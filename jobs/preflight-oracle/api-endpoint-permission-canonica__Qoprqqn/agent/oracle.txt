@@ -1,0 +1,5 @@
+Successfully generated /app/output.txt
+/api/users/{id} PUT admin ALLOW
+/api/users GET user ALLOW
+/api/users POST admin ALLOW
+/api GET admin ALLOW

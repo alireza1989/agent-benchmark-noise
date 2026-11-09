@@ -1,0 +1,994 @@
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+Get:4 http://deb.debian.org/debian bookworm/main arm64 Packages [8689 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main arm64 Packages [6936 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main arm64 Packages [355 kB]
+Fetched 9293 kB in 1s (7854 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  libbrotli1 libcurl4 libldap-2.5-0 libldap-common libnghttp2-14 libpsl5
+  librtmp1 libsasl2-2 libsasl2-modules libsasl2-modules-db libssh2-1
+  publicsuffix
+Suggested packages:
+  libsasl2-modules-gssapi-mit | libsasl2-modules-gssapi-heimdal
+  libsasl2-modules-ldap libsasl2-modules-otp libsasl2-modules-sql
+The following NEW packages will be installed:
+  curl libbrotli1 libcurl4 libldap-2.5-0 libldap-common libnghttp2-14 libpsl5
+  librtmp1 libsasl2-2 libsasl2-modules libsasl2-modules-db libssh2-1
+  publicsuffix
+0 upgraded, 13 newly installed, 0 to remove and 49 not upgraded.
+Need to get 1769 kB of archives.
+After this operation, 5028 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian-security bookworm-security/main arm64 libbrotli1 arm64 1.0.9-2+deb12u1 [267 kB]
+Get:2 http://deb.debian.org/debian bookworm/main arm64 libsasl2-modules-db arm64 2.1.28+dfsg-10 [20.8 kB]
+Get:3 http://deb.debian.org/debian bookworm/main arm64 libsasl2-2 arm64 2.1.28+dfsg-10 [58.0 kB]
+Get:4 http://deb.debian.org/debian bookworm/main arm64 libldap-2.5-0 arm64 2.5.13+dfsg-5 [171 kB]
+Get:5 http://deb.debian.org/debian bookworm/main arm64 libnghttp2-14 arm64 1.52.0-1+deb12u3 [69.0 kB]
+Get:6 http://deb.debian.org/debian bookworm/main arm64 libpsl5 arm64 0.21.2-1 [58.6 kB]
+Get:7 http://deb.debian.org/debian bookworm/main arm64 librtmp1 arm64 2.4+20151223.gitfa8646d.1-2+b2 [59.4 kB]
+Get:8 http://deb.debian.org/debian-security bookworm-security/main arm64 libssh2-1 arm64 1.10.0-3+deb12u1 [169 kB]
+Get:9 http://deb.debian.org/debian bookworm/main arm64 libcurl4 arm64 7.88.1-10+deb12u15 [367 kB]
+Get:10 http://deb.debian.org/debian bookworm/main arm64 curl arm64 7.88.1-10+deb12u15 [310 kB]
+Get:11 http://deb.debian.org/debian bookworm/main arm64 libldap-common all 2.5.13+dfsg-5 [29.3 kB]
+Get:12 http://deb.debian.org/debian bookworm/main arm64 libsasl2-modules arm64 2.1.28+dfsg-10 [63.1 kB]
+Get:13 http://deb.debian.org/debian bookworm/main arm64 publicsuffix all 20230209.2326-1 [126 kB]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 1769 kB in 0s (4014 kB/s)
+Selecting previously unselected package libbrotli1:arm64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 7584 files and directories currently installed.)
+Preparing to unpack .../00-libbrotli1_1.0.9-2+deb12u1_arm64.deb ...
+Unpacking libbrotli1:arm64 (1.0.9-2+deb12u1) ...
+Selecting previously unselected package libsasl2-modules-db:arm64.
+Preparing to unpack .../01-libsasl2-modules-db_2.1.28+dfsg-10_arm64.deb ...
+Unpacking libsasl2-modules-db:arm64 (2.1.28+dfsg-10) ...
+Selecting previously unselected package libsasl2-2:arm64.
+Preparing to unpack .../02-libsasl2-2_2.1.28+dfsg-10_arm64.deb ...
+Unpacking libsasl2-2:arm64 (2.1.28+dfsg-10) ...
+Selecting previously unselected package libldap-2.5-0:arm64.
+Preparing to unpack .../03-libldap-2.5-0_2.5.13+dfsg-5_arm64.deb ...
+Unpacking libldap-2.5-0:arm64 (2.5.13+dfsg-5) ...
+Selecting previously unselected package libnghttp2-14:arm64.
+Preparing to unpack .../04-libnghttp2-14_1.52.0-1+deb12u3_arm64.deb ...
+Unpacking libnghttp2-14:arm64 (1.52.0-1+deb12u3) ...
+Selecting previously unselected package libpsl5:arm64.
+Preparing to unpack .../05-libpsl5_0.21.2-1_arm64.deb ...
+Unpacking libpsl5:arm64 (0.21.2-1) ...
+Selecting previously unselected package librtmp1:arm64.
+Preparing to unpack .../06-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_arm64.deb ...
+Unpacking librtmp1:arm64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+Selecting previously unselected package libssh2-1:arm64.
+Preparing to unpack .../07-libssh2-1_1.10.0-3+deb12u1_arm64.deb ...
+Unpacking libssh2-1:arm64 (1.10.0-3+deb12u1) ...
+Selecting previously unselected package libcurl4:arm64.
+Preparing to unpack .../08-libcurl4_7.88.1-10+deb12u15_arm64.deb ...
+Unpacking libcurl4:arm64 (7.88.1-10+deb12u15) ...
+Selecting previously unselected package curl.
+Preparing to unpack .../09-curl_7.88.1-10+deb12u15_arm64.deb ...
+Unpacking curl (7.88.1-10+deb12u15) ...
+Selecting previously unselected package libldap-common.
+Preparing to unpack .../10-libldap-common_2.5.13+dfsg-5_all.deb ...
+Unpacking libldap-common (2.5.13+dfsg-5) ...
+Selecting previously unselected package libsasl2-modules:arm64.
+Preparing to unpack .../11-libsasl2-modules_2.1.28+dfsg-10_arm64.deb ...
+Unpacking libsasl2-modules:arm64 (2.1.28+dfsg-10) ...
+Selecting previously unselected package publicsuffix.
+Preparing to unpack .../12-publicsuffix_20230209.2326-1_all.deb ...
+Unpacking publicsuffix (20230209.2326-1) ...
+Setting up libpsl5:arm64 (0.21.2-1) ...
+Setting up libbrotli1:arm64 (1.0.9-2+deb12u1) ...
+Setting up libsasl2-modules:arm64 (2.1.28+dfsg-10) ...
+Setting up libnghttp2-14:arm64 (1.52.0-1+deb12u3) ...
+Setting up libldap-common (2.5.13+dfsg-5) ...
+Setting up libsasl2-modules-db:arm64 (2.1.28+dfsg-10) ...
+Setting up librtmp1:arm64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+Setting up libsasl2-2:arm64 (2.1.28+dfsg-10) ...
+Setting up libssh2-1:arm64 (1.10.0-3+deb12u1) ...
+Setting up publicsuffix (20230209.2326-1) ...
+Setting up libldap-2.5-0:arm64 (2.5.13+dfsg-5) ...
+Setting up libcurl4:arm64 (7.88.1-10+deb12u15) ...
+Setting up curl (7.88.1-10+deb12u15) ...
+Processing triggers for libc-bin (2.36-9+deb12u9) ...
+downloading uv 0.7.13 aarch64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Using CPython 3.13.1 interpreter at: /usr/local/bin/python
+Creating virtual environment at: .tbench-testing
+Using Python 3.13.1 environment at: .tbench-testing
+Resolved 6 packages in 323ms
+Downloading pygments (1.2MiB)
+Downloading numpy (13.0MiB)
+ Downloading pygments
+ Downloading numpy
+Prepared 6 packages in 605ms
+Installed 6 packages in 16ms
+ + iniconfig==2.3.1
+ + numpy==2.1.3
+ + packaging==26.3
+ + pluggy==1.7.0
+ + pygments==2.21.0
+ + pytest==8.4.1
+============================= test session starts ==============================
+platform linux -- Python 3.13.1, pytest-8.4.1, pluggy-1.7.0
+rootdir: /tests
+collected 90 items
+
+../tests/test_outputs.py FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 52%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                              [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_padding_exists ______________________________
+
+    def test_padding_exists():
+        """Check padding.py exists."""
+>       assert os.path.exists("/app/src/padding.py"), "padding.py not found"
+E       AssertionError: padding.py not found
+E       assert False
+E        +  where False = <function exists at 0xffff8110aa20>('/app/src/padding.py')
+E        +    where <function exists at 0xffff8110aa20> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+/tests/test_outputs.py:17: AssertionError
+_______________________________ test_base_exists _______________________________
+
+    def test_base_exists():
+        """Check base.py exists."""
+>       assert os.path.exists("/app/src/base.py"), "base.py not found"
+E       AssertionError: base.py not found
+E       assert False
+E        +  where False = <function exists at 0xffff8110aa20>('/app/src/base.py')
+E        +    where <function exists at 0xffff8110aa20> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+/tests/test_outputs.py:22: AssertionError
+_______________________________ test_conv_exists _______________________________
+
+    def test_conv_exists():
+        """Check conv.py exists."""
+>       assert os.path.exists("/app/src/conv.py"), "conv.py not found"
+E       AssertionError: conv.py not found
+E       assert False
+E        +  where False = <function exists at 0xffff8110aa20>('/app/src/conv.py')
+E        +    where <function exists at 0xffff8110aa20> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+/tests/test_outputs.py:27: AssertionError
+__________________________ test_conv_transpose_exists __________________________
+
+    def test_conv_transpose_exists():
+        """Check conv_transpose.py exists."""
+>       assert os.path.exists("/app/src/conv_transpose.py"), "conv_transpose.py not found"
+E       AssertionError: conv_transpose.py not found
+E       assert False
+E        +  where False = <function exists at 0xffff8110aa20>('/app/src/conv_transpose.py')
+E        +    where <function exists at 0xffff8110aa20> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+/tests/test_outputs.py:32: AssertionError
+_____________________________ test_pooling_exists ______________________________
+
+    def test_pooling_exists():
+        """Check pooling.py exists."""
+>       assert os.path.exists("/app/src/pooling.py"), "pooling.py not found"
+E       AssertionError: pooling.py not found
+E       assert False
+E        +  where False = <function exists at 0xffff8110aa20>('/app/src/pooling.py')
+E        +    where <function exists at 0xffff8110aa20> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+/tests/test_outputs.py:37: AssertionError
+__________________________ test_normalization_exists ___________________________
+
+    def test_normalization_exists():
+        """Check normalization.py exists."""
+>       assert os.path.exists("/app/src/normalization.py"), "normalization.py not found"
+E       AssertionError: normalization.py not found
+E       assert False
+E        +  where False = <function exists at 0xffff8110aa20>('/app/src/normalization.py')
+E        +    where <function exists at 0xffff8110aa20> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+/tests/test_outputs.py:42: AssertionError
+____________________________ test_activation_exists ____________________________
+
+    def test_activation_exists():
+        """Check activation.py exists."""
+>       assert os.path.exists("/app/src/activation.py"), "activation.py not found"
+E       AssertionError: activation.py not found
+E       assert False
+E        +  where False = <function exists at 0xffff8110aa20>('/app/src/activation.py')
+E        +    where <function exists at 0xffff8110aa20> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+/tests/test_outputs.py:47: AssertionError
+_______________________________ test_init_exists _______________________________
+
+    def test_init_exists():
+        """Check __init__.py exists."""
+>       assert os.path.exists("/app/src/__init__.py"), "__init__.py not found"
+E       AssertionError: __init__.py not found
+E       assert False
+E        +  where False = <function exists at 0xffff8110aa20>('/app/src/__init__.py')
+E        +    where <function exists at 0xffff8110aa20> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+/tests/test_outputs.py:52: AssertionError
+____________________________ test_output_dir_exists ____________________________
+
+    def test_output_dir_exists():
+        """Check output directory exists."""
+>       assert os.path.isdir("/app/output"), "/app/output directory not found"
+E       AssertionError: /app/output directory not found
+E       assert False
+E        +  where False = <function isdir at 0xffff8110ac00>('/app/output')
+E        +    where <function isdir at 0xffff8110ac00> = <module 'posixpath' (frozen)>.isdir
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+/tests/test_outputs.py:57: AssertionError
+_____________________________ test_zero_pad_import _____________________________
+
+    def test_zero_pad_import():
+        """Test that zero_pad can be imported."""
+>       from src.padding import zero_pad
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:65: ModuleNotFoundError
+_____________________________ test_zero_pad_basic ______________________________
+
+    def test_zero_pad_basic():
+        """Test basic zero padding."""
+>       from src.padding import zero_pad
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:72: ModuleNotFoundError
+_____________________________ test_zero_pad_values _____________________________
+
+    def test_zero_pad_values():
+        """Test zero padding fills with zeros."""
+>       from src.padding import zero_pad
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:83: ModuleNotFoundError
+___________________________ test_zero_pad_no_padding ___________________________
+
+    def test_zero_pad_no_padding():
+        """Test zero padding with pad=0 returns original."""
+>       from src.padding import zero_pad
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:100: ModuleNotFoundError
+_________________________ test_get_output_shape_import _________________________
+
+    def test_get_output_shape_import():
+        """Test that get_output_shape can be imported."""
+>       from src.padding import get_output_shape
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:111: ModuleNotFoundError
+_________________________ test_get_output_shape_basic __________________________
+
+    def test_get_output_shape_basic():
+        """Test output shape calculation."""
+>       from src.padding import get_output_shape
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:118: ModuleNotFoundError
+______________________ test_get_output_shape_with_padding ______________________
+
+    def test_get_output_shape_with_padding():
+        """Test output shape with padding."""
+>       from src.padding import get_output_shape
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:127: ModuleNotFoundError
+______________________ test_get_output_shape_with_stride _______________________
+
+    def test_get_output_shape_with_stride():
+        """Test output shape with stride > 1."""
+>       from src.padding import get_output_shape
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:136: ModuleNotFoundError
+_____________________ test_get_output_shape_with_dilation ______________________
+
+    def test_get_output_shape_with_dilation():
+        """Test output shape with dilation > 1."""
+>       from src.padding import get_output_shape
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:145: ModuleNotFoundError
+____________________________ test_base_layer_import ____________________________
+
+    def test_base_layer_import():
+        """Test that BaseLayer can be imported."""
+>       from src.base import BaseLayer
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:159: ModuleNotFoundError
+___________________________ test_base_layer_abstract ___________________________
+
+    def test_base_layer_abstract():
+        """Test that BaseLayer cannot be instantiated without implementing forward."""
+>       from src.base import BaseLayer
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:166: ModuleNotFoundError
+___________________________ test_base_layer_callable ___________________________
+
+    def test_base_layer_callable():
+        """Test that BaseLayer subclass is callable via __call__."""
+>       from src.base import BaseLayer
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:178: ModuleNotFoundError
+______________________________ test_conv2d_import ______________________________
+
+    def test_conv2d_import():
+        """Test that Conv2D can be imported."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:196: ModuleNotFoundError
+__________________________ test_conv2d_initialization __________________________
+
+    def test_conv2d_initialization():
+        """Test Conv2D initializes with correct attributes."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:203: ModuleNotFoundError
+__________________________ test_conv2d_weights_shape ___________________________
+
+    def test_conv2d_weights_shape():
+        """Test Conv2D weights have correct shape."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:217: ModuleNotFoundError
+____________________________ test_conv2d_bias_shape ____________________________
+
+    def test_conv2d_bias_shape():
+        """Test Conv2D bias has correct shape."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:227: ModuleNotFoundError
+______________________ test_conv2d_bias_initialized_zeros ______________________
+
+    def test_conv2d_bias_initialized_zeros():
+        """Test Conv2D bias is initialized to zeros."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:237: ModuleNotFoundError
+___________________________ test_conv2d_output_shape ___________________________
+
+    def test_conv2d_output_shape():
+        """Test Conv2D output shape is correct."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:246: ModuleNotFoundError
+____________________ test_conv2d_output_shape_with_padding _____________________
+
+    def test_conv2d_output_shape_with_padding():
+        """Test Conv2D output shape with padding."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:258: ModuleNotFoundError
+_____________________ test_conv2d_output_shape_with_stride _____________________
+
+    def test_conv2d_output_shape_with_stride():
+        """Test Conv2D output shape with stride > 1."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:271: ModuleNotFoundError
+____________________ test_conv2d_output_shape_with_dilation ____________________
+
+    def test_conv2d_output_shape_with_dilation():
+        """Test Conv2D output shape with dilation > 1."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:284: ModuleNotFoundError
+___________________________ test_conv2d_output_dtype ___________________________
+
+    def test_conv2d_output_dtype():
+        """Test Conv2D output dtype is float64."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:298: ModuleNotFoundError
+___________________________ test_conv2d_known_values ___________________________
+
+    def test_conv2d_known_values():
+        """Test Conv2D with known weights produces correct output."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:310: ModuleNotFoundError
+______________________ test_conv2d_dilation_known_values _______________________
+
+    def test_conv2d_dilation_known_values():
+        """Test Conv2D with dilation produces correct output."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:330: ModuleNotFoundError
+______________________ test_conv2d_xavier_initialization _______________________
+
+    def test_conv2d_xavier_initialization():
+        """Test Conv2D uses Xavier/Glorot uniform initialization."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:351: ModuleNotFoundError
+__________________________ test_conv2d_default_params __________________________
+
+    def test_conv2d_default_params():
+        """Test Conv2D uses default stride=1, padding=0, dilation=1."""
+>       from src.conv import Conv2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:373: ModuleNotFoundError
+_________________________ test_conv2d_transpose_import _________________________
+
+    def test_conv2d_transpose_import():
+        """Test that Conv2DTranspose can be imported."""
+>       from src.conv_transpose import Conv2DTranspose
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:388: ModuleNotFoundError
+_____________________ test_conv2d_transpose_initialization _____________________
+
+    def test_conv2d_transpose_initialization():
+        """Test Conv2DTranspose initializes with correct attributes."""
+>       from src.conv_transpose import Conv2DTranspose
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:395: ModuleNotFoundError
+_____________________ test_conv2d_transpose_weights_shape ______________________
+
+    def test_conv2d_transpose_weights_shape():
+        """Test Conv2DTranspose weights have correct shape."""
+>       from src.conv_transpose import Conv2DTranspose
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:408: ModuleNotFoundError
+_______________________ test_conv2d_transpose_bias_shape _______________________
+
+    def test_conv2d_transpose_bias_shape():
+        """Test Conv2DTranspose bias has correct shape."""
+>       from src.conv_transpose import Conv2DTranspose
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:418: ModuleNotFoundError
+_________________ test_conv2d_transpose_bias_initialized_zeros _________________
+
+    def test_conv2d_transpose_bias_initialized_zeros():
+        """Test Conv2DTranspose bias is initialized to zeros."""
+>       from src.conv_transpose import Conv2DTranspose
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:428: ModuleNotFoundError
+______________________ test_conv2d_transpose_output_shape ______________________
+
+    def test_conv2d_transpose_output_shape():
+        """Test Conv2DTranspose output shape is correct."""
+>       from src.conv_transpose import Conv2DTranspose
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:437: ModuleNotFoundError
+________________ test_conv2d_transpose_output_shape_with_stride ________________
+
+    def test_conv2d_transpose_output_shape_with_stride():
+        """Test Conv2DTranspose output shape with stride > 1."""
+>       from src.conv_transpose import Conv2DTranspose
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:450: ModuleNotFoundError
+_______________ test_conv2d_transpose_output_shape_with_padding ________________
+
+    def test_conv2d_transpose_output_shape_with_padding():
+        """Test Conv2DTranspose output shape with padding."""
+>       from src.conv_transpose import Conv2DTranspose
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:463: ModuleNotFoundError
+______________________ test_conv2d_transpose_output_dtype ______________________
+
+    def test_conv2d_transpose_output_dtype():
+        """Test Conv2DTranspose output dtype is float64."""
+>       from src.conv_transpose import Conv2DTranspose
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:476: ModuleNotFoundError
+_____________________ test_conv2d_transpose_default_params _____________________
+
+    def test_conv2d_transpose_default_params():
+        """Test Conv2DTranspose uses default stride=1, padding=0."""
+>       from src.conv_transpose import Conv2DTranspose
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:488: ModuleNotFoundError
+____________________________ test_maxpool2d_import _____________________________
+
+    def test_maxpool2d_import():
+        """Test that MaxPool2D can be imported."""
+>       from src.pooling import MaxPool2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:501: ModuleNotFoundError
+________________________ test_maxpool2d_initialization _________________________
+
+    def test_maxpool2d_initialization():
+        """Test MaxPool2D initializes with correct attributes."""
+>       from src.pooling import MaxPool2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:508: ModuleNotFoundError
+___________________ test_maxpool2d_stride_defaults_to_kernel ___________________
+
+    def test_maxpool2d_stride_defaults_to_kernel():
+        """Test MaxPool2D stride defaults to kernel_size."""
+>       from src.pooling import MaxPool2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:518: ModuleNotFoundError
+_________________________ test_maxpool2d_output_shape __________________________
+
+    def test_maxpool2d_output_shape():
+        """Test MaxPool2D output shape is correct."""
+>       from src.pooling import MaxPool2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:527: ModuleNotFoundError
+_________________________ test_maxpool2d_output_dtype __________________________
+
+    def test_maxpool2d_output_dtype():
+        """Test MaxPool2D output dtype is float64."""
+>       from src.pooling import MaxPool2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:539: ModuleNotFoundError
+_________________________ test_maxpool2d_known_values __________________________
+
+    def test_maxpool2d_known_values():
+        """Test MaxPool2D produces correct max values."""
+>       from src.pooling import MaxPool2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:551: ModuleNotFoundError
+____________________________ test_avgpool2d_import _____________________________
+
+    def test_avgpool2d_import():
+        """Test that AvgPool2D can be imported."""
+>       from src.pooling import AvgPool2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:571: ModuleNotFoundError
+________________________ test_avgpool2d_initialization _________________________
+
+    def test_avgpool2d_initialization():
+        """Test AvgPool2D initializes with correct attributes."""
+>       from src.pooling import AvgPool2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:578: ModuleNotFoundError
+___________________ test_avgpool2d_stride_defaults_to_kernel ___________________
+
+    def test_avgpool2d_stride_defaults_to_kernel():
+        """Test AvgPool2D stride defaults to kernel_size."""
+>       from src.pooling import AvgPool2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:588: ModuleNotFoundError
+_________________________ test_avgpool2d_output_shape __________________________
+
+    def test_avgpool2d_output_shape():
+        """Test AvgPool2D output shape is correct."""
+>       from src.pooling import AvgPool2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:597: ModuleNotFoundError
+_________________________ test_avgpool2d_output_dtype __________________________
+
+    def test_avgpool2d_output_dtype():
+        """Test AvgPool2D output dtype is float64."""
+>       from src.pooling import AvgPool2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:609: ModuleNotFoundError
+_________________________ test_avgpool2d_known_values __________________________
+
+    def test_avgpool2d_known_values():
+        """Test AvgPool2D produces correct average values."""
+>       from src.pooling import AvgPool2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:621: ModuleNotFoundError
+___________________________ test_batchnorm2d_import ____________________________
+
+    def test_batchnorm2d_import():
+        """Test that BatchNorm2D can be imported."""
+>       from src.normalization import BatchNorm2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:641: ModuleNotFoundError
+_______________________ test_batchnorm2d_initialization ________________________
+
+    def test_batchnorm2d_initialization():
+        """Test BatchNorm2D initializes with correct attributes."""
+>       from src.normalization import BatchNorm2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:648: ModuleNotFoundError
+_________________________ test_batchnorm2d_gamma_shape _________________________
+
+    def test_batchnorm2d_gamma_shape():
+        """Test BatchNorm2D gamma has correct shape and initial values."""
+>       from src.normalization import BatchNorm2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:659: ModuleNotFoundError
+_________________________ test_batchnorm2d_beta_shape __________________________
+
+    def test_batchnorm2d_beta_shape():
+        """Test BatchNorm2D beta has correct shape and initial values."""
+>       from src.normalization import BatchNorm2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:670: ModuleNotFoundError
+_____________________ test_batchnorm2d_running_mean_shape ______________________
+
+    def test_batchnorm2d_running_mean_shape():
+        """Test BatchNorm2D running_mean has correct shape and initial values."""
+>       from src.normalization import BatchNorm2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:681: ModuleNotFoundError
+______________________ test_batchnorm2d_running_var_shape ______________________
+
+    def test_batchnorm2d_running_var_shape():
+        """Test BatchNorm2D running_var has correct shape and initial values."""
+>       from src.normalization import BatchNorm2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:692: ModuleNotFoundError
+________________________ test_batchnorm2d_output_shape _________________________
+
+    def test_batchnorm2d_output_shape():
+        """Test BatchNorm2D preserves input shape."""
+>       from src.normalization import BatchNorm2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:703: ModuleNotFoundError
+________________________ test_batchnorm2d_output_dtype _________________________
+
+    def test_batchnorm2d_output_dtype():
+        """Test BatchNorm2D output dtype is float64."""
+>       from src.normalization import BatchNorm2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:715: ModuleNotFoundError
+_______________ test_batchnorm2d_training_updates_running_stats ________________
+
+    def test_batchnorm2d_training_updates_running_stats():
+        """Test BatchNorm2D updates running statistics in training mode."""
+>       from src.normalization import BatchNorm2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:727: ModuleNotFoundError
+_____________________ test_batchnorm2d_inference_no_update _____________________
+
+    def test_batchnorm2d_inference_no_update():
+        """Test BatchNorm2D does not update running stats in inference mode."""
+>       from src.normalization import BatchNorm2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:744: ModuleNotFoundError
+________________________ test_batchnorm2d_normalization ________________________
+
+    def test_batchnorm2d_normalization():
+        """Test BatchNorm2D normalizes to approximately zero mean and unit variance."""
+>       from src.normalization import BatchNorm2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:766: ModuleNotFoundError
+_______________________ test_batchnorm2d_default_params ________________________
+
+    def test_batchnorm2d_default_params():
+        """Test BatchNorm2D uses default eps=1e-5, momentum=0.1."""
+>       from src.normalization import BatchNorm2D
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:783: ModuleNotFoundError
+_______________________________ test_relu_import _______________________________
+
+    def test_relu_import():
+        """Test that ReLU can be imported."""
+>       from src.activation import ReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:796: ModuleNotFoundError
+__________________________ test_relu_positive_values ___________________________
+
+    def test_relu_positive_values():
+        """Test ReLU passes positive values unchanged."""
+>       from src.activation import ReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:803: ModuleNotFoundError
+__________________________ test_relu_negative_values ___________________________
+
+    def test_relu_negative_values():
+        """Test ReLU zeros out negative values."""
+>       from src.activation import ReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:814: ModuleNotFoundError
+____________________________ test_relu_mixed_values ____________________________
+
+    def test_relu_mixed_values():
+        """Test ReLU with mixed positive and negative values."""
+>       from src.activation import ReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:825: ModuleNotFoundError
+____________________________ test_relu_output_dtype ____________________________
+
+    def test_relu_output_dtype():
+        """Test ReLU output dtype is float64."""
+>       from src.activation import ReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:837: ModuleNotFoundError
+__________________________ test_relu_preserves_shape ___________________________
+
+    def test_relu_preserves_shape():
+        """Test ReLU preserves input shape."""
+>       from src.activation import ReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:848: ModuleNotFoundError
+____________________________ test_leakyrelu_import _____________________________
+
+    def test_leakyrelu_import():
+        """Test that LeakyReLU can be imported."""
+>       from src.activation import LeakyReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:862: ModuleNotFoundError
+________________________ test_leakyrelu_initialization _________________________
+
+    def test_leakyrelu_initialization():
+        """Test LeakyReLU initializes with correct attributes."""
+>       from src.activation import LeakyReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:869: ModuleNotFoundError
+_________________________ test_leakyrelu_default_slope _________________________
+
+    def test_leakyrelu_default_slope():
+        """Test LeakyReLU uses default negative_slope=0.01."""
+>       from src.activation import LeakyReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:878: ModuleNotFoundError
+________________________ test_leakyrelu_positive_values ________________________
+
+    def test_leakyrelu_positive_values():
+        """Test LeakyReLU passes positive values unchanged."""
+>       from src.activation import LeakyReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:887: ModuleNotFoundError
+________________________ test_leakyrelu_negative_values ________________________
+
+    def test_leakyrelu_negative_values():
+        """Test LeakyReLU scales negative values."""
+>       from src.activation import LeakyReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:898: ModuleNotFoundError
+_________________________ test_leakyrelu_mixed_values __________________________
+
+    def test_leakyrelu_mixed_values():
+        """Test LeakyReLU with mixed positive and negative values."""
+>       from src.activation import LeakyReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:910: ModuleNotFoundError
+_________________________ test_leakyrelu_output_dtype __________________________
+
+    def test_leakyrelu_output_dtype():
+        """Test LeakyReLU output dtype is float64."""
+>       from src.activation import LeakyReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:922: ModuleNotFoundError
+________________________ test_leakyrelu_preserves_shape ________________________
+
+    def test_leakyrelu_preserves_shape():
+        """Test LeakyReLU preserves input shape."""
+>       from src.activation import LeakyReLU
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:933: ModuleNotFoundError
+_____________________________ test_sigmoid_import ______________________________
+
+    def test_sigmoid_import():
+        """Test that Sigmoid can be imported."""
+>       from src.activation import Sigmoid
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:947: ModuleNotFoundError
+_____________________________ test_sigmoid_at_zero _____________________________
+
+    def test_sigmoid_at_zero():
+        """Test Sigmoid at x=0 returns 0.5."""
+>       from src.activation import Sigmoid
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:954: ModuleNotFoundError
+______________________________ test_sigmoid_range ______________________________
+
+    def test_sigmoid_range():
+        """Test Sigmoid output is in (0, 1) range."""
+>       from src.activation import Sigmoid
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:965: ModuleNotFoundError
+_______________________ test_sigmoid_numerical_stability _______________________
+
+    def test_sigmoid_numerical_stability():
+        """Test Sigmoid handles large values without overflow."""
+>       from src.activation import Sigmoid
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:977: ModuleNotFoundError
+__________________________ test_sigmoid_output_dtype ___________________________
+
+    def test_sigmoid_output_dtype():
+        """Test Sigmoid output dtype is float64."""
+>       from src.activation import Sigmoid
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:991: ModuleNotFoundError
+_________________________ test_sigmoid_preserves_shape _________________________
+
+    def test_sigmoid_preserves_shape():
+        """Test Sigmoid preserves input shape."""
+>       from src.activation import Sigmoid
+E       ModuleNotFoundError: No module named 'src'
+
+/tests/test_outputs.py:1002: ModuleNotFoundError
+_____________________________ test_package_exports _____________________________
+
+    def test_package_exports():
+        """Test that all required classes are exported from package."""
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("src", "/app/src/__init__.py")
+        src = importlib.util.module_from_spec(spec)
+>       spec.loader.exec_module(src)
+
+/tests/test_outputs.py:1019: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen importlib._bootstrap_external>:1022: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1159: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0xffff7fa37a10>
+path = '/app/src/__init__.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/src/__init__.py'
+
+<frozen importlib._bootstrap_external>:1217: FileNotFoundError
+=========================== short test summary info ============================
+FAILED ../tests/test_outputs.py::test_padding_exists - AssertionError: paddin...
+FAILED ../tests/test_outputs.py::test_base_exists - AssertionError: base.py n...
+FAILED ../tests/test_outputs.py::test_conv_exists - AssertionError: conv.py n...
+FAILED ../tests/test_outputs.py::test_conv_transpose_exists - AssertionError:...
+FAILED ../tests/test_outputs.py::test_pooling_exists - AssertionError: poolin...
+FAILED ../tests/test_outputs.py::test_normalization_exists - AssertionError: ...
+FAILED ../tests/test_outputs.py::test_activation_exists - AssertionError: act...
+FAILED ../tests/test_outputs.py::test_init_exists - AssertionError: __init__....
+FAILED ../tests/test_outputs.py::test_output_dir_exists - AssertionError: /ap...
+FAILED ../tests/test_outputs.py::test_zero_pad_import - ModuleNotFoundError: ...
+FAILED ../tests/test_outputs.py::test_zero_pad_basic - ModuleNotFoundError: N...
+FAILED ../tests/test_outputs.py::test_zero_pad_values - ModuleNotFoundError: ...
+FAILED ../tests/test_outputs.py::test_zero_pad_no_padding - ModuleNotFoundErr...
+FAILED ../tests/test_outputs.py::test_get_output_shape_import - ModuleNotFoun...
+FAILED ../tests/test_outputs.py::test_get_output_shape_basic - ModuleNotFound...
+FAILED ../tests/test_outputs.py::test_get_output_shape_with_padding - ModuleN...
+FAILED ../tests/test_outputs.py::test_get_output_shape_with_stride - ModuleNo...
+FAILED ../tests/test_outputs.py::test_get_output_shape_with_dilation - Module...
+FAILED ../tests/test_outputs.py::test_base_layer_import - ModuleNotFoundError...
+FAILED ../tests/test_outputs.py::test_base_layer_abstract - ModuleNotFoundErr...
+FAILED ../tests/test_outputs.py::test_base_layer_callable - ModuleNotFoundErr...
+FAILED ../tests/test_outputs.py::test_conv2d_import - ModuleNotFoundError: No...
+FAILED ../tests/test_outputs.py::test_conv2d_initialization - ModuleNotFoundE...
+FAILED ../tests/test_outputs.py::test_conv2d_weights_shape - ModuleNotFoundEr...
+FAILED ../tests/test_outputs.py::test_conv2d_bias_shape - ModuleNotFoundError...
+FAILED ../tests/test_outputs.py::test_conv2d_bias_initialized_zeros - ModuleN...
+FAILED ../tests/test_outputs.py::test_conv2d_output_shape - ModuleNotFoundErr...
+FAILED ../tests/test_outputs.py::test_conv2d_output_shape_with_padding - Modu...
+FAILED ../tests/test_outputs.py::test_conv2d_output_shape_with_stride - Modul...
+FAILED ../tests/test_outputs.py::test_conv2d_output_shape_with_dilation - Mod...
+FAILED ../tests/test_outputs.py::test_conv2d_output_dtype - ModuleNotFoundErr...
+FAILED ../tests/test_outputs.py::test_conv2d_known_values - ModuleNotFoundErr...
+FAILED ../tests/test_outputs.py::test_conv2d_dilation_known_values - ModuleNo...
+FAILED ../tests/test_outputs.py::test_conv2d_xavier_initialization - ModuleNo...
+FAILED ../tests/test_outputs.py::test_conv2d_default_params - ModuleNotFoundE...
+FAILED ../tests/test_outputs.py::test_conv2d_transpose_import - ModuleNotFoun...
+FAILED ../tests/test_outputs.py::test_conv2d_transpose_initialization - Modul...
+FAILED ../tests/test_outputs.py::test_conv2d_transpose_weights_shape - Module...
+FAILED ../tests/test_outputs.py::test_conv2d_transpose_bias_shape - ModuleNot...
+FAILED ../tests/test_outputs.py::test_conv2d_transpose_bias_initialized_zeros
+FAILED ../tests/test_outputs.py::test_conv2d_transpose_output_shape - ModuleN...
+FAILED ../tests/test_outputs.py::test_conv2d_transpose_output_shape_with_stride
+FAILED ../tests/test_outputs.py::test_conv2d_transpose_output_shape_with_padding
+FAILED ../tests/test_outputs.py::test_conv2d_transpose_output_dtype - ModuleN...
+FAILED ../tests/test_outputs.py::test_conv2d_transpose_default_params - Modul...
+FAILED ../tests/test_outputs.py::test_maxpool2d_import - ModuleNotFoundError:...
+FAILED ../tests/test_outputs.py::test_maxpool2d_initialization - ModuleNotFou...
+FAILED ../tests/test_outputs.py::test_maxpool2d_stride_defaults_to_kernel - M...
+FAILED ../tests/test_outputs.py::test_maxpool2d_output_shape - ModuleNotFound...
+FAILED ../tests/test_outputs.py::test_maxpool2d_output_dtype - ModuleNotFound...
+FAILED ../tests/test_outputs.py::test_maxpool2d_known_values - ModuleNotFound...
+FAILED ../tests/test_outputs.py::test_avgpool2d_import - ModuleNotFoundError:...
+FAILED ../tests/test_outputs.py::test_avgpool2d_initialization - ModuleNotFou...
+FAILED ../tests/test_outputs.py::test_avgpool2d_stride_defaults_to_kernel - M...
+FAILED ../tests/test_outputs.py::test_avgpool2d_output_shape - ModuleNotFound...
+FAILED ../tests/test_outputs.py::test_avgpool2d_output_dtype - ModuleNotFound...
+FAILED ../tests/test_outputs.py::test_avgpool2d_known_values - ModuleNotFound...
+FAILED ../tests/test_outputs.py::test_batchnorm2d_import - ModuleNotFoundErro...
+FAILED ../tests/test_outputs.py::test_batchnorm2d_initialization - ModuleNotF...
+FAILED ../tests/test_outputs.py::test_batchnorm2d_gamma_shape - ModuleNotFoun...
+FAILED ../tests/test_outputs.py::test_batchnorm2d_beta_shape - ModuleNotFound...
+FAILED ../tests/test_outputs.py::test_batchnorm2d_running_mean_shape - Module...
+FAILED ../tests/test_outputs.py::test_batchnorm2d_running_var_shape - ModuleN...
+FAILED ../tests/test_outputs.py::test_batchnorm2d_output_shape - ModuleNotFou...
+FAILED ../tests/test_outputs.py::test_batchnorm2d_output_dtype - ModuleNotFou...
+FAILED ../tests/test_outputs.py::test_batchnorm2d_training_updates_running_stats
+FAILED ../tests/test_outputs.py::test_batchnorm2d_inference_no_update - Modul...
+FAILED ../tests/test_outputs.py::test_batchnorm2d_normalization - ModuleNotFo...
+FAILED ../tests/test_outputs.py::test_batchnorm2d_default_params - ModuleNotF...
+FAILED ../tests/test_outputs.py::test_relu_import - ModuleNotFoundError: No m...
+FAILED ../tests/test_outputs.py::test_relu_positive_values - ModuleNotFoundEr...
+FAILED ../tests/test_outputs.py::test_relu_negative_values - ModuleNotFoundEr...
+FAILED ../tests/test_outputs.py::test_relu_mixed_values - ModuleNotFoundError...
+FAILED ../tests/test_outputs.py::test_relu_output_dtype - ModuleNotFoundError...
+FAILED ../tests/test_outputs.py::test_relu_preserves_shape - ModuleNotFoundEr...
+FAILED ../tests/test_outputs.py::test_leakyrelu_import - ModuleNotFoundError:...
+FAILED ../tests/test_outputs.py::test_leakyrelu_initialization - ModuleNotFou...
+FAILED ../tests/test_outputs.py::test_leakyrelu_default_slope - ModuleNotFoun...
+FAILED ../tests/test_outputs.py::test_leakyrelu_positive_values - ModuleNotFo...
+FAILED ../tests/test_outputs.py::test_leakyrelu_negative_values - ModuleNotFo...
+FAILED ../tests/test_outputs.py::test_leakyrelu_mixed_values - ModuleNotFound...
+FAILED ../tests/test_outputs.py::test_leakyrelu_output_dtype - ModuleNotFound...
+FAILED ../tests/test_outputs.py::test_leakyrelu_preserves_shape - ModuleNotFo...
+FAILED ../tests/test_outputs.py::test_sigmoid_import - ModuleNotFoundError: N...
+FAILED ../tests/test_outputs.py::test_sigmoid_at_zero - ModuleNotFoundError: ...
+FAILED ../tests/test_outputs.py::test_sigmoid_range - ModuleNotFoundError: No...
+FAILED ../tests/test_outputs.py::test_sigmoid_numerical_stability - ModuleNot...
+FAILED ../tests/test_outputs.py::test_sigmoid_output_dtype - ModuleNotFoundEr...
+FAILED ../tests/test_outputs.py::test_sigmoid_preserves_shape - ModuleNotFoun...
+FAILED ../tests/test_outputs.py::test_package_exports - FileNotFoundError: [E...
+============================== 90 failed in 1.25s ==============================

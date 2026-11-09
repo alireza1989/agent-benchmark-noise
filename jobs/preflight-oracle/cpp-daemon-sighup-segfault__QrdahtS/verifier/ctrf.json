@@ -1,0 +1,191 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 19,
+            "passed": 19,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792963992.6893494,
+            "stop": 1792964211.002681
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_1_extreme_stress_1000_rapid_reloads",
+                "status": "passed",
+                "duration": 17.204295591000033,
+                "start": 1792963992.7509272,
+                "stop": 1792964009.9586911,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_2_concurrent_signal_bombardment",
+                "status": "passed",
+                "duration": 6.536827127999999,
+                "start": 1792964009.9605534,
+                "stop": 1792964016.4983494,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_4_memory_safety_500_reloads_with_asan",
+                "status": "passed",
+                "duration": 16.057605964999993,
+                "start": 1792964016.4987686,
+                "stop": 1792964032.5600498,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_5_rapid_reload_during_worker_access",
+                "status": "passed",
+                "duration": 10.739297921999992,
+                "start": 1792964032.5621023,
+                "stop": 1792964043.304456,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_6_thread_safety_verification",
+                "status": "passed",
+                "duration": 8.53037237800001,
+                "start": 1792964043.305828,
+                "stop": 1792964051.8378851,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_7_extended_operation_200_reloads",
+                "status": "passed",
+                "duration": 25.827659386999983,
+                "start": 1792964051.8388772,
+                "stop": 1792964077.6719844,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_8_nested_data_structure_access",
+                "status": "passed",
+                "duration": 9.07930742000002,
+                "start": 1792964077.6779523,
+                "stop": 1792964086.7592576,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_9_burst_signal_handling",
+                "status": "passed",
+                "duration": 5.479570295999963,
+                "start": 1792964086.7599506,
+                "stop": 1792964092.241999,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_10_all_workers_active_during_reload",
+                "status": "passed",
+                "duration": 12.981418963999886,
+                "start": 1792964092.243546,
+                "stop": 1792964105.2269044,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_11_memory_leak_detection_100_reloads",
+                "status": "passed",
+                "duration": 10.751825297000039,
+                "start": 1792964105.2273808,
+                "stop": 1792964115.9811497,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_12_config_value_progression",
+                "status": "passed",
+                "duration": 12.516097378999973,
+                "start": 1792964115.9836895,
+                "stop": 1792964128.501883,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_13_stress_test_300_reloads_minimal_delay",
+                "status": "passed",
+                "duration": 8.977463586999988,
+                "start": 1792964128.5035303,
+                "stop": 1792964137.4841568,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_14_worker_thread_count_verification",
+                "status": "passed",
+                "duration": 4.499162544000001,
+                "start": 1792964137.4863236,
+                "stop": 1792964141.9869168,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_15_no_double_free_or_invalid_free",
+                "status": "passed",
+                "duration": 8.02917575400005,
+                "start": 1792964141.9875698,
+                "stop": 1792964150.018886,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_16_rapid_startup_reload_sequence",
+                "status": "passed",
+                "duration": 7.079094251999948,
+                "start": 1792964150.0200503,
+                "stop": 1792964157.1103163,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_17_config_access_during_reload_window",
+                "status": "passed",
+                "duration": 8.008969711999953,
+                "start": 1792964157.112517,
+                "stop": 1792964165.1238348,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_18_extended_memory_stability",
+                "status": "passed",
+                "duration": 17.643744591999962,
+                "start": 1792964165.124233,
+                "stop": 1792964182.7707326,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_19_worker_output_consistency",
+                "status": "passed",
+                "duration": 14.884605131,
+                "start": 1792964182.7723541,
+                "stop": 1792964197.658883,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_20_comprehensive_memory_safety_final",
+                "status": "passed",
+                "duration": 13.337605547999999,
+                "start": 1792964197.6595373,
+                "stop": 1792964210.9997797,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

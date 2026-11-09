@@ -1,0 +1,215 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 21,
+            "passed": 19,
+            "failed": 2,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792964259.371166,
+            "stop": 1792964259.4705093
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_validator_integrity",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0013850420000380836,
+                "start": 1792964259.4278963,
+                "stop": 1792964259.4374104,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_validator_integrity():\n        \"\"\"Verify that the validator binary has not been modified\"\"\"\n>       verify_validator_integrity()\n\n/tests/test_outputs.py:44: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def verify_validator_integrity():\n        \"\"\"Verify that /app/validator has not been tampered with\"\"\"\n        validator_path = \"/app/validator\"\n    \n        if not os.path.exists(validator_path):\n            pytest.fail(\"Validator binary is missing\")\n    \n        # Calculate current checksum of the validator binary\n        with open(validator_path, \"rb\") as f:\n            current_checksum = hashlib.sha256(f.read()).hexdigest()\n    \n        # Compare against expected checksum embedded in test code\n        # This checksum is calculated during Docker build and cannot be modified by the agent\n        if EXPECTED_VALIDATOR_CHECKSUM == \"PLACEHOLDER_CHECKSUM_WILL_BE_REPLACED_DURING_BUILD\":\n            pytest.fail(\"Validator checksum not properly embedded in test code - build process failed\")\n    \n        if current_checksum != EXPECTED_VALIDATOR_CHECKSUM:\n>           pytest.fail(f\"Validator binary has been tampered with! Expected {EXPECTED_VALIDATOR_CHECKSUM}, got {current_checksum}\")\nE           Failed: Validator binary has been tampered with! Expected 9ce4a624ef77c18411fc7074fde932a7db051d183d0ac61facfe743813b63305, got bc695175cc8070ebf69ef36eda5fba97e6a4dc64d1be4223332735a7c9abb3d0\n\n/tests/test_outputs.py:40: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_validator_with_flag",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.001004333000025781,
+                "start": 1792964259.4375362,
+                "stop": 1792964259.4420192,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_validator_with_flag():\n        \"\"\"Verify that the validator binary grants access when given the flag content\"\"\"\n        # First verify integrity to prevent cheating\n>       verify_validator_integrity()\n\n/tests/test_outputs.py:49: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def verify_validator_integrity():\n        \"\"\"Verify that /app/validator has not been tampered with\"\"\"\n        validator_path = \"/app/validator\"\n    \n        if not os.path.exists(validator_path):\n            pytest.fail(\"Validator binary is missing\")\n    \n        # Calculate current checksum of the validator binary\n        with open(validator_path, \"rb\") as f:\n            current_checksum = hashlib.sha256(f.read()).hexdigest()\n    \n        # Compare against expected checksum embedded in test code\n        # This checksum is calculated during Docker build and cannot be modified by the agent\n        if EXPECTED_VALIDATOR_CHECKSUM == \"PLACEHOLDER_CHECKSUM_WILL_BE_REPLACED_DURING_BUILD\":\n            pytest.fail(\"Validator checksum not properly embedded in test code - build process failed\")\n    \n        if current_checksum != EXPECTED_VALIDATOR_CHECKSUM:\n>           pytest.fail(f\"Validator binary has been tampered with! Expected {EXPECTED_VALIDATOR_CHECKSUM}, got {current_checksum}\")\nE           Failed: Validator binary has been tampered with! Expected 9ce4a624ef77c18411fc7074fde932a7db051d183d0ac61facfe743813b63305, got bc695175cc8070ebf69ef36eda5fba97e6a4dc64d1be4223332735a7c9abb3d0\n\n/tests/test_outputs.py:40: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_flag_exists",
+                "status": "passed",
+                "duration": 0.0005187490000935213,
+                "start": 1792964259.4421358,
+                "stop": 1792964259.442799,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_flag_not_empty",
+                "status": "passed",
+                "duration": 0.0004899579999460002,
+                "start": 1792964259.442889,
+                "stop": 1792964259.443515,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_flag_no_trailing_newline",
+                "status": "passed",
+                "duration": 0.0005154589999847303,
+                "start": 1792964259.443597,
+                "stop": 1792964259.4442523,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_flag_no_leading_whitespace",
+                "status": "passed",
+                "duration": 0.0004763750000051914,
+                "start": 1792964259.4443486,
+                "stop": 1792964259.444964,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_flag_no_trailing_whitespace",
+                "status": "passed",
+                "duration": 0.00046991700003218284,
+                "start": 1792964259.4450455,
+                "stop": 1792964259.4456298,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_flag_alphanumeric_underscore",
+                "status": "passed",
+                "duration": 0.0005104150000079244,
+                "start": 1792964259.4457495,
+                "stop": 1792964259.4464011,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_flag_correct_length",
+                "status": "passed",
+                "duration": 0.0004743759999428221,
+                "start": 1792964259.446492,
+                "stop": 1792964259.4470878,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_rejects_empty",
+                "status": "passed",
+                "duration": 0.0014087090000316493,
+                "start": 1792964259.4471705,
+                "stop": 1792964259.4487314,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_rejects_wrong_length_short",
+                "status": "passed",
+                "duration": 0.001109999999982847,
+                "start": 1792964259.4488177,
+                "stop": 1792964259.4500794,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_rejects_wrong_length_long",
+                "status": "passed",
+                "duration": 0.001070499999968888,
+                "start": 1792964259.4501655,
+                "stop": 1792964259.4513748,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_rejects_similar_but_wrong",
+                "status": "passed",
+                "duration": 0.00593229200001133,
+                "start": 1792964259.451468,
+                "stop": 1792964259.4575434,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_rejects_random_alphanumeric",
+                "status": "passed",
+                "duration": 0.0030129580000561873,
+                "start": 1792964259.457647,
+                "stop": 1792964259.460781,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_executable",
+                "status": "passed",
+                "duration": 0.0003309170000420636,
+                "start": 1792964259.460877,
+                "stop": 1792964259.4613087,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_flag_reproducible",
+                "status": "passed",
+                "duration": 0.002278957999976683,
+                "start": 1792964259.4613862,
+                "stop": 1792964259.463829,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_flag_exact_output_format",
+                "status": "passed",
+                "duration": 0.001054167000063444,
+                "start": 1792964259.4639447,
+                "stop": 1792964259.4651465,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_no_args",
+                "status": "passed",
+                "duration": 0.001174624999976004,
+                "start": 1792964259.465238,
+                "stop": 1792964259.466597,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_flag_is_valid_utf8",
+                "status": "passed",
+                "duration": 0.0004668750000291766,
+                "start": 1792964259.4667132,
+                "stop": 1792964259.4673488,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_case_sensitive",
+                "status": "passed",
+                "duration": 0.0010743339999521595,
+                "start": 1792964259.4674542,
+                "stop": 1792964259.4687147,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_position_sensitive",
+                "status": "passed",
+                "duration": 0.001243416999955116,
+                "start": 1792964259.468825,
+                "stop": 1792964259.4702687,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

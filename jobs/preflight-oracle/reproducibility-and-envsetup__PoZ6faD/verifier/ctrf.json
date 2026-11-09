@@ -1,0 +1,74 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 6,
+            "passed": 6,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792964231.1463382,
+            "stop": 1792964278.9444873
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_repro_script_produces_artifacts",
+                "status": "passed",
+                "duration": 10.060388254000031,
+                "start": 1792964231.1725442,
+                "stop": 1792964241.2348824,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_hashes_json_schema_and_match",
+                "status": "passed",
+                "duration": 9.793155669999976,
+                "start": 1792964241.2412195,
+                "stop": 1792964251.0351439,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_seed_train_script_unchanged",
+                "status": "passed",
+                "duration": 9.093632256000035,
+                "start": 1792964251.035501,
+                "stop": 1792964260.132681,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_seed_project_copied_verbatim",
+                "status": "passed",
+                "duration": 8.590424128999985,
+                "start": 1792964260.135234,
+                "stop": 1792964268.7264845,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_artifacts_match_seed_training_output",
+                "status": "passed",
+                "duration": 10.212604546000023,
+                "start": 1792964268.7266839,
+                "stop": 1792964278.94146,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_repro_script_structure_uses_virtualenvs",
+                "status": "passed",
+                "duration": 0.0014462499999581269,
+                "start": 1792964278.942285,
+                "stop": 1792964278.943937,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

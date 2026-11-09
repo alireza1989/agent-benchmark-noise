@@ -1,0 +1,89 @@
+[?2004hroot@7a3466c11065:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@7a3466c11065:/app# clear
+[?2004l[H[J[3J[?2004hroot@7a3466c11065:/app# ls -la /app && which python3 && file /app/bandit | head -c 300
+[?2004ltotal 20
+drwxr-xr-x 1 root root 4096 Oct 25 21:39 .
+drwxr-xr-x 1 root root 4096 Oct 26 00:33 ..
+-rwxr-xr-x 1 root root   46 Oct 25 21:39 bandit
+-r--r--r-- 1 root root 7944 Oct 25 21:38 bandit.pyc
+/usr/local/bin/python3
+bash: file: command not found
+[?2004hroot@7a3466c11065:/app# cat /app/bandit; echo; echo ---; python3 -c "import sys; print(sys.version)"
+[?2004l#!/bin/bash
+exec python3 /app/bandit.pyc "$@"
+
+---
+3.11.17 (main, Oct 21 2026, 01:13:51) [GCC 14.2.0]
+[?2004hroot@7a3466c11065:/app# cat > /tmp/play.py << 'EOF'
+[?2004l[?2004h> import subprocess, math, re
+[?2004l[?2004h> W = 40
+[?2004l[?2004h> C = 0.5
+[?2004l[?2004h> 
+[?2004l[?2004h> def play(seed):
+[?2004l[?2004h>     p = subprocess.Popen(['/app/bandit', '--seed', str(seed)], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True, bufsize=1)
+[?2004l[?2004h>     hist = [[] for _ in range(10)]
+[?2004l[?2004h>     done = None
+[?2004l[?2004h>     while True:
+[?2004l[?2004h>         line = p.stdout.readline()
+[?2004l[?2004h>         if not line:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         line = line.strip()
+[?2004l[?2004h>         if line.startswith('TURN'):
+[?2004l[?2004h>             ns = [len(h) for h in hist]
+[?2004l[?2004h>             N = sum(ns)
+[?2004l[?2004h>             best = 0
+[?2004l[?2004h>             bs = -1e9
+[?2004l[?2004h>             arm = None
+[?2004l[?2004h>             for i in range(10):
+[?2004l[?2004h>                 if ns[i] == 0:
+[?2004l[?2004h>                     arm = i
+[?2004l[?2004h>                     break
+[?2004l[?2004h>                 s = sum(hist[i]) / ns[i] + C * math.sqrt(2 * math.log(max(N, 2)) / ns[i])
+[?2004l[?2004h>                 if s > bs:
+[?2004l[?2004h>                     bs = s
+[?2004l[?2004h>                     best = i
+[?2004l[?2004h>             if arm is None:
+[?2004l[?2004h>                 arm = best
+[?2004l[?2004h>             p.stdin.write(str(arm) + '\n')
+[?2004l[?2004h>             p.stdin.flush()
+[?2004l[?2004h>             rl = p.stdout.readline().strip()
+[?2004l[?2004h>             r = float(rl.split()[1])
+[?2004l[?2004h>             hist[arm].append(r)
+[?2004l[?2004h>             hist[arm] = hist[arm][-W:]
+[?2004l[?2004h>         elif line.startswith('DONE'):
+[?2004l[?2004h>             done = line
+[?2004l[?2004h>             break
+[?2004l[?2004h>     p.stdin.close()
+[?2004l[?2004h>     p.wait()
+[?2004l[?2004h>     m = re.search(r'total_reward=([-\d.]+) oracle_reward=([-\d.]+) regret=([-\d.]+)', done)
+[?2004l[?2004h>     return float(m.group(1)), float(m.group(3)), done
+[?2004l[?2004h> 
+[?2004l[?2004h> tot = []
+[?2004l[?2004h> reg = []
+[?2004l[?2004h> for s in [42, 43, 44]:
+[?2004l[?2004h>     t, g, d = play(s)
+[?2004l[?2004h>     print(d)
+[?2004l[?2004h>     tot.append(t)
+[?2004l[?2004h>     reg.append(g)
+[?2004l[?2004h> avg_t = sum(tot) / len(tot)
+[?2004l[?2004h> avg_g = sum(reg) / len(reg)
+[?2004l[?2004h> with open('/app/answer.txt', 'w') as f:
+[?2004l[?2004h>     f.write('total_reward=%.3f\nregret=%.3f\n' % (avg_t, avg_g))
+[?2004l[?2004h> print(open('/app/answer.txt').read())
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@7a3466c11065:/app# python3 /tmp/play.py
+[?2004lDONE total_reward=1203.233 oracle_reward=1350.995 regret=147.762
+DONE total_reward=1252.788 oracle_reward=1391.051 regret=138.264
+DONE total_reward=1234.780 oracle_reward=1377.283 regret=142.502
+total_reward=1230.267
+regret=142.843
+
+[?2004hroot@7a3466c11065:/app# cat /app/answer.txt; ls -la /app/.game_log_*.json
+[?2004ltotal_reward=1230.267
+regret=142.843
+-rw-r--r-- 1 root root 90415 Oct 26 00:33 /app/.game_log_42.json
+-rw-r--r-- 1 root root 90441 Oct 26 00:33 /app/.game_log_43.json
+-rw-r--r-- 1 root root 90424 Oct 26 00:33 /app/.game_log_44.json
+[?2004hroot@7a3466c11065:/app# 

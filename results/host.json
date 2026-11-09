@@ -1,0 +1,10 @@
+{
+  "docker_version": "27.5.1",
+  "os": "Docker Desktop",
+  "arch": "aarch64",
+  "cpus": 10,
+  "memory_gb": 7.6532135009765625,
+  "harbor": "0.24.0",
+  "litellm": "1.106.2",
+  "tblite_commit": "f075e463472c7790b85793b392dff1fff20cc0e3"
+}

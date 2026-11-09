@@ -1,0 +1,133 @@
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+Get:4 http://deb.debian.org/debian bookworm/main arm64 Packages [8689 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main arm64 Packages [6936 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main arm64 Packages [355 kB]
+Fetched 9293 kB in 1s (9577 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+curl is already the newest version (7.88.1-10+deb12u15).
+0 upgraded, 0 newly installed, 0 to remove and 49 not upgraded.
+downloading uv 0.7.13 aarch64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Using CPython 3.13.1 interpreter at: /usr/local/bin/python
+Creating virtual environment at: .tbench-testing
+Using Python 3.13.1 environment at: .tbench-testing
+Resolved 21 packages in 452ms
+Downloading pygments (1.2MiB)
+Downloading numpy (13.4MiB)
+Downloading scikit-learn (11.6MiB)
+Downloading scipy (32.4MiB)
+Downloading pandas (14.5MiB)
+ Downloading pygments
+ Downloading numpy
+ Downloading scikit-learn
+ Downloading pandas
+ Downloading scipy
+Prepared 21 packages in 2.10s
+Installed 21 packages in 77ms
+ + certifi==2026.10.23
+ + charset-normalizer==3.5.2
+ + cloudpickle==3.1.2
+ + idna==3.20
+ + iniconfig==2.3.1
+ + joblib==1.6.0
+ + numpy==2.2.1
+ + packaging==26.3
+ + pandas==2.2.3
+ + pluggy==1.7.0
+ + pygments==2.21.0
+ + pytest==8.4.1
+ + python-dateutil==3.0.0
+ + pytz==2026.5
+ + requests==2.32.3
+ + scikit-learn==1.6.0
+ + scipy==1.18.1
+ + six==1.17.0
+ + threadpoolctl==3.7.0
+ + tzdata==2026.5
+ + urllib3==2.8.0
+============================= test session starts ==============================
+platform linux -- Python 3.13.1, pytest-8.4.1, pluggy-1.7.0
+rootdir: /tests
+collected 30 items
+
+../tests/test_outputs.py ..............................                  [100%]
+
+=============================== warnings summary ===============================
+test_outputs.py::test_model_prediction_on_hidden_test
+test_outputs.py::test_api_prediction_matches_model
+test_outputs.py::test_validation_vs_test_metrics
+test_outputs.py::test_predictions_reproducible_from_saved_model
+  /app/.tbench-testing/lib/python3.13/site-packages/sklearn/utils/validation.py:2732: UserWarning: X has feature names, but RandomForestRegressor was fitted without feature names
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+==================================== PASSES ====================================
+_________________________ test_api_prediction_accuracy _________________________
+----------------------------- Captured stdout call -----------------------------
+
+[Validation Metrics]
+  R²: 0.7998 (threshold: > 0.6)
+  MAE: 0.3436 (threshold: < 0.8)
+  RMSE: 0.5256
+  Sample count: 3303
+_____________________ test_model_prediction_on_hidden_test _____________________
+----------------------------- Captured stdout call -----------------------------
+
+[Test Set Metrics (Hidden Ground Truth)]
+  R²: 0.8002 (threshold: > 0.5)
+  MAE: 0.3336 (threshold: < 1.0)
+  RMSE: 0.5117
+  Sample count: 4128
+_______________________ test_validation_vs_test_metrics ________________________
+----------------------------- Captured stdout call -----------------------------
+
+[Validation vs Test Comparison]
+  Val R²: 0.7998 | Test R²: 0.8002 | Diff: 0.0003
+  Val MAE: 0.3436 | Test MAE: 0.3336 | Diff: 0.0100
+  (Threshold: diff < 0.15)
+=========================== short test summary info ============================
+PASSED ../tests/test_outputs.py::test_train_data_file_exists
+PASSED ../tests/test_outputs.py::test_train_data_format
+PASSED ../tests/test_outputs.py::test_test_data_file_exists
+PASSED ../tests/test_outputs.py::test_model_comparison_file
+PASSED ../tests/test_outputs.py::test_best_model_selection
+PASSED ../tests/test_outputs.py::test_best_model_file
+PASSED ../tests/test_outputs.py::test_all_models_saved
+PASSED ../tests/test_outputs.py::test_model_types
+PASSED ../tests/test_outputs.py::test_fastapi_app_file
+PASSED ../tests/test_outputs.py::test_api_predictions_file
+PASSED ../tests/test_outputs.py::test_train_validation_split
+PASSED ../tests/test_outputs.py::test_split_info_exists
+PASSED ../tests/test_outputs.py::test_split_info_schema
+PASSED ../tests/test_outputs.py::test_split_indices_consistency
+PASSED ../tests/test_outputs.py::test_split_indices_reproducible
+PASSED ../tests/test_outputs.py::test_api_metrics_file
+PASSED ../tests/test_outputs.py::test_api_prediction_accuracy
+PASSED ../tests/test_outputs.py::test_no_hardcoded_predictions
+PASSED ../tests/test_outputs.py::test_api_server_running
+PASSED ../tests/test_outputs.py::test_api_model_info_endpoint
+PASSED ../tests/test_outputs.py::test_api_predict_endpoint
+PASSED ../tests/test_outputs.py::test_api_predict_batch_endpoint
+PASSED ../tests/test_outputs.py::test_api_predict_batch_matches_single_predict
+PASSED ../tests/test_outputs.py::test_api_predict_batch_order_preserved
+PASSED ../tests/test_outputs.py::test_model_types_trained
+PASSED ../tests/test_outputs.py::test_output_directory_structure
+PASSED ../tests/test_outputs.py::test_model_prediction_on_hidden_test
+PASSED ../tests/test_outputs.py::test_api_prediction_matches_model
+PASSED ../tests/test_outputs.py::test_validation_vs_test_metrics
+PASSED ../tests/test_outputs.py::test_predictions_reproducible_from_saved_model
+======================== 30 passed, 4 warnings in 7.19s ========================

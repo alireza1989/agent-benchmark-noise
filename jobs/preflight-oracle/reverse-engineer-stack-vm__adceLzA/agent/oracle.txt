@@ -1,0 +1,36 @@
+Step 1: Analyzing binary structure...
+/app/validator: ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, for GNU/Linux 3.7.0, stripped
+4`R4
+T`X`xd
+b8B 
+TaJe8
+h"8B
+ 7@9
+ `t9 
+5`~D
+C`49^B
+T?h"8
+x7xF@
+5xF@
+5xF@
+x7wF@
+5wF@
+@6b&@
+T`2@
+@6b&@
+bja8
+h!8!
+Tc"@
+ hc8
+j#8c
+Td&@
+Rd&@
+*BHM
+*BHM
+*BHM
+6a2@
+T`R@
+Step 2: Running VM reverse engineering analysis...
+Step 3: Writing passphrase to /app/flag.txt
+Step 4: Verifying solution...
+Success: Passphrase verified!

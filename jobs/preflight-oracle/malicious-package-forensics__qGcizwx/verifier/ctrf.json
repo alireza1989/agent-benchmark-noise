@@ -1,0 +1,245 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 25,
+            "passed": 25,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792964037.6486723,
+            "stop": 1792964037.7329714
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::TestTimelineExists::test_timeline_file_exists",
+                "status": "passed",
+                "duration": 0.0006352499999877637,
+                "start": 1792964037.707126,
+                "stop": 1792964037.707969,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineExists::test_timeline_is_not_empty",
+                "status": "passed",
+                "duration": 0.0005976250000401251,
+                "start": 1792964037.708085,
+                "stop": 1792964037.7088284,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineFormat::test_timeline_has_exactly_required_columns",
+                "status": "passed",
+                "duration": 0.0005353749999699176,
+                "start": 1792964037.7089403,
+                "stop": 1792964037.709614,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineFormat::test_timestamp_format_is_iso8601",
+                "status": "passed",
+                "duration": 0.0009328339999683521,
+                "start": 1792964037.709725,
+                "stop": 1792964037.7107892,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineFormat::test_source_values_are_valid",
+                "status": "passed",
+                "duration": 0.0008135420000030535,
+                "start": 1792964037.7108855,
+                "stop": 1792964037.71184,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineFormat::test_event_type_values_are_valid",
+                "status": "passed",
+                "duration": 0.0008081250000202544,
+                "start": 1792964037.7119617,
+                "stop": 1792964037.7129025,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineOrdering::test_timeline_is_sorted_chronologically",
+                "status": "passed",
+                "duration": 0.0033712900000182344,
+                "start": 1792964037.713003,
+                "stop": 1792964037.7165604,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_contains_package_install_events",
+                "status": "passed",
+                "duration": 0.0008586249999780193,
+                "start": 1792964037.716667,
+                "stop": 1792964037.7176569,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_contains_persistence_events",
+                "status": "passed",
+                "duration": 0.000851248999993004,
+                "start": 1792964037.7177503,
+                "stop": 1792964037.7187235,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_contains_exfiltration_events",
+                "status": "passed",
+                "duration": 0.0008867500000064865,
+                "start": 1792964037.7188032,
+                "stop": 1792964037.7198153,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_has_minimum_event_count",
+                "status": "passed",
+                "duration": 0.000799376000003349,
+                "start": 1792964037.7199013,
+                "stop": 1792964037.7208207,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_contains_credential_harvesting",
+                "status": "passed",
+                "duration": 0.000915749999990112,
+                "start": 1792964037.7208986,
+                "stop": 1792964037.7219772,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_documents_malicious_package",
+                "status": "passed",
+                "duration": 0.0008280419999664446,
+                "start": 1792964037.7220604,
+                "stop": 1792964037.7230122,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsExists::test_findings_file_exists",
+                "status": "passed",
+                "duration": 0.00046366500001226996,
+                "start": 1792964037.723088,
+                "stop": 1792964037.7236724,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsExists::test_findings_has_three_lines",
+                "status": "passed",
+                "duration": 0.0004703329999813377,
+                "start": 1792964037.7237556,
+                "stop": 1792964037.7243469,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsFormat::test_findings_has_malicious_package_line",
+                "status": "passed",
+                "duration": 0.00046950099999776285,
+                "start": 1792964037.724422,
+                "stop": 1792964037.725006,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsFormat::test_findings_has_persistence_path_line",
+                "status": "passed",
+                "duration": 0.00045054199998162403,
+                "start": 1792964037.7250812,
+                "stop": 1792964037.7256508,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsFormat::test_findings_has_exfil_destination_line",
+                "status": "passed",
+                "duration": 0.0004420829999958187,
+                "start": 1792964037.7257237,
+                "stop": 1792964037.7262785,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestMaliciousPackageIdentification::test_malicious_package_identified_correctly",
+                "status": "passed",
+                "duration": 0.0005169590000377866,
+                "start": 1792964037.7263567,
+                "stop": 1792964037.7269902,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestPersistenceDetection::test_persistence_path_identified_correctly",
+                "status": "passed",
+                "duration": 0.0005330829999934394,
+                "start": 1792964037.7270696,
+                "stop": 1792964037.727722,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestPersistenceDetection::test_persistence_path_is_absolute",
+                "status": "passed",
+                "duration": 0.0004642090000004373,
+                "start": 1792964037.7277987,
+                "stop": 1792964037.7283843,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestExfiltrationIdentification::test_exfil_destination_identified_correctly",
+                "status": "passed",
+                "duration": 0.0004971669999918049,
+                "start": 1792964037.7284594,
+                "stop": 1792964037.7290823,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestExfiltrationIdentification::test_exfil_ip_format_is_valid",
+                "status": "passed",
+                "duration": 0.0005005409999796484,
+                "start": 1792964037.7291622,
+                "stop": 1792964037.7297773,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestAttackChainCorrelation::test_attack_sequence_is_logical",
+                "status": "passed",
+                "duration": 0.001697000000007165,
+                "start": 1792964037.7298512,
+                "stop": 1792964037.7317076,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestAttackChainCorrelation::test_timeline_shows_multi_source_correlation",
+                "status": "passed",
+                "duration": 0.000823541999977806,
+                "start": 1792964037.7317939,
+                "stop": 1792964037.732736,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

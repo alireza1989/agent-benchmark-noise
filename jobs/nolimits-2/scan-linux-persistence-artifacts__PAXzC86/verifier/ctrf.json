@@ -1,0 +1,164 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 16,
+            "passed": 16,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792977247.6165712,
+            "stop": 1792977251.0303543
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_script_exists",
+                "status": "passed",
+                "duration": 0.0007057910006551538,
+                "start": 1792977247.6773024,
+                "stop": 1792977247.6782248,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_report_exists",
+                "status": "passed",
+                "duration": 1.137544084000183,
+                "start": 1792977247.6783593,
+                "stop": 1792977248.8162322,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_report_valid_json",
+                "status": "passed",
+                "duration": 0.0007086250006977934,
+                "start": 1792977248.8164206,
+                "stop": 1792977248.817304,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_report_structure",
+                "status": "passed",
+                "duration": 0.0005338750015653204,
+                "start": 1792977248.8174114,
+                "stop": 1792977248.8180873,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_summary_fields",
+                "status": "passed",
+                "duration": 0.000524499997482053,
+                "start": 1792977248.8181694,
+                "stop": 1792977248.8188214,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_summary_counts_match",
+                "status": "passed",
+                "duration": 0.0006002489990351023,
+                "start": 1792977248.818974,
+                "stop": 1792977248.819723,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_artifact_structure",
+                "status": "passed",
+                "duration": 0.0005694580013368977,
+                "start": 1792977248.8198178,
+                "stop": 1792977248.8205485,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_sha256_hashes",
+                "status": "passed",
+                "duration": 0.000918624999030726,
+                "start": 1792977248.82064,
+                "stop": 1792977248.8217092,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_artifacts_sorted",
+                "status": "passed",
+                "duration": 0.0004971250000380678,
+                "start": 1792977248.8218007,
+                "stop": 1792977248.822431,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_detects_cron_jobs",
+                "status": "passed",
+                "duration": 0.0004926249985146569,
+                "start": 1792977248.822508,
+                "stop": 1792977248.8231165,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_detects_systemd_units",
+                "status": "passed",
+                "duration": 0.00048145799883059226,
+                "start": 1792977248.8231924,
+                "stop": 1792977248.823788,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_detects_rc_local",
+                "status": "passed",
+                "duration": 0.0005760839994763955,
+                "start": 1792977248.8238814,
+                "stop": 1792977248.8245716,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_detects_ssh_keys",
+                "status": "passed",
+                "duration": 0.0005198339968046639,
+                "start": 1792977248.82465,
+                "stop": 1792977248.825318,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_idempotency",
+                "status": "passed",
+                "duration": 2.2028246680001757,
+                "start": 1792977248.825401,
+                "stop": 1792977251.0284865,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_content_preview_length",
+                "status": "passed",
+                "duration": 0.0005839589994138805,
+                "start": 1792977251.0286314,
+                "stop": 1792977251.029376,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_paths_are_absolute",
+                "status": "passed",
+                "duration": 0.0005342919976101257,
+                "start": 1792977251.0294602,
+                "stop": 1792977251.0301085,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

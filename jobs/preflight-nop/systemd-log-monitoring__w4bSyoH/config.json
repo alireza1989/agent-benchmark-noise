@@ -1,0 +1,12 @@
+{
+    "task": {
+        "path": "tblite/systemd-log-monitoring",
+        "source": "tblite"
+    },
+    "trial_name": "systemd-log-monitoring__w4bSyoH",
+    "trials_dir": "jobs/preflight-nop",
+    "agent": {
+        "name": "nop"
+    },
+    "job_id": "2a0a1ef1-40fa-4a18-ac7d-00b14514c28d"
+}

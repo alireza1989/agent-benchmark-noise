@@ -1,0 +1,338 @@
+[?2004hroot@eef602860458:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@eef602860458:/app# clear
+[?2004l[H[J[3J[?2004hroot@eef602860458:/app# ls -la /app && echo '---' && cat -A /app/input.txt 2>/dev/null | head -100
+[?2004ltotal 8
+drwxr-xr-x 2 root root 4096 Oct 25 21:30 .
+drwxr-xr-x 1 root root 4096 Oct 25 23:58 ..
+---
+[?2004hroot@eef602860458:/app# cat > /app/canonicalize.py << 'EOF'
+[?2004l[?2004h> import re
+[?2004l[?2004h> 
+[?2004l[?2004h> METHODS = {'DELETE', 'GET', 'PATCH', 'POST', 'PUT'}
+[?2004l[?2004h> PERMS = {'ALLOW', 'DENY'}
+[?2004l[?2004h> VAR_RE = re.compile(r'\{[A-Za-z0-9_-]+\}')
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def norm(path):
+[?2004lplan:
+        selected = eligible
+    else:
+        planset = set(plan)
+        eligible_paths = set(e[0] for e in eligible)
+        parents = set()
+        for pp, pm in planset:
+            ps = segs(pp)
+            for cand in eligible_paths:
+                if cand == pp:
+                    continue
+                cs = segs(cand)
+                if len(cs) < len(ps) and ps[:len(cs)] == cs:
+                    parents.add(cand)
+        selected = [e for e in eligible
+                    if (e[0], e[1]) in planset or e[0] in parents]
+
+    seen = set()
+    rows = []
+    for np_, m, r, perm in selected:
+        key = (np_, m, r)
+        if key in seen:
+            continue
+        seen.add(key)
+        rows.append((np_, m, r, perm))
+
+    rows.sort(key=lambda x: (-len(segs(x[0])), x[1], x[2], x[3]))
+    out = ''.join('%s %s %s %s\n' % (varname[np_], m, r, perm)
+                  for np_, m, r, perm in rows)
+    if not out:
+        out = '\n'
+    with open('/app/output.txt', 'w') as f:
+        f.write(out)
+
+
+[?2004h>     return VAR_RE.sub('{var}', path)
+[?2004l[?2004h> 
+[?2004lif __name__ == '__main__':
+    main()
+EOF
+[?2004h> 
+[?2004l[?2004h> def segs(path):
+[?2004l[?2004h>     return [s for s in path.split('/') if s]
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def main():
+[?2004l[?2004h>     try:
+[?2004l[?2004h>         with open('/app/input.txt') as f:
+[?2004l[?2004h>             lines = f.read().splitlines()
+[?2004l[?2004h>     except FileNotFoundError:
+[?2004l[?2004h>         lines = []
+[?2004l[?2004h>     n = len(lines)
+[?2004l[?2004h>     i = 0
+[?2004l[?2004h>     ep_lines = []
+[?2004l[?2004h>     while i < n and lines[i].strip() != '':
+[?2004l[?2004h>         ep_lines.append(lines[i])
+[?2004l[?2004h>         i += 1
+[?2004l[?2004h>     rest = lines[i:]
+[?2004l[?2004h> 
+[?2004l[?2004h>     base = None
+[?2004l[?2004h>     excl = set()
+[?2004l[?2004h>     plan_lines = []
+[?2004l[?2004h>     in_meta = True
+[?2004l[?2004h>     for line in rest:
+[?2004l[?2004h>         parts = line.split()
+[?2004l[?2004h>         if not parts:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         if in_meta and parts[0].lower() in ('base', 'exclude'):
+[?2004l[?2004h>             if parts[0].lower() == 'base':
+[?2004l[?2004h>                 if len(parts) >= 2 and base is None:
+[?2004l[?2004h>                     base = parts[1]
+[?2004l[?2004h>             else:
+[?2004l[?2004h>                 excl.update(parts[1:])
+[?2004l[?2004h>         else:
+[?2004l[?2004h>             in_meta = False
+[?2004l[?2004h>             plan_lines.append(line)
+[?2004l[?2004h> 
+[?2004l[?2004h>     eps = []
+[?2004l[?2004h>     for line in ep_lines:
+[?2004l[?2004h>         parts = line.split()
+[?2004l[?2004h>         if len(parts) != 4:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         path, method, role, perm = parts
+[?2004l[?2004h>         method = method.upper()
+[?2004l[?2004h>         perm = perm.upper()
+[?2004l[?2004h>         if method not in METHODS or perm not in PERMS:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         eps.append((path, method, role, perm))
+[?2004l[?2004h> 
+[?2004l[?2004h>     plan = []
+[?2004l[?2004h>     for line in plan_lines:
+[?2004l[?2004h>         parts = line.split()
+[?2004l[?2004h>         if len(parts) != 2:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         path, method = parts[0], parts[1].upper()
+[?2004l[?2004h>         if method not in METHODS:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         plan.append((norm(path), method))
+[?2004l[?2004h> 
+[?2004l[?2004h>     varname = {}
+[?2004l[?2004h>     for path, _, _, _ in eps:
+[?2004l[?2004h>         varname.setdefault(norm(path), path)
+[?2004l[?2004h> 
+[?2004l[?2004h>     eligible = []
+[?2004l[?2004h>     for path, method, role, perm in eps:
+[?2004l[?2004h>         if base is not None and not path.startswith(base):
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         if role in excl:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         eligible.append((norm(path), method, role, perm))
+[?2004l[?2004h> 
+[?2004l[?2004h>     if not plan:
+[?2004l[?2004h>         selected = eligible
+[?2004l[?2004h>     else:
+[?2004l[?2004h>         planset = set(plan)
+[?2004l[?2004h>         eligible_paths = set(e[0] for e in eligible)
+[?2004l[?2004h>         parents = set()
+[?2004l[?2004h>         for pp, pm in planset:
+[?2004l[?2004h>             ps = segs(pp)
+[?2004l[?2004h>             for cand in eligible_paths:
+[?2004l[?2004h>                 if cand == pp:
+[?2004l[?2004h>                     continue
+[?2004l[?2004h>                 cs = segs(cand)
+[?2004l[?2004h>                 if len(cs) < len(ps) and ps[:len(cs)] == cs:
+[?2004l[?2004h>                     parents.add(cand)
+[?2004l[?2004h>         selected = [e for e in eligible
+[?2004l[?2004h>                     if (e[0], e[1]) in planset or e[0] in parents]
+[?2004l[?2004h> 
+[?2004l[?2004h>     seen = set()
+[?2004l[?2004h>     rows = []
+[?2004l[?2004h>     for np_, m, r, perm in selected:
+[?2004l[?2004h>         key = (np_, m, r)
+[?2004l[?2004h>         if key in seen:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         seen.add(key)
+[?2004l[?2004h>         rows.append((np_, m, r, perm))
+[?2004l[?2004h> 
+[?2004l[?2004h>     rows.sort(key=lambda x: (-len(segs(x[0])), x[1], x[2], x[3]))
+[?2004l[?2004h>     out = ''.join('%s %s %s %s\n' % (varname[np_], m, r, perm)
+[?2004l[?2004h>                   for np_, m, r, perm in rows)
+[?2004l[?2004h>     if not out:
+[?2004l[?2004h>         out = '\n'
+[?2004l[?2004h>     with open('/app/output.txt', 'w') as f:
+[?2004l[?2004h>         f.write(out)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h>     main()
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@eef602860458:/app# python3 /app/canonicalize.py && cat -A /app/output.txt
+[?2004l$
+[?2004hroot@eef602860458:/app# cat > /app/canonicalize.py << 'PYEOF'
+[?2004l[?2004h> import re
+[?2004lm))
+
+    if not plan:
+        selected = eligible
+    else:
+        planset = set(plan)
+        eligible_paths = set(e[0] for e in eligible)
+        parents = set()
+        for pp, _ in planset:
+            ps = segs(pp)
+            for cand in eligible_paths:
+                if cand == pp:
+                    continue
+                cs = segs(cand)
+                if len(cs) < len(ps) and ps[:len(cs)] == cs:
+                    parents.add(cand)
+        selected = [e for e in eligible
+                    if (e[0], e[1]) in planset or e[0] in parents]
+
+    seen = set()
+    rows = []
+    for np_, m, r, perm in selected:
+        key = (np_, m, r)
+        if key in seen:
+            continue
+        seen.add(key)
+        rows.append((np_, m, r, perm))
+
+    rows.sort(key=lambda x: (-len(segs(x[0])), x[1], x[2], x[3]))
+    out = ''.join('%s %s %s %s\n' % (varname[np_], m, r, perm)
+                  for np_, m, r, perm in rows)
+    if not out:
+        out = '\n'
+    with open('/app/output.txt', 'w') as f:
+        f.write(out)
+
+
+if __name__ == '__main__':
+    main()
+PYEOF
+[?2004h> 
+[?2004l[?2004h> METHODS = {'DELETE', 'GET', 'PATCH', 'POST', 'PUT'}
+[?2004l[?2004h> PERMS = {'ALLOW', 'DENY'}
+[?2004l[?2004h> VAR_RE = re.compile(r'\{[A-Za-z0-9_-]+\}')
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def norm(path):
+[?2004l[?2004h>     return VAR_RE.sub('{var}', path)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def segs(path):
+[?2004l[?2004h>     return [s for s in path.split('/') if s]
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def main():
+[?2004l[?2004h>     try:
+[?2004l[?2004h>         with open('/app/input.txt') as f:
+[?2004l[?2004h>             lines = f.read().splitlines()
+[?2004l[?2004h>     except FileNotFoundError:
+[?2004l[?2004h>         lines = []
+[?2004l[?2004h>     i = 0
+[?2004l[?2004h>     ep_lines = []
+[?2004l[?2004h>     while i < len(lines) and lines[i].strip() != '':
+[?2004l[?2004h>         ep_lines.append(lines[i])
+[?2004l[?2004h>         i += 1
+[?2004l[?2004h>     rest = lines[i:]
+[?2004l[?2004h> 
+[?2004l[?2004h>     base = None
+[?2004l[?2004h>     excl = set()
+[?2004l[?2004h>     plan_lines = []
+[?2004l[?2004h>     in_meta = True
+[?2004l[?2004h>     for line in rest:
+[?2004l[?2004h>         parts = line.split()
+[?2004l[?2004h>         if not parts:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         if in_meta and parts[0].lower() in ('base', 'exclude'):
+[?2004l[?2004h>             if parts[0].lower() == 'base':
+[?2004l[?2004h>                 if len(parts) >= 2 and base is None:
+[?2004l[?2004h>                     base = parts[1]
+[?2004l[?2004h>             else:
+[?2004l[?2004h>                 excl.update(parts[1:])
+[?2004l[?2004h>         else:
+[?2004l[?2004h>             in_meta = False
+[?2004l[?2004h>             plan_lines.append(line)
+[?2004l[?2004h> 
+[?2004l[?2004h>     eps = []
+[?2004l[?2004h>     for line in ep_lines:
+[?2004l[?2004h>         parts = line.split()
+[?2004l[?2004h>         if len(parts) != 4:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         path, method, role, perm = parts
+[?2004l[?2004h>         method = method.upper()
+[?2004l[?2004h>         perm = perm.upper()
+[?2004l[?2004h>         if not path or method not in METHODS or perm not in PERMS or not role:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         eps.append((path, method, role, perm))
+[?2004l[?2004h> 
+[?2004l[?2004h>     plan = []
+[?2004l[?2004h>     for line in plan_lines:
+[?2004l[?2004h>         parts = line.split()
+[?2004l[?2004h>         if len(parts) != 2:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         path, method = parts[0], parts[1].upper()
+[?2004l[?2004h>         if method not in METHODS:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         plan.append((norm(path), method))
+[?2004l[?2004h> 
+[?2004l[?2004h>     varname = {}
+[?2004l[?2004h>     for path, _, _, _ in eps:
+[?2004l[?2004h>         varname.setdefault(norm(path), path)
+[?2004l[?2004h> 
+[?2004l[?2004h>     eligible = []
+[?2004l[?2004h>     for path, method, role, perm in eps:
+[?2004l[?2004h>         if base is not None and not path.startswith(base):
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         if role in excl:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         eligible.append((norm(path), method, role, perm))
+[?2004l[?2004h> 
+[?2004l[?2004h>     if not plan:
+[?2004l[?2004h>         selected = eligible
+[?2004l[?2004h>     else:
+[?2004l[?2004h>         planset = set(plan)
+[?2004l[?2004h>         eligible_paths = set(e[0] for e in eligible)
+[?2004l[?2004h>         parents = set()
+[?2004l[?2004h>         for pp, _ in planset:
+[?2004l[?2004h>             ps = segs(pp)
+[?2004l[?2004h>             for cand in eligible_paths:
+[?2004l[?2004h>                 if cand == pp:
+[?2004l[?2004h>                     continue
+[?2004l[?2004h>                 cs = segs(cand)
+[?2004l[?2004h>                 if len(cs) < len(ps) and ps[:len(cs)] == cs:
+[?2004l[?2004h>                     parents.add(cand)
+[?2004l[?2004h>         selected = [e for e in eligible
+[?2004l[?2004h>                     if (e[0], e[1]) in planset or e[0] in parents]
+[?2004l[?2004h> 
+[?2004l[?2004h>     seen = set()
+[?2004l[?2004h>     rows = []
+[?2004l[?2004h>     for np_, m, r, perm in selected:
+[?2004l[?2004h>         key = (np_, m, r)
+[?2004l[?2004h>         if key in seen:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         seen.add(key)
+[?2004l[?2004h>         rows.append((np_, m, r, perm))
+[?2004l[?2004h> 
+[?2004l[?2004h>     rows.sort(key=lambda x: (-len(segs(x[0])), x[1], x[2], x[3]))
+[?2004l[?2004h>     out = ''.join('%s %s %s %s\n' % (varname[np_], m, r, perm)
+[?2004l[?2004h>                   for np_, m, r, perm in rows)
+[?2004l[?2004h>     if not out:
+[?2004l[?2004h>         out = '\n'
+[?2004l[?2004h>     with open('/app/output.txt', 'w') as f:
+[?2004l[?2004h>         f.write(out)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h>     main()
+[?2004l[?2004h> PYEOF
+[?2004l[?2004hroot@eef602860458:/app# printf '/api/users/{id} GET alice ALLOW\n/api/users/{uid}/posts GET alice ALLOW\n/api/users/{id} get bob deny\n/api/admin GET root ALLOW\n\nbase /api\nexclude root\n\n/api/users/{uid}/posts get\n' > /app/input.txt && python3 /app/canonicalize.py && cat -A /app/output.txt
+[?2004l/api/users/{uid}/posts GET alice ALLOW$
+/api/users/{id} GET alice ALLOW$
+/api/users/{id} GET bob DENY$
+[?2004hroot@eef602860458:/app# rm -f /app/input.txt /app/output.txt
+[?2004l[?2004hroot@eef602860458:/app# python3 -m py_compile /app/canonicalize.py && echo COMPILED_OK && wc -l /app/canonicalize.py && ls /app
+[?2004lCOMPILED_OK
+117 /app/canonicalize.py
+__pycache__  canonicalize.py
+[?2004hroot@eef602860458:/app# 

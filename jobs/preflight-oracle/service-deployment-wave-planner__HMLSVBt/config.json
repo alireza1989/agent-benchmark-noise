@@ -1,0 +1,9 @@
+{
+    "task": {
+        "path": "tblite/service-deployment-wave-planner",
+        "source": "tblite"
+    },
+    "trial_name": "service-deployment-wave-planner__HMLSVBt",
+    "trials_dir": "jobs/preflight-oracle",
+    "job_id": "273c4c3e-9a12-45ff-80f8-65b9f8c5f4aa"
+}

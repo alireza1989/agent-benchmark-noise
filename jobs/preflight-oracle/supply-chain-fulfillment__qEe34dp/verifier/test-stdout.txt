@@ -1,0 +1,46 @@
+downloading uv 0.9.5 aarch64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 6 packages in 8ms
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-8.4.1, pluggy-1.7.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 26 items
+
+../tests/test_outputs.py ..........................                      [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_outputs.py::test_input_data_integrity
+PASSED ../tests/test_outputs.py::test_output_file_exists
+PASSED ../tests/test_outputs.py::test_schema_validation
+PASSED ../tests/test_outputs.py::test_destination_id_match
+PASSED ../tests/test_outputs.py::test_output_sorted
+PASSED ../tests/test_outputs.py::test_determinism_requirement
+PASSED ../tests/test_outputs.py::test_timeout_requirement
+PASSED ../tests/test_outputs.py::test_constraint_1_completeness
+PASSED ../tests/test_outputs.py::test_constraint_2_volume_capacity
+PASSED ../tests/test_outputs.py::test_constraint_3_weight_capacity
+PASSED ../tests/test_outputs.py::test_constraint_4_warehouse_capabilities
+PASSED ../tests/test_outputs.py::test_constraint_5_route_validity
+PASSED ../tests/test_outputs.py::test_constraint_6_delivery_deadlines
+PASSED ../tests/test_outputs.py::test_constraint_7_precedence_constraints
+PASSED ../tests/test_outputs.py::test_constraint_8_exclusivity_constraints
+PASSED ../tests/test_outputs.py::test_constraint_9_destination_time_windows
+PASSED ../tests/test_outputs.py::test_constraint_10_minimum_batch_sizes
+PASSED ../tests/test_outputs.py::test_constraint_11_maximum_route_hops
+PASSED ../tests/test_outputs.py::test_constraint_12_regional_quotas
+PASSED ../tests/test_outputs.py::test_constraint_13_load_consistency
+PASSED ../tests/test_outputs.py::test_constraint_14_route_capacity_limits
+PASSED ../tests/test_outputs.py::test_constraint_15_warehouse_availability
+PASSED ../tests/test_outputs.py::test_performance_thresholds_documented
+PASSED ../tests/test_outputs.py::test_performance_thresholds_total
+PASSED ../tests/test_outputs.py::test_not_baseline_solution
+PASSED ../tests/test_outputs.py::test_not_random_solution
+============================== 26 passed in 0.34s ==============================

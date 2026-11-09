@@ -1,0 +1,60 @@
+{
+    "id": "fad6a305-e9a5-4a05-afe9-5090c8675a59",
+    "started_at": "2026-10-25T21:00:29.377137",
+    "updated_at": "2026-10-25T21:17:56.807109",
+    "finished_at": "2026-10-25T21:17:56.807109",
+    "n_total_trials": 20,
+    "stats": {
+        "n_completed_trials": 20,
+        "n_errored_trials": 0,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "terminus-2__claude-haiku-5-5__tblite": {
+                "n_trials": 20,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.9
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "api-endpoint-permission-canonica__mvi72yV",
+                            "bandit-delayed-feedback__MyS5ay9",
+                            "build-system-task-ordering__PivTfQa",
+                            "california-housing-api__uMaYveK",
+                            "container-registry-optimization__zAcaYzV",
+                            "convolutional-layers__ugukHEU",
+                            "csv-json-jsonl-merger__fPZnmM8",
+                            "db-migration-local-storage__tktsR8W",
+                            "industrial-kiln-controller__8ea5z4f",
+                            "maven-slf4j-conflict__tdPsLvF",
+                            "neural-architecture-search-final__JqKhsVj",
+                            "reproducibility-and-envsetup__WUyxwnv",
+                            "rsa-jwt-token-api-redis-blacklis__gwR4XCZ",
+                            "scan-linux-persistence-artifacts__PAXzC86",
+                            "service-deployment-wave-planner__dhdGU6u",
+                            "sign-vector-game__mMTpnwQ",
+                            "submission_a63937a5_20251224_152__zfpLToZ",
+                            "task-xxe-exploit__37rGJ4C"
+                        ],
+                        "0.0": [
+                            "malicious-package-forensics__9GLMSFH",
+                            "systemd-log-monitoring__VWAD656"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        },
+        "n_input_tokens": 1523799,
+        "n_cache_tokens": 1209202,
+        "n_output_tokens": 255820,
+        "cost_usd": 0.179313445
+    }
+}

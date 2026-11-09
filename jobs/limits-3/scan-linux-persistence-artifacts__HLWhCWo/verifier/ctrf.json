@@ -1,0 +1,164 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 16,
+            "passed": 16,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792978423.0263278,
+            "stop": 1792978424.7649343
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_script_exists",
+                "status": "passed",
+                "duration": 0.000598125998294563,
+                "start": 1792978423.0814576,
+                "stop": 1792978423.0822687,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_report_exists",
+                "status": "passed",
+                "duration": 0.591045999997732,
+                "start": 1792978423.0823686,
+                "stop": 1792978423.673642,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_report_valid_json",
+                "status": "passed",
+                "duration": 0.0006023340010870015,
+                "start": 1792978423.6737952,
+                "stop": 1792978423.6745439,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_report_structure",
+                "status": "passed",
+                "duration": 0.0005088329999125563,
+                "start": 1792978423.6746416,
+                "stop": 1792978423.6752858,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_summary_fields",
+                "status": "passed",
+                "duration": 0.0004876239981967956,
+                "start": 1792978423.6753788,
+                "stop": 1792978423.675991,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_summary_counts_match",
+                "status": "passed",
+                "duration": 0.0004439590011315886,
+                "start": 1792978423.6760747,
+                "stop": 1792978423.676637,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_artifact_structure",
+                "status": "passed",
+                "duration": 0.000460666999060777,
+                "start": 1792978423.676721,
+                "stop": 1792978423.6772933,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_sha256_hashes",
+                "status": "passed",
+                "duration": 0.0008248340018326417,
+                "start": 1792978423.677383,
+                "stop": 1792978423.6783388,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_artifacts_sorted",
+                "status": "passed",
+                "duration": 0.0004975420015398413,
+                "start": 1792978423.6784153,
+                "stop": 1792978423.6790385,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_detects_cron_jobs",
+                "status": "passed",
+                "duration": 0.0004914580022159498,
+                "start": 1792978423.6791136,
+                "stop": 1792978423.679731,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_detects_systemd_units",
+                "status": "passed",
+                "duration": 0.0005325419988366775,
+                "start": 1792978423.6798248,
+                "stop": 1792978423.6805031,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_detects_rc_local",
+                "status": "passed",
+                "duration": 0.0005716250016121194,
+                "start": 1792978423.6805804,
+                "stop": 1792978423.6812842,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_detects_ssh_keys",
+                "status": "passed",
+                "duration": 0.0006277920019783778,
+                "start": 1792978423.6813602,
+                "stop": 1792978423.6822026,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_idempotency",
+                "status": "passed",
+                "duration": 1.080610417000571,
+                "start": 1792978423.6823637,
+                "stop": 1792978424.763218,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_content_preview_length",
+                "status": "passed",
+                "duration": 0.0005438329972093925,
+                "start": 1792978424.7633808,
+                "stop": 1792978424.7640643,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_paths_are_absolute",
+                "status": "passed",
+                "duration": 0.0004230410013406072,
+                "start": 1792978424.7641647,
+                "stop": 1792978424.7646976,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

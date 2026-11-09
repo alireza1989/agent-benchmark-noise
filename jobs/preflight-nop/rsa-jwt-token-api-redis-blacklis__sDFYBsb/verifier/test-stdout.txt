@@ -1,0 +1,433 @@
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+Get:4 http://deb.debian.org/debian bookworm/main arm64 Packages [8689 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main arm64 Packages [6936 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main arm64 Packages [355 kB]
+Fetched 9293 kB in 1s (8533 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+curl is already the newest version (7.88.1-10+deb12u15).
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+downloading uv 0.9.5 aarch64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Downloading pygments (1.2MiB)
+Downloading cryptography (3.6MiB)
+ Downloading cryptography
+ Downloading pygments
+Installed 16 packages in 12ms
+============================= test session starts ==============================
+platform linux -- Python 3.13.17, pytest-8.4.1, pluggy-1.7.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 15 items
+
+../tests/test_outputs.py FFFFFFFFFFFFFFF                                 [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_rsa_keys_exist ______________________________
+
+    def test_rsa_keys_exist():
+        """Test that RSA key pair exists in /app/keys directory."""
+        private_key_path = Path("/app/keys/private.pem")
+        public_key_path = Path("/app/keys/public.pem")
+    
+>       assert private_key_path.exists(), "Private key file does not exist"
+E       AssertionError: Private key file does not exist
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/app/keys/private.pem').exists
+
+/tests/test_outputs.py:97: AssertionError
+____________________________ test_api_server_starts ____________________________
+
+    def test_api_server_starts():
+        """Test that API server can start and respond."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+_____________________________ test_login_endpoint ______________________________
+
+    def test_login_endpoint():
+        """Test that login endpoint returns access and refresh tokens."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+_____________________________ test_tokens_have_jti _____________________________
+
+    def test_tokens_have_jti():
+        """Test that tokens contain unique JTI claims."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:158: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+__________________________ test_tokens_are_rsa_signed __________________________
+
+    def test_tokens_are_rsa_signed():
+        """Test that tokens are signed with RSA algorithm."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:193: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+____________________________ test_validate_endpoint ____________________________
+
+    def test_validate_endpoint():
+        """Test that validate endpoint checks token validity."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:219: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+_____________________________ test_revoke_endpoint _____________________________
+
+    def test_revoke_endpoint():
+        """Test that revoke endpoint adds token to Redis blacklist."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:263: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+_________________________ test_revoked_token_rejected __________________________
+
+    def test_revoked_token_rejected():
+        """Test that revoked tokens are rejected by validate endpoint."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:316: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+____________________________ test_refresh_endpoint _____________________________
+
+    def test_refresh_endpoint():
+        """Test that refresh endpoint returns new access token."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:361: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+_______________________________ test_cli_acquire _______________________________
+
+    def test_cli_acquire():
+        """Test that CLI acquire command works."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:397: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+______________________________ test_cli_validate _______________________________
+
+    def test_cli_validate():
+        """Test that CLI validate command works."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:449: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+_______________________________ test_cli_revoke ________________________________
+
+    def test_cli_revoke():
+        """Test that CLI revoke command works."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:485: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+________________________________ test_cli_retry ________________________________
+
+    def test_cli_retry():
+        """Test that CLI retry command refreshes tokens."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:520: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+_________________________ test_expired_token_rejected __________________________
+
+    def test_expired_token_rejected():
+        """Test that expired tokens are rejected."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:572: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+__________________________ test_logs_directory_exists __________________________
+
+    def test_logs_directory_exists():
+        """Test that logs directory exists and log file is created."""
+        ensure_dependencies()
+>       port, api_process = start_api_server_if_needed()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tests/test_outputs.py:610: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def start_api_server_if_needed():
+        """Start API server if not already running, return the port."""
+        port = get_api_port()
+        if port is not None:
+            return port, None
+    
+        api_file = Path('/app/api.py')
+        if not api_file.exists():
+            api_file = Path('/app/main.py')
+    
+        if not api_file.exists():
+>           raise AssertionError("API server file not found at /app/api.py or /app/main.py")
+E           AssertionError: API server file not found at /app/api.py or /app/main.py
+
+/tests/test_outputs.py:60: AssertionError
+=========================== short test summary info ============================
+FAILED ../tests/test_outputs.py::test_rsa_keys_exist - AssertionError: Privat...
+FAILED ../tests/test_outputs.py::test_api_server_starts - AssertionError: API...
+FAILED ../tests/test_outputs.py::test_login_endpoint - AssertionError: API se...
+FAILED ../tests/test_outputs.py::test_tokens_have_jti - AssertionError: API s...
+FAILED ../tests/test_outputs.py::test_tokens_are_rsa_signed - AssertionError:...
+FAILED ../tests/test_outputs.py::test_validate_endpoint - AssertionError: API...
+FAILED ../tests/test_outputs.py::test_revoke_endpoint - AssertionError: API s...
+FAILED ../tests/test_outputs.py::test_revoked_token_rejected - AssertionError...
+FAILED ../tests/test_outputs.py::test_refresh_endpoint - AssertionError: API ...
+FAILED ../tests/test_outputs.py::test_cli_acquire - AssertionError: API serve...
+FAILED ../tests/test_outputs.py::test_cli_validate - AssertionError: API serv...
+FAILED ../tests/test_outputs.py::test_cli_revoke - AssertionError: API server...
+FAILED ../tests/test_outputs.py::test_cli_retry - AssertionError: API server ...
+FAILED ../tests/test_outputs.py::test_expired_token_rejected - AssertionError...
+FAILED ../tests/test_outputs.py::test_logs_directory_exists - AssertionError:...
+============================== 15 failed in 0.41s ==============================

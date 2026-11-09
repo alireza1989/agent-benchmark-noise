@@ -1,0 +1,145 @@
+[?2004hroot@ee4a33fb5199:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@ee4a33fb5199:/app# clear
+[?2004l[H[J[3J[?2004hroot@ee4a33fb5199:/app# ls -la /app
+[?2004ltotal 8
+drwxr-xr-x 2 root root 4096 Oct 25 21:30 .
+drwxr-xr-x 1 root root 4096 Oct 26 01:18 ..
+[?2004hroot@ee4a33fb5199:/app# cat -A /app/input.txt 2>/dev/null | head -n 100
+[?2004l[?2004hroot@ee4a33fb5199:/app# cat > /app/canonicalize.py << 'EOF'
+[?2004l[?2004h> import re
+[?2004l[?2004h> 
+[?2004l[?2004h> METHODS = {'GET', 'POST', 'PUT', 'DELETE', 'PATCH'}
+[?2004l[?2004h> PERMS = {'ALLOW', 'DENY'}
+[?2004l[?2004h> NL = chr(10)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def norm(p):
+[?2004l[?2004h>     return re.sub('[{][A-Za-z0-9_-]+[}]', '{var}', p)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def segs(p):
+[?2004l[?2004h>     return len([s for s in p.split('/') if s])
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def is_prefix(a, b):
+[?2004l[?2004h>     if a == b:
+[?2004l[?2004h>         return True
+[?2004l[?2004h>     return b.startswith(a.rstrip('/') + '/')
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def main():
+[?2004l[?2004h>     try:
+[?2004l[?2004h>         with open('/app/input.txt', 'r') as fh:
+[?2004l[?2004h>             raw = fh.read().splitlines()
+[?2004l[?2004h>     except OSError:
+[?2004l[?2004h>         raw = []
+[?2004l[?2004h> 
+[?2004l[?2004h>     parts = []
+[?2004l[?2004h>     cur = []
+[?2004l[?2004h>     for line in raw:
+[?2004l[?2004h>         if line.strip() == '':
+[?2004l[?2004h>             parts.append(cur)
+[?2004l[?2004h>             cur = []
+[?2004l[?2004h>         else:
+[?2004l[?2004h>             cur.append(line)
+[?2004l[?2004h>     parts.append(cur)
+[?2004l[?2004h> 
+[?2004l[?2004h>     ep_lines = parts[0] if len(parts) > 0 else []
+[?2004l[?2004h>     be_lines = parts[1] if len(parts) > 1 else []
+[?2004l[?2004h>     plan_lines = [l for grp in parts[2:] for l in grp]
+[?2004l[?2004h> 
+[?2004l[?2004h>     endpoints = []
+[?2004l[?2004h>     for line in ep_lines:
+[?2004l[?2004h>         f = line.split()
+[?2004l[?2004h>         if len(f) != 4:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         path, m, role, perm = f
+[?2004l[?2004h>         m = m.upper()
+[?2004l[?2004h>         perm = perm.upper()
+[?2004l[?2004h>         if m not in METHODS or perm not in PERMS:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         endpoints.append((path, m, role, perm))
+[?2004l[?2004h> 
+[?2004l[?2004h>     base = None
+[?2004l[?2004h>     excl = set()
+[?2004l[?2004h>     for line in be_lines:
+[?2004l[?2004h>         f = line.split()
+[?2004l[?2004h>         if not f:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         kw = f[0].lower()
+[?2004l[?2004h>         if kw == 'base' and len(f) >= 2:
+[?2004l[?2004h>             base = f[1]
+[?2004l[?2004h>         elif kw == 'exclude':
+[?2004l[?2004h>             excl.update(f[1:])
+[?2004l[?2004h> 
+[?2004l[?2004h>     plan = set()
+[?2004l[?2004h>     for line in plan_lines:
+[?2004l[?2004h>         f = line.split()
+[?2004l[?2004h>         if len(f) != 2:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         p, m = f[0], f[1].upper()
+[?2004l[?2004h>         if m not in METHODS:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         plan.add((norm(p), m))
+[?2004l[?2004h> 
+[?2004l[?2004h>     if base is not None:
+[?2004l[?2004h>         endpoints = [e for e in endpoints if e[0].startswith(base)]
+[?2004l[?2004h> 
+[?2004l[?2004h>     canon = {}
+[?2004l[?2004h>     for path, m, role, perm in endpoints:
+[?2004l[?2004h>         n = norm(path)
+[?2004l[?2004h>         if n not in canon:
+[?2004l[?2004h>             canon[n] = path
+[?2004l[?2004h> 
+[?2004l[?2004h>     uniq = []
+[?2004l[?2004h>     seen = set()
+[?2004l[?2004h>     for path, m, role, perm in endpoints:
+[?2004l[?2004h>         key = (norm(path), m, role)
+[?2004l[?2004h>         if key in seen:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         seen.add(key)
+[?2004l[?2004h>         uniq.append((norm(path), m, role, perm))
+[?2004l[?2004h> 
+[?2004l[?2004h>     if not plan:
+[?2004l[?2004h>         chosen = [u for u in uniq if u[2] not in excl]
+[?2004l[?2004h>     else:
+[?2004l[?2004h>         chosen_set = set()
+[?2004l[?2004h>         plan_norms = set(u[0] for u in uniq if (u[0], u[1]) in plan)
+[?2004l[?2004h>         for u in uniq:
+[?2004l[?2004h>             if (u[0], u[1]) in plan and u[2] not in excl:
+[?2004l[?2004h>                 chosen_set.add(u)
+[?2004l[?2004h>         all_norms = set(u[0] for u in uniq)
+[?2004l[?2004h>         for pn in all_norms:
+[?2004l[?2004h>             if not any(pn != n and is_prefix(pn, n) for n in plan_norms):
+[?2004l[?2004h>                 continue
+[?2004l[?2004h>             group = [u for u in uniq if u[0] == pn]
+[?2004l[?2004h>             nonex = [u for u in group if u[2] not in excl]
+[?2004l[?2004h>             chosen_set.update(nonex if nonex else group)
+[?2004l[?2004h>         chosen = list(chosen_set)
+[?2004l[?2004h> 
+[?2004l[?2004h>     chosen.sort(key=lambda u: (-segs(u[0]), u[1], u[2], u[3]))
+[?2004l[?2004h>     lines = [canon[u[0]] + ' ' + u[1] + ' ' + u[2] + ' ' + u[3] for u in chosen]
+[?2004l[?2004h>     out = ''.join(l + NL for l in lines) if lines else NL
+[?2004l[?2004h>     with open('/app/output.txt', 'w') as fh:
+[?2004l[?2004h>         fh.write(out)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h>     main()
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@ee4a33fb5199:/app# python3 -m py_compile /app/canonicalize.py && echo COMPILE_OK
+[?2004lCOMPILE_OK
+[?2004hroot@ee4a33fb5199:/app# ls -la /app
+[?2004ltotal 16
+drwxr-xr-x 1 root root 4096 Oct 26 01:18 .
+drwxr-xr-x 1 root root 4096 Oct 26 01:18 ..
+drwxr-xr-x 2 root root 4096 Oct 26 01:18 __pycache__
+-rw-r--r-- 1 root root 3084 Oct 26 01:18 canonicalize.py
+[?2004hroot@ee4a33fb5199:/app# printf 'https://x/api/users/{id} GET alice ALLOW\n/api/users/{uid} get alice deny\n/api/users GET admin allow\n/api/users GET bob ALLOW\n/api/users/{id}/orders POST bob allow\n/api/users/{id}/orders POST admin ALLOW\n\nbase /api\nexclude bob\n\n/api/users/{id}/orders post\n' > /app/input.txt && python3 /app/canonicalize.py && cat -A /app/output.txt
+[?2004l/api/users/{id}/orders POST admin ALLOW$
+/api/users/{uid} GET alice DENY$
+/api/users GET admin ALLOW$
+[?2004hroot@ee4a33fb5199:/app# rm -rf /app/__pycache__ /app/input.txt /app/output.txt
+[?2004l[?2004hroot@ee4a33fb5199:/app# 

@@ -1,0 +1,248 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 25,
+            "passed": 24,
+            "failed": 1,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792976845.1625733,
+            "stop": 1792976845.2631228
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::TestTimelineExists::test_timeline_file_exists",
+                "status": "passed",
+                "duration": 0.0006069179999030894,
+                "start": 1792976845.2268455,
+                "stop": 1792976845.227668,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineExists::test_timeline_is_not_empty",
+                "status": "passed",
+                "duration": 0.000510081999891554,
+                "start": 1792976845.227776,
+                "stop": 1792976845.2284245,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineFormat::test_timeline_has_exactly_required_columns",
+                "status": "passed",
+                "duration": 0.0004822910013899673,
+                "start": 1792976845.2285297,
+                "stop": 1792976845.2291317,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineFormat::test_timestamp_format_is_iso8601",
+                "status": "passed",
+                "duration": 0.000668833999952767,
+                "start": 1792976845.2292159,
+                "stop": 1792976845.2300127,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineFormat::test_source_values_are_valid",
+                "status": "passed",
+                "duration": 0.0005670410009770421,
+                "start": 1792976845.2300951,
+                "stop": 1792976845.230797,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineFormat::test_event_type_values_are_valid",
+                "status": "passed",
+                "duration": 0.0005297909992805216,
+                "start": 1792976845.2308843,
+                "stop": 1792976845.2315412,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineOrdering::test_timeline_is_sorted_chronologically",
+                "status": "passed",
+                "duration": 0.009824332999414764,
+                "start": 1792976845.2316275,
+                "stop": 1792976845.2416537,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_contains_package_install_events",
+                "status": "passed",
+                "duration": 0.0005030419997638091,
+                "start": 1792976845.2417603,
+                "stop": 1792976845.2423809,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_contains_persistence_events",
+                "status": "passed",
+                "duration": 0.00043400000140536577,
+                "start": 1792976845.2424593,
+                "stop": 1792976845.2430058,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_contains_exfiltration_events",
+                "status": "passed",
+                "duration": 0.00045133300045563374,
+                "start": 1792976845.243082,
+                "stop": 1792976845.2436473,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_has_minimum_event_count",
+                "status": "passed",
+                "duration": 0.00046158300028764643,
+                "start": 1792976845.2437246,
+                "stop": 1792976845.244306,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_contains_credential_harvesting",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006244999985938193,
+                "start": 1792976845.244385,
+                "stop": 1792976845.2537491,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestTimelineCompleteness object at 0xffffa83b9d90>\n\n    def test_timeline_contains_credential_harvesting(self):\n        \"\"\"Verify timeline includes credential file access events.\"\"\"\n        timeline_path = Path(\"/app/timeline.csv\")\n        with open(timeline_path, \"r\") as f:\n            reader = csv.DictReader(f)\n            rows = list(reader)\n    \n        cred_events = [\n            r for r in rows\n            if r.get(\"event_type\", \"\").lower() == \"file_read\"\n            and any(kw in r.get(\"details\", \"\").lower()\n                   for kw in (\".ssh\", \".aws\", \"credentials\", \"id_rsa\", \".kube\", \".npmrc\"))\n        ]\n>       assert len(cred_events) >= 2, (\n            f\"Expected at least 2 credential harvesting events, found {len(cred_events)}. \"\n            \"The attack involved reading multiple sensitive files.\"\n        )\nE       AssertionError: Expected at least 2 credential harvesting events, found 0. The attack involved reading multiple sensitive files.\nE       assert 0 >= 2\nE        +  where 0 = len([])\n\n/tests/test_outputs.py:239: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_documents_malicious_package",
+                "status": "passed",
+                "duration": 0.0005429580014606472,
+                "start": 1792976845.2538664,
+                "stop": 1792976845.2545335,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsExists::test_findings_file_exists",
+                "status": "passed",
+                "duration": 0.0004689580000558635,
+                "start": 1792976845.2546148,
+                "stop": 1792976845.255206,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsExists::test_findings_has_three_lines",
+                "status": "passed",
+                "duration": 0.00047408300088136457,
+                "start": 1792976845.2552824,
+                "stop": 1792976845.25587,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsFormat::test_findings_has_malicious_package_line",
+                "status": "passed",
+                "duration": 0.00046116600242385175,
+                "start": 1792976845.2559457,
+                "stop": 1792976845.2565176,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsFormat::test_findings_has_persistence_path_line",
+                "status": "passed",
+                "duration": 0.00046916699830035213,
+                "start": 1792976845.2566264,
+                "stop": 1792976845.25722,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsFormat::test_findings_has_exfil_destination_line",
+                "status": "passed",
+                "duration": 0.0004453330002434086,
+                "start": 1792976845.2573037,
+                "stop": 1792976845.2578726,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestMaliciousPackageIdentification::test_malicious_package_identified_correctly",
+                "status": "passed",
+                "duration": 0.000506749998749001,
+                "start": 1792976845.257949,
+                "stop": 1792976845.2585704,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestPersistenceDetection::test_persistence_path_identified_correctly",
+                "status": "passed",
+                "duration": 0.0005103329986013705,
+                "start": 1792976845.2586467,
+                "stop": 1792976845.259284,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestPersistenceDetection::test_persistence_path_is_absolute",
+                "status": "passed",
+                "duration": 0.0004566669995256234,
+                "start": 1792976845.259376,
+                "stop": 1792976845.2599456,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestExfiltrationIdentification::test_exfil_destination_identified_correctly",
+                "status": "passed",
+                "duration": 0.0005086669989395887,
+                "start": 1792976845.260028,
+                "stop": 1792976845.2606678,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestExfiltrationIdentification::test_exfil_ip_format_is_valid",
+                "status": "passed",
+                "duration": 0.0004911670002911706,
+                "start": 1792976845.2607434,
+                "stop": 1792976845.2613506,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestAttackChainCorrelation::test_attack_sequence_is_logical",
+                "status": "passed",
+                "duration": 0.0006657919966528425,
+                "start": 1792976845.2614233,
+                "stop": 1792976845.2622056,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestAttackChainCorrelation::test_timeline_shows_multi_source_correlation",
+                "status": "passed",
+                "duration": 0.0005268330005492317,
+                "start": 1792976845.2622795,
+                "stop": 1792976845.2629192,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

@@ -1,0 +1,4 @@
+=== Starting solve.sh ===
+Creating fixed version of service.py...
+=== Solution applied successfully ===
+Now loading ONLY the specific chunk needed for each query

@@ -1,0 +1,55 @@
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+Get:4 http://deb.debian.org/debian bookworm/main arm64 Packages [8689 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main arm64 Packages [6936 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main arm64 Packages [355 kB]
+Fetched 9293 kB in 1s (7618 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+curl is already the newest version (7.88.1-10+deb12u15).
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+downloading uv 0.9.5 aarch64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Downloading pygments (1.2MiB)
+Downloading cryptography (3.6MiB)
+ Downloading cryptography
+ Downloading pygments
+Installed 16 packages in 11ms
+============================= test session starts ==============================
+platform linux -- Python 3.13.17, pytest-8.4.1, pluggy-1.7.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 15 items
+
+../tests/test_outputs.py ...............                                 [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_outputs.py::test_rsa_keys_exist
+PASSED ../tests/test_outputs.py::test_api_server_starts
+PASSED ../tests/test_outputs.py::test_login_endpoint
+PASSED ../tests/test_outputs.py::test_tokens_have_jti
+PASSED ../tests/test_outputs.py::test_tokens_are_rsa_signed
+PASSED ../tests/test_outputs.py::test_validate_endpoint
+PASSED ../tests/test_outputs.py::test_revoke_endpoint
+PASSED ../tests/test_outputs.py::test_revoked_token_rejected
+PASSED ../tests/test_outputs.py::test_refresh_endpoint
+PASSED ../tests/test_outputs.py::test_cli_acquire
+PASSED ../tests/test_outputs.py::test_cli_validate
+PASSED ../tests/test_outputs.py::test_cli_revoke
+PASSED ../tests/test_outputs.py::test_cli_retry
+PASSED ../tests/test_outputs.py::test_expired_token_rejected
+PASSED ../tests/test_outputs.py::test_logs_directory_exists
+============================= 15 passed in 13.76s ==============================

@@ -1,0 +1,18 @@
+{
+    "task": {
+        "path": "tblite/csv-json-jsonl-merger",
+        "source": "tblite"
+    },
+    "trial_name": "csv-json-jsonl-merger__MgaEcxF",
+    "trials_dir": "jobs/nolimits-1",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "anthropic/claude-haiku-5-5"
+    },
+    "environment": {
+        "type": "docker",
+        "cpu_enforcement_policy": "ignore",
+        "memory_enforcement_policy": "ignore"
+    },
+    "job_id": "5ca6a809-3255-4f39-a72f-88da3f605737"
+}

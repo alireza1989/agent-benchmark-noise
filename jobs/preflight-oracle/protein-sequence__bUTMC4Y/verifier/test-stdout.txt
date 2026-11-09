@@ -1,0 +1,4 @@
+[EVAL] clean_train.fasta: Missing 1 expected sequences:
+  - DQASPIADFDRPQVKV...
+[EVAL] clean_train.fasta does not match expected content.
+[TEST] Evaluation failed.

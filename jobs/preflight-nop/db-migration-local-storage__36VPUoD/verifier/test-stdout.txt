@@ -1,0 +1,206 @@
+Waiting for API to start...
+API started successfully
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 14 packages in 15ms
+============================= test session starts ==============================
+platform linux -- Python 3.11.17, pytest-8.4.1, pluggy-1.7.0 -- /root/.cache/uv/archive-v0/ZOvuPlNor8l9TeqD9sD2_/bin/python
+cachedir: .pytest_cache
+rootdir: /tests
+plugins: anyio-4.15.1, json-ctrf-0.3.5
+collecting ... collected 18 items
+
+../tests/test_queries.py::test_service_is_running PASSED                 [  5%]
+../tests/test_queries.py::test_stats_endpoint PASSED                     [ 11%]
+../tests/test_queries.py::test_query_electronics_phones PASSED           [ 16%]
+../tests/test_queries.py::test_query_furniture_chairs PASSED             [ 22%]
+../tests/test_queries.py::test_query_clothing_shoes PASSED               [ 27%]
+../tests/test_queries.py::test_query_food_fruits PASSED                  [ 33%]
+../tests/test_queries.py::test_query_books_fiction PASSED                [ 38%]
+../tests/test_queries.py::test_query_nonexistent_combination PASSED      [ 44%]
+../tests/test_queries.py::test_query_missing_type1 PASSED                [ 50%]
+../tests/test_queries.py::test_query_missing_type2 PASSED                [ 55%]
+../tests/test_queries.py::test_query_performance PASSED                  [ 61%]
+../tests/test_queries.py::test_multiple_records_same_combination PASSED  [ 66%]
+../tests/test_queries.py::test_all_records_queryable PASSED              [ 72%]
+../tests/test_queries.py::test_concurrent_queries PASSED                 [ 77%]
+../tests/test_queries.py::test_single_query_loads_exactly_one_type1_and_one_type2 FAILED [ 83%]
+../tests/test_queries.py::test_multiple_queries_each_loads_only_requested_data FAILED [ 88%]
+../tests/test_queries.py::test_catastrophic_memory_inefficiency_detection FAILED [ 94%]
+../tests/test_queries.py::test_empty_query_loads_nothing FAILED          [100%]
+
+=================================== FAILURES ===================================
+___________ test_single_query_loads_exactly_one_type1_and_one_type2 ____________
+
+client = <httpx.Client object at 0xffffb0f17e50>
+
+    def test_single_query_loads_exactly_one_type1_and_one_type2(client):
+        """
+        CRITICAL: Each query should load EXACTLY 1 Type1 and 1 Type2 value.
+        This validates that CSV chunking is working correctly.
+        """
+        response = client.get("/query", params={"type1": "electronics", "type2": "phones"})
+        assert response.status_code == 200
+    
+        loaded_response = client.get("/get_all_loaded_types_and_subtypes")
+        assert loaded_response.status_code == 200
+        loaded_data = loaded_response.json()
+    
+        print(f"\n=== Single Query Efficiency ===")
+        print(f"Query: type1=electronics, type2=phones")
+        print(f"Loaded Type1 values: {loaded_data['type1_values']}")
+        print(f"Loaded Type2 values: {loaded_data['type2_values']}")
+    
+        # MUST load EXACTLY 1 Type1
+>       assert len(loaded_data['type1_values']) == 1, \
+            f"FAIL: Expected exactly 1 Type1 value, got {len(loaded_data['type1_values'])}"
+E       AssertionError: FAIL: Expected exactly 1 Type1 value, got 10
+E       assert 10 == 1
+E        +  where 10 = len(['automotive', 'beauty', 'books', 'clothing', 'electronics', 'food', ...])
+
+/tests/test_queries.py:203: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+=== Single Query Efficiency ===
+Query: type1=electronics, type2=phones
+Loaded Type1 values: ['automotive', 'beauty', 'books', 'clothing', 'electronics', 'food', 'furniture', 'home', 'sports', 'toys']
+Loaded Type2 values: ['accessories', 'action_figures', 'apparel', 'bathroom', 'bedroom', 'beds', 'cabinets', 'cameras', 'chairs', 'comics', 'dairy', 'dolls', 'dresses', 'educational', 'equipment', 'fiction', 'fluids', 'footwear', 'fragrance', 'fruits', 'games', 'haircare', 'jackets', 'kitchen', 'laptops', 'living', 'magazines', 'makeup', 'meat', 'nonfiction', 'nutrition', 'outdoor', 'pants', 'parts', 'phones', 'puzzles', 'shirts', 'shoes', 'skincare', 'snacks', 'sofas', 'tables', 'tablets', 'textbooks', 'tires', 'tools', 'vegetables']
+_____________ test_multiple_queries_each_loads_only_requested_data _____________
+
+client = <httpx.Client object at 0xffffb0f17ed0>
+
+    def test_multiple_queries_each_loads_only_requested_data(client):
+        """
+        Test that EACH individual query loads only its specific data.
+        This ensures CSV chunks are loaded independently per query.
+        """
+        test_cases = [
+            ("furniture", "chairs"),
+            ("clothing", "shoes"),
+            ("food", "fruits")
+        ]
+    
+        for type1, type2 in test_cases:
+            response = client.get("/query", params={"type1": type1, "type2": type2})
+            assert response.status_code == 200
+    
+            loaded_response = client.get("/get_all_loaded_types_and_subtypes")
+            assert loaded_response.status_code == 200
+            loaded_data = loaded_response.json()
+    
+            print(f"\n=== Multiple Query Test: {type1}/{type2} ===")
+            print(f"Loaded Type1 values: {loaded_data['type1_values']}")
+            print(f"Loaded Type2 values: {loaded_data['type2_values']}")
+    
+            # Each query must load EXACTLY 1 Type1 and 1 Type2
+>           assert len(loaded_data['type1_values']) == 1, \
+                f"Query ({type1}, {type2}) loaded {len(loaded_data['type1_values'])} Type1 values instead of 1"
+E           AssertionError: Query (furniture, chairs) loaded 10 Type1 values instead of 1
+E           assert 10 == 1
+E            +  where 10 = len(['automotive', 'beauty', 'books', 'clothing', 'electronics', 'food', ...])
+
+/tests/test_queries.py:239: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+=== Multiple Query Test: furniture/chairs ===
+Loaded Type1 values: ['automotive', 'beauty', 'books', 'clothing', 'electronics', 'food', 'furniture', 'home', 'sports', 'toys']
+Loaded Type2 values: ['accessories', 'action_figures', 'apparel', 'bathroom', 'bedroom', 'beds', 'cabinets', 'cameras', 'chairs', 'comics', 'dairy', 'dolls', 'dresses', 'educational', 'equipment', 'fiction', 'fluids', 'footwear', 'fragrance', 'fruits', 'games', 'haircare', 'jackets', 'kitchen', 'laptops', 'living', 'magazines', 'makeup', 'meat', 'nonfiction', 'nutrition', 'outdoor', 'pants', 'parts', 'phones', 'puzzles', 'shirts', 'shoes', 'skincare', 'snacks', 'sofas', 'tables', 'tablets', 'textbooks', 'tires', 'tools', 'vegetables']
+_______________ test_catastrophic_memory_inefficiency_detection ________________
+
+client = <httpx.Client object at 0xffffb0e4ad90>
+
+    def test_catastrophic_memory_inefficiency_detection(client):
+        """
+        CRITICAL: Verify that only the queried data is loaded into memory.
+        If more than 1 Type1 or 1 Type2 is loaded, the implementation is inefficient.
+        """
+        # Execute a single query
+        response = client.get("/query", params={"type1": "electronics", "type2": "phones"})
+        assert response.status_code == 200
+    
+        # Check what was loaded into memory
+        loaded_response = client.get("/get_all_loaded_types_and_subtypes")
+        assert loaded_response.status_code == 200
+        loaded_data = loaded_response.json()
+    
+        loaded_type1_count = len(loaded_data['type1_values'])
+        loaded_type2_count = len(loaded_data['type2_values'])
+    
+        print(f"\n=== MEMORY EFFICIENCY CHECK ===")
+        print(f"Query: type1=electronics, type2=phones")
+        print(f"Loaded into memory: {loaded_type1_count} Type1, {loaded_type2_count} Type2")
+        print(f"Type1 loaded: {loaded_data['type1_values']}")
+        print(f"Type2 loaded: {loaded_data['type2_values']}")
+    
+        # PRIMARY ASSERTION: Must load EXACTLY 1 of each
+>       assert loaded_type1_count == 1, \
+            f"❌ MEMORY INEFFICIENCY: Loaded {loaded_type1_count} Type1 values instead of 1! " \
+            f"This indicates poor data organization. Loaded: {loaded_data['type1_values']}"
+E       AssertionError: ❌ MEMORY INEFFICIENCY: Loaded 10 Type1 values instead of 1! This indicates poor data organization. Loaded: ['automotive', 'beauty', 'books', 'clothing', 'electronics', 'food', 'furniture', 'home', 'sports', 'toys']
+E       assert 10 == 1
+
+/tests/test_queries.py:274: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+=== MEMORY EFFICIENCY CHECK ===
+Query: type1=electronics, type2=phones
+Loaded into memory: 10 Type1, 47 Type2
+Type1 loaded: ['automotive', 'beauty', 'books', 'clothing', 'electronics', 'food', 'furniture', 'home', 'sports', 'toys']
+Type2 loaded: ['accessories', 'action_figures', 'apparel', 'bathroom', 'bedroom', 'beds', 'cabinets', 'cameras', 'chairs', 'comics', 'dairy', 'dolls', 'dresses', 'educational', 'equipment', 'fiction', 'fluids', 'footwear', 'fragrance', 'fruits', 'games', 'haircare', 'jackets', 'kitchen', 'laptops', 'living', 'magazines', 'makeup', 'meat', 'nonfiction', 'nutrition', 'outdoor', 'pants', 'parts', 'phones', 'puzzles', 'shirts', 'shoes', 'skincare', 'snacks', 'sofas', 'tables', 'tablets', 'textbooks', 'tires', 'tools', 'vegetables']
+________________________ test_empty_query_loads_nothing ________________________
+
+client = <httpx.Client object at 0xffffb0dea0d0>
+
+    def test_empty_query_loads_nothing(client):
+        """Test that queries returning no results don't load any data"""
+        response = client.get("/query", params={"type1": "nonexistent", "type2": "invalid"})
+        assert response.status_code == 200
+        results = response.json()
+        assert len(results) == 0
+    
+        loaded_response = client.get("/get_all_loaded_types_and_subtypes")
+        assert loaded_response.status_code == 200
+        loaded_data = loaded_response.json()
+    
+        print(f"\n=== Empty Query Test ===")
+        print(f"Query: type1=nonexistent, type2=invalid")
+        print(f"Loaded Type1 values: {loaded_data['type1_values']}")
+        print(f"Loaded Type2 values: {loaded_data['type2_values']}")
+    
+        # For non-existent data, should load 0 values (chunk doesn't exist)
+>       assert len(loaded_data['type1_values']) == 0, \
+            f"Non-existent query loaded {len(loaded_data['type1_values'])} Type1 values"
+E       AssertionError: Non-existent query loaded 10 Type1 values
+E       assert 10 == 0
+E        +  where 10 = len(['automotive', 'beauty', 'books', 'clothing', 'electronics', 'food', ...])
+
+/tests/test_queries.py:310: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+=== Empty Query Test ===
+Query: type1=nonexistent, type2=invalid
+Loaded Type1 values: ['automotive', 'beauty', 'books', 'clothing', 'electronics', 'food', 'furniture', 'home', 'sports', 'toys']
+Loaded Type2 values: ['accessories', 'action_figures', 'apparel', 'bathroom', 'bedroom', 'beds', 'cabinets', 'cameras', 'chairs', 'comics', 'dairy', 'dolls', 'dresses', 'educational', 'equipment', 'fiction', 'fluids', 'footwear', 'fragrance', 'fruits', 'games', 'haircare', 'jackets', 'kitchen', 'laptops', 'living', 'magazines', 'makeup', 'meat', 'nonfiction', 'nutrition', 'outdoor', 'pants', 'parts', 'phones', 'puzzles', 'shirts', 'shoes', 'skincare', 'snacks', 'sofas', 'tables', 'tablets', 'textbooks', 'tires', 'tools', 'vegetables']
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_queries.py::test_service_is_running
+PASSED ../tests/test_queries.py::test_stats_endpoint
+PASSED ../tests/test_queries.py::test_query_electronics_phones
+PASSED ../tests/test_queries.py::test_query_furniture_chairs
+PASSED ../tests/test_queries.py::test_query_clothing_shoes
+PASSED ../tests/test_queries.py::test_query_food_fruits
+PASSED ../tests/test_queries.py::test_query_books_fiction
+PASSED ../tests/test_queries.py::test_query_nonexistent_combination
+PASSED ../tests/test_queries.py::test_query_missing_type1
+PASSED ../tests/test_queries.py::test_query_missing_type2
+PASSED ../tests/test_queries.py::test_query_performance
+PASSED ../tests/test_queries.py::test_multiple_records_same_combination
+PASSED ../tests/test_queries.py::test_all_records_queryable
+PASSED ../tests/test_queries.py::test_concurrent_queries
+FAILED ../tests/test_queries.py::test_single_query_loads_exactly_one_type1_and_one_type2
+FAILED ../tests/test_queries.py::test_multiple_queries_each_loads_only_requested_data
+FAILED ../tests/test_queries.py::test_catastrophic_memory_inefficiency_detection
+FAILED ../tests/test_queries.py::test_empty_query_loads_nothing - AssertionEr...
+========================= 4 failed, 14 passed in 0.32s =========================
+Test exit code: 1
+Reward file written to /logs/verifier/reward.txt

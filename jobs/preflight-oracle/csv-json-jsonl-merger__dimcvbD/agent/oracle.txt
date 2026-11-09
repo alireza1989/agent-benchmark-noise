@@ -1,0 +1,10 @@
+Running the merge script...
+WORKING in workspace
+Loaded 6 users from /workspace/users.csv
+Loaded 7 profiles from /workspace/profiles.json
+Loaded 10 records from /workspace/records.jsonl
+Collected 10 unique emails from records.
+Collected 14 unique emails after adding profiles.
+Collected 20 unique emails after adding users.
+Writing merged records to merged_records.csv
+Merge completed. Output written to /workspace/merged_records.csv

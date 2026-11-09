@@ -1,0 +1,64 @@
+{
+    "id": "604f2936-2f66-466c-a375-7e63ab9e457a",
+    "started_at": "2026-10-25T21:18:00.481841",
+    "updated_at": "2026-10-25T21:38:10.898807",
+    "finished_at": "2026-10-25T21:38:10.898807",
+    "n_total_trials": 20,
+    "stats": {
+        "n_completed_trials": 20,
+        "n_errored_trials": 1,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "terminus-2__claude-haiku-5-5__tblite": {
+                "n_trials": 20,
+                "n_errors": 1,
+                "metrics": [
+                    {
+                        "mean": 0.8
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "api-endpoint-permission-canonica__TQAVgP3",
+                            "build-system-task-ordering__kzVU5jy",
+                            "california-housing-api__UjXLFv3",
+                            "container-registry-optimization__Ym6WhEP",
+                            "convolutional-layers__Wd8MJ53",
+                            "csv-json-jsonl-merger__9bF2VxZ",
+                            "db-migration-local-storage__MMsNdnM",
+                            "industrial-kiln-controller__N2teS8T",
+                            "maven-slf4j-conflict__6EHLjRf",
+                            "neural-architecture-search-final__GaVKV7d",
+                            "rsa-jwt-token-api-redis-blacklis__JxJwse4",
+                            "scan-linux-persistence-artifacts__HLWhCWo",
+                            "service-deployment-wave-planner__L3jPsFa",
+                            "sign-vector-game__dKaeByE",
+                            "submission_a63937a5_20251224_152__iP4pyoc",
+                            "task-xxe-exploit__KPfBNxF"
+                        ],
+                        "0.0": [
+                            "bandit-delayed-feedback__LStGJSw",
+                            "malicious-package-forensics__Zsjyymh",
+                            "reproducibility-and-envsetup__gkyhpEL",
+                            "systemd-log-monitoring__PAytUfa"
+                        ]
+                    }
+                },
+                "exception_stats": {
+                    "AgentTimeoutError": [
+                        "maven-slf4j-conflict__6EHLjRf"
+                    ]
+                }
+            }
+        },
+        "n_input_tokens": 1488643,
+        "n_cache_tokens": 1161952,
+        "n_output_tokens": 291526,
+        "cost_usd": 0.198205795
+    }
+}

@@ -1,0 +1,2 @@
+Processed 5 unique sequences for training
+Processed 5 unique sequences for testing

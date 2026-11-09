@@ -1,0 +1,38 @@
+Delay model: mu=2.476, sigma=0.898
+Median delay: 11.89 hours, Conversion rate: 0.0835
+
+Training LinUCB models...
+LinUCB training complete.
+
+Arm statistics:
+   arm_id  estimated_conversion_rate  ...  total_impressions  total_conversions
+0       0                     0.0631  ...               6767                417
+1       1                     0.0995  ...               8453                817
+2       2                     0.0447  ...               3187                139
+3       3                     0.1168  ...               8584               1033
+4       4                     0.0816  ...               5005                390
+5       5                     0.0715  ...               4285                300
+6       6                     0.0890  ...               4974                442
+7       7                     0.0641  ...               2917                179
+8       8                     0.1219  ...               3303                375
+9       9                     0.0360  ...               2525                 82
+
+[10 rows x 5 columns]
+
+Generating predictions with LinUCB...
+
+Predictions saved: 2000 rows
+Arm selection distribution:
+selected_arm
+2     110
+5     638
+7    1150
+8      94
+9       8
+Name: count, dtype: int64
+
+Expected reward - Mean: 0.2571
+CI width - Mean: 0.5571
+
+LinUCB Solution completed!
+Solution execution finished.

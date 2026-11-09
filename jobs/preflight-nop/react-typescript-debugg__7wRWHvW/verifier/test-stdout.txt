@@ -1,0 +1,581 @@
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 https://deb.nodesource.com/node_20.x nodistro InRelease [12.1 kB]
+Get:3 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:4 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+Get:5 http://deb.debian.org/debian bookworm/main arm64 Packages [8689 kB]
+Get:6 https://deb.nodesource.com/node_20.x nodistro/main arm64 Packages [14.4 kB]
+Get:7 http://deb.debian.org/debian bookworm-updates/main arm64 Packages [6936 B]
+Get:8 http://deb.debian.org/debian-security bookworm-security/main arm64 Packages [355 kB]
+Fetched 9319 kB in 1s (7398 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+curl is already the newest version (7.88.1-10+deb12u15).
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+[38;5;79m2026-10-25 21:43:35 - Installing pre-requisites[0m
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Hit:1 http://deb.debian.org/debian bookworm InRelease
+Hit:2 http://deb.debian.org/debian bookworm-updates InRelease
+Hit:3 http://deb.debian.org/debian-security bookworm-security InRelease
+Hit:4 https://deb.nodesource.com/node_20.x nodistro InRelease
+Reading package lists...
+Building dependency tree...
+Reading state information...
+1 package can be upgraded. Run 'apt list --upgradable' to see it.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+apt-transport-https is already the newest version (2.6.1).
+ca-certificates is already the newest version (20250419~deb12u2).
+curl is already the newest version (7.88.1-10+deb12u15).
+gnupg is already the newest version (2.2.40-1.1+deb12u2).
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Hit:1 http://deb.debian.org/debian bookworm InRelease
+Hit:2 http://deb.debian.org/debian bookworm-updates InRelease
+Hit:3 http://deb.debian.org/debian-security bookworm-security InRelease
+Hit:4 https://deb.nodesource.com/node_20.x nodistro InRelease
+Reading package lists...
+Building dependency tree...
+Reading state information...
+1 package can be upgraded. Run 'apt list --upgradable' to see it.
+[1;34m2026-10-25 21:43:38 - Repository configured successfully.[0m
+[38;5;79m2026-10-25 21:43:38 - To install Node.js, run: apt install nodejs -y[0m
+[38;5;79m2026-10-25 21:43:38 - You can use N|solid Runtime as a node.js alternative[0m
+[1;32m2026-10-25 21:43:38 - To install N|solid Runtime, run: apt install nsolid -y 
+[0m
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following packages will be DOWNGRADED:
+  nodejs
+0 upgraded, 0 newly installed, 1 downgraded, 0 to remove and 1 not upgraded.
+E: Packages were downgraded and -y was used without --allow-downgrades.
+v20.20.2
+10.8.2
+downloading uv 0.9.5 aarch64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 6 packages in 12ms
+============================= test session starts ==============================
+platform linux -- Python 3.13.17, pytest-8.4.1, pluggy-1.7.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 17 items
+
+../tests/test_outputs.py EEEEEEEEEEEEEEEEE                               [100%]
+
+==================================== ERRORS ====================================
+_____ ERROR at setup of TestReactTypeScriptBuild.test_package_json_exists ______
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+_______ ERROR at setup of TestReactTypeScriptBuild.test_tsconfig_exists ________
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+____ ERROR at setup of TestReactTypeScriptBuild.test_webpack_config_exists _____
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+______ ERROR at setup of TestReactTypeScriptBuild.test_source_files_exist ______
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+____ ERROR at setup of TestReactTypeScriptBuild.test_node_modules_installed ____
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+_______ ERROR at setup of TestReactTypeScriptBuild.test_typecheck_passed _______
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+_________ ERROR at setup of TestReactTypeScriptBuild.test_tests_passed _________
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+__ ERROR at setup of TestReactTypeScriptBuild.test_production_build_succeeded __
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+________ ERROR at setup of TestReactTypeScriptBuild.test_bundle_created ________
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+____ ERROR at setup of TestReactTypeScriptBuild.test_bundle_size_reasonable ____
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+______ ERROR at setup of TestReactTypeScriptBuild.test_source_map_created ______
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+_ ERROR at setup of TestReactTypeScriptBuild.test_no_type_errors_in_components _
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+_ ERROR at setup of TestReactTypeScriptBuild.test_react_types_version_compatible _
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+___ ERROR at setup of TestReactTypeScriptBuild.test_canary_string_in_bundle ____
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+_____ ERROR at setup of TestReactTypeScriptBuild.test_strict_mode_enabled ______
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+_ ERROR at setup of TestReactTypeScriptBuild.test_package_json_scripts_not_modified _
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+__ ERROR at setup of TestReactTypeScriptBuild.test_webpack_was_actually_used ___
+
+self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9f229940>
+
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_and_build(self):
+        """Set up environment and run the build process."""
+        os.chdir('/app')
+    
+        # Clean any previous builds
+        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],
+                      capture_output=True, check=False)
+    
+        # Install dependencies
+        install_result = subprocess.run(
+            ['npm', 'install'],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    
+        if install_result.returncode != 0:
+>           pytest.fail(f"npm install failed:\n{install_result.stderr}")
+E           Failed: npm install failed:
+E           npm error Cannot read properties of null (reading 'edgesOut')
+E           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_43_42_332Z-debug-0.log
+
+/tests/test_outputs.py:34: Failed
+=========================== short test summary info ============================
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_package_json_exists
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_tsconfig_exists
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_webpack_config_exists
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_source_files_exist
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_node_modules_installed
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_typecheck_passed
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_tests_passed
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_production_build_succeeded
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_bundle_created
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_bundle_size_reasonable
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_source_map_created
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_no_type_errors_in_components
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_react_types_version_compatible
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_canary_string_in_bundle
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_strict_mode_enabled
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_package_json_scripts_not_modified
+ERROR ../tests/test_outputs.py::TestReactTypeScriptBuild::test_webpack_was_actually_used
+============================== 17 errors in 3.60s ==============================

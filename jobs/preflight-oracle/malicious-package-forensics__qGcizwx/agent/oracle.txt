@@ -1,0 +1,64 @@
+============================================================
+Multi-Stage Supply-Chain Attack Forensic Analyzer
+============================================================
+
+[1/6] Parsing auditd logs...
+      Found 41 events
+[2/6] Parsing dpkg logs...
+      Found 9 events
+[3/6] Parsing pip packages...
+      Found 22 events
+[4/6] Parsing journal logs...
+      Found 95 events
+[5/6] Parsing DNS queries...
+      Found 26 events
+[6/6] Parsing netflow data...
+      Found 45 events
+
+[*] Writing timeline.csv...
+    Written 238 events to timeline
+
+[*] Performing behavioral analysis to identify malicious package...
+    Identified: requsets
+
+[*] Analyzing persistence mechanisms...
+    First persistence: /home/developer/.config/systemd/user/update-helper.service
+
+[*] Correlating DNS and netflow to identify C2 server...
+    C2 server: 104.152.171.76
+
+[*] Writing findings.txt...
+
+============================================================
+FORENSIC ANALYSIS COMPLETE
+============================================================
+
+Key Findings:
+  Malicious Package:     requsets
+  First Persistence:     /home/developer/.config/systemd/user/update-helper.service
+  C2/Exfil Destination:  104.152.171.76
+
+Timeline Events:         238
+
+=== Timeline Preview (first 15 events) ===
+timestamp,source,event_type,details
+2024-03-15 06:00:01,journal,service_event,systemd: Starting Daily apt download activities...
+2024-03-15 06:00:02,journal,service_event,systemd: Finished Daily apt download activities.
+2024-03-15 06:15:00,journal,service_event,systemd: Starting System Logging Service...
+2024-03-15 06:15:01,journal,service_event,systemd: Started System Logging Service.
+2024-03-15 06:30:00,journal,service_event,CRON: (root) CMD (/usr/lib/apt/apt.systemd.daily)
+2024-03-15 06:30:15,dpkg,package_install,System package installed: libc6 v2.37-8
+2024-03-15 06:45:00,journal,service_event,sshd: Accepted publickey for developer from 192.168.1.10 port 54320 ssh2: RSA SHA256:abc123xyz
+2024-03-15 06:45:02,journal,service_event,sshd: pam_unix(sshd:session): session opened for user developer(uid=1000) by developer(uid=0)
+2024-03-15 07:00:10,journal,service_event,systemd: Starting Package Manager...
+2024-03-15 07:00:10,dns,dns_query,DNS query: pypi.org -> 151.101.0.223
+2024-03-15 07:00:11,dns,dns_query,DNS query: files.pythonhosted.org -> 151.101.64.223
+2024-03-15 07:00:12,journal,service_event,apt: Installing python3.11 (3.11.8-1)
+2024-03-15 07:00:15,dpkg,package_install,System package installed: python3.11 v3.11.8-1
+2024-03-15 07:00:15,netflow,network_connection,Legitimate traffic to pypi.org (151.101.0.223:443)
+2024-03-15 07:00:20,dpkg,package_install,System package installed: python3-pip v24.0-1
+
+=== Findings ===
+malicious_package: requsets
+persistence_path: /home/developer/.config/systemd/user/update-helper.service
+exfil_destination: 104.152.171.76

@@ -1,0 +1,55 @@
+[21:44:56] SMILES Parse Error: syntax error while parsing: ethanol
+[21:44:56] SMILES Parse Error: check for mistakes around position 1:
+[21:44:56] ethanol
+[21:44:56] ^
+[21:44:56] SMILES Parse Error: Failed parsing SMILES 'ethanol' for input: 'ethanol'
+[21:44:56] SMILES Parse Error: syntax error while parsing: acetic
+[21:44:56] SMILES Parse Error: check for mistakes around position 1:
+[21:44:56] acetic
+[21:44:56] ^
+[21:44:56] SMILES Parse Error: Failed parsing SMILES 'acetic' for input: 'acetic'
+[21:44:56] SMILES Parse Error: syntax error while parsing: 2-methylpropanoic
+[21:44:56] SMILES Parse Error: check for mistakes around position 1:
+[21:44:56] 2-methylpropanoic
+[21:44:56] ^
+[21:44:56] SMILES Parse Error: Failed parsing SMILES '2-methylpropanoic' for input: '2-methylpropanoic'
+[21:44:56] SMILES Parse Error: syntax error while parsing: N,N-dimethylaniline
+[21:44:56] SMILES Parse Error: check for mistakes around position 2:
+[21:44:56] N,N-dimethylaniline
+[21:44:56] ~^
+[21:44:56] SMILES Parse Error: Failed parsing SMILES 'N,N-dimethylaniline' for input: 'N,N-dimethylaniline'
+[21:44:56] SMILES Parse Error: syntax error while parsing: sodium
+[21:44:56] SMILES Parse Error: check for mistakes around position 3:
+[21:44:56] sodium
+[21:44:56] ~~^
+[21:44:56] SMILES Parse Error: Failed parsing SMILES 'sodium' for input: 'sodium'
+[21:44:56] SMILES Parse Error: syntax error while parsing: propan-2-ol
+[21:44:56] SMILES Parse Error: check for mistakes around position 2:
+[21:44:56] propan-2-ol
+[21:44:56] ~^
+[21:44:56] SMILES Parse Error: Failed parsing SMILES 'propan-2-ol' for input: 'propan-2-ol'
+[21:44:56] SMILES Parse Error: syntax error while parsing: benzoic
+[21:44:56] SMILES Parse Error: check for mistakes around position 2:
+[21:44:56] benzoic
+[21:44:56] ~^
+[21:44:56] SMILES Parse Error: Failed parsing SMILES 'benzoic' for input: 'benzoic'
+[21:44:56] SMILES Parse Error: syntax error while parsing: 4-methylbenzenesulfonic
+[21:44:56] SMILES Parse Error: check for mistakes around position 1:
+[21:44:56] 4-methylbenzenesulfonic
+[21:44:56] ^
+[21:44:56] SMILES Parse Error: Failed parsing SMILES '4-methylbenzenesulfonic' for input: '4-methylbenzenesulfonic'
+[21:44:56] SMILES Parse Error: syntax error while parsing: sodium
+[21:44:56] SMILES Parse Error: check for mistakes around position 3:
+[21:44:56] sodium
+[21:44:56] ~~^
+[21:44:56] SMILES Parse Error: Failed parsing SMILES 'sodium' for input: 'sodium'
+[21:44:56] SMILES Parse Error: syntax error while parsing: glucose
+[21:44:56] SMILES Parse Error: check for mistakes around position 1:
+[21:44:56] glucose
+[21:44:56] ^
+[21:44:56] SMILES Parse Error: Failed parsing SMILES 'glucose' for input: 'glucose'
+[EVAL] Missing file: /app/environment/data/clean_train.smi
+[EVAL] Missing file: /app/environment/data/clean_test.smi
+[EVAL] Missing file: /app/environment/data/overlap.smi
+[EVAL] Missing file: /app/environment/data/aromatic_train.smi
+[TEST] Evaluation failed.

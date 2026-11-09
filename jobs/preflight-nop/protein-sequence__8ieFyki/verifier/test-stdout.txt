@@ -1,0 +1,2 @@
+[EVAL] clean_train.fasta does not match expected content.
+[TEST] Evaluation failed.

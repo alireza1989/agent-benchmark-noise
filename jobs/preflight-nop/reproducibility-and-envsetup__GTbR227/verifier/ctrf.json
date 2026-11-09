@@ -1,0 +1,92 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 6,
+            "passed": 0,
+            "failed": 6,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792964623.8842406,
+            "stop": 1792964623.9611301
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_repro_script_produces_artifacts",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0017646669999749065,
+                "start": 1792964623.9231322,
+                "stop": 1792964623.9374182,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_repro_script_produces_artifacts() -> None:\n        \"\"\"repro.sh creates both run artifacts and the hashes.json report.\n    \n        After running the entrypoint, we expect the two .npy artifacts and the\n        JSON report to exist under /output with the prescribed paths.\n        \"\"\"\n    \n>       _run_repro()\n\n/tests/test_outputs.py:51: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def _run_repro() -> None:\n        \"\"\"Run /app/work/repro.sh and assert it completes successfully.\n    \n        The instruction specifies that the verifier invokes this script directly.\n        We call it in each test so that they are self-contained and idempotent.\n        \"\"\"\n    \n>       assert WORK_DIR.exists(), \"Expected /app/work to exist\"\nE       AssertionError: Expected /app/work to exist\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/work').exists\n\n/tests/test_outputs.py:30: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_hashes_json_schema_and_match",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0010667079999393536,
+                "start": 1792964623.9376466,
+                "stop": 1792964623.9427698,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_hashes_json_schema_and_match() -> None:\n        \"\"\"hashes.json has the required schema and shows a matching pair of hashes.\n    \n        We require the report to contain run1, run2, match, python_version,\n        and numpy_version fields. The run1/run2 values must be equal 64-char\n        lowercase hex SHA-256 strings and match must be true.\n        \"\"\"\n    \n>       _run_repro()\n\n/tests/test_outputs.py:70: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def _run_repro() -> None:\n        \"\"\"Run /app/work/repro.sh and assert it completes successfully.\n    \n        The instruction specifies that the verifier invokes this script directly.\n        We call it in each test so that they are self-contained and idempotent.\n        \"\"\"\n    \n>       assert WORK_DIR.exists(), \"Expected /app/work to exist\"\nE       AssertionError: Expected /app/work to exist\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/work').exists\n\n/tests/test_outputs.py:30: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_seed_train_script_unchanged",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006422920001796228,
+                "start": 1792964623.942968,
+                "stop": 1792964623.9472404,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_seed_train_script_unchanged() -> None:\n        \"\"\"The seed training script under /seed must not be modified by the agent.\n    \n        The task specification treats /seed as read-only. We enforce that the\n        contents of /seed/project/train.py still match the expected reference\n        contents after the agent has run using SHA-256 hash verification.\n        \"\"\"\n    \n        # Running the repro script first ensures the agent pipeline has executed.\n>       _run_repro()\n\n/tests/test_outputs.py:161: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def _run_repro() -> None:\n        \"\"\"Run /app/work/repro.sh and assert it completes successfully.\n    \n        The instruction specifies that the verifier invokes this script directly.\n        We call it in each test so that they are self-contained and idempotent.\n        \"\"\"\n    \n>       assert WORK_DIR.exists(), \"Expected /app/work to exist\"\nE       AssertionError: Expected /app/work to exist\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/work').exists\n\n/tests/test_outputs.py:30: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_seed_project_copied_verbatim",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006032079999158668,
+                "start": 1792964623.9473467,
+                "stop": 1792964623.9517882,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_seed_project_copied_verbatim() -> None:\n        \"\"\"The working copy of train.py under /app/work/project matches the seed file.\n    \n        This directly exercises the requirement to copy /seed/project to\n        /app/work/project without modifying the training script. Any edits to the\n        working copy of train.py will cause this test to fail.\n        \"\"\"\n    \n>       _run_repro()\n\n/tests/test_outputs.py:188: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def _run_repro() -> None:\n        \"\"\"Run /app/work/repro.sh and assert it completes successfully.\n    \n        The instruction specifies that the verifier invokes this script directly.\n        We call it in each test so that they are self-contained and idempotent.\n        \"\"\"\n    \n>       assert WORK_DIR.exists(), \"Expected /app/work to exist\"\nE       AssertionError: Expected /app/work to exist\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/work').exists\n\n/tests/test_outputs.py:30: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_artifacts_match_seed_training_output",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0007995840001058241,
+                "start": 1792964623.9519527,
+                "stop": 1792964623.957089,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_artifacts_match_seed_training_output() -> None:\n        \"\"\"Artifacts produced by repro.sh match running the seed train.py once.\n    \n        This guards against trivial cheating strategies that write arbitrary\n        /output/run1/model.npy and /output/run2/model.npy files without actually\n        invoking the provided deterministic training script. We re-run the seed\n        train.py ourselves under the base environment and compare its output\n        byte-for-byte against the agent's first run artifact.\n        \"\"\"\n    \n>       _run_repro()\n\n/tests/test_outputs.py:211: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def _run_repro() -> None:\n        \"\"\"Run /app/work/repro.sh and assert it completes successfully.\n    \n        The instruction specifies that the verifier invokes this script directly.\n        We call it in each test so that they are self-contained and idempotent.\n        \"\"\"\n    \n>       assert WORK_DIR.exists(), \"Expected /app/work to exist\"\nE       AssertionError: Expected /app/work to exist\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/work').exists\n\n/tests/test_outputs.py:30: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_repro_script_structure_uses_virtualenvs",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0007368330001327195,
+                "start": 1792964623.95722,
+                "stop": 1792964623.9608347,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_repro_script_structure_uses_virtualenvs() -> None:\n        \"\"\"repro.sh declares two virtual environments and uses them to run train.py.\n    \n        This enforces that the agent sets up isolated environments instead of\n        running the training directly in the base image or simply writing files\n        under /output. We perform a lightweight static check on the repro.sh\n        script to ensure it creates two venvs and invokes train.py from them.\n        \"\"\"\n    \n>       assert REPRO_SCRIPT.exists(), \"Expected /app/work/repro.sh entrypoint script\"\nE       AssertionError: Expected /app/work/repro.sh entrypoint script\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/work/repro.sh').exists\n\n/tests/test_outputs.py:256: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

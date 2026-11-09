@@ -1,0 +1,248 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 19,
+            "passed": 0,
+            "failed": 19,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792964533.6725776,
+            "stop": 1792964534.0225904
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_1_extreme_stress_1000_rapid_reloads",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0009254999999939173,
+                "start": 1792964533.7369986,
+                "stop": 1792964533.757333,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_1_extreme_stress_1000_rapid_reloads():\n        \"\"\"Test 1: Extreme stress test with 1000 rapid consecutive SIGHUP reloads.\n    \n        The daemon must handle 1000 rapid reloads without crashing or memory errors.\n        This tests the fix under extreme load conditions.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:81: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_2_concurrent_signal_bombardment",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.000611916999901041,
+                "start": 1792964533.757535,
+                "stop": 1792964533.7720292,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_2_concurrent_signal_bombardment():\n        \"\"\"Test 2: Concurrent signal bombardment from multiple threads.\n    \n        Multiple threads send SIGHUP signals simultaneously to test thread safety\n        of the signal handler and configuration reload mechanism.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:133: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_4_memory_safety_500_reloads_with_asan",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0007011680000914566,
+                "start": 1792964533.7721882,
+                "stop": 1792964533.7861047,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_4_memory_safety_500_reloads_with_asan():\n        \"\"\"Test 4: Memory safety verification with 500 reloads using AddressSanitizer.\n    \n        AddressSanitizer must detect no use-after-free, double-free, or memory leaks\n        after 500 consecutive reloads.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:181: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_5_rapid_reload_during_worker_access",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006731250000484579,
+                "start": 1792964533.7862759,
+                "stop": 1792964533.8007557,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_5_rapid_reload_during_worker_access():\n        \"\"\"Test 5: Rapid reloads while workers are actively accessing config.\n    \n        This test maximizes the race condition window by sending reloads at the exact\n        moment workers are reading from the configuration object.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:227: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_6_thread_safety_verification",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006669570000212843,
+                "start": 1792964533.8009303,
+                "stop": 1792964533.8145082,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_6_thread_safety_verification():\n        \"\"\"Test 6: Verify thread safety with all 3 workers accessing config concurrently.\n    \n        All worker threads must safely access the shared configuration object without\n        data races, even during configuration reloads. Uses AddressSanitizer for memory safety.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:274: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_7_extended_operation_200_reloads",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0007280430000946581,
+                "start": 1792964533.8146434,
+                "stop": 1792964533.8289266,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_7_extended_operation_200_reloads():\n        \"\"\"Test 7: Extended operation test with 200 reloads over extended period.\n    \n        The daemon must remain stable and functional over an extended period with\n        many configuration reloads.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:318: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_8_nested_data_structure_access",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0005298329998595364,
+                "start": 1792964533.8290946,
+                "stop": 1792964533.8427715,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_8_nested_data_structure_access():\n        \"\"\"Test 8: Verify safe access to nested data structures during reloads.\n    \n        Worker threads access nested vectors in the Config struct. This must remain\n        safe even during configuration reloads.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:364: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_9_burst_signal_handling",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006325419999484438,
+                "start": 1792964533.8429325,
+                "stop": 1792964533.8574212,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_9_burst_signal_handling():\n        \"\"\"Test 9: Handle burst of signals in very short time window.\n    \n        Multiple SIGHUP signals arrive in rapid succession (burst pattern).\n        The daemon must handle all signals correctly without losing any.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:408: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_10_all_workers_active_during_reload",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0007294570000340173,
+                "start": 1792964533.8575613,
+                "stop": 1792964533.8724744,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_10_all_workers_active_during_reload():\n        \"\"\"Test 10: Verify all 3 workers remain active and output during reloads.\n    \n        All worker threads must continue accessing and outputting config values\n        even during rapid configuration reloads.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:454: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_11_memory_leak_detection_100_reloads",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0007175840000854805,
+                "start": 1792964533.8726323,
+                "stop": 1792964533.885766,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_11_memory_leak_detection_100_reloads():\n        \"\"\"Test 11: Memory leak detection after 100 reloads.\n    \n        AddressSanitizer must report no memory leaks after 100 configuration reloads.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:491: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_12_config_value_progression",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0007367079999767157,
+                "start": 1792964533.8859134,
+                "stop": 1792964533.9003792,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_12_config_value_progression():\n        \"\"\"Test 12: Verify configuration values progress correctly through reloads.\n    \n        Port values must increase monotonically with each reload, and all workers\n        must see the updated values.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:533: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_13_stress_test_300_reloads_minimal_delay",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006759589999774107,
+                "start": 1792964533.9005425,
+                "stop": 1792964533.9142187,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_13_stress_test_300_reloads_minimal_delay():\n        \"\"\"Test 13: Stress test with 300 reloads with minimal delay between signals.\n    \n        Tests the daemon's ability to handle rapid-fire reloads without accumulating\n        errors or memory issues.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:578: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_14_worker_thread_count_verification",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006651250000686559,
+                "start": 1792964533.914363,
+                "stop": 1792964533.9287982,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_14_worker_thread_count_verification():\n        \"\"\"Test 14: Verify exactly 4 threads (1 main + 3 workers) are present.\n    \n        The daemon must maintain exactly 4 threads throughout its operation.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:622: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_15_no_double_free_or_invalid_free",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0007256669998696452,
+                "start": 1792964533.9289775,
+                "stop": 1792964533.9442081,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_15_no_double_free_or_invalid_free():\n        \"\"\"Test 15: Verify no double-free or invalid free errors.\n    \n        AddressSanitizer must detect no double-free or invalid free errors\n        during configuration reloads.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:668: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_16_rapid_startup_reload_sequence",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006034990000216567,
+                "start": 1792964533.9443676,
+                "stop": 1792964533.9594698,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_16_rapid_startup_reload_sequence():\n        \"\"\"Test 16: Send reloads immediately after daemon startup.\n    \n        Test reloads sent before workers fully initialize to catch initialization\n        race conditions.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:713: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_17_config_access_during_reload_window",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0007787089999737873,
+                "start": 1792964533.9596393,
+                "stop": 1792964533.9752293,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_17_config_access_during_reload_window():\n        \"\"\"Test 17: Workers access config during the critical reload window.\n    \n        This test maximizes the race condition by ensuring workers are actively\n        accessing config during the exact moment of reload.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:759: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_18_extended_memory_stability",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006557499999644278,
+                "start": 1792964533.9753742,
+                "stop": 1792964533.9897645,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_18_extended_memory_stability():\n        \"\"\"Test 18: Extended memory stability over 150 reloads.\n    \n        Verify no memory corruption or leaks accumulate over extended operation.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:803: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_19_worker_output_consistency",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0005408750000697182,
+                "start": 1792964533.9899504,
+                "stop": 1792964534.005752,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_19_worker_output_consistency():\n        \"\"\"Test 19: Verify worker output format and consistency.\n    \n        All workers must output in correct format and show consistent config values\n        during reloads.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:847: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_20_comprehensive_memory_safety_final",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0005808750000824148,
+                "start": 1792964534.0058985,
+                "stop": 1792964534.0222507,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_20_comprehensive_memory_safety_final():\n        \"\"\"Test 20: Comprehensive final memory safety check with 250 reloads.\n    \n        Final comprehensive test combining all aspects: rapid reloads, worker access,\n        memory safety, and extended operation.\n        \"\"\"\n>       check_buggy_pattern()\n\n/tests/test_outputs.py:890: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def check_buggy_pattern():\n        \"\"\"Check for buggy pattern and fail if detected.\"\"\"\n        with open(\"/app/daemon.cpp\", \"r\") as f:\n            source = f.read()\n    \n        has_raw_pointer_bug = (\n            \"Config* g_config\" in source and\n            \"delete old_config\" in source and\n            \"std::shared_ptr<Config>\" not in source and\n            \"std::unique_ptr<Config>\" not in source\n        )\n    \n        if has_raw_pointer_bug:\n>           pytest.fail(\n                \"Buggy code detected: Using raw pointer (Config* g_config) with delete. \"\n                \"This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\"\n            )\nE           Failed: Buggy code detected: Using raw pointer (Config* g_config) with delete. This causes use-after-free. Fix must use smart pointers (std::shared_ptr or std::unique_ptr).\n\n/tests/test_outputs.py:69: Failed",
+                "message": "The test failed in the call phase"
+            }
+        ]
+    }
+}

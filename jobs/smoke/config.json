@@ -1,0 +1,19 @@
+{
+    "job_name": "smoke",
+    "n_concurrent_trials": 3,
+    "quiet": true,
+    "agents": [
+        {
+            "name": "terminus-2",
+            "model_name": "anthropic/claude-haiku-5-5"
+        }
+    ],
+    "datasets": [
+        {
+            "path": "tblite",
+            "task_names": [
+                "california-housing-api"
+            ]
+        }
+    ]
+}

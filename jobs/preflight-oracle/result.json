@@ -1,0 +1,68 @@
+{
+    "id": "273c4c3e-9a12-45ff-80f8-65b9f8c5f4aa",
+    "started_at": "2026-10-25T17:30:15.068780",
+    "updated_at": "2026-10-25T17:40:47.898225",
+    "finished_at": "2026-10-25T17:40:47.898225",
+    "n_total_trials": 28,
+    "stats": {
+        "n_completed_trials": 28,
+        "n_errored_trials": 0,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "oracle__tblite": {
+                "n_trials": 28,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.8214285714285714
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "api-endpoint-permission-canonica__Qoprqqn",
+                            "bandit-delayed-feedback__GrFznaB",
+                            "build-system-task-ordering__3YLAGxH",
+                            "california-housing-api__wAeKdqG",
+                            "chained-forensic-extraction_2026__iB7fNtf",
+                            "container-registry-optimization__SumtZta",
+                            "convolutional-layers__5tzqQnt",
+                            "cpp-daemon-sighup-segfault__QrdahtS",
+                            "csv-json-jsonl-merger__dimcvbD",
+                            "db-migration-local-storage__Pad5XA3",
+                            "industrial-kiln-controller__L63jVnn",
+                            "malicious-package-forensics__qGcizwx",
+                            "maven-slf4j-conflict__hYeR2Xm",
+                            "neural-architecture-search-final__w4SWunv",
+                            "reproducibility-and-envsetup__PoZ6faD",
+                            "rsa-jwt-token-api-redis-blacklis__Qh8CrDN",
+                            "scan-linux-persistence-artifacts__dCoK9Jf",
+                            "service-deployment-wave-planner__HMLSVBt",
+                            "sign-vector-game__vWTjt7v",
+                            "submission_a63937a5_20251224_152__JRnY5bG",
+                            "supply-chain-fulfillment__qEe34dp",
+                            "systemd-log-monitoring__xyExfWo",
+                            "task-xxe-exploit__9BqYbDq"
+                        ],
+                        "0.0": [
+                            "bloom-filter-cache-penetration-p__reeUgQn",
+                            "protein-sequence__bUTMC4Y",
+                            "react-typescript-debugg__uCbt46G",
+                            "reverse-engineer-stack-vm__adceLzA",
+                            "smiles-data-lab__oTBWp45"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        },
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null
+    }
+}

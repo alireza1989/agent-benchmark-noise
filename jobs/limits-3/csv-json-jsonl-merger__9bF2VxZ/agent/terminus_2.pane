@@ -1,0 +1,115 @@
+[?2004hroot@1387774ab038:/workspace# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@1387774ab038:/workspace# clear
+[?2004l[H[J[3J[?2004hroot@1387774ab038:/workspace# ls -la /workspace && wc -l /workspace/users.csv /workspace/records.jsonl && head -c 600 /workspace/users.csv && echo && echo ---- && head -n 3 /workspace/records.jsonl | cut -c1-400 && echo ---- && head -c 600 /workspace/profiles.json && echo
+[?2004ltotal 20
+drwxr-xr-x 1 root root 4096 Oct 25 21:32 .
+drwxr-xr-x 1 root root 4096 Oct 26 01:21 ..
+-rw-r--r-- 1 root root 2567 Oct 25 21:29 profiles.json
+-rw-r--r-- 1 root root 2207 Oct 25 21:29 records.jsonl
+-rw-r--r-- 1 root root  755 Oct 25 21:29 users.csv
+   7 /workspace/users.csv
+  10 /workspace/records.jsonl
+  17 total
+id,name,university,email,phone,status,salary,time
+user_1001,Tiffany Gomez,Togo Junior College,gomez_tiffany@yahoo.com,766-117-5141,active,111191,2013-03-24
+user_1004,,Nevada Junior College,martinez_claudia@yahoo.com,915-875-9429,archived,61031,2020-11-20
+user_1002,Brandi Chang,Switzerland State University,brandichang28@gmail.com,562-795-1576,pending,36522,2015-12-05
+user_1006,Scott Yang,Netherlands Antilles State University,syang@netherlandsantillesstateuniversity.com,918-958-4047,inactive,76316,2022-09-10
+user_1003,Cynthia Sosa,Syrian Arab Republic College,csosa@syrianarabrepubliccollege
+----
+{"id": "user_1020", "name": "Robert Benjamin", "university": "Svalbard & Jan Mayen Islands University", "email": "robertbenjamin52@gmail.com", "phone": "632-301-4455", "status": "pending", "salary": 69380, "time": "2011-10-26"}
+{"id": "user_1012", "name": "Julie Bryant", "university": "Tonga University", "email": "jbryant@tongauniversity.com", "phone": "910-813-3642", "status": "active", "salary": 83183, "time": "2023-08-24"}
+{"id": "user_1014", "name": "Lacey Owens", "university": "Northern Mariana Islands College", "email": "lowens@northernmarianaislandscollege.org", "phone": "720-382-9023", "status": "archived", "salary": 64637, "time": "2011-04-04"}
+----
+{
+    "kristensimon61@gmail.com": {
+        "id": "user_1009",
+        "name": "Kristen Simon",
+        "email": "kristensimon61@gmail.com",
+        "status": "inactive",
+        "salary": 70548,
+        "time": "2012-02-10",
+        "other_info": {
+            "phone": "279-736-5631",
+            "university": "United States Minor Outlying Islands Junior College"
+        }
+    },
+    "corey.smith@liberiajuniorcollege.org": {
+        "id": "user_1013",
+        "name": "Corey Smith",
+        "email": "corey.smith@liberiajuniorcollege.org",
+        "status": "active",
+        "salary": 68613,
+  
+[?2004hroot@1387774ab038:/workspace# python3 -c "import json,csv,collections; r=open('/workspace/records.jsonl').read(); print(repr(r[:120])); print(r.count('\n'))"
+[?2004l'{"id": "user_1020", "name": "Robert Benjamin", "university": "Svalbard & Jan Mayen Islands University", "email": "robert'
+10
+[?2004hroot@1387774ab038:/workspace# python3 -c "import json; p=json.load(open('/workspace/profiles.json')); print(type(p), len(p)); ks=set(); [ks.update(v.keys()) for v in p.values()]; print(sorted(ks)); print(sorted({k for v in p.values() if isinstance(v.get('other_info'),dict) for k in v['other_info']}))"
+[?2004l<class 'dict'> 7
+['email', 'id', 'name', 'other_info', 'salary', 'status', 'time']
+['phone', 'university']
+[?2004hroot@1387774ab038:/workspace# python3 -c "import csv; rows=list(csv.DictReader(open('/workspace/users.csv'))); print(len(rows)); print([ (r['email'], r['phone'], r['status']) for r in rows])"
+[?2004l6
+[('gomez_tiffany@yahoo.com', '766-117-5141', 'active'), ('martinez_claudia@yahoo.com', '915-875-9429', 'archived'), ('brandichang28@gmail.com', '562-795-1576', 'pending'), ('syang@netherlandsantillesstateuniversity.com', '918-958-4047', 'inactive'), ('csosa@syrianarabrepubliccollege.org', '674-218-5388', 'archived'), ('nolan_michelle@yahoo.com', '222-143-8472', 'pending')]
+[?2004hroot@1387774ab038:/workspace# cat > /workspace/do_merge.py << 'EOF'
+[?2004l[?2004h> import json
+[?2004l[?2004h> import pandas as pd
+[?2004l[?2004h> 
+[?2004l[?2004h> def clean(v):
+[?2004l[?2004h>     if v is None or (isinstance(v, float) and pd.isna(v)):
+[?2004l[?2004h>         return ''
+[?2004l[?2004h>     return str(v).strip()
+[?2004l[?2004h> 
+[?2004l[?2004h> records = {}
+[?2004l[?2004h> 
+[?2004l[?2004h> def add(email, phone, status):
+[?2004l[?2004h>     e = clean(email)
+[?2004l[?2004h>     if not e:
+[?2004l[?2004h>         return
+[?2004l[?2004h>     cur = records.setdefault(e, {'email': e, 'phone': '', 'status': ''})
+[?2004l[?2004h>     if not cur['phone'] and clean(phone):
+[?2004l[?2004h>         cur['phone'] = clean(phone)
+[?2004l[?2004h>     if not cur['status'] and clean(status):
+[?2004l[?2004h>         cur['status'] = clean(status)
+[?2004l[?2004h> 
+[?2004l[?2004h> users = pd.read_csv('/workspace/users.csv', dtype=str, keep_default_na=False)
+[?2004l[?2004h> for _, r in users.iterrows():
+[?2004l[?2004h>     add(r.get('email', ''), r.get('phone', ''), r.get('status', ''))
+[?2004l[?2004h> 
+[?2004l[?2004h> with open('/workspace/records.jsonl') as f:
+[?2004l[?2004h>     for line in f:
+[?2004l[?2004h>         line = line.strip()
+[?2004l[?2004h>         if not line:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         r = json.loads(line)
+[?2004l[?2004h>         other = r.get('other_info') or {}
+[?2004l[?2004h>         add(r.get('email'), r.get('phone') or other.get('phone'), r.get('status'))
+[?2004l[?2004h> 
+[?2004l[?2004h> with open('/workspace/profiles.json') as f:
+[?2004l[?2004h>     profiles = json.load(f)
+[?2004l[?2004h> if isinstance(profiles, dict):
+[?2004l[?2004h>     items = [(k, v) for k, v in profiles.items()]
+[?2004l[?2004h> else:
+[?2004l[?2004h>     items = [(None, v) for v in profiles]
+[?2004l[?2004h> for key, r in items:
+[?2004l[?2004h>     other = r.get('other_info') or {}
+[?2004l[?2004h>     add(r.get('email') or key, r.get('phone') or other.get('phone'), r.get('status'))
+[?2004l[?2004h> 
+[?2004l[?2004h> out = pd.DataFrame(list(records.values()), columns=['email', 'phone', 'status'])
+[?2004l[?2004h> out.to_csv('/workspace/merged_records.csv', index=False)
+[?2004l[?2004h> print(len(out), 'rows written')
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@1387774ab038:/workspace# python3 /workspace/do_merge.py && python3 -c "import json; ks=set(); [ks.update(json.loads(l).keys()) for l in open('/workspace/records.jsonl') if l.strip()]; print(sorted(ks))" && head -n 3 /workspace/merged_records.csv && wc -l /workspace/merged_records.csv
+[?2004l20 rows written
+['email', 'id', 'name', 'phone', 'salary', 'status', 'time', 'university']
+email,phone,status
+gomez_tiffany@yahoo.com,766-117-5141,active
+martinez_claudia@yahoo.com,915-875-9429,archived
+21 /workspace/merged_records.csv
+[?2004hroot@1387774ab038:/workspace# python3 -c "import pandas as pd; d=pd.read_csv('/workspace/merged_records.csv', dtype=str, keep_default_na=False); print('rows', len(d)); print('empty phone', (d.phone=='').sum(), 'empty status', (d.status=='').sum()); n=d.email.str.strip().str.lower(); print('distinct raw', d.email.nunique(), 'distinct normalized', n.nunique())"
+[?2004lrows 20
+empty phone 0 empty status 0
+distinct raw 20 distinct normalized 20
+[?2004hroot@1387774ab038:/workspace# 

@@ -1,0 +1,116 @@
+{
+    "id": "feddd163-3091-41e8-b688-cbc48fe83087",
+    "task_name": "california-housing-api",
+    "trial_name": "california-housing-api__wAeKdqG",
+    "trial_uri": "file:///Users/alireza/agent-benchmark-noise/jobs/preflight-oracle/california-housing-api__wAeKdqG",
+    "task_id": {
+        "path": "tblite/california-housing-api"
+    },
+    "source": "tblite",
+    "task_checksum": "f7d734cf2405d72c2a1e7504710acc867c489703a8bbbc685e7433b3b12f8184",
+    "config": {
+        "task": {
+            "path": "tblite/california-housing-api",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "tblite"
+        },
+        "trial_name": "california-housing-api__wAeKdqG",
+        "trials_dir": "jobs/preflight-oracle",
+        "install_only": false,
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "oracle",
+            "import_path": null,
+            "model_name": null,
+            "n_concurrent": null,
+            "concurrency_group": null,
+            "skills": [],
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "resume_trajectory": false,
+            "load_trajectory": null,
+            "extra_allowed_hosts": [],
+            "kwargs": {},
+            "mcp_servers": []
+        },
+        "user_agent": null,
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "stream": false,
+            "cpu_enforcement_policy": "auto",
+            "memory_enforcement_policy": "auto",
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "override_tpu": null,
+            "mounts": null,
+            "extra_docker_compose": [],
+            "kwargs": {},
+            "extra_allowed_hosts": []
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "extra_instruction_paths": [],
+        "extra_instructions": [],
+        "job_id": "273c4c3e-9a12-45ff-80f8-65b9f8c5f4aa",
+        "source_trial": null
+    },
+    "agent_info": {
+        "name": "oracle",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "model_usage": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "verifier_environment_mode": "shared",
+    "exception_info": null,
+    "started_at": "2026-10-25T21:31:11.834605Z",
+    "finished_at": "2026-10-25T21:33:20.036022Z",
+    "environment_setup": {
+        "started_at": "2026-10-25T21:31:11.836172Z",
+        "finished_at": "2026-10-25T21:32:21.314858Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-10-25T21:32:21.315573Z",
+        "finished_at": "2026-10-25T21:32:21.315732Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-10-25T21:32:21.319526Z",
+        "finished_at": "2026-10-25T21:32:53.672925Z"
+    },
+    "verifier": {
+        "started_at": "2026-10-25T21:32:55.327210Z",
+        "finished_at": "2026-10-25T21:33:07.589163Z"
+    },
+    "step_results": null
+}

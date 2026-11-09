@@ -1,0 +1,22 @@
+{
+  "model": [
+    "claude-haiku-5-5"
+  ],
+  "answers": [
+    "tail -n +2 data.csv | wc -l",
+    "tail -n +2 data.csv | wc -l",
+    "tail -n +2 data.csv | wc -l",
+    "tail -n +2 data.csv | wc -l",
+    "tail -n +2 data.csv | wc -l",
+    "tail -n +2 data.csv | wc -l",
+    "tail -n +2 data.csv | wc -l",
+    "tail -n +2 data.csv | wc -l",
+    "tail -n +2 data.csv | wc -l",
+    "tail -n +2 data.csv | wc -l"
+  ],
+  "usage": {
+    "input_tokens": 420,
+    "output_tokens": 445
+  },
+  "temperature_0_status": 400
+}

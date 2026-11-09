@@ -1,0 +1,7 @@
+temperature 0: HTTP 400
+  `temperature` is deprecated for this model.
+
+same request 10 times (claude-haiku-5-5): 1 different answers
+  10x  tail -n +2 data.csv | wc -l
+
+tokens used: 420 in, 445 out

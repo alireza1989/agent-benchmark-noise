@@ -1,0 +1,101 @@
+[?2004hroot@d473c4bba330:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@d473c4bba330:/app# clear
+[?2004l[H[J[3J[?2004hroot@d473c4bba330:/app# ls -la /app
+[?2004ltotal 32
+drwxr-xr-x 1 root root  4096 Oct 25 21:34 [0m[01;34m.[0m
+drwxr-xr-x 1 root root  4096 Oct 26 01:06 [01;34m..[0m
+-rw-r--r-- 1 root root 18464 Oct 25 21:34 firing_schedule.csv
+-rw-r--r-- 1 root root    75 Oct 25 21:34 kiln_specs.json
+[?2004hroot@d473c4bba330:/app# cat /app/kiln_specs.json
+[?2004l{"gas_burner_power_c": 6.0, "damper_cooling_c": 3.5, "ambient_loss_c": 1.5}[?2004hroot@d473c4bba330:/app# head -5 /app/firing_schedule.csv; wc -l /app/firing_schedule.csv
+[?2004ltarget_temp
+20.25
+20.504991670832343
+20.759933466539753
+21.014776010333065
+1001 /app/firing_schedule.csv
+[?2004hroot@d473c4bba330:/app# python3 -c "import csv;r=[float(x['target_temp']) for x in csv.DictReader(open('/app/firing_schedule.csv'))];print(len(r),min(r),max(r));print([round(v,1) for v in r[::50]]);print(max(abs(r[i+1]-r[i]) for i in range(len(r)-1)))"
+[?2004l1000 20.25 120.04999982451729
+[20.2, 32.7, 45.2, 57.8, 70.3, 82.7, 95.2, 107.7, 120.0, 120.0, 120.0, 120.0, 120.0, 120.0, 119.9, 112.3, 104.8, 97.3, 89.9, 82.4]
+0.25499791643424885
+[?2004hroot@d473c4bba330:/app# cat > /app/kiln_firmware.py << 'EOF'
+[?2004l[?2004h> import csv
+[?2004l[?2004h> import json
+[?2004l[?2004h> 
+[?2004l[?2004h> BEAM = 200
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def run_firing_cycle(schedule_path, specs_path):
+[?2004l[?2004h>     with open(specs_path) as f:
+[?2004l[?2004h>         s = json.load(f)
+[?2004l[?2004h>     P = float(s['gas_burner_power_c'])
+[?2004l[?2004h>     D = float(s['damper_cooling_c'])
+[?2004l[?2004h>     A = float(s['ambient_loss_c'])
+[?2004l[?2004h>     with open(schedule_path) as f:
+[?2004l[?2004h>         target = [float(r['target_temp']) for r in csv.DictReader(f)]
+[?2004l[?2004h>     n = len(target)
+[?2004l[?2004h>     T0 = target[0]
+[?2004l[?2004h>     # beam entry: (err, T, last_gas, prev_gas)
+[?2004l[?2004h>     beam = [(0.0, T0, 0, 0)]
+[?2004l[?2004h>     hist = []
+[?2004l[?2004h>     for t in range(n):
+[?2004l[?2004h>         tgt = target[t + 1] if t + 1 < n else target[-1]
+[?2004l[?2004h>         best = {}
+[?2004l[?2004h>         for bi, (err, T, last, prev) in enumerate(beam):
+[?2004l[?2004h>             for g in range(6):
+[?2004l[?2004h>                 gain = (0.1 * g + 0.3 * last + 0.6 * prev) * P
+[?2004l[?2004h>                 for d in range(6):
+[?2004l[?2004h>                     Tn = T + gain - (d * D + A)
+[?2004l[?2004h>                     if Tn < T - 5.0:
+[?2004l[?2004h>                         continue
+[?2004l[?2004h>                     e = err + abs(Tn - tgt) + 0.02 * g
+[?2004l[?2004h>                     key = (round(Tn, 2), g, last)
+[?2004l[?2004h>                     if key not in best or e < best[key][0]:
+[?2004l[?2004h>                         best[key] = (e, bi, g, d, Tn)
+[?2004l[?2004h>         items = sorted(best.values(), key=lambda x: x[0])[:BEAM]
+[?2004l[?2004h>         beam = [(e, Tn, g, beam[bi][2]) for (e, bi, g, d, Tn) in items]
+[?2004l[?2004h>         hist.append([(bi, g, d) for (e, bi, g, d, Tn) in items])
+[?2004l[?2004h>     idx = min(range(len(beam)), key=lambda i: beam[i][0])
+[?2004l[?2004h>     actions = [None] * n
+[?2004l[?2004h>     for t in range(n - 1, -1, -1):
+[?2004l[?2004h>         bi, g, d = hist[t][idx]
+[?2004l[?2004h>         actions[t] = {'gas': int(g), 'damper': int(d)}
+[?2004l[?2004h>         idx = bi
+[?2004l[?2004h>     return actions
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h>     import sys
+[?2004l[?2004h>     sched = '/app/firing_schedule.csv'
+[?2004l[?2004h>     specs = '/app/kiln_specs.json'
+[?2004l[?2004h>     acts = run_firing_cycle(sched, specs)
+[?2004l[?2004h>     with open(specs) as f:
+[?2004l[?2004h>         s = json.load(f)
+[?2004l[?2004h>     P = s['gas_burner_power_c']; D = s['damper_cooling_c']; A = s['ambient_loss_c']
+[?2004l[?2004h>     with open(sched) as f:
+[?2004l[?2004h>         target = [float(r['target_temp']) for r in csv.DictReader(f)]
+[?2004l[?2004h>     g1 = g2 = 0
+[?2004l[?2004h>     T = target[0]
+[?2004l[?2004h>     err = 0.0
+[?2004l[?2004h>     total_gas = 0
+[?2004l[?2004h>     maxdrop = 0.0
+[?2004l[?2004h>     for t in range(len(target)):
+[?2004l[?2004h>         err += abs(T - target[t])
+[?2004l[?2004h>         g = acts[t]['gas']; d = acts[t]['damper']
+[?2004l[?2004h>         total_gas += g
+[?2004l[?2004h>         geff = 0.1 * g + 0.3 * g1 + 0.6 * g2
+[?2004l[?2004h>         Tn = T + geff * P - (d * D + A)
+[?2004l[?2004h>         maxdrop = max(maxdrop, T - Tn)
+[?2004l[?2004h>         g2, g1 = g1, g
+[?2004l[?2004h>         T = Tn
+[?2004l[?2004h>     print('steps', len(acts), 'total_gas', total_gas, 'abs_error', round(err, 2), 'max_drop', round(maxdrop, 3))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@d473c4bba330:/app# cd /app && time python3 kiln_firmware.py
+[?2004lsteps 1000 total_gas 1630 abs_error 170.61 max_drop 0.8
+
+real	0m3.077s
+user	0m3.059s
+sys	0m0.018s
+[?2004hroot@d473c4bba330:/app# 

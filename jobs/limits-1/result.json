@@ -1,0 +1,64 @@
+{
+    "id": "a0c34f35-7d98-41b0-b4fb-c0a5ae8a7c1c",
+    "started_at": "2026-10-25T19:58:21.966362",
+    "updated_at": "2026-10-25T20:17:57.124020",
+    "finished_at": "2026-10-25T20:17:57.124020",
+    "n_total_trials": 20,
+    "stats": {
+        "n_completed_trials": 20,
+        "n_errored_trials": 1,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "terminus-2__claude-haiku-5-5__tblite": {
+                "n_trials": 20,
+                "n_errors": 1,
+                "metrics": [
+                    {
+                        "mean": 0.9
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "api-endpoint-permission-canonica__8DKN9Xh",
+                            "bandit-delayed-feedback__sCP9xhx",
+                            "california-housing-api__4kpSQNL",
+                            "container-registry-optimization__mNVMbV8",
+                            "convolutional-layers__94SXqRQ",
+                            "csv-json-jsonl-merger__LzuVB9K",
+                            "db-migration-local-storage__CBxC2dN",
+                            "industrial-kiln-controller__qvMH9hS",
+                            "malicious-package-forensics__iUftWdL",
+                            "maven-slf4j-conflict__ure2cwq",
+                            "neural-architecture-search-final__dfomXoP",
+                            "rsa-jwt-token-api-redis-blacklis__UfRtAfy",
+                            "scan-linux-persistence-artifacts__eBd7LUF",
+                            "service-deployment-wave-planner__8EDvqah",
+                            "sign-vector-game__ceoPUEK",
+                            "submission_a63937a5_20251224_152__NAxpETj",
+                            "systemd-log-monitoring__KvsSs39",
+                            "task-xxe-exploit__2AFUVXr"
+                        ],
+                        "0.0": [
+                            "build-system-task-ordering__cv8GxEr",
+                            "reproducibility-and-envsetup__qA9Mdkn"
+                        ]
+                    }
+                },
+                "exception_stats": {
+                    "AgentTimeoutError": [
+                        "maven-slf4j-conflict__ure2cwq"
+                    ]
+                }
+            }
+        },
+        "n_input_tokens": 1280961,
+        "n_cache_tokens": 977444,
+        "n_output_tokens": 274910,
+        "cost_usd": 0.185156365
+    }
+}

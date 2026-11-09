@@ -1,0 +1,38 @@
+{
+    "job_name": "limits-1",
+    "n_concurrent_trials": 3,
+    "quiet": true,
+    "agents": [
+        {
+            "name": "terminus-2",
+            "model_name": "anthropic/claude-haiku-5-5"
+        }
+    ],
+    "datasets": [
+        {
+            "path": "tblite",
+            "task_names": [
+                "california-housing-api",
+                "malicious-package-forensics",
+                "reproducibility-and-envsetup",
+                "task-xxe-exploit",
+                "build-system-task-ordering",
+                "csv-json-jsonl-merger",
+                "scan-linux-persistence-artifacts",
+                "neural-architecture-search-final",
+                "sign-vector-game",
+                "db-migration-local-storage",
+                "api-endpoint-permission-canonicalizer",
+                "industrial-kiln-controller",
+                "bandit-delayed-feedback",
+                "container-registry-optimization",
+                "service-deployment-wave-planner",
+                "submission_a63937a5_20251224_152124",
+                "rsa-jwt-token-api-redis-blacklist",
+                "maven-slf4j-conflict",
+                "systemd-log-monitoring",
+                "convolutional-layers"
+            ]
+        }
+    ]
+}

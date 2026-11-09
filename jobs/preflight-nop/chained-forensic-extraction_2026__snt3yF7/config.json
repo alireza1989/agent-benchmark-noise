@@ -1,0 +1,12 @@
+{
+    "task": {
+        "path": "tblite/chained-forensic-extraction_20260101_011957",
+        "source": "tblite"
+    },
+    "trial_name": "chained-forensic-extraction_2026__snt3yF7",
+    "trials_dir": "jobs/preflight-nop",
+    "agent": {
+        "name": "nop"
+    },
+    "job_id": "2a0a1ef1-40fa-4a18-ac7d-00b14514c28d"
+}

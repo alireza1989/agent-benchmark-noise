@@ -1,0 +1,9 @@
+{
+    "task": {
+        "path": "tblite/systemd-log-monitoring",
+        "source": "tblite"
+    },
+    "trial_name": "systemd-log-monitoring__xyExfWo",
+    "trials_dir": "jobs/preflight-oracle",
+    "job_id": "273c4c3e-9a12-45ff-80f8-65b9f8c5f4aa"
+}

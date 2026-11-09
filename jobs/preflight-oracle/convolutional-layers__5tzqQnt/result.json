@@ -1,0 +1,116 @@
+{
+    "id": "679bf420-ac4e-4f91-8794-20f7aace7753",
+    "task_name": "convolutional-layers",
+    "trial_name": "convolutional-layers__5tzqQnt",
+    "trial_uri": "file:///Users/alireza/agent-benchmark-noise/jobs/preflight-oracle/convolutional-layers__5tzqQnt",
+    "task_id": {
+        "path": "tblite/convolutional-layers"
+    },
+    "source": "tblite",
+    "task_checksum": "40b5666344d14aa2b618a646afb5d0083ee837d25d61a6dadc42190e4bc0b9b9",
+    "config": {
+        "task": {
+            "path": "tblite/convolutional-layers",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "tblite"
+        },
+        "trial_name": "convolutional-layers__5tzqQnt",
+        "trials_dir": "jobs/preflight-oracle",
+        "install_only": false,
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "oracle",
+            "import_path": null,
+            "model_name": null,
+            "n_concurrent": null,
+            "concurrency_group": null,
+            "skills": [],
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "resume_trajectory": false,
+            "load_trajectory": null,
+            "extra_allowed_hosts": [],
+            "kwargs": {},
+            "mcp_servers": []
+        },
+        "user_agent": null,
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "stream": false,
+            "cpu_enforcement_policy": "auto",
+            "memory_enforcement_policy": "auto",
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "override_tpu": null,
+            "mounts": null,
+            "extra_docker_compose": [],
+            "kwargs": {},
+            "extra_allowed_hosts": []
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "extra_instruction_paths": [],
+        "extra_instructions": [],
+        "job_id": "273c4c3e-9a12-45ff-80f8-65b9f8c5f4aa",
+        "source_trial": null
+    },
+    "agent_info": {
+        "name": "oracle",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "model_usage": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "verifier_environment_mode": "shared",
+    "exception_info": null,
+    "started_at": "2026-10-25T21:31:44.930553Z",
+    "finished_at": "2026-10-25T21:32:22.538590Z",
+    "environment_setup": {
+        "started_at": "2026-10-25T21:31:44.931620Z",
+        "finished_at": "2026-10-25T21:32:00.910112Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-10-25T21:32:00.910326Z",
+        "finished_at": "2026-10-25T21:32:00.910581Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-10-25T21:32:00.911384Z",
+        "finished_at": "2026-10-25T21:32:01.914428Z"
+    },
+    "verifier": {
+        "started_at": "2026-10-25T21:32:03.371542Z",
+        "finished_at": "2026-10-25T21:32:10.596018Z"
+    },
+    "step_results": null
+}

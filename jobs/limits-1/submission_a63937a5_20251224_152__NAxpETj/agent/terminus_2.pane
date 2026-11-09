@@ -1,0 +1,99 @@
+[?2004hroot@268f9a13b332:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@268f9a13b332:/app# clear
+[?2004l[H[J[3J[?2004hroot@268f9a13b332:/app# ls -la /app && file /app/bandit && which python3 && head -c 600 /app/bandit | cat -v | head -40
+[?2004ltotal 20
+drwxr-xr-x 1 root root 4096 Oct 25 21:39 .
+drwxr-xr-x 1 root root 4096 Oct 26 00:13 ..
+-rwxr-xr-x 1 root root   46 Oct 25 21:39 bandit
+-r--r--r-- 1 root root 7944 Oct 25 21:38 bandit.pyc
+bash: file: command not found
+[?2004hroot@268f9a13b332:/app# cat /app/bandit; echo; which python3; python3 --version
+[?2004l#!/bin/bash
+exec python3 /app/bandit.pyc "$@"
+
+/usr/local/bin/python3
+Python 3.11.17
+[?2004hroot@268f9a13b332:/app# cat > /app/play.py << 'EOF'
+[?2004l[?2004h> import subprocess, sys, math
+[?2004l[?2004h> from collections import deque
+[?2004l[?2004h> 
+[?2004l[?2004h> def play(seed, W=30, c=0.5):
+[?2004l[?2004h>     p = subprocess.Popen(['/app/bandit', '--seed', str(seed)], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True, bufsize=1)
+[?2004l[?2004h>     def readline():
+[?2004l[?2004h>         return p.stdout.readline().strip()
+[?2004l[?2004h>     hdr = readline()
+[?2004l[?2004h>     while hdr != 'READY':
+[?2004l[?2004h>         hdr = readline()
+[?2004l[?2004h>     n = 10
+[?2004l[?2004h>     windows = [deque(maxlen=W) for _ in range(n)]
+[?2004l[?2004h>     done = None
+[?2004l[?2004h>     while True:
+[?2004l[?2004h>         line = readline()
+[?2004l[?2004h>         if not line:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         if line.startswith('DONE'):
+[?2004l[?2004h>             done = line
+[?2004l[?2004h>             break
+[?2004l[?2004h>         if line.startswith('TURN'):
+[?2004l[?2004h>             untried = [i for i in range(n) if len(windows[i]) == 0]
+[?2004l[?2004h>             if untried:
+[?2004l[?2004h>                 arm = untried[0]
+[?2004l[?2004h>             else:
+[?2004l[?2004h>                 total = sum(len(w) for w in windows)
+[?2004l[?2004h>                 best, besti = -1e9, 0
+[?2004l[?2004h>                 for i in range(n):
+[?2004l[?2004h>                     m = sum(windows[i]) / len(windows[i])
+[?2004l[?2004h>                     bonus = c * math.sqrt(2 * math.log(min(total, W * n) + 1) / len(windows[i]))
+[?2004l[?2004h>                     v = m + bonus
+[?2004l[?2004h>                     if v > best:
+[?2004l[?2004h>                         best, besti = v, i
+[?2004l[?2004h>                 arm = besti
+[?2004l[?2004h>             p.stdin.write(str(arm) + chr(10))
+[?2004l[?2004h>             p.stdin.flush()
+[?2004l[?2004h>             rline = readline()
+[?2004l[?2004h>             r = float(rline.split()[1])
+[?2004l[?2004h>             windows[arm].append(r)
+[?2004l[?2004h>     p.stdin.close()
+[?2004l[?2004h>     p.wait()
+[?2004l[?2004h>     return done
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h>     print(play(int(sys.argv[1])))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@268f9a13b332:/app# python3 /app/play.py 42
+[?2004lDONE total_reward=1200.475 oracle_reward=1350.995 regret=150.519
+[?2004hroot@268f9a13b332:/app# python3 /app/play.py 42 > /tmp/r42.txt && python3 /app/play.py 43 > /tmp/r43.txt && python3 /app/play.py 44 > /tmp/r44.txt && cat /tmp/r42.txt /tmp/r43.txt /tmp/r44.txt && python3 -c "import re;vals=[re.findall(r'total_reward=([-\d.]+) oracle_reward=([-\d.]+) regret=([-\d.]+)',open(f'/tmp/r{s}.txt').read())[0] for s in (42,43,44)];tr=sum(float(v[0]) for v in vals)/3;rg=sum(float(v[2]) for v in vals)/3;open('/app/answer.txt','w').write(f'total_reward={tr:.3f}\nregret={rg:.3f}\n')" && cat /app/answer.txt
+[?2004lDONE total_reward=1200.475 oracle_reward=1350.995 regret=150.519
+DONE total_reward=1261.848 oracle_reward=1391.051 regret=129.204
+DONE total_reward=1187.025 oracle_reward=1377.283 regret=190.258
+total_reward=1216.449
+regret=156.660
+[?2004hroot@268f9a13b332:/app# sed -i 's/    print(play(int(sys.argv\[1\])))/    print(play(int(sys.argv[1]), int(sys.argv[2]), float(sys.argv[3])))/' /app/play.py && for W in 20 40; do for C in 0.3 0.7; do echo "W=$W c=$C"; for s in 42 43 44; do python3 /app/play.py $s $W $C; done; done; done
+[?2004lW=20 c=0.3
+DONE total_reward=1197.413 oracle_reward=1350.995 regret=153.581
+DONE total_reward=1269.434 oracle_reward=1391.051 regret=121.617
+DONE total_reward=1255.046 oracle_reward=1377.283 regret=122.237
+W=20 c=0.7
+DONE total_reward=1185.303 oracle_reward=1350.995 regret=165.692
+DONE total_reward=1256.019 oracle_reward=1391.051 regret=135.033
+DONE total_reward=1233.902 oracle_reward=1377.283 regret=143.380
+W=40 c=0.3
+DONE total_reward=1174.758 oracle_reward=1350.995 regret=176.237
+DONE total_reward=1236.773 oracle_reward=1391.051 regret=154.279
+DONE total_reward=1138.829 oracle_reward=1377.283 regret=238.453
+W=40 c=0.7
+DONE total_reward=1211.946 oracle_reward=1350.995 regret=139.048
+DONE total_reward=1238.549 oracle_reward=1391.051 regret=152.502
+DONE total_reward=1182.578 oracle_reward=1377.283 regret=194.705
+[?2004hroot@268f9a13b332:/app# for s in 42 43 44; do python3 /app/play.py $s 20 0.3 > /tmp/f$s.txt; done; cat /tmp/f42.txt /tmp/f43.txt /tmp/f44.txt; python3 -c "import re;vals=[re.findall(r'total_reward=([-\d.]+) oracle_reward=([-\d.]+) regret=([-\d.]+)',open(f'/tmp/f{s}.txt').read())[0] for s in (42,43,44)];tr=sum(float(v[0]) for v in vals)/3;rg=sum(float(v[2]) for v in vals)/3;open('/app/answer.txt','w').write(f'total_reward={tr:.3f}\nregret={rg:.3f}\n')"; cat /app/answer.txt
+[?2004lDONE total_reward=1197.413 oracle_reward=1350.995 regret=153.581
+DONE total_reward=1269.434 oracle_reward=1391.051 regret=121.617
+DONE total_reward=1255.046 oracle_reward=1377.283 regret=122.237
+total_reward=1240.631
+regret=132.478
+[?2004hroot@268f9a13b332:/app# cat /app/answer.txt
+[?2004ltotal_reward=1240.631
+regret=132.478
+[?2004hroot@268f9a13b332:/app# 

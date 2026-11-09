@@ -1,0 +1,535 @@
+{
+  "tasks": [
+    "california-housing-api",
+    "malicious-package-forensics",
+    "reproducibility-and-envsetup",
+    "task-xxe-exploit",
+    "build-system-task-ordering",
+    "csv-json-jsonl-merger",
+    "scan-linux-persistence-artifacts",
+    "neural-architecture-search-final",
+    "sign-vector-game",
+    "db-migration-local-storage",
+    "api-endpoint-permission-canonicalizer",
+    "industrial-kiln-controller",
+    "bandit-delayed-feedback",
+    "container-registry-optimization",
+    "service-deployment-wave-planner",
+    "submission_a63937a5_20251224_152124",
+    "rsa-jwt-token-api-redis-blacklist",
+    "maven-slf4j-conflict",
+    "systemd-log-monitoring",
+    "convolutional-layers"
+  ],
+  "runs": [
+    {
+      "job": "limits-1",
+      "n": 20,
+      "passed": 18.0,
+      "score": 0.9,
+      "wilson": [
+        0.6989663528135878,
+        0.9721335190383086
+      ],
+      "normal": [
+        0.7685216178764281,
+        1.031478382123572
+      ],
+      "buckets": {
+        "passed": 17,
+        "failed": 2,
+        "timed out, passed": 1
+      },
+      "cost_usd": 0.185156365,
+      "started_at": "2026-10-25T23:58:22.047657Z"
+    },
+    {
+      "job": "limits-2",
+      "n": 20,
+      "passed": 16.0,
+      "score": 0.8,
+      "wilson": [
+        0.583982565906683,
+        0.9193423379822393
+      ],
+      "normal": [
+        0.6246954905019042,
+        0.9753045094980959
+      ],
+      "buckets": {
+        "passed": 16,
+        "failed": 3,
+        "timed out, failed": 1
+      },
+      "cost_usd": 0.570761055,
+      "started_at": "2026-10-26T00:36:17.453254Z"
+    },
+    {
+      "job": "limits-3",
+      "n": 20,
+      "passed": 16.0,
+      "score": 0.8,
+      "wilson": [
+        0.583982565906683,
+        0.9193423379822393
+      ],
+      "normal": [
+        0.6246954905019042,
+        0.9753045094980959
+      ],
+      "buckets": {
+        "passed": 15,
+        "failed": 4,
+        "timed out, passed": 1
+      },
+      "cost_usd": 0.198205795,
+      "started_at": "2026-10-26T01:18:00.556623Z"
+    },
+    {
+      "job": "nolimits-1",
+      "n": 20,
+      "passed": 18.0,
+      "score": 0.9,
+      "wilson": [
+        0.6989663528135878,
+        0.9721335190383086
+      ],
+      "normal": [
+        0.7685216178764281,
+        1.031478382123572
+      ],
+      "buckets": {
+        "passed": 17,
+        "failed": 2,
+        "timed out, passed": 1
+      },
+      "cost_usd": 0.174333495,
+      "started_at": "2026-10-26T00:18:00.874188Z"
+    },
+    {
+      "job": "nolimits-2",
+      "n": 20,
+      "passed": 18.0,
+      "score": 0.9,
+      "wilson": [
+        0.6989663528135878,
+        0.9721335190383086
+      ],
+      "normal": [
+        0.7685216178764281,
+        1.031478382123572
+      ],
+      "buckets": {
+        "passed": 18,
+        "failed": 2
+      },
+      "cost_usd": 0.179313445,
+      "started_at": "2026-10-26T01:00:29.464164Z"
+    }
+  ],
+  "grid": {
+    "limits-1": {
+      "api-endpoint-permission-canonicalizer": "passed",
+      "bandit-delayed-feedback": "passed",
+      "build-system-task-ordering": "failed",
+      "california-housing-api": "passed",
+      "container-registry-optimization": "passed",
+      "convolutional-layers": "passed",
+      "csv-json-jsonl-merger": "passed",
+      "db-migration-local-storage": "passed",
+      "industrial-kiln-controller": "passed",
+      "malicious-package-forensics": "passed",
+      "maven-slf4j-conflict": "timed out, passed",
+      "neural-architecture-search-final": "passed",
+      "reproducibility-and-envsetup": "failed",
+      "rsa-jwt-token-api-redis-blacklist": "passed",
+      "scan-linux-persistence-artifacts": "passed",
+      "service-deployment-wave-planner": "passed",
+      "sign-vector-game": "passed",
+      "submission_a63937a5_20251224_152124": "passed",
+      "systemd-log-monitoring": "passed",
+      "task-xxe-exploit": "passed"
+    },
+    "limits-2": {
+      "api-endpoint-permission-canonicalizer": "passed",
+      "bandit-delayed-feedback": "failed",
+      "build-system-task-ordering": "timed out, failed",
+      "california-housing-api": "passed",
+      "container-registry-optimization": "passed",
+      "convolutional-layers": "passed",
+      "csv-json-jsonl-merger": "passed",
+      "db-migration-local-storage": "passed",
+      "industrial-kiln-controller": "passed",
+      "malicious-package-forensics": "passed",
+      "maven-slf4j-conflict": "passed",
+      "neural-architecture-search-final": "passed",
+      "reproducibility-and-envsetup": "failed",
+      "rsa-jwt-token-api-redis-blacklist": "passed",
+      "scan-linux-persistence-artifacts": "passed",
+      "service-deployment-wave-planner": "passed",
+      "sign-vector-game": "passed",
+      "submission_a63937a5_20251224_152124": "passed",
+      "systemd-log-monitoring": "failed",
+      "task-xxe-exploit": "passed"
+    },
+    "limits-3": {
+      "api-endpoint-permission-canonicalizer": "passed",
+      "bandit-delayed-feedback": "failed",
+      "build-system-task-ordering": "passed",
+      "california-housing-api": "passed",
+      "container-registry-optimization": "passed",
+      "convolutional-layers": "passed",
+      "csv-json-jsonl-merger": "passed",
+      "db-migration-local-storage": "passed",
+      "industrial-kiln-controller": "passed",
+      "malicious-package-forensics": "failed",
+      "maven-slf4j-conflict": "timed out, passed",
+      "neural-architecture-search-final": "passed",
+      "reproducibility-and-envsetup": "failed",
+      "rsa-jwt-token-api-redis-blacklist": "passed",
+      "scan-linux-persistence-artifacts": "passed",
+      "service-deployment-wave-planner": "passed",
+      "sign-vector-game": "passed",
+      "submission_a63937a5_20251224_152124": "passed",
+      "systemd-log-monitoring": "failed",
+      "task-xxe-exploit": "passed"
+    },
+    "nolimits-1": {
+      "api-endpoint-permission-canonicalizer": "passed",
+      "bandit-delayed-feedback": "failed",
+      "build-system-task-ordering": "failed",
+      "california-housing-api": "passed",
+      "container-registry-optimization": "passed",
+      "convolutional-layers": "passed",
+      "csv-json-jsonl-merger": "passed",
+      "db-migration-local-storage": "passed",
+      "industrial-kiln-controller": "passed",
+      "malicious-package-forensics": "passed",
+      "maven-slf4j-conflict": "timed out, passed",
+      "neural-architecture-search-final": "passed",
+      "reproducibility-and-envsetup": "passed",
+      "rsa-jwt-token-api-redis-blacklist": "passed",
+      "scan-linux-persistence-artifacts": "passed",
+      "service-deployment-wave-planner": "passed",
+      "sign-vector-game": "passed",
+      "submission_a63937a5_20251224_152124": "passed",
+      "systemd-log-monitoring": "passed",
+      "task-xxe-exploit": "passed"
+    },
+    "nolimits-2": {
+      "api-endpoint-permission-canonicalizer": "passed",
+      "bandit-delayed-feedback": "passed",
+      "build-system-task-ordering": "passed",
+      "california-housing-api": "passed",
+      "container-registry-optimization": "passed",
+      "convolutional-layers": "passed",
+      "csv-json-jsonl-merger": "passed",
+      "db-migration-local-storage": "passed",
+      "industrial-kiln-controller": "passed",
+      "malicious-package-forensics": "failed",
+      "maven-slf4j-conflict": "passed",
+      "neural-architecture-search-final": "passed",
+      "reproducibility-and-envsetup": "passed",
+      "rsa-jwt-token-api-redis-blacklist": "passed",
+      "scan-linux-persistence-artifacts": "passed",
+      "service-deployment-wave-planner": "passed",
+      "sign-vector-game": "passed",
+      "submission_a63937a5_20251224_152124": "passed",
+      "systemd-log-monitoring": "failed",
+      "task-xxe-exploit": "passed"
+    }
+  },
+  "aa_pairs": [
+    {
+      "a": "limits-1",
+      "b": "limits-2",
+      "diff": -0.1,
+      "only_a": 2,
+      "only_b": 0,
+      "p": 0.5
+    },
+    {
+      "a": "limits-1",
+      "b": "limits-3",
+      "diff": -0.1,
+      "only_a": 3,
+      "only_b": 1,
+      "p": 0.625
+    },
+    {
+      "a": "limits-2",
+      "b": "limits-3",
+      "diff": 0.0,
+      "only_a": 1,
+      "only_b": 1,
+      "p": 1.0
+    }
+  ],
+  "pooled": {
+    "k": 3,
+    "n_trials": 60,
+    "mean": 0.8333333333333334,
+    "se_clustered": 0.06871842709362767,
+    "se_naive": 0.048518542478298496,
+    "always": 15,
+    "never": 1,
+    "icc": 0.5365853658536585,
+    "within": 0.06666666666666668,
+    "between": 0.07719298245614035,
+    "per_task": {
+      "california-housing-api": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "malicious-package-forensics": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "reproducibility-and-envsetup": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "task-xxe-exploit": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "build-system-task-ordering": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "csv-json-jsonl-merger": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "scan-linux-persistence-artifacts": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "neural-architecture-search-final": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "sign-vector-game": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "db-migration-local-storage": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "api-endpoint-permission-canonicalizer": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "industrial-kiln-controller": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "bandit-delayed-feedback": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "container-registry-optimization": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "service-deployment-wave-planner": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "submission_a63937a5_20251224_152124": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "rsa-jwt-token-api-redis-blacklist": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "maven-slf4j-conflict": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "systemd-log-monitoring": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "convolutional-layers": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "paired": {
+    "mean_on": 0.8333333333333334,
+    "mean_off": 0.9,
+    "diff": 0.06666666666666668,
+    "sd_diff": 0.2319507913128198,
+    "se_paired": 0.05186577368103327,
+    "se_unpaired": 0.08411910241920598,
+    "boot": [
+      -0.008333333333333328,
+      0.175
+    ],
+    "p": 0.3125,
+    "infra_on": 0,
+    "n_on": 60,
+    "infra_off": 0,
+    "n_off": 40,
+    "per_task_diff": {
+      "california-housing-api": 0.0,
+      "malicious-package-forensics": -0.16666666666666663,
+      "reproducibility-and-envsetup": 1.0,
+      "task-xxe-exploit": 0.0,
+      "build-system-task-ordering": 0.16666666666666669,
+      "csv-json-jsonl-merger": 0.0,
+      "scan-linux-persistence-artifacts": 0.0,
+      "neural-architecture-search-final": 0.0,
+      "sign-vector-game": 0.0,
+      "db-migration-local-storage": 0.0,
+      "api-endpoint-permission-canonicalizer": 0.0,
+      "industrial-kiln-controller": 0.0,
+      "bandit-delayed-feedback": 0.16666666666666669,
+      "container-registry-optimization": 0.0,
+      "service-deployment-wave-planner": 0.0,
+      "submission_a63937a5_20251224_152124": 0.0,
+      "rsa-jwt-token-api-redis-blacklist": 0.0,
+      "maven-slf4j-conflict": 0.0,
+      "systemd-log-monitoring": 0.16666666666666669,
+      "convolutional-layers": 0.0
+    },
+    "omega2": 0.0,
+    "per_task_off": {
+      "california-housing-api": [
+        1.0,
+        1.0
+      ],
+      "malicious-package-forensics": [
+        1.0,
+        0.0
+      ],
+      "reproducibility-and-envsetup": [
+        1.0,
+        1.0
+      ],
+      "task-xxe-exploit": [
+        1.0,
+        1.0
+      ],
+      "build-system-task-ordering": [
+        0.0,
+        1.0
+      ],
+      "csv-json-jsonl-merger": [
+        1.0,
+        1.0
+      ],
+      "scan-linux-persistence-artifacts": [
+        1.0,
+        1.0
+      ],
+      "neural-architecture-search-final": [
+        1.0,
+        1.0
+      ],
+      "sign-vector-game": [
+        1.0,
+        1.0
+      ],
+      "db-migration-local-storage": [
+        1.0,
+        1.0
+      ],
+      "api-endpoint-permission-canonicalizer": [
+        1.0,
+        1.0
+      ],
+      "industrial-kiln-controller": [
+        1.0,
+        1.0
+      ],
+      "bandit-delayed-feedback": [
+        0.0,
+        1.0
+      ],
+      "container-registry-optimization": [
+        1.0,
+        1.0
+      ],
+      "service-deployment-wave-planner": [
+        1.0,
+        1.0
+      ],
+      "submission_a63937a5_20251224_152124": [
+        1.0,
+        1.0
+      ],
+      "rsa-jwt-token-api-redis-blacklist": [
+        1.0,
+        1.0
+      ],
+      "maven-slf4j-conflict": [
+        1.0,
+        1.0
+      ],
+      "systemd-log-monitoring": [
+        1.0,
+        0.0
+      ],
+      "convolutional-layers": [
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "power": [
+    {
+      "k": 1,
+      "sd_diff": 0.36514837167011077,
+      "mde_20": 0.22874845736784036,
+      "n_5": 419,
+      "n_10": 105
+    },
+    {
+      "k": 3,
+      "sd_diff": 0.21081851067789198,
+      "mde_20": 0.13206798343803428,
+      "n_5": 140,
+      "n_10": 35
+    },
+    {
+      "k": 5,
+      "sd_diff": 0.16329931618554522,
+      "mde_20": 0.10229942008454072,
+      "n_5": 84,
+      "n_10": 21
+    }
+  ],
+  "cost": {
+    "trials": 100,
+    "usd": 1.307770155,
+    "solved": 86.0,
+    "input_tokens": 31062258,
+    "cache_tokens": 29383597,
+    "output_tokens": 1460652
+  }
+}

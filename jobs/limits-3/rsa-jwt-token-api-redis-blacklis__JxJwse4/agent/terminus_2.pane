@@ -1,0 +1,497 @@
+[?2004hroot@dd05d7035ebf:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@dd05d7035ebf:/app# clear
+[?2004l[H[J[3J[?2004hroot@dd05d7035ebf:/app# ls -la /app
+[?2004ltotal 16
+drwxr-xr-x 1 root root 4096 Oct 25 21:37 .
+drwxr-xr-x 1 root root 4096 Oct 26 01:28 ..
+drwxr-xr-x 2 root root 4096 Oct 25 21:37 keys
+drwxr-xr-x 2 root root 4096 Oct 25 21:37 logs
+[?2004hroot@dd05d7035ebf:/app# which python3 pip pip3 redis-server redis-cli openssl; python3 --version
+[?2004l/usr/local/bin/python3
+/usr/local/bin/pip
+/usr/local/bin/pip3
+/usr/bin/redis-server
+/usr/bin/redis-cli
+/usr/bin/openssl
+Python 3.13.17
+[?2004hroot@dd05d7035ebf:/app# redis-cli ping 2>&1 | head -1
+[?2004lCould not connect to Redis at 127.0.0.1:6379: Connection refused
+[?2004hroot@dd05d7035ebf:/app# cd /app && openssl genrsa -out keys/private.pem 2048 2>/dev/null && openssl rsa -in keys/private.pem -pubout -out keys/public.pem 2>/dev/null && chmod 600 keys/private.pem && chmod 644 keys/public.pem && ls -l keys
+[?2004ltotal 8
+-rw------- 1 root root 1704 Oct 26 01:28 private.pem
+-rw-r--r-- 1 root root  451 Oct 26 01:28 public.pem
+[?2004hroot@dd05d7035ebf:/app# printf 'flask\npyjwt\ncryptography\nbcrypt\nredis\nrequests\n' > /app/requirements.txt && (pip3 install -q -r /app/requirements.txt || pip3 install -q --break-system-packages -r /app/requirements.txt) && echo DEPS_OK
+[?2004l[33mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.[0m[33m
+[0mDEPS_OK
+[?2004hroot@dd05d7035ebf:/app# redis-server --daemonize yes --port 6379 >/dev/null && sleep 1 && redis-cli ping
+[?2004lPONG
+[?2004hroot@dd05d7035ebf:/app# cat > /app/api.py << 'EOF'
+[?2004l e.code, e.description)
+        return jsonify(error=e.description), e.code
+    log.exception('unhandled error on %s', request.path)
+    return jsonify(error='internal server error'), 500
+
+
+def make_token(sub, ttype, ttl):
+    now = dt.datetime.now(dt.timezone.utc)
+    claims = {'iss': ISSUER, 'sub': sub, 'iat': now, 'exp': now + ttl,
+              'jti': str(uuid.uuid4()), 'type': ttype}
+    return jwt.encode(claims, PRIVATE, algorithm='RS256')
+
+
+def verify(token):
+    return jwt.decode(token, PUBLIC, algorithms=['RS256'], issuer=ISSUER,
+                      options={'require': ['exp', 'iat', 'jti', 'sub', 'iss']})
+
+
+def check(token, expected_type=None):
+    try:
+        claims = verify(token)
+    except jwt.ExpiredSignatureError:
+        return None, ('token expired', 401)
+    except jwt.InvalidTokenError as e:
+        return None, ('invalid token: ' + str(e), 401)
+    if expected_type and claims.get('type') != expected_type:
+        return None, ('wrong token type', 401)
+    if r.exists('blacklist:' + cla[?2004h> import os, uuid, time, logging, datetime as dt
+[?2004l[?2004h> import bcrypt, jwt, redis
+[?2004lcted: %s', err[0])
+        return jsonify(error=err[0]), err[1]
+    access = make_token(claims['sub'], 'access', ACCESS_TTL)
+    return jsonify(access_token=access, token_type='Bearer',
+                   expires_in=int(ACCESS_TTL.total_seconds())), 200
+
+
+@app.post('/auth/revoke')
+def revoke():
+    body = request.get_json(silent=True) or {}
+    tok = body.get('token')
+    if not tok:
+        return jsonify(error='token required'), 400
+    try:
+        claims = verify(tok)
+    except jwt.ExpiredSignatureError:
+        return jsonify(error='token expired'), 401
+    except jwt.InvalidTokenError as e:
+        return jsonify(error='invalid token: ' + str(e)), 401
+    ttl = int(claims['exp'] - time.time())
+    if ttl > 0:
+        r.setex('blacklist:' + claims['jti'], ttl, claims['sub'])
+    log.info('revoked jti %s', claims['jti'])
+    return jsonify(message='revoked', jti=claims['jti']), 200
+
+
+@app.get('/auth/validate')
+def validate():
+    auth = request.headers.get('Authorization', '')
+    tok = auth[7:] if auth.[?2004h> from flask import Flask, request, jsonify
+[?2004l[?2004h> from werkzeug.exceptions import HTTPException
+[?2004l[?2004h> 
+[?2004l[?2004h> BASE = '/app'
+[?2004l[?2004h> os.makedirs(BASE + '/logs', exist_ok=True)
+[?2004lo[?2004h> logging.basicConfig(filename=BASE + '/logs/app.log', level=logging.INFO,
+[?2004l[?2004h>                     format='%(asctime)s %(levelname)s api: %(message)s')
+[?2004l[?2004h> log = logging.getLogger('api')
+[?2004l[?2004h> 
+[?2004l[?2004h> with open(BASE + '/keys/private.pem') as f:
+[?2004lme__ =[?2004h>     PRIVATE = f.read()
+[?2004l[?2004h> with open(BASE + '/keys/public.pem') as f:
+[?2004l[?2004h>     PUBLIC = f.read()
+[?2004l[?2004h> 
+[?2004l[?2004h> ISSUER = 'rsa-jwt-api'
+[?2004l[?2004h> ACCESS_TTL = dt.timedelta(minutes=15)
+[?2004l[?2004h> REFRESH_TTL = dt.timedelta(days=7)
+[?2004l[?2004h> REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+[?2004l[?2004h> r = redis.Redis(host=REDIS_HOST, port=6379, decode_responses=True)
+[?2004l[?2004h> USERS = {'admin': bcrypt.hashpw(b'password123', bcrypt.gensalt()).decode()}
+[?2004l[?2004h> 
+[?2004l[?2004h> app = Flask(__name__)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> @app.errorhandler(Exception)
+[?2004l[?2004h> def on_error(e):
+[?2004l[?2004h>     if isinstance(e, HTTPException):
+[?2004l[?2004h>         log.error('%s %s -> %s %s', request.method, request.path, e.code, e.description)
+[?2004l[?2004h>         return jsonify(error=e.description), e.code
+[?2004l[?2004h>     log.exception('unhandled error on %s', request.path)
+[?2004l[?2004h>     return jsonify(error='internal server error'), 500
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def make_token(sub, ttype, ttl):
+[?2004l[?2004h>     now = dt.datetime.now(dt.timezone.utc)
+[?2004l[?2004h>     claims = {'iss': ISSUER, 'sub': sub, 'iat': now, 'exp': now + ttl,
+[?2004l[?2004h>               'jti': str(uuid.uuid4()), 'type': ttype}
+[?2004l[?2004h>     return jwt.encode(claims, PRIVATE, algorithm='RS256')
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def verify(token):
+[?2004l[?2004h>     return jwt.decode(token, PUBLIC, algorithms=['RS256'], issuer=ISSUER,
+[?2004l[?2004h>                       options={'require': ['exp', 'iat', 'jti', 'sub', 'iss']})
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def check(token, expected_type=None):
+[?2004l[?2004h>     try:
+[?2004l[?2004h>         claims = verify(token)
+[?2004l[?2004h>     except jwt.ExpiredSignatureError:
+[?2004l[?2004h>         return None, ('token expired', 401)
+[?2004l[?2004h>     except jwt.InvalidTokenError as e:
+[?2004l[?2004h>         return None, ('invalid token: ' + str(e), 401)
+[?2004l[?2004h>     if expected_type and claims.get('type') != expected_type:
+[?2004l[?2004h>         return None, ('wrong token type', 401)
+[?2004l[?2004h>     if r.exists('blacklist:' + claims['jti']):
+[?2004l[?2004h>         return None, ('token revoked', 403)
+[?2004l[?2004h>     return claims, None
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> @app.post('/auth/login')
+[?2004l[?2004h> def login():
+[?2004l[?2004h>     body = request.get_json(silent=True) or {}
+[?2004l[?2004h>     user = body.get('username', '')
+[?2004l[?2004h>     pw = body.get('password', '')
+[?2004l[?2004h>     h = USERS.get(user)
+[?2004l[?2004h>     if not h or not bcrypt.checkpw(pw.encode(), h.encode()):
+[?2004l[?2004h>         log.warning('failed login for user %s', user)
+[?2004l[?2004h>         return jsonify(error='invalid credentials'), 401
+[?2004l[?2004h>     access = make_token(user, 'access', ACCESS_TTL)
+[?2004l[?2004h>     refresh = make_token(user, 'refresh', REFRESH_TTL)
+[?2004l[?2004h>     log.info('login ok for user %s', user)
+[?2004l[?2004h>     return jsonify(access_token=access, refresh_token=refresh, token_type='Bearer',
+[?2004l[?2004h>                    expires_in=int(ACCESS_TTL.total_seconds())), 200
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> @app.post('/auth/refresh')
+[?2004l[?2004h> def refresh():
+[?2004l[?2004h>     body = request.get_json(silent=True) or {}
+[?2004l[?2004h>     tok = body.get('refresh_token')
+[?2004l[?2004h>     if not tok:
+[?2004l[?2004h>         return jsonify(error='refresh_token required'), 400
+[?2004l[?2004h>     claims, err = check(tok, 'refresh')
+[?2004l[?2004h>     if err:
+[?2004l[?2004h>         log.warning('refresh rejected: %s', err[0])
+[?2004l[?2004h>         return jsonify(error=err[0]), err[1]
+[?2004l[?2004h>     access = make_token(claims['sub'], 'access', ACCESS_TTL)
+[?2004l[?2004h>     return jsonify(access_token=access, token_type='Bearer',
+[?2004l[?2004h>                    expires_in=int(ACCESS_TTL.total_seconds())), 200
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> @app.post('/auth/revoke')
+[?2004l[?2004h> def revoke():
+[?2004l[?2004h>     body = request.get_json(silent=True) or {}
+[?2004l[?2004h>     tok = body.get('token')
+[?2004l[?2004h>     if not tok:
+[?2004l[?2004h>         return jsonify(error='token required'), 400
+[?2004l[?2004h>     try:
+[?2004l[?2004h>         claims = verify(tok)
+[?2004l[?2004h>     except jwt.ExpiredSignatureError:
+[?2004l[?2004h>         return jsonify(error='token expired'), 401
+[?2004l[?2004h>     except jwt.InvalidTokenError as e:
+[?2004l[?2004h>         return jsonify(error='invalid token: ' + str(e)), 401
+[?2004l[?2004h>     ttl = int(claims['exp'] - time.time())
+[?2004l[?2004h>     if ttl > 0:
+[?2004l[?2004h>         r.setex('blacklist:' + claims['jti'], ttl, claims['sub'])
+[?2004l[?2004h>     log.info('revoked jti %s', claims['jti'])
+[?2004l[?2004h>     return jsonify(message='revoked', jti=claims['jti']), 200
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> @app.get('/auth/validate')
+[?2004l[?2004h> def validate():
+[?2004l[?2004h>     auth = request.headers.get('Authorization', '')
+[?2004l[?2004h>     tok = auth[7:] if auth.startswith('Bearer ') else request.args.get('token')
+[?2004l[?2004h>     if not tok:
+[?2004l[?2004h>         return jsonify(valid=False, error='missing token'), 401
+[?2004l[?2004h>     claims, err = check(tok)
+[?2004l[?2004h>     if err:
+[?2004l[?2004h>         log.warning('validation failed: %s', err[0])
+[?2004l[?2004h>         return jsonify(valid=False, error=err[0]), err[1]
+[?2004l[?2004h>     return jsonify(valid=True, claims=claims), 200
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> @app.get('/auth/public-key')
+[?2004l[?2004h> def public_key():
+[?2004l[?2004h>     return PUBLIC, 200, {'Content-Type': 'application/x-pem-file'}
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h>     app.run(host='0.0.0.0', port=5000)
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@dd05d7035ebf:/app# echo WROTE_API
+[?2004lWROTE_API
+[?2004hroot@dd05d7035ebf:/app# cat > /app/cli.py << 'EOF'
+[?2004l[?2004h> #!/usr/bin/env python3
+[?2004lr = validate_token(d['access_token'])
+    if r.status_code == 401 and d.get('refresh_token'):
+        print('access token expired or invalid; attempting refresh')
+        if do_refresh(d):
+            r = validate_token(d['access_token'])
+    print(r.status_code, r.text)
+    if r.status_code == 200:
+        print('VALID')
+        return 0
+    print('INVALID (expired)' if r.status_code == 401 else 'INVALID (revoked)')
+    if r.status_code == 401:
+        log.warning('validate: token expired or invalid')
+    return 3 if r.status_code == 403 else 1
+
+
+def cmd_revoke(args):
+    d = load()
+    keys = ['access_token', 'refresh_token'] if args.which == 'both' else [args.which + '_token']
+    for k in keys:
+        if k not in d:
+            continue
+        r = post('/auth/revoke', token=d[k])
+        print(k, r.status_code, r.text)
+        if r.status_code == 200:
+            log.info('revoked %s', k)
+        else:
+            log.error('revoke of %s failed: %s %s', k, r.status_code, r.text)
+        if r.status_code[?2004h> import argparse, json, logging, os, sys, time
+[?2004l[?2004h> import requests
+[?2004lefresh', 'both'], default='both')
+    rt = sub.add_parser('retry')
+    rt.add_argument('--attempts', type=int, [?2004h> 
+[?2004l[?2004h> BASE = '/app'
+[?2004l[?2004h> TOKENS = BASE + '/tokens.json'
+[?2004l[?2004h> API = os.environ.get('API_URL', 'http://localhost:5000')
+[?2004lnt('--password', default[?2004h> os.makedirs(BASE + '/logs', exist_ok=True)
+[?2004l[?2004h> logging.basicConfig(filename=BASE + '/logs/app.log', level=logging.INFO,
+[?2004l[?2004h>                     format='%(asctime)s %(levelname)s cli: %(message)s')
+[?2004l[?2004h> log = logging.getLogger('cli')
+[?2004l[?2004h> 
+[?2004lturn handlers[args.cmd](args)
+    ex[?2004h> 
+[?2004l[?2004h> def load():
+[?2004l[?2004h>     if not os.path.exists(TOKENS):
+[?2004l[?2004h>         return {}
+[?2004l[?2004h>     with open(TOKENS) as f:
+[?2004l [?2004h>         return json.load(f)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def save(d):
+[?2004lle at', AP[?2004h>     with open(TOKENS, 'w') as f:
+[?2004l[?2004h>         json.dump(d, f, indent=2)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def post(path, **body):
+[?2004ls.exit(main())
+EOF
+ch[?2004h>     return requests.post(API + path, json=body, timeout=10)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def validate_token(tok):
+[?2004l[?2004h>     return requests.get(API + '/auth/validate',
+[?2004l[?2004h>                         headers={'Authorization': 'Bearer ' + tok}, timeout=10)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def do_login(user, pw):
+[?2004l[?2004h>     r = post('/auth/login', username=user, password=pw)
+[?2004l[?2004h>     if r.status_code != 200:
+[?2004l[?2004h>         log.error('login failed for %s: %s %s', user, r.status_code, r.text)
+[?2004l[?2004h>         print('login failed:', r.status_code, r.text, file=sys.stderr)
+[?2004l[?2004h>         return False
+[?2004l[?2004h>     d = r.json()
+[?2004l[?2004h>     save({'username': user, 'access_token': d['access_token'],
+[?2004l[?2004h>           'refresh_token': d['refresh_token']})
+[?2004l[?2004h>     print('tokens acquired and saved to', TOKENS)
+[?2004l[?2004h>     return True
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def do_refresh(d):
+[?2004l[?2004h>     if not d.get('refresh_token'):
+[?2004l[?2004h>         return False
+[?2004l[?2004h>     r = post('/auth/refresh', refresh_token=d['refresh_token'])
+[?2004l[?2004h>     if r.status_code != 200:
+[?2004l[?2004h>         log.error('refresh failed: %s %s', r.status_code, r.text)
+[?2004l[?2004h>         print('refresh failed:', r.status_code, r.text, file=sys.stderr)
+[?2004l[?2004h>         return False
+[?2004l[?2004h>     d['access_token'] = r.json()['access_token']
+[?2004l[?2004h>     save(d)
+[?2004l[?2004h>     print('access token refreshed')
+[?2004l[?2004h>     return True
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def cmd_acquire(args):
+[?2004l[?2004h>     return 0 if do_login(args.username, args.password) else 1
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def cmd_validate(args):
+[?2004l[?2004h>     d = load()
+[?2004l[?2004h>     if 'access_token' not in d:
+[?2004l[?2004h>         print('no tokens found; run acquire first', file=sys.stderr)
+[?2004l[?2004h>         return 1
+[?2004l[?2004h>     r = validate_token(d['access_token'])
+[?2004l[?2004h>     if r.status_code == 401 and d.get('refresh_token'):
+[?2004l[?2004h>         print('access token expired or invalid; attempting refresh')
+[?2004l[?2004h>         if do_refresh(d):
+[?2004l[?2004h>             r = validate_token(d['access_token'])
+[?2004l[?2004h>     print(r.status_code, r.text)
+[?2004l[?2004h>     if r.status_code == 200:
+[?2004l[?2004h>         print('VALID')
+[?2004l[?2004h>         return 0
+[?2004l[?2004h>     print('INVALID (expired)' if r.status_code == 401 else 'INVALID (revoked)')
+[?2004l[?2004h>     if r.status_code == 401:
+[?2004l[?2004h>         log.warning('validate: token expired or invalid')
+[?2004l[?2004h>     return 3 if r.status_code == 403 else 1
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def cmd_revoke(args):
+[?2004l[?2004h>     d = load()
+[?2004l[?2004h>     keys = ['access_token', 'refresh_token'] if args.which == 'both' else [args.which + '_token']
+[?2004l[?2004h>     for k in keys:
+[?2004l[?2004h>         if k not in d:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         r = post('/auth/revoke', token=d[k])
+[?2004l[?2004h>         print(k, r.status_code, r.text)
+[?2004l[?2004h>         if r.status_code == 200:
+[?2004l[?2004h>             log.info('revoked %s', k)
+[?2004l[?2004h>         else:
+[?2004l[?2004h>             log.error('revoke of %s failed: %s %s', k, r.status_code, r.text)
+[?2004l[?2004h>         if r.status_code in (200, 401):
+[?2004l[?2004h>             d.pop(k, None)
+[?2004l[?2004h>     save(d)
+[?2004l[?2004h>     return 0
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def cmd_retry(args):
+[?2004l[?2004h>     for i in range(1, args.attempts + 1):
+[?2004l[?2004h>         d = load()
+[?2004l[?2004h>         if d.get('access_token') and validate_token(d['access_token']).status_code == 200:
+[?2004l[?2004h>             print('tokens valid; nothing to retry')
+[?2004l[?2004h>             return 0
+[?2004l[?2004h>         if do_refresh(d):
+[?2004l[?2004h>             return 0
+[?2004l[?2004h>         if do_login(args.username, args.password):
+[?2004l[?2004h>             return 0
+[?2004l[?2004h>         wait = 2 ** (i - 1)
+[?2004l[?2004h>         print('attempt %d failed; retrying in %ds' % (i, wait))
+[?2004l[?2004h>         time.sleep(wait)
+[?2004l[?2004h>     print('giving up after %d attempts' % args.attempts, file=sys.stderr)
+[?2004l[?2004h>     return 1
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def main():
+[?2004l[?2004h>     p = argparse.ArgumentParser(description='JWT auth CLI')
+[?2004l[?2004h>     sub = p.add_subparsers(dest='cmd', required=True)
+[?2004l[?2004h>     a = sub.add_parser('acquire')
+[?2004l[?2004h>     a.add_argument('--username', default='admin')
+[?2004l[?2004h>     a.add_argument('--password', default='password123')
+[?2004l[?2004h>     sub.add_parser('validate')
+[?2004l[?2004h>     rv = sub.add_parser('revoke')
+[?2004l[?2004h>     rv.add_argument('--which', choices=['access', 'refresh', 'both'], default='both')
+[?2004l[?2004h>     rt = sub.add_parser('retry')
+[?2004l[?2004h>     rt.add_argument('--attempts', type=int, default=3)
+[?2004l[?2004h>     rt.add_argument('--username', default='admin')
+[?2004l[?2004h>     rt.add_argument('--password', default='password123')
+[?2004l[?2004h>     args = p.parse_args()
+[?2004l[?2004h>     handlers = {'acquire': cmd_acquire, 'validate': cmd_validate,
+[?2004l[?2004h>                 'revoke': cmd_revoke, 'retry': cmd_retry}
+[?2004l[?2004h>     try:
+[?2004l[?2004h>         return handlers[args.cmd](args)
+[?2004l[?2004h>     except requests.RequestException as e:
+[?2004l[?2004h>         log.error('API unreachable at %s: %s', API, e)
+[?2004l[?2004h>         print('error: API unreachable at', API, file=sys.stderr)
+[?2004l[?2004h>         return 2
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h>     sys.exit(main())
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@dd05d7035ebf:/app# chmod +x /app/cli.py && echo WROTE_CLI
+[?2004lWROTE_CLI
+[?2004hroot@dd05d7035ebf:/app# cd /app && nohup python3 /app/api.py > /app/logs/server.out 2>&1 &
+[?2004l[1] 587
+[?2004hroot@dd05d7035ebf:/app# sleep 3; curl -s -X POST localhost:5000/auth/login -H 'Content-Type: application/json' -d '{"username":"admin","password":"password123"}' | head -c 200; echo; python3 cli.py acquire; python3 cli.py validate; echo EXIT=$?
+[?2004l{"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyc2Etand0LWFwaSIsInN1YiI6ImFkbWluIiwiaWF0IjoxNzkyOTc4MTg1LCJleHAiOjE3OTI5NzkwODUsImp0aSI6IjQ0ODU2YTdmLTViOTQtNGYyZi1iOTI2LTc3ZDYxMDMxMT
+tokens acquired and saved to /app/tokens.json
+200 {"claims":{"exp":1792979086,"iat":1792978186,"iss":"rsa-jwt-api","jti":"44147b06-4a78-4d8c-91f8-706ae9af094c","sub":"admin","type":"access"},"valid":true}
+
+VALID
+EXIT=0
+[?2004hroot@dd05d7035ebf:/app# python3 cli.py revoke --which access; echo EXIT=$?
+[?2004laccess_token 200 {"jti":"44147b06-4a78-4d8c-91f8-706ae9af094c","message":"revoked"}
+
+EXIT=0
+[?2004hroot@dd05d7035ebf:/app# redis-cli keys 'blacklist:*'; for k in $(redis-cli keys 'blacklist:*'); do echo "$k ttl=$(redis-cli ttl $k)"; done
+[?2004l1) "blacklist:44147b06-4a78-4d8c-91f8-706ae9af094c"
+blacklist:44147b06-4a78-4d8c-91f8-706ae9af094c ttl=890
+[?2004hroot@dd05d7035ebf:/app# ACC=$(python3 -c "import json,sys; print(json.load(open('/app/tokens.json'))['access_token'])" 2>/dev/null); curl -s -w ' HTTP=%{http_code}\n' localhost:5000/auth/validate -H "Authorization: Bearer $ACC"; echo
+[?2004l{"error":"missing token","valid":false}
+ HTTP=401
+
+[?2004hroot@dd05d7035ebf:/app# python3 cli.py retry; echo EXIT=$?; python3 cli.py validate; echo EXIT=$?
+[?2004laccess token refreshed
+EXIT=0
+200 {"claims":{"exp":1792979097,"iat":1792978197,"iss":"rsa-jwt-api","jti":"6ac3b3d2-f61a-46fe-b8f4-85ee3118933a","sub":"admin","type":"access"},"valid":true}
+
+VALID
+EXIT=0
+[?2004hroot@dd05d7035ebf:/app# curl -s -w ' HTTP=%{http_code}\n' localhost:5000/auth/validate -H 'Authorization: Bearer garbage.token.here'; echo
+[?2004l{"error":"invalid token: Invalid header string: 'utf-8' codec can't decode byte 0x81 in position 0: invalid start byte","valid":false}
+ HTTP=401
+
+[?2004hroot@dd05d7035ebf:/app# echo ---LOG---; tail -n 15 /app/logs/app.log; echo ---SERVER---; tail -n 5 /app/logs/server.out
+[?2004l---LOG---
+ * Running on http://172.20.0.2:5000
+2026-10-26 01:29:42,864 INFO api: [33mPress CTRL+C to quit[0m
+2026-10-26 01:29:45,818 INFO api: login ok for user admin
+2026-10-26 01:29:45,819 INFO api: 127.0.0.1 - - [26/Oct/2026 01:29:45] "POST /auth/login HTTP/1.1" 200 -
+2026-10-26 01:29:46,212 INFO api: login ok for user admin
+2026-10-26 01:29:46,212 INFO api: 127.0.0.1 - - [26/Oct/2026 01:29:46] "POST /auth/login HTTP/1.1" 200 -
+2026-10-26 01:29:46,303 INFO api: 127.0.0.1 - - [26/Oct/2026 01:29:46] "GET /auth/validate HTTP/1.1" 200 -
+2026-10-26 01:29:54,975 INFO api: revoked jti 44147b06-4a78-4d8c-91f8-706ae9af094c
+2026-10-26 01:29:54,975 INFO api: 127.0.0.1 - - [26/Oct/2026 01:29:54] "POST /auth/revoke HTTP/1.1" 200 -
+2026-10-26 01:29:54,976 INFO cli: revoked access_token
+2026-10-26 01:29:56,424 INFO api: 127.0.0.1 - - [26/Oct/2026 01:29:56] "[31m[1mGET /auth/validate HTTP/1.1[0m" 401 -
+2026-10-26 01:29:57,531 INFO api: 127.0.0.1 - - [26/Oct/2026 01:29:57] "POST /auth/refresh HTTP/1.1" 200 -
+2026-10-26 01:29:57,629 INFO api: 127.0.0.1 - - [26/Oct/2026 01:29:57] "GET /auth/validate HTTP/1.1" 200 -
+2026-10-26 01:30:00,405 WARNING api: validation failed: invalid token: Invalid header string: 'utf-8' codec can't decode byte 0x81 in position 0: invalid start byte
+2026-10-26 01:30:00,405 INFO api: 127.0.0.1 - - [26/Oct/2026 01:30:00] "[31m[1mGET /auth/validate HTTP/1.1[0m" 401 -
+---SERVER---
+nohup: ignoring input
+ * Serving Flask app 'api'
+ * Debug mode: off
+[?2004hroot@dd05d7035ebf:/app# cat > /tmp/test_flow.py << 'EOF'
+[?2004l[?2004h> import requests, jwt, datetime as dt, uuid
+[?2004l[?2004h> API = 'http://localhost:5000'
+[?2004l[?2004h> r = requests.post(API + '/auth/login', json={'username': 'admin', 'password': 'password123'}).json()
+[?2004l[?2004h> acc, ref = r['access_token'], r['refresh_token']
+[?2004l[?2004h> H = lambda t: {'Authorization': 'Bearer ' + t}
+[?2004l[?2004h> print('fresh validate:', requests.get(API + '/auth/validate', headers=H(acc)).status_code)
+[?2004l[?2004h> print('revoke access:', requests.post(API + '/auth/revoke', json={'token': acc}).status_code)
+[?2004l[?2004h> x = requests.get(API + '/auth/validate', headers=H(acc))
+[?2004l[?2004h> print('revoked validate:', x.status_code, x.text)
+[?2004l[?2004h> priv = open('/app/keys/private.pem').read()
+[?2004l[?2004h> now = dt.datetime.now(dt.timezone.utc)
+[?2004l[?2004h> expired = jwt.encode({'iss': 'rsa-jwt-api', 'sub': 'admin', 'iat': now - dt.timedelta(minutes=30), 'exp': now - dt.timedelta(minutes=15), 'jti': str(uuid.uuid4()), 'type': 'access'}, priv, algorithm='RS256')
+[?2004l[?2004h> x = requests.get(API + '/auth/validate', headers=H(expired))
+[?2004l[?2004h> print('expired validate:', x.status_code, x.text)
+[?2004l[?2004h> print('revoke refresh:', requests.post(API + '/auth/revoke', json={'token': ref}).status_code)
+[?2004l[?2004h> x = requests.post(API + '/auth/refresh', json={'refresh_token': ref})
+[?2004l[?2004h> print('revoked refresh:', x.status_code, x.text)
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@dd05d7035ebf:/app# python3 /tmp/test_flow.py; echo ---BLACKLIST---; redis-cli keys 'blacklist:*'; echo ---LOG---; tail -n 8 /app/logs/app.log
+[?2004lfresh validate: 200
+revoke access: 200
+revoked validate: 403 {"error":"token revoked","valid":false}
+
+expired validate: 401 {"error":"token expired","valid":false}
+
+revoke refresh: 200
+revoked refresh: 403 {"error":"token revoked"}
+
+---BLACKLIST---
+1) "blacklist:8df186e3-fe49-49c7-b1bb-efa9090a091b"
+2) "blacklist:44147b06-4a78-4d8c-91f8-706ae9af094c"
+3) "blacklist:5007224d-93ba-4ca7-860b-846aa579a497"
+---LOG---
+2026-10-26 01:30:12,835 WARNING api: validation failed: token revoked
+2026-10-26 01:30:12,835 INFO api: 127.0.0.1 - - [26/Oct/2026 01:30:12] "[31m[1mGET /auth/validate HTTP/1.1[0m" 403 -
+2026-10-26 01:30:12,873 WARNING api: validation failed: token expired
+2026-10-26 01:30:12,873 INFO api: 127.0.0.1 - - [26/Oct/2026 01:30:12] "[31m[1mGET /auth/validate HTTP/1.1[0m" 401 -
+2026-10-26 01:30:12,874 INFO api: revoked jti 8df186e3-fe49-49c7-b1bb-efa9090a091b
+2026-10-26 01:30:12,874 INFO api: 127.0.0.1 - - [26/Oct/2026 01:30:12] "POST /auth/revoke HTTP/1.1" 200 -
+2026-10-26 01:30:12,875 WARNING api: refresh rejected: token revoked
+2026-10-26 01:30:12,875 INFO api: 127.0.0.1 - - [26/Oct/2026 01:30:12] "[31m[1mPOST /auth/refresh HTTP/1.1[0m" 403 -
+[?2004hroot@dd05d7035ebf:/app# 

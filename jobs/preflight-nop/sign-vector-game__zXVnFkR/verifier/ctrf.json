@@ -1,0 +1,32 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 1,
+            "passed": 0,
+            "failed": 1,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792964676.9869442,
+            "stop": 1792964676.9977787
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_players_recovered",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006239580001192735,
+                "start": 1792964676.9913557,
+                "stop": 1792964676.9975638,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_players_recovered():\n        \"\"\"Test that the correct 16 players are recovered.\"\"\"\n        ground_truth = {141, 148, 430, 569, 596, 630, 692, 716, 775, 935, 948, 999, 1003, 1008, 1014, 1022}\n    \n>       with open(\"players.txt\", \"r\") as f:\n             ^^^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: 'players.txt'\n\n/tests/test_outputs.py:8: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            }
+        ]
+    }
+}

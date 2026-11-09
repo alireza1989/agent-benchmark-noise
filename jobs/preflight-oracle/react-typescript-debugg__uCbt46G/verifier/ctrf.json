@@ -1,0 +1,190 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 17,
+            "passed": 0,
+            "failed": 17,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792964226.5342693,
+            "stop": 1792964227.9789498
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_package_json_exists",
+                "status": "failed",
+                "duration": 1.3133143339999833,
+                "start": 1792964226.5943162,
+                "stop": 1792964227.9164007,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_tsconfig_exists",
+                "status": "failed",
+                "duration": 0.0005067079999889756,
+                "start": 1792964227.9166162,
+                "stop": 1792964227.9204156,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_webpack_config_exists",
+                "status": "failed",
+                "duration": 0.0004348759999857066,
+                "start": 1792964227.920551,
+                "stop": 1792964227.9241042,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_source_files_exist",
+                "status": "failed",
+                "duration": 0.0004698750000216023,
+                "start": 1792964227.9242618,
+                "stop": 1792964227.928075,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_node_modules_installed",
+                "status": "failed",
+                "duration": 0.0006242910000082702,
+                "start": 1792964227.9282172,
+                "stop": 1792964227.93199,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_typecheck_passed",
+                "status": "failed",
+                "duration": 0.0006362089999925047,
+                "start": 1792964227.9321413,
+                "stop": 1792964227.936187,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_tests_passed",
+                "status": "failed",
+                "duration": 0.0005547499999920547,
+                "start": 1792964227.9363368,
+                "stop": 1792964227.9399412,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_production_build_succeeded",
+                "status": "failed",
+                "duration": 0.0003095829999892885,
+                "start": 1792964227.9400768,
+                "stop": 1792964227.9434977,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_bundle_created",
+                "status": "failed",
+                "duration": 0.0003587499999753163,
+                "start": 1792964227.9436154,
+                "stop": 1792964227.9470987,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_bundle_size_reasonable",
+                "status": "failed",
+                "duration": 0.0005397089999519267,
+                "start": 1792964227.947242,
+                "stop": 1792964227.9531476,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_source_map_created",
+                "status": "failed",
+                "duration": 0.000654041999951005,
+                "start": 1792964227.9534266,
+                "stop": 1792964227.9576037,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_no_type_errors_in_components",
+                "status": "failed",
+                "duration": 0.0005413750000116124,
+                "start": 1792964227.9577746,
+                "stop": 1792964227.9611487,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_react_types_version_compatible",
+                "status": "failed",
+                "duration": 0.0003386249999834945,
+                "start": 1792964227.961275,
+                "stop": 1792964227.9643474,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_canary_string_in_bundle",
+                "status": "failed",
+                "duration": 0.00033924999996770566,
+                "start": 1792964227.964465,
+                "stop": 1792964227.967734,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_strict_mode_enabled",
+                "status": "failed",
+                "duration": 0.0003507909999598269,
+                "start": 1792964227.9678428,
+                "stop": 1792964227.9709213,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_package_json_scripts_not_modified",
+                "status": "failed",
+                "duration": 0.00039449899998089677,
+                "start": 1792964227.9710271,
+                "stop": 1792964227.9745493,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            },
+            {
+                "name": "test_outputs.py::TestReactTypeScriptBuild::test_webpack_was_actually_used",
+                "status": "failed",
+                "duration": 0.00041458399994098727,
+                "start": 1792964227.9746764,
+                "stop": 1792964227.9786706,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestReactTypeScriptBuild object at 0xffff9e299940>\n\n    @pytest.fixture(scope=\"class\", autouse=True)\n    def setup_and_build(self):\n        \"\"\"Set up environment and run the build process.\"\"\"\n        os.chdir('/app')\n    \n        # Clean any previous builds\n        subprocess.run(['rm', '-rf', 'node_modules', 'dist'],\n                      capture_output=True, check=False)\n    \n        # Install dependencies\n        install_result = subprocess.run(\n            ['npm', 'install'],\n            capture_output=True,\n            text=True,\n            timeout=300\n        )\n    \n        if install_result.returncode != 0:\n>           pytest.fail(f\"npm install failed:\\n{install_result.stderr}\")\nE           Failed: npm install failed:\nE           npm error Cannot read properties of null (reading 'edgesOut')\nE           npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-25T21_37_06_641Z-debug-0.log\n\n/tests/test_outputs.py:34: Failed"
+            }
+        ]
+    }
+}

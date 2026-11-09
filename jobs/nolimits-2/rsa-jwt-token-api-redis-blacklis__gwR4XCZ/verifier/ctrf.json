@@ -1,0 +1,155 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 15,
+            "passed": 15,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792977175.9929597,
+            "stop": 1792977180.6739986
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_rsa_keys_exist",
+                "status": "passed",
+                "duration": 0.0007339580006373581,
+                "start": 1792977176.123063,
+                "stop": 1792977176.1240225,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_api_server_starts",
+                "status": "passed",
+                "duration": 0.015721582998594386,
+                "start": 1792977176.1241345,
+                "stop": 1792977176.1401706,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_login_endpoint",
+                "status": "passed",
+                "duration": 0.3179045840006438,
+                "start": 1792977176.140424,
+                "stop": 1792977176.45867,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_tokens_have_jti",
+                "status": "passed",
+                "duration": 0.3176962929992442,
+                "start": 1792977176.4588637,
+                "stop": 1792977176.776843,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_tokens_are_rsa_signed",
+                "status": "passed",
+                "duration": 0.3135790000014822,
+                "start": 1792977176.7769942,
+                "stop": 1792977177.090937,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validate_endpoint",
+                "status": "passed",
+                "duration": 0.31371075099923473,
+                "start": 1792977177.0911295,
+                "stop": 1792977177.405196,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_revoke_endpoint",
+                "status": "passed",
+                "duration": 0.3139718749989697,
+                "start": 1792977177.405358,
+                "stop": 1792977177.7196314,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_revoked_token_rejected",
+                "status": "passed",
+                "duration": 0.3144822510002996,
+                "start": 1792977177.719788,
+                "stop": 1792977178.0345807,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_refresh_endpoint",
+                "status": "passed",
+                "duration": 0.34840758399877814,
+                "start": 1792977178.0347366,
+                "stop": 1792977178.383443,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_cli_acquire",
+                "status": "passed",
+                "duration": 0.4152887930013094,
+                "start": 1792977178.3835924,
+                "stop": 1792977178.7991564,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_cli_validate",
+                "status": "passed",
+                "duration": 0.5056840829984139,
+                "start": 1792977178.7993057,
+                "stop": 1792977179.3052979,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_cli_revoke",
+                "status": "passed",
+                "duration": 0.5008248340000137,
+                "start": 1792977179.3054497,
+                "stop": 1792977179.80658,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_cli_retry",
+                "status": "passed",
+                "duration": 0.5036413339985302,
+                "start": 1792977179.8067307,
+                "stop": 1792977180.3111012,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_expired_token_rejected",
+                "status": "passed",
+                "duration": 0.04722470800152223,
+                "start": 1792977180.3112843,
+                "stop": 1792977180.358783,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_logs_directory_exists",
+                "status": "passed",
+                "duration": 0.3145301250006014,
+                "start": 1792977180.3589318,
+                "stop": 1792977180.673739,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

@@ -1,0 +1,66 @@
+{
+    "id": "2a0a1ef1-40fa-4a18-ac7d-00b14514c28d",
+    "started_at": "2026-10-25T17:40:55.492860",
+    "updated_at": "2026-10-25T17:45:35.497868",
+    "finished_at": "2026-10-25T17:45:35.497868",
+    "n_total_trials": 28,
+    "stats": {
+        "n_completed_trials": 28,
+        "n_errored_trials": 0,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "nop__tblite": {
+                "n_trials": 28,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "api-endpoint-permission-canonica__XFDdJXG",
+                            "bandit-delayed-feedback__ie5q7vQ",
+                            "bloom-filter-cache-penetration-p__M9hFh7B",
+                            "build-system-task-ordering__e6YAxNH",
+                            "california-housing-api__yhokf9R",
+                            "chained-forensic-extraction_2026__snt3yF7",
+                            "container-registry-optimization__HTgcM7o",
+                            "convolutional-layers__VzmxnyM",
+                            "cpp-daemon-sighup-segfault__Yd8B3yY",
+                            "csv-json-jsonl-merger__mm5t9bE",
+                            "db-migration-local-storage__36VPUoD",
+                            "industrial-kiln-controller__FUvwFKG",
+                            "malicious-package-forensics__Rin9fMn",
+                            "maven-slf4j-conflict__vETTYpd",
+                            "neural-architecture-search-final__jyRcRgE",
+                            "protein-sequence__8ieFyki",
+                            "react-typescript-debugg__7wRWHvW",
+                            "reproducibility-and-envsetup__GTbR227",
+                            "reverse-engineer-stack-vm__29eVcjZ",
+                            "rsa-jwt-token-api-redis-blacklis__sDFYBsb",
+                            "scan-linux-persistence-artifacts__awSzcyu",
+                            "service-deployment-wave-planner__wHH4g4h",
+                            "sign-vector-game__zXVnFkR",
+                            "smiles-data-lab__ycTqv6n",
+                            "submission_a63937a5_20251224_152__WzrnjtP",
+                            "supply-chain-fulfillment__DPYXWZD",
+                            "systemd-log-monitoring__w4bSyoH",
+                            "task-xxe-exploit__2Wxqj5Z"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        },
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null
+    }
+}

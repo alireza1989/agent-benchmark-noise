@@ -1,0 +1,39 @@
+{
+    "id": "cab26948-0e87-46ae-8f93-1211877b200a",
+    "started_at": "2026-10-25T19:53:55.706304",
+    "updated_at": "2026-10-25T19:58:18.889149",
+    "finished_at": "2026-10-25T19:58:18.889149",
+    "n_total_trials": 1,
+    "stats": {
+        "n_completed_trials": 1,
+        "n_errored_trials": 0,
+        "n_running_trials": 0,
+        "n_pending_trials": 0,
+        "n_cancelled_trials": 0,
+        "n_retries": 0,
+        "evals": {
+            "terminus-2__claude-haiku-5-5__tblite": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "pass_at_k": {},
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "california-housing-api__ytxn9mM"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        },
+        "n_input_tokens": 98336,
+        "n_cache_tokens": 83030,
+        "n_output_tokens": 7844,
+        "cost_usd": 0.006664649999999999
+    }
+}

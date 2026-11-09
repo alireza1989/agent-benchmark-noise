@@ -1,0 +1,205 @@
+Collecting pytest==8.4.1
+  Downloading pytest-8.4.1-py3-none-any.whl.metadata (7.7 kB)
+Collecting pytest-json-ctrf==0.3.5
+  Downloading pytest_json_ctrf-0.3.5-py3-none-any.whl.metadata (3.3 kB)
+Collecting iniconfig>=1 (from pytest==8.4.1)
+  Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+Collecting packaging>=20 (from pytest==8.4.1)
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pluggy<2,>=1.5 (from pytest==8.4.1)
+  Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+Collecting pygments>=2.7.2 (from pytest==8.4.1)
+  Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Downloading pytest-8.4.1-py3-none-any.whl (365 kB)
+Downloading pytest_json_ctrf-0.3.5-py3-none-any.whl (6.8 kB)
+Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 28.1 MB/s  0:00:00
+Installing collected packages: pygments, pluggy, packaging, iniconfig, pytest, pytest-json-ctrf
+
+Successfully installed iniconfig-2.3.1 packaging-26.3 pluggy-1.7.0 pygments-2.21.0 pytest-8.4.1 pytest-json-ctrf-0.3.5
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+============================= test session starts ==============================
+platform linux -- Python 3.13.17, pytest-8.4.1, pluggy-1.7.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 6 items
+
+../tests/test_outputs.py FFFFFF                                          [100%]
+
+=================================== FAILURES ===================================
+_____________________ test_repro_script_produces_artifacts _____________________
+
+    def test_repro_script_produces_artifacts() -> None:
+        """repro.sh creates both run artifacts and the hashes.json report.
+    
+        After running the entrypoint, we expect the two .npy artifacts and the
+        JSON report to exist under /output with the prescribed paths.
+        """
+    
+>       _run_repro()
+
+/tests/test_outputs.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _run_repro() -> None:
+        """Run /app/work/repro.sh and assert it completes successfully.
+    
+        The instruction specifies that the verifier invokes this script directly.
+        We call it in each test so that they are self-contained and idempotent.
+        """
+    
+>       assert WORK_DIR.exists(), "Expected /app/work to exist"
+E       AssertionError: Expected /app/work to exist
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/app/work').exists
+
+/tests/test_outputs.py:30: AssertionError
+______________________ test_hashes_json_schema_and_match _______________________
+
+    def test_hashes_json_schema_and_match() -> None:
+        """hashes.json has the required schema and shows a matching pair of hashes.
+    
+        We require the report to contain run1, run2, match, python_version,
+        and numpy_version fields. The run1/run2 values must be equal 64-char
+        lowercase hex SHA-256 strings and match must be true.
+        """
+    
+>       _run_repro()
+
+/tests/test_outputs.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _run_repro() -> None:
+        """Run /app/work/repro.sh and assert it completes successfully.
+    
+        The instruction specifies that the verifier invokes this script directly.
+        We call it in each test so that they are self-contained and idempotent.
+        """
+    
+>       assert WORK_DIR.exists(), "Expected /app/work to exist"
+E       AssertionError: Expected /app/work to exist
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/app/work').exists
+
+/tests/test_outputs.py:30: AssertionError
+_______________________ test_seed_train_script_unchanged _______________________
+
+    def test_seed_train_script_unchanged() -> None:
+        """The seed training script under /seed must not be modified by the agent.
+    
+        The task specification treats /seed as read-only. We enforce that the
+        contents of /seed/project/train.py still match the expected reference
+        contents after the agent has run using SHA-256 hash verification.
+        """
+    
+        # Running the repro script first ensures the agent pipeline has executed.
+>       _run_repro()
+
+/tests/test_outputs.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _run_repro() -> None:
+        """Run /app/work/repro.sh and assert it completes successfully.
+    
+        The instruction specifies that the verifier invokes this script directly.
+        We call it in each test so that they are self-contained and idempotent.
+        """
+    
+>       assert WORK_DIR.exists(), "Expected /app/work to exist"
+E       AssertionError: Expected /app/work to exist
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/app/work').exists
+
+/tests/test_outputs.py:30: AssertionError
+______________________ test_seed_project_copied_verbatim _______________________
+
+    def test_seed_project_copied_verbatim() -> None:
+        """The working copy of train.py under /app/work/project matches the seed file.
+    
+        This directly exercises the requirement to copy /seed/project to
+        /app/work/project without modifying the training script. Any edits to the
+        working copy of train.py will cause this test to fail.
+        """
+    
+>       _run_repro()
+
+/tests/test_outputs.py:188: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _run_repro() -> None:
+        """Run /app/work/repro.sh and assert it completes successfully.
+    
+        The instruction specifies that the verifier invokes this script directly.
+        We call it in each test so that they are self-contained and idempotent.
+        """
+    
+>       assert WORK_DIR.exists(), "Expected /app/work to exist"
+E       AssertionError: Expected /app/work to exist
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/app/work').exists
+
+/tests/test_outputs.py:30: AssertionError
+__________________ test_artifacts_match_seed_training_output ___________________
+
+    def test_artifacts_match_seed_training_output() -> None:
+        """Artifacts produced by repro.sh match running the seed train.py once.
+    
+        This guards against trivial cheating strategies that write arbitrary
+        /output/run1/model.npy and /output/run2/model.npy files without actually
+        invoking the provided deterministic training script. We re-run the seed
+        train.py ourselves under the base environment and compare its output
+        byte-for-byte against the agent's first run artifact.
+        """
+    
+>       _run_repro()
+
+/tests/test_outputs.py:211: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _run_repro() -> None:
+        """Run /app/work/repro.sh and assert it completes successfully.
+    
+        The instruction specifies that the verifier invokes this script directly.
+        We call it in each test so that they are self-contained and idempotent.
+        """
+    
+>       assert WORK_DIR.exists(), "Expected /app/work to exist"
+E       AssertionError: Expected /app/work to exist
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/app/work').exists
+
+/tests/test_outputs.py:30: AssertionError
+_________________ test_repro_script_structure_uses_virtualenvs _________________
+
+    def test_repro_script_structure_uses_virtualenvs() -> None:
+        """repro.sh declares two virtual environments and uses them to run train.py.
+    
+        This enforces that the agent sets up isolated environments instead of
+        running the training directly in the base image or simply writing files
+        under /output. We perform a lightweight static check on the repro.sh
+        script to ensure it creates two venvs and invokes train.py from them.
+        """
+    
+>       assert REPRO_SCRIPT.exists(), "Expected /app/work/repro.sh entrypoint script"
+E       AssertionError: Expected /app/work/repro.sh entrypoint script
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/app/work/repro.sh').exists
+
+/tests/test_outputs.py:256: AssertionError
+=========================== short test summary info ============================
+FAILED ../tests/test_outputs.py::test_repro_script_produces_artifacts - Asser...
+FAILED ../tests/test_outputs.py::test_hashes_json_schema_and_match - Assertio...
+FAILED ../tests/test_outputs.py::test_seed_train_script_unchanged - Assertion...
+FAILED ../tests/test_outputs.py::test_seed_project_copied_verbatim - Assertio...
+FAILED ../tests/test_outputs.py::test_artifacts_match_seed_training_output - ...
+FAILED ../tests/test_outputs.py::test_repro_script_structure_uses_virtualenvs
+============================== 6 failed in 0.08s ===============================

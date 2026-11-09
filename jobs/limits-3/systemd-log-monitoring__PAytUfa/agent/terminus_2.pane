@@ -1,0 +1,327 @@
+[?2004hroot@fe59e176b225:/opt/myapp# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@fe59e176b225:/opt/myapp# clear
+[?2004l[H[J[3J[?2004hroot@fe59e176b225:/opt/myapp# whoami; pwd; ls -la /opt/myapp; which python3 systemctl journalctl rsyslogd logrotate jq; python3 --version; ps -p 1 -o comm=; ls /etc/rsyslog.d /etc/logrotate.d
+[?2004lroot
+/opt/myapp
+total 8
+drwxr-xr-x 2 myapp myapp 4096 Oct 25 21:40 .
+drwxr-xr-x 1 root  root  4096 Oct 25 21:40 ..
+/usr/bin/python3
+/usr/sbin/rsyslogd
+/usr/sbin/logrotate
+Python 3.11.2
+bash: ps: command not found
+/etc/logrotate.d:
+alternatives  apt  btmp  dpkg  exim4-base  exim4-paniclog  rsyslog  wtmp
+
+/etc/rsyslog.d:
+[?2004hroot@fe59e176b225:/opt/myapp# id myapp >/dev/null 2>&1 || useradd --system --home-dir /opt/myapp --shell /usr/sbin/nologin myapp; id myapp
+[?2004luid=999(myapp) gid=999(myapp) groups=999(myapp)
+[?2004hroot@fe59e176b225:/opt/myapp# cat > /opt/myapp/app.py << 'EOF'
+[?2004l[?2004h> #!/usr/bin/env python3
+[?2004l[?2004h> """Simple application that logs JSON-formatted events to stdout."""
+[?2004l[?2004h> import argparse
+[?2004l[?2004h> import datetime
+[?2004l[?2004h> import json
+[?2004l[?2004h> import logging
+[?2004l[?2004h> import signal
+[?2004l[?2004h> import sys
+[?2004l[?2004h> import time
+[?2004l[?2004h> 
+[?2004l[?2004h> SERVICE = "myapp"
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class JsonFormatter(logging.Formatter):
+[?2004l[?2004h>     def format(self, record):
+[?2004l[?2004h>         ts = datetime.datetime.fromtimestamp(record.created, datetime.timezone.utc)
+[?2004l[?2004h>         payload = {
+[?2004l[?2004h>             "timestamp": ts.strftime("%Y-%m-%dT%H:%M:%SZ"),
+[?2004l[?2004h>             "level": record.levelname,
+[?2004l[?2004h>             "message": record.getMessage(),
+[?2004l[?2004h>             "service": SERVICE,
+[?2004l[?2004h>         }
+[?2004l[?2004h>         return json.dumps(payload, separators=(",", ":"))
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def parse_args(argv):
+[?2004l[?2004h>     parser = argparse.ArgumentParser(description="myapp JSON logger")
+[?2004l[?2004h>     parser.add_argument("--log-level", default="INFO", type=str.upper,
+[?2004l[?2004h>                         choices=["INFO", "WARN", "ERROR"],
+[?2004l[?2004h>                         help="minimum level to emit (INFO, WARN, ERROR)")
+[?2004l[?2004h>     return parser.parse_args(argv)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def main(argv=None):
+[?2004l[?2004h>     args = parse_args(argv if argv is not None else sys.argv[1:])
+[?2004l[?2004h>     logging.addLevelName(logging.WARNING, "WARN")
+[?2004l[?2004h> 
+[?2004l[?2004h>     handler = logging.StreamHandler(sys.stdout)
+[?2004l[?2004h>     handler.setFormatter(JsonFormatter())
+[?2004l[?2004h>     logger = logging.getLogger(SERVICE)
+[?2004l[?2004h>     logger.handlers = [handler]
+[?2004l[?2004h>     logger.propagate = False
+[?2004l[?2004h>     logger.setLevel(getattr(logging, args.log_level))
+[?2004l[?2004h> 
+[?2004l[?2004h>     # Treat SIGTERM (systemd stop) as a clean exit.
+[?2004l[?2004h>     signal.signal(signal.SIGTERM, lambda signum, frame: sys.exit(0))
+[?2004l[?2004h> 
+[?2004l[?2004h>     logger.info("Service started")
+[?2004l[?2004h>     counter = 0
+[?2004l[?2004h>     try:
+[?2004l[?2004h>         while True:
+[?2004l[?2004h>             time.sleep(5)
+[?2004l[?2004h>             counter += 1
+[?2004l[?2004h>             logger.info("Heartbeat %d", counter)
+[?2004l[?2004h>             if counter % 3 == 0:
+[?2004l[?2004h>                 logger.warning("Queue depth elevated")
+[?2004l[?2004h>             if counter % 4 == 0:
+[?2004l[?2004h>                 logger.error("Failed to process request batch %d", counter)
+[?2004l[?2004h>     except KeyboardInterrupt:
+[?2004l[?2004h>         logger.info("Service stopping")
+[?2004l[?2004h>     return 0
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == "__main__":
+[?2004l[?2004h>     sys.exit(main())
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@fe59e176b225:/opt/myapp# chmod 755 /opt/myapp/app.py && chown -R myapp:myapp /opt/myapp && ls -l /opt/myapp
+[?2004ltotal 4
+-rwxr-xr-x 1 myapp myapp 1976 Oct 26 01:36 app.py
+[?2004hroot@fe59e176b225:/opt/myapp# runuser -u myapp -- timeout 7 /opt/myapp/app.py --log-level=INFO; echo "exit=$?"
+[?2004l{"timestamp":"2026-10-26T01:36:10Z","level":"INFO","message":"Service started","service":"myapp"}
+{"timestamp":"2026-10-26T01:36:15Z","level":"INFO","message":"Heartbeat 1","service":"myapp"}
+exit=124
+[?2004hroot@fe59e176b225:/opt/myapp# cat > /etc/systemd/system/myapp.service << 'EOF'
+[?2004l[?2004h> [Unit]
+[?2004l[?2004h> Description=myapp JSON event logger
+[?2004l[?2004h> After=network.target
+[?2004l[?2004h> 
+[?2004l[?2004h> [Service]
+[?2004l[?2004h> Type=simple
+[?2004l[?2004h> User=myapp
+[?2004l[?2004h> Group=myapp
+[?2004l[?2004h> WorkingDirectory=/opt/myapp
+[?2004l[?2004h> ExecStart=/opt/myapp/app.py --log-level=INFO
+[?2004l[?2004h> Restart=on-failure
+[?2004l[?2004h> RestartSec=5
+[?2004l[?2004h> Environment=PYTHONUNBUFFERED=1
+[?2004l[?2004h> StandardOutput=journal
+[?2004l[?2004h> StandardError=journal
+[?2004l[?2004h> SyslogIdentifier=myapp
+[?2004l[?2004h> 
+[?2004l[?2004h> [Install]
+[?2004l[?2004h> WantedBy=multi-user.target
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@fe59e176b225:/opt/myapp# cat /etc/systemd/system/myapp.service | head -3
+[?2004l[Unit]
+Description=myapp JSON event logger
+After=network.target
+[?2004hroot@fe59e176b225:/opt/myapp# cat > /etc/rsyslog.d/50-myapp.conf << 'EOF'
+[?2004l[?2004h> # Read journald messages (systemd-journal integration)
+[?2004l[?2004h> module(load="imjournal" StateFile="imjournal.state")
+[?2004l[?2004h> 
+[?2004l[?2004h> # Files created by rsyslog are owned by the myapp user
+[?2004l[?2004h> $FileOwner myapp
+[?2004l[?2004h> $FileGroup myapp
+[?2004l[?2004h> $FileCreateMode 0644
+[?2004l[?2004h> 
+[?2004l[?2004h> # Route only ERROR-level JSON events to the errors file
+[?2004l[?2004h> if $programname == 'myapp' and $msg contains '"level":"ERROR"' then /var/log/app_errors.log
+[?2004l[?2004h> 
+[?2004l[?2004h> # Route all INFO, WARN and ERROR events to the events file
+[?2004l[?2004h> if $programname == 'myapp' then /var/log/app_events.log
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@fe59e176b225:/opt/myapp# cat /etc/rsyslog.d/50-myapp.conf | tail -3
+[?2004l
+# Route all INFO, WARN and ERROR events to the events file
+if $programname == 'myapp' then /var/log/app_events.log
+[?2004hroot@fe59e176b225:/opt/myapp# cat > /etc/logrotate.d/myapp << 'EOF'
+[?2004l[?2004h> /var/log/app_events.log /var/log/app_errors.log {
+[?2004l[?2004h>     daily
+[?2004l[?2004h>     rotate 7
+[?2004l[?2004h>     compress
+[?2004l[?2004h>     delaycompress
+[?2004l[?2004h>     missingok
+[?2004l[?2004h>     notifempty
+[?2004l[?2004h>     create 0644 myapp myapp
+[?2004l[?2004h>     sharedscripts
+[?2004l[?2004h>     postrotate
+[?2004l[?2004h>         systemctl kill -s HUP rsyslog.service 2>/dev/null || killall -HUP rsyslogd 2>/dev/null || true
+[?2004l[?2004h>     endscript
+[?2004l[?2004h> }
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@fe59e176b225:/opt/myapp# touch /var/log/app_events.log /var/log/app_errors.log && chown myapp:myapp /var/log/app_events.log /var/log/app_errors.log && chmod 644 /var/log/app_events.log /var/log/app_errors.log && ls -l /var/log/app_*.log
+[?2004l-rw-r--r-- 1 myapp myapp 0 Oct 26 01:36 /var/log/app_errors.log
+-rw-r--r-- 1 myapp myapp 0 Oct 26 01:36 /var/log/app_events.log
+[?2004hroot@fe59e176b225:/opt/myapp# cat > /usr/local/bin/check_service_health.sh << 'EOF'
+[?2004l[?2004h> #!/bin/bash
+[?2004l[?2004h> # Reports restart and error statistics for myapp over the last 5 minutes.
+[?2004l[?2004h> SERVICE="myapp"
+[?2004l[?2004h> WINDOW="5 minutes"
+[?2004l[?2004h> LOOP_THRESHOLD=3
+[?2004l[?2004h> 
+[?2004l[?2004h> if command -v journalctl >/dev/null 2>&1; then
+[?2004l[?2004h>     LOGS=$(journalctl -u "$SERVICE" --since "5 minutes ago" -o cat --no-pager 2>/dev/null)
+[?2004l[?2004h>     RESTART_PATTERN='Started myapp.service'
+[?2004l[?2004h> else
+[?2004l[?2004h>     # Fallback when journald is unavailable: use the rsyslog-generated events file
+[?2004l[?2004h>     LOGS=$(tail -n 1000 /var/log/app_events.log 2>/dev/null)
+[?2004l[?2004h>     RESTART_PATTERN='Service started'
+[?2004l[?2004h> fi
+[?2004l[?2004h> 
+[?2004l[?2004h> RESTARTS=$(printf '%s\n' "$LOGS" | grep -c "$RESTART_PATTERN" || true)
+[?2004l[?2004h> ERRORS=$(printf '%s\n' "$LOGS" | grep -c 'ERROR' || true)
+[?2004l[?2004h> RESTART_LOOP=false
+[?2004l[?2004h> if [ "$RESTARTS" -gt "$LOOP_THRESHOLD" ]; then
+[?2004l[?2004h>     RESTART_LOOP=true
+[?2004l[?2004h> fi
+[?2004l[?2004h> TS=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+[?2004l[?2004h> 
+[?2004l[?2004h> printf '{\n  "service": "%s",\n  "time_window": "%s",\n  "restarts": %d,\n  "errors": %d,\n  "restart_loop_detected": %s,\n  "timestamp": "%s"\n}\n' "$SERVICE" "$WINDOW" "$RESTARTS" "$ERRORS" "$RESTART_LOOP" "$TS"
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@fe59e176b225:/opt/myapp# chmod 755 /usr/local/bin/check_service_health.sh && bash -n /usr/local/bin/check_service_health.sh && echo SYNTAX_OK
+[?2004lSYNTAX_OK
+[?2004hroot@fe59e176b225:/opt/myapp# /usr/local/bin/check_service_health.sh; sleep 1; /usr/local/bin/check_service_health.sh
+[?2004l{
+  "service": "myapp",
+  "time_window": "5 minutes",
+  "restarts": 0,
+  "errors": 0,
+  "restart_loop_detected": false,
+  "timestamp": "2026-10-26T01:36:22Z"
+}
+{
+  "service": "myapp",
+  "time_window": "5 minutes",
+  "restarts": 0,
+  "errors": 0,
+  "restart_loop_detected": false,
+  "timestamp": "2026-10-26T01:36:23Z"
+}
+[?2004hroot@fe59e176b225:/opt/myapp# rsyslogd -N1 2>&1 | tail -5; echo "rsyslog_check=$?"; logrotate -d /etc/logrotate.d/myapp 2>&1 | tail -15
+[?2004lrsyslogd: version 8.2302.0, config validation run (level 1), master config /etc/rsyslog.conf
+rsyslogd: End of config validation run. Bye.
+rsyslog_check=0
+Handling 1 logs
+
+rotating pattern: /var/log/app_events.log /var/log/app_errors.log  after 1 days (7 rotations)
+empty log files are not rotated, old logs are removed
+considering log /var/log/app_events.log
+Creating new state
+  Now: 2026-10-26 01:36
+  Last rotated at 2026-10-26 01:00
+  log does not need rotating (log has already been rotated)
+considering log /var/log/app_errors.log
+Creating new state
+  Now: 2026-10-26 01:36
+  Last rotated at 2026-10-26 01:00
+  log does not need rotating (log has already been rotated)
+not running postrotate script, since no logs were rotated
+[?2004hroot@fe59e176b225:/opt/myapp# ls -l /dev/log 2>/dev/null; cat /var/run/rsyslogd.pid 2>/dev/null; ls /proc | grep -E '^[0-9]+$' | while read p; do grep -l rsyslogd /proc/$p/comm 2>/dev/null; done; echo done
+[?2004ldone
+[?2004hroot@fe59e176b225:/opt/myapp# logger -t myapp '{"timestamp":"2026-01-01T00:00:00Z","level":"INFO","message":"route test info","service":"myapp"}'; logger -t myapp '{"timestamp":"2026-01-01T00:00:01Z","level":"ERROR","message":"route test error","service":"myapp"}'; sleep 2; echo '--- events:'; cat /var/log/app_events.log; echo '--- errors:'; cat /var/log/app_errors.log
+[?2004l--- events:
+--- errors:
+[?2004hroot@fe59e176b225:/opt/myapp# logrotate -f /etc/logrotate.d/myapp; echo "logrotate_exit=$?"; ls -l /var/log/app_*
+[?2004llogrotate_exit=0
+-rw-r--r-- 1 myapp myapp 0 Oct 26 01:36 /var/log/app_errors.log
+-rw-r--r-- 1 myapp myapp 0 Oct 26 01:36 /var/log/app_events.log
+[?2004hroot@fe59e176b225:/opt/myapp# grep -v '^#' /etc/rsyslog.conf | grep -v '^$'; ls /etc/rsyslog.d/
+[?2004l$FileOwner root
+$FileGroup adm
+$FileCreateMode 0640
+$DirCreateMode 0755
+$Umask 0022
+$WorkDirectory /var/spool/rsyslog
+$IncludeConfig /etc/rsyslog.d/*.conf
+*.*;auth,authpriv.none		-/var/log/syslog
+auth,authpriv.*			/var/log/auth.log
+cron.*				-/var/log/cron.log
+kern.*				-/var/log/kern.log
+mail.*				-/var/log/mail.log
+user.*				-/var/log/user.log
+*.emerg				:omusrmsg:*
+50-myapp.conf
+[?2004hroot@fe59e176b225:/opt/myapp# mkdir -p /var/spool/rsyslog; rsyslogd; sleep 2; ls -l /dev/log; ls /proc/*/comm 2>/dev/null | xargs grep -l rsyslogd 2>/dev/null; echo started
+[?2004lls: cannot access '/dev/log': No such file or directory
+/proc/514/comm
+started
+[?2004hroot@fe59e176b225:/opt/myapp# logger -t myapp '{"timestamp":"2026-01-01T00:00:00Z","level":"INFO","message":"route test info","service":"myapp"}'; logger -t myapp '{"timestamp":"2026-01-01T00:00:01Z","level":"ERROR","message":"route test error","service":"myapp"}'; sleep 2; echo '--- events:'; cat /var/log/app_events.log; echo '--- errors:'; cat /var/log/app_errors.log
+[?2004l--- events:
+--- errors:
+[?2004hroot@fe59e176b225:/opt/myapp# logger -t myapp '{"timestamp":"2026-01-01T00:00:02Z","level":"WARN","message":"route test warn","service":"myapp"}'; sleep 1; logrotate -f /etc/logrotate.d/myapp; echo "logrotate_exit=$?"; ls -l /var/log/app_*
+[?2004llogrotate_exit=0
+-rw-r--r-- 1 myapp myapp 0 Oct 26 01:36 /var/log/app_errors.log
+-rw-r--r-- 1 myapp myapp 0 Oct 26 01:36 /var/log/app_events.log
+[?2004hroot@fe59e176b225:/opt/myapp# sed -i '1i module(load="imuxsock" SysSock.Use="on")' /etc/rsyslog.d/50-myapp.conf && head -2 /etc/rsyslog.d/50-myapp.conf && rsyslogd -N1 2>&1 | tail -3
+[?2004lmodule(load="imuxsock" SysSock.Use="on")
+# Read journald messages (systemd-journal integration)
+rsyslogd: version 8.2302.0, config validation run (level 1), master config /etc/rsyslog.conf
+rsyslogd: End of config validation run. Bye.
+[?2004hroot@fe59e176b225:/opt/myapp# kill 514; sleep 1; rsyslogd; sleep 2; ls -l /dev/log; ls /proc/*/comm 2>/dev/null | xargs grep -l rsyslogd 2>/dev/null; echo restarted
+[?2004llogger -t myapp '{"timestamp":"2026-01-01T00:00:00Z","level":"INFO","message":"route test info","service":"myapp"}'; logger -t myapp '{"timestamp":"2026-01-01T00:00:01Z","level":"ERROR","message":"route test error","service":"myapp"}'; logger -t myapp '{"timestamp":"2026-01-01T00:00:02Z","level":"WARN","message":"route test warn","service":"myapp"}'; sleep 2; echo '--- events:'; cat /var/log/app_events.log; echo '--- errors:'; cat /var/log/app_errors.log
+srw-rw-rw- 1 root root 0 Oct 26 01:37 /dev/log
+/proc/571/comm
+restarted
+[?2004hroot@fe59e176b225:/opt/myapp# logger -t myapp '{"timestamp":"2026-01-01T00:00:00Z","level":"INFO","message":"route test info","service":"myapp"}'; logger -t myapp '{"timestamp":"2026-01-01T00:00:01Z","level":"ERROR","message":"route test error","service":"myapp"}'; logger -t myapp '{"timestamp":"2026-01-01T00:00:02Z","level":"WARN","message":"route test warn","service":"myapp"}'; sleep 2; echo '--- events:'; cat /var/log/app_events.log; echo '--- errors:'; cat /var/log/app_errors.log
+[?2004l--- events:
+2026-10-26T01:37:13.546940+00:00 fe59e176b225 myapp: {"timestamp":"2026-01-01T00:00:00Z","level":"INFO","message":"route test info","service":"myapp"}
+2026-10-26T01:37:13.548212+00:00 fe59e176b225 myapp: {"timestamp":"2026-01-01T00:00:01Z","level":"ERROR","message":"route test error","service":"myapp"}
+2026-10-26T01:37:13.549551+00:00 fe59e176b225 myapp: {"timestamp":"2026-01-01T00:00:02Z","level":"WARN","message":"route test warn","service":"myapp"}
+--- errors:
+2026-10-26T01:37:13.548212+00:00 fe59e176b225 myapp: {"timestamp":"2026-01-01T00:00:01Z","level":"ERROR","message":"route test error","service":"myapp"}
+[?2004hroot@fe59e176b225:/opt/myapp# logrotate -f /etc/logrotate.d/myapp; echo "logrotate_exit=$?"; ls -l /var/log/app_*; ls /var/log/app_* 2>/dev/null | grep -c gz
+[?2004llogrotate_exit=0
+-rw-r--r-- 1 myapp myapp   0 Oct 26 01:37 /var/log/app_errors.log
+-rw-r--r-- 1 myapp myapp 153 Oct 26 01:37 /var/log/app_errors.log.1
+-rw-r--r-- 1 myapp myapp   0 Oct 26 01:37 /var/log/app_events.log
+-rw-r--r-- 1 myapp myapp 455 Oct 26 01:37 /var/log/app_events.log.1
+0
+[?2004hroot@fe59e176b225:/opt/myapp# logger -t myapp '{"timestamp":"2026-01-01T00:01:00Z","level":"INFO","message":"cycle two info","service":"myapp"}'; logger -t myapp '{"timestamp":"2026-01-01T00:01:01Z","level":"ERROR","message":"cycle two error","service":"myapp"}'; sleep 2; logrotate -f /etc/logrotate.d/myapp; echo "logrotate_exit=$?"; ls -l /var/log/app_*
+[?2004llogrotate_exit=0
+-rw-r--r-- 1 myapp myapp   0 Oct 26 01:37 /var/log/app_errors.log
+-rw-r--r-- 1 myapp myapp 152 Oct 26 01:37 /var/log/app_errors.log.1
+-rw-r--r-- 1 myapp myapp 149 Oct 26 01:37 /var/log/app_errors.log.2.gz
+-rw-r--r-- 1 myapp myapp   0 Oct 26 01:37 /var/log/app_events.log
+-rw-r--r-- 1 myapp myapp 302 Oct 26 01:37 /var/log/app_events.log.1
+-rw-r--r-- 1 myapp myapp 198 Oct 26 01:37 /var/log/app_events.log.2.gz
+[?2004hroot@fe59e176b225:/opt/myapp# /usr/local/bin/check_service_health.sh
+[?2004l{
+  "service": "myapp",
+  "time_window": "5 minutes",
+  "restarts": 0,
+  "errors": 0,
+  "restart_loop_detected": false,
+  "timestamp": "2026-10-26T01:37:26Z"
+}
+[?2004hroot@fe59e176b225:/opt/myapp# rm -f /var/log/app_events.log.* /var/log/app_errors.log.*; : > /var/log/app_events.log; : > /var/log/app_errors.log; logger -t myapp '{"timestamp":"2026-01-01T00:02:00Z","level":"INFO","message":"Service started","service":"myapp"}'; sleep 2; /usr/local/bin/check_service_health.sh
+[?2004l{
+  "service": "myapp",
+  "time_window": "5 minutes",
+  "restarts": 1,
+  "errors": 0,
+  "restart_loop_detected": false,
+  "timestamp": "2026-10-26T01:37:39Z"
+}
+[?2004hroot@fe59e176b225:/opt/myapp# : > /var/log/app_events.log; : > /var/log/app_errors.log; sleep 1; /usr/local/bin/check_service_health.sh; sleep 1; /usr/local/bin/check_service_health.sh; ls -l /var/log/app_*
+[?2004l{
+  "service": "myapp",
+  "time_window": "5 minutes",
+  "restarts": 0,
+  "errors": 0,
+  "restart_loop_detected": false,
+  "timestamp": "2026-10-26T01:37:41Z"
+}
+{
+  "service": "myapp",
+  "time_window": "5 minutes",
+  "restarts": 0,
+  "errors": 0,
+  "restart_loop_detected": false,
+  "timestamp": "2026-10-26T01:37:42Z"
+}
+-rw-r--r-- 1 myapp myapp 0 Oct 26 01:37 /var/log/app_errors.log
+-rw-r--r-- 1 myapp myapp 0 Oct 26 01:37 /var/log/app_events.log
+[?2004hroot@fe59e176b225:/opt/myapp# 

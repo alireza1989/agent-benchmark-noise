@@ -1,0 +1,23 @@
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+[notice] A new release of pip is available: 24.0 -> 26.2.2
+[notice] To update, run: pip install --upgrade pip
+============================= test session starts ==============================
+platform linux -- Python 3.11.17, pytest-8.4.1, pluggy-1.7.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 8 items
+
+../tests/test_outputs.py ........                                        [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_outputs.py::test_game_was_played
+PASSED ../tests/test_outputs.py::test_answer_file_exists
+PASSED ../tests/test_outputs.py::test_answer_file_format
+PASSED ../tests/test_outputs.py::test_results_match_game
+PASSED ../tests/test_outputs.py::test_regret_is_acceptable
+PASSED ../tests/test_outputs.py::test_total_reward_is_plausible
+PASSED ../tests/test_outputs.py::test_regret_consistency
+PASSED ../tests/test_outputs.py::test_bandit_not_modified
+============================== 8 passed in 0.08s ===============================

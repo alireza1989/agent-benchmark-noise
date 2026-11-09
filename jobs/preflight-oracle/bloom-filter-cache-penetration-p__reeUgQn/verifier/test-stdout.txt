@@ -1,0 +1,1870 @@
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+Get:4 http://deb.debian.org/debian bookworm/main arm64 Packages [8689 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main arm64 Packages [6936 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main arm64 Packages [355 kB]
+Fetched 9293 kB in 1s (9641 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+curl is already the newest version (7.88.1-10+deb12u15).
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+downloading uv 0.7.13 aarch64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Using CPython 3.13.17 interpreter at: /usr/local/bin/python
+Creating virtual environment at: .tbench-testing
+Using Python 3.13.17 environment at: .tbench-testing
+Resolved 23 packages in 608ms
+Downloading pygments (1.2MiB)
+Downloading pydantic-core (1.8MiB)
+   Building bitarray==2.9.2
+ Downloading pydantic-core
+ Downloading pygments
+      Built bitarray==2.9.2
+Prepared 23 packages in 2.67s
+Installed 23 packages in 18ms
+ + annotated-types==0.8.0
+ + anyio==4.15.1
+ + bitarray==2.9.2
+ + certifi==2026.10.23
+ + fakeredis==2.25.0
+ + fastapi==0.115.0
+ + h11==0.16.0
+ + httpcore==1.0.9
+ + httpx==0.27.2
+ + idna==3.20
+ + iniconfig==2.3.1
+ + packaging==26.3
+ + pluggy==1.7.0
+ + pydantic==2.12.5
+ + pydantic-core==2.41.5
+ + pygments==2.21.0
+ + pytest==8.4.1
+ + redis==8.1.0
+ + sniffio==1.3.1
+ + sortedcontainers==2.4.0
+ + starlette==0.38.6
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.4
+============================= test session starts ==============================
+platform linux -- Python 3.13.17, pytest-8.4.1, pluggy-1.7.0
+rootdir: /tests
+plugins: anyio-4.15.1
+collected 27 items
+
+../tests/test_outputs.py EEEEEEEEEEEEEEEEEEEEEEEEEEE                     [100%]
+
+==================================== ERRORS ====================================
+____________________ ERROR at setup of test_health_endpoint ____________________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+_________ ERROR at setup of test_bloom_filter_rejects_non_existent_id __________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+____________ ERROR at setup of test_bloom_filter_allows_existing_id ____________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+_______________ ERROR at setup of test_request_flow_bloom_to_db ________________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+___________________ ERROR at setup of test_negative_caching ____________________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+____________________ ERROR at setup of test_create_product _____________________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+______________________ ERROR at setup of test_bloom_stats ______________________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+__________________ ERROR at setup of test_no_false_negatives ___________________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+____________ ERROR at setup of test_bloom_filter_reduces_db_queries ____________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+___ ERROR at setup of test_metrics_endpoint_enforces_db_roundtrip_reduction ____
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+______________ ERROR at setup of test_multiple_products_workflow _______________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+__________ ERROR at setup of test_post_products_adds_to_bloom_filter ___________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+________ ERROR at setup of test_large_dataset_bloom_filter_performance _________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+_____________ ERROR at setup of test_double_hashing_implementation _____________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+_______________ ERROR at setup of test_post_products_validation ________________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+_____________ ERROR at setup of test_response_format_completeness ______________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+_________________ ERROR at setup of test_initial_data_loading __________________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+___________________ ERROR at setup of test_all_source_types ____________________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+______________ ERROR at setup of test_negative_cache_ttl_behavior ______________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+________________ ERROR at setup of test_bitarray_library_usage _________________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+____________ ERROR at setup of test_bloom_filter_memory_efficiency _____________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+________ ERROR at setup of test_bloom_filter_actual_bitarray_operations ________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+__________ ERROR at setup of test_double_hashing_formula_verification __________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+______________ ERROR at setup of test_code_documentation_formulas ______________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+__________________ ERROR at setup of test_redis_client_reuse ___________________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+__________ ERROR at setup of test_performance_bloom_filter_efficiency __________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+_________ ERROR at setup of test_bloom_filter_false_positive_behavior __________
+
+    @pytest.fixture
+    def client():
+        """
+        Fixture that provides a TestClient for the FastAPI application.
+    
+        Each test gets a fresh database by reloading the module.
+        Redis is backed by a shared fakeredis server to allow persistence tests to simulate restarts,
+        so we MUST flush it before each test to avoid cross-test contamination.
+        """
+>       fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+/tests/test_outputs.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.tbench-testing/lib/python3.13/site-packages/redis/commands/core.py:1565: in flushall
+    return self.execute_command("FLUSHALL", *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:867: in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/client.py:873: in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/utils.py:258: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:3273: in get_connection
+    connection.connect()
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:24: in connect
+    super().connect()
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1028: in connect
+    self.retry.call_with_retry(
+.tbench-testing/lib/python3.13/site-packages/redis/retry.py:120: in call_with_retry
+    return do()
+           ^^^^
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1029: in <lambda>
+    lambda: self.connect_check_health(
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1083: in connect_check_health
+    self.on_connect_check_health(check_health=check_health)
+.tbench-testing/lib/python3.13/site-packages/redis/connection.py:1186: in on_connect_check_health
+    self.handshake_metadata = self.read_response()
+                              ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <fakeredis._connection.FakeConnection(server=<fakeredis._server.FakeServer object at 0xffff95cb5160>,db=0)>
+kwargs = {}, response = server:ResponseError
+
+    def read_response(self, **kwargs: Any) -> Any:  # type: ignore
+        if not self._sock:
+            raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        if not self._server.connected:
+            try:
+                response = self._sock.responses.get_nowait()
+            except queue.Empty:
+                if kwargs.get("disconnect_on_error", True):
+                    self.disconnect()
+                raise redis.ConnectionError(msgs.CONNECTION_ERROR_MSG)
+        else:
+            response = self._sock.responses.get()
+        if isinstance(response, redis.ResponseError):
+>           raise response
+E           redis.exceptions.ResponseError: unknown command `hello`, with args beginning with:
+
+.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:66: ResponseError
+=============================== warnings summary ===============================
+.tbench-testing/lib/python3.13/site-packages/starlette/testclient.py:40
+  /app/.tbench-testing/lib/python3.13/site-packages/starlette/testclient.py:40: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+test_outputs.py: 27 warnings
+  /tests/test_outputs.py:85: DeprecationWarning: Call to '__init__' function with deprecated usage of input argument/s 'retry_on_timeout'. (TimeoutError is included by default.) -- Deprecated since version 6.0.0.
+    fakeredis.FakeRedis(server=_FAKEREDIS_SERVER, decode_responses=True).flushall()
+
+test_outputs.py: 27 warnings
+  /app/.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:144: DeprecationWarning: Call to '__init__' function with deprecated usage of input argument/s 'lib_name'. (Use 'driver_info' parameter instead. lib_name and lib_version will be removed in a future version.)
+    super().__init__(**kwds)
+
+test_outputs.py: 27 warnings
+  /app/.tbench-testing/lib/python3.13/site-packages/fakeredis/_connection.py:144: DeprecationWarning: Call to '__init__' function with deprecated usage of input argument/s 'lib_version'. (Use 'driver_info' parameter instead. lib_name and lib_version will be removed in a future version.)
+    super().__init__(**kwds)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR ../tests/test_outputs.py::test_health_endpoint - redis.exceptions.Respo...
+ERROR ../tests/test_outputs.py::test_bloom_filter_rejects_non_existent_id - r...
+ERROR ../tests/test_outputs.py::test_bloom_filter_allows_existing_id - redis....
+ERROR ../tests/test_outputs.py::test_request_flow_bloom_to_db - redis.excepti...
+ERROR ../tests/test_outputs.py::test_negative_caching - redis.exceptions.Resp...
+ERROR ../tests/test_outputs.py::test_create_product - redis.exceptions.Respon...
+ERROR ../tests/test_outputs.py::test_bloom_stats - redis.exceptions.ResponseE...
+ERROR ../tests/test_outputs.py::test_no_false_negatives - redis.exceptions.Re...
+ERROR ../tests/test_outputs.py::test_bloom_filter_reduces_db_queries - redis....
+ERROR ../tests/test_outputs.py::test_metrics_endpoint_enforces_db_roundtrip_reduction
+ERROR ../tests/test_outputs.py::test_multiple_products_workflow - redis.excep...
+ERROR ../tests/test_outputs.py::test_post_products_adds_to_bloom_filter - red...
+ERROR ../tests/test_outputs.py::test_large_dataset_bloom_filter_performance
+ERROR ../tests/test_outputs.py::test_double_hashing_implementation - redis.ex...
+ERROR ../tests/test_outputs.py::test_post_products_validation - redis.excepti...
+ERROR ../tests/test_outputs.py::test_response_format_completeness - redis.exc...
+ERROR ../tests/test_outputs.py::test_initial_data_loading - redis.exceptions....
+ERROR ../tests/test_outputs.py::test_all_source_types - redis.exceptions.Resp...
+ERROR ../tests/test_outputs.py::test_negative_cache_ttl_behavior - redis.exce...
+ERROR ../tests/test_outputs.py::test_bitarray_library_usage - redis.exception...
+ERROR ../tests/test_outputs.py::test_bloom_filter_memory_efficiency - redis.e...
+ERROR ../tests/test_outputs.py::test_bloom_filter_actual_bitarray_operations
+ERROR ../tests/test_outputs.py::test_double_hashing_formula_verification - re...
+ERROR ../tests/test_outputs.py::test_code_documentation_formulas - redis.exce...
+ERROR ../tests/test_outputs.py::test_redis_client_reuse - redis.exceptions.Re...
+ERROR ../tests/test_outputs.py::test_performance_bloom_filter_efficiency - re...
+ERROR ../tests/test_outputs.py::test_bloom_filter_false_positive_behavior - r...
+======================= 82 warnings, 27 errors in 5.16s ========================

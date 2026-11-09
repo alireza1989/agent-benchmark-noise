@@ -1,0 +1,13 @@
+{
+    "task": {
+        "path": "tblite/submission_a63937a5_20251224_152124",
+        "source": "tblite"
+    },
+    "trial_name": "submission_a63937a5_20251224_152__iP4pyoc",
+    "trials_dir": "jobs/limits-3",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "anthropic/claude-haiku-5-5"
+    },
+    "job_id": "604f2936-2f66-466c-a375-7e63ab9e457a"
+}

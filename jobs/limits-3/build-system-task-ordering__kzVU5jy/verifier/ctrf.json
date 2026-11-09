@@ -1,0 +1,128 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 12,
+            "passed": 12,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792977559.4166381,
+            "stop": 1792977559.4945667
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_01_parse_error_bad_header",
+                "status": "passed",
+                "duration": 0.0007172909990913467,
+                "start": 1792977559.483748,
+                "stop": 1792977559.4846988,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_02_parse_error_bad_directive",
+                "status": "passed",
+                "duration": 0.000571415999729652,
+                "start": 1792977559.4847972,
+                "stop": 1792977559.4855154,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_03_alias_canonicalization_lexmin",
+                "status": "passed",
+                "duration": 0.0007376669982477324,
+                "start": 1792977559.4856062,
+                "stop": 1792977559.4864957,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_04_override_ordering_by_id_and_phony_override",
+                "status": "passed",
+                "duration": 0.0008524169988959329,
+                "start": 1792977559.4865992,
+                "stop": 1792977559.4876099,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_05_transitive_aliases",
+                "status": "passed",
+                "duration": 0.000662959002511343,
+                "start": 1792977559.4877188,
+                "stop": 1792977559.488515,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_06_cycle_detection",
+                "status": "passed",
+                "duration": 0.0006247490018722601,
+                "start": 1792977559.4886055,
+                "stop": 1792977559.48936,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_07_self_loop_cycle",
+                "status": "passed",
+                "duration": 0.0005650429993693251,
+                "start": 1792977559.489451,
+                "stop": 1792977559.4901342,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_08_empty_input",
+                "status": "passed",
+                "duration": 0.0005381669961934676,
+                "start": 1792977559.4902108,
+                "stop": 1792977559.4908745,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_09_undefined_referenced_targets",
+                "status": "passed",
+                "duration": 0.0006302069996309001,
+                "start": 1792977559.4909647,
+                "stop": 1792977559.4917147,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_10_multiple_target_blocks",
+                "status": "passed",
+                "duration": 0.0006484989989985479,
+                "start": 1792977559.4917922,
+                "stop": 1792977559.4925559,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_11_directive_accumulation",
+                "status": "passed",
+                "duration": 0.0006144579983811127,
+                "start": 1792977559.4926307,
+                "stop": 1792977559.4933748,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_12_all_dependency_types",
+                "status": "passed",
+                "duration": 0.000674708000587998,
+                "start": 1792977559.4934871,
+                "stop": 1792977559.4943345,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

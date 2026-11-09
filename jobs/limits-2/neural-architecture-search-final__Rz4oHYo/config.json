@@ -1,0 +1,13 @@
+{
+    "task": {
+        "path": "tblite/neural-architecture-search-final",
+        "source": "tblite"
+    },
+    "trial_name": "neural-architecture-search-final__Rz4oHYo",
+    "trials_dir": "jobs/limits-2",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "anthropic/claude-haiku-5-5"
+    },
+    "job_id": "eedb7eeb-b4cf-4d95-aed9-34bdc2267ed9"
+}

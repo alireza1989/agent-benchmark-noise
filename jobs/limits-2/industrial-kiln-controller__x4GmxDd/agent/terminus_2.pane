@@ -1,0 +1,159 @@
+[?2004hroot@05660e803bc5:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@05660e803bc5:/app# clear
+[?2004l[H[J[3J[?2004hroot@05660e803bc5:/app# ls -la /app
+[?2004ltotal 32
+drwxr-xr-x 1 root root  4096 Oct 25 21:34 [0m[01;34m.[0m
+drwxr-xr-x 1 root root  4096 Oct 26 00:42 [01;34m..[0m
+-rw-r--r-- 1 root root 18464 Oct 25 21:34 firing_schedule.csv
+-rw-r--r-- 1 root root    75 Oct 25 21:34 kiln_specs.json
+[?2004hroot@05660e803bc5:/app# cat /app/kiln_specs.json
+[?2004l{"gas_burner_power_c": 6.0, "damper_cooling_c": 3.5, "ambient_loss_c": 1.5}[?2004hroot@05660e803bc5:/app# head -5 /app/firing_schedule.csv; wc -l /app/firing_schedule.csv
+[?2004ltarget_temp
+20.25
+20.504991670832343
+20.759933466539753
+21.014776010333065
+1001 /app/firing_schedule.csv
+[?2004hroot@05660e803bc5:/app# python3 -c "import csv;r=list(csv.DictReader(open('/app/firing_schedule.csv')));t=[float(x['target_temp']) for x in r];print(len(t),min(t),max(t));print(t[::50]);print(max(abs(t[i+1]-t[i]) for i in range(len(t)-1)))"
+[?2004l1000 20.25 120.04999982451729
+[20.25, 32.702053786266845, 45.22279894445553, 57.782514392007855, 70.29564726253638, 82.74338241249511, 95.20059841879535, 107.7285908665252, 120.03725565802397, 120.04254517622671, 119.9868812573148, 119.95001224133208, 119.98475946894489, 120.04134143397451, 119.88869453407789, 112.33061091822924, 104.80030556730325, 97.34119621900172, 89.89469983317889, 82.38416308573538]
+0.25499791643424885
+[?2004hroot@05660e803bc5:/app# cat > /app/kiln_firmware.py << 'EOF'
+[?2004l[?2004h> import csv, json
+[?2004l[?2004h> 
+[?2004l[?2004h> def run_firing_cycle(schedule_path, specs_path):
+[?2004l[?2004h>     specs = json.load(open(specs_path))
+[?2004l[?2004h>     gp = float(specs['gas_burner_power_c'])
+[?2004l[?2004h>     dc = float(specs['damper_cooling_c'])
+[?2004l[?2004h>     al = float(specs['ambient_loss_c'])
+[?2004l[?2004h>     with open(schedule_path) as f:
+[?2004l[?2004h>         targets = [float(r['target_temp']) for r in csv.DictReader(f)]
+[?2004l[?2004h>     n = len(targets)
+[?2004l[?2004h>     T = targets[0]
+[?2004l[?2004h>     g1 = 0
+[?2004l[?2004h>     g2 = 0
+[?2004l[?2004h>     out = []
+[?2004l[?2004h>     for t in range(n):
+[?2004l[?2004h>         nxt = targets[t + 1] if t + 1 < n else targets[t]
+[?2004l[?2004h>         eff_base = 0.3 * g1 + 0.6 * g2
+[?2004l[?2004h>         best = None
+[?2004l[?2004h>         fallback = None
+[?2004l[?2004h>         for g in range(6):
+[?2004l[?2004h>             Tg = T + (0.1 * g + eff_base) * gp
+[?2004l[?2004h>             for d in range(6):
+[?2004l[?2004h>                 Tn = Tg - (d * dc + al)
+[?2004l[?2004h>                 if fallback is None or Tn > fallback[0]:
+[?2004l[?2004h>                     fallback = (Tn, g, d)
+[?2004l[?2004h>                 if Tn < T - 5.0:
+[?2004l[?2004h>                     continue
+[?2004l[?2004h>                 cost = abs(Tn - nxt) + 0.02 * g
+[?2004l[?2004h>                 if best is None or cost < best[0]:
+[?2004l[?2004h>                     best = (cost, g, d, Tn)
+[?2004l[?2004h>         if best is not None:
+[?2004l[?2004h>             _, g, d, Tn = best
+[?2004l[?2004h>         else:
+[?2004l[?2004h>             Tn, g, d = fallback
+[?2004l[?2004h>         out.append({'gas': int(g), 'damper': int(d)})
+[?2004l[?2004h>         T = Tn
+[?2004l[?2004h>         g2 = g1
+[?2004l[?2004h>         g1 = g
+[?2004l[?2004h>     return out
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h>     r = run_firing_cycle('/app/firing_schedule.csv', '/app/kiln_specs.json')
+[?2004l[?2004h>     print(r[:3], len(r))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@05660e803bc5:/app# cat > /app/check.py << 'EOF'
+[?2004l[?2004h> import json, csv
+[?2004l[?2004h> from kiln_firmware import run_firing_cycle
+[?2004l[?2004h> res = run_firing_cycle('/app/firing_schedule.csv', '/app/kiln_specs.json')
+[?2004l[?2004h> s = json.load(open('/app/kiln_specs.json'))
+[?2004l[?2004h> tg = [float(r['target_temp']) for r in csv.DictReader(open('/app/firing_schedule.csv'))]
+[?2004l[?2004h> T = tg[0]
+[?2004l[?2004h> gs = []
+[?2004l[?2004h> err = 0.0
+[?2004l[?2004h> maxdrop = 0.0
+[?2004l[?2004h> for t in range(1000):
+[?2004l[?2004h>     g = res[t]['gas']
+[?2004l[?2004h>     d = res[t]['damper']
+[?2004l[?2004h>     gs.append(g)
+[?2004l[?2004h>     g1 = gs[t-1] if t >= 1 else 0
+[?2004l[?2004h>     g2 = gs[t-2] if t >= 2 else 0
+[?2004l[?2004h>     eff = 0.1*g + 0.3*g1 + 0.6*g2
+[?2004l[?2004h>     Tn = T + eff*s['gas_burner_power_c'] - (d*s['damper_cooling_c'] + s['ambient_loss_c'])
+[?2004l[?2004h>     maxdrop = max(maxdrop, T - Tn)
+[?2004l[?2004h>     T = Tn
+[?2004l[?2004h>     if t + 1 < 1000:
+[?2004l[?2004h>         err += abs(T - tg[t+1])
+[?2004l[?2004h> print('len', len(res), 'gas', sum(gs), 'err', round(err, 3), 'maxdrop', round(maxdrop, 3))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@05660e803bc5:/app# cd /app && python3 kiln_firmware.py && python3 check.py
+[?2004l[{'gas': 3, 'damper': 0}, {'gas': 0, 'damper': 1}, {'gas': 2, 'damper': 3}] 1000
+len 1000 gas 1917 err 745.942 maxdrop 5.0
+[?2004hroot@05660e803bc5:/app# cat > /app/kiln_firmware.py << 'EOF'
+[?2004l[?2004h> import csv, json
+[?2004l[?2004h> 
+[?2004l[?2004h> def run_firing_cycle(schedule_path, specs_path):
+[?2004l[?2004h>     specs = json.load(open(specs_path))
+[?2004l[?2004h>     gp = float(specs['gas_burner_power_c'])
+[?2004l[?2004h>     dc = float(specs['damper_cooling_c'])
+[?2004l[?2004h>     al = float(specs['ambient_loss_c'])
+[?2004l[?2004h>     with open(schedule_path) as f:
+[?2004l[?2004h>         targets = [float(r['target_temp']) for r in csv.DictReader(f)]
+[?2004l[?2004h>     n = len(targets)
+[?2004l[?2004h>     K = 200
+[?2004l[?2004h>     GP = 0.05
+[?2004l[?2004h>     DP = 0.02
+[?2004l[?2004h>     beam = [(0.0, targets[0], 0, 0)]
+[?2004l[?2004h>     layers = []
+[?2004l[?2004h>     for t in range(n):
+[?2004l[?2004h>         nxt = targets[t + 1] if t + 1 < n else targets[t]
+[?2004l[?2004h>         cands = []
+[?2004l[?2004h>         for bi, (cost, T, g1, g2) in enumerate(beam):
+[?2004l[?2004h>             base = T + (0.3 * g1 + 0.6 * g2) * gp
+[?2004l[?2004h>             for g in range(6):
+[?2004l[?2004h>                 Tg = base + 0.1 * g * gp
+[?2004l[?2004h>                 for d in range(6):
+[?2004l[?2004h>                     Tn = Tg - (d * dc + al)
+[?2004l[?2004h>                     if Tn < T - 4.9:
+[?2004l[?2004h>                         continue
+[?2004l[?2004h>                     c = cost + abs(Tn - nxt) + GP * g + DP * d
+[?2004l[?2004h>                     cands.append((c, bi, g, d, Tn))
+[?2004l[?2004h>         cands.sort()
+[?2004l[?2004h>         new = []
+[?2004l[?2004h>         layer = []
+[?2004l[?2004h>         seen = set()
+[?2004l[?2004h>         for c, bi, g, d, Tn in cands:
+[?2004l[?2004h>             old_g1 = beam[bi][2]
+[?2004l[?2004h>             key = (g, old_g1, round(Tn, 2))
+[?2004l[?2004h>             if key in seen:
+[?2004l[?2004h>                 continue
+[?2004l[?2004h>             seen.add(key)
+[?2004l[?2004h>             new.append((c, Tn, g, old_g1))
+[?2004l[?2004h>             layer.append((bi, g, d))
+[?2004l[?2004h>             if len(new) >= K:
+[?2004l[?2004h>                 break
+[?2004l[?2004h>         beam = new
+[?2004l[?2004h>         layers.append(layer)
+[?2004l[?2004h>     bi = min(range(len(beam)), key=lambda i: beam[i][0])
+[?2004l[?2004h>     out = [None] * n
+[?2004l[?2004h>     for t in range(n - 1, -1, -1):
+[?2004l[?2004h>         parent, g, d = layers[t][bi]
+[?2004l[?2004h>         out[t] = {'gas': int(g), 'damper': int(d)}
+[?2004l[?2004h>         bi = parent
+[?2004l[?2004h>     return out
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h>     r = run_firing_cycle('/app/firing_schedule.csv', '/app/kiln_specs.json')
+[?2004l[?2004h>     print(r[:3], len(r))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@05660e803bc5:/app# cd /app && time python3 kiln_firmware.py && python3 check.py
+[?2004l[{'gas': 3, 'damper': 0}, {'gas': 0, 'damper': 1}, {'gas': 2, 'damper': 3}] 1000
+
+real	0m2.423s
+user	0m2.383s
+sys	0m0.025s
+len 1000 gas 1623 err 171.151 maxdrop 0.8
+[?2004hroot@05660e803bc5:/app# 

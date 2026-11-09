@@ -1,0 +1,89 @@
+Hit:1 http://deb.debian.org/debian bookworm InRelease
+Hit:2 http://deb.debian.org/debian bookworm-updates InRelease
+Hit:3 http://deb.debian.org/debian-security bookworm-security InRelease
+Reading package lists...
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 5 packages in 6ms
+============================= test session starts ==============================
+platform linux -- Python 3.12.15, pytest-8.4.1, pluggy-1.7.0 -- /root/.cache/uv/archive-v0/6bH5VmyRwlkDMBMEAOb5g/bin/python
+cachedir: .pytest_cache
+rootdir: /app
+collecting ... collected 35 items
+
+test_outputs.py::test_output_file_exists PASSED                          [  2%]
+test_outputs.py::test_output_is_valid_json PASSED                        [  5%]
+test_outputs.py::test_output_has_required_fields PASSED                  [  8%]
+test_outputs.py::test_generated_at_is_iso8601 PASSED                     [ 11%]
+test_outputs.py::test_waves_is_list PASSED                               [ 14%]
+test_outputs.py::test_wave_numbers_are_consecutive PASSED                [ 17%]
+test_outputs.py::test_deployments_have_required_fields PASSED            [ 20%]
+test_outputs.py::test_total_waves_matches PASSED                         [ 22%]
+test_outputs.py::test_constraint_dependency_ordering PASSED              [ 25%]
+test_outputs.py::test_constraint_capacity_limits PASSED                  [ 28%]
+test_outputs.py::test_constraint_critical_limits PASSED                  [ 31%]
+test_outputs.py::test_constraint_regional_coverage PASSED                [ 34%]
+test_outputs.py::test_constraint_service_uniqueness PASSED               [ 37%]
+test_outputs.py::test_constraint_valid_references PASSED                 [ 40%]
+test_outputs.py::test_constraint_blackout_compliance PASSED              [ 42%]
+test_outputs.py::test_constraint_team_bandwidth PASSED                   [ 45%]
+test_outputs.py::test_constraint_atomic_deployment PASSED                [ 48%]
+test_outputs.py::test_constraint_high_resource_slots PASSED              [ 51%]
+test_outputs.py::test_constraint_global_critical_limit PASSED            [ 54%]
+test_outputs.py::test_constraint_region_deployment_gap PASSED            [ 57%]
+test_outputs.py::test_constraint_team_fatigue PASSED                     [ 60%]
+test_outputs.py::test_wave_efficiency_threshold PASSED                   [ 62%]
+test_outputs.py::test_capacity_utilization_threshold PASSED              [ 65%]
+test_outputs.py::test_priority_compliance_threshold PASSED               [ 68%]
+test_outputs.py::test_balance_score_threshold PASSED                     [ 71%]
+test_outputs.py::test_team_balance_threshold PASSED                      [ 74%]
+test_outputs.py::test_constraint_margin_threshold PASSED                 [ 77%]
+test_outputs.py::test_deployment_smoothness_threshold PASSED             [ 80%]
+test_outputs.py::test_total_score_threshold PASSED                       [ 82%]
+test_outputs.py::test_input_files_not_modified PASSED                    [ 85%]
+test_outputs.py::test_model_file_not_modified PASSED                     [ 88%]
+test_outputs.py::test_minimum_waves_required PASSED                      [ 91%]
+test_outputs.py::test_no_hardcoded_plan PASSED                           [ 94%]
+test_outputs.py::test_all_datacenters_used PASSED                        [ 97%]
+test_outputs.py::test_full_constraint_validation PASSED                  [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED test_outputs.py::test_output_file_exists
+PASSED test_outputs.py::test_output_is_valid_json
+PASSED test_outputs.py::test_output_has_required_fields
+PASSED test_outputs.py::test_generated_at_is_iso8601
+PASSED test_outputs.py::test_waves_is_list
+PASSED test_outputs.py::test_wave_numbers_are_consecutive
+PASSED test_outputs.py::test_deployments_have_required_fields
+PASSED test_outputs.py::test_total_waves_matches
+PASSED test_outputs.py::test_constraint_dependency_ordering
+PASSED test_outputs.py::test_constraint_capacity_limits
+PASSED test_outputs.py::test_constraint_critical_limits
+PASSED test_outputs.py::test_constraint_regional_coverage
+PASSED test_outputs.py::test_constraint_service_uniqueness
+PASSED test_outputs.py::test_constraint_valid_references
+PASSED test_outputs.py::test_constraint_blackout_compliance
+PASSED test_outputs.py::test_constraint_team_bandwidth
+PASSED test_outputs.py::test_constraint_atomic_deployment
+PASSED test_outputs.py::test_constraint_high_resource_slots
+PASSED test_outputs.py::test_constraint_global_critical_limit
+PASSED test_outputs.py::test_constraint_region_deployment_gap
+PASSED test_outputs.py::test_constraint_team_fatigue
+PASSED test_outputs.py::test_wave_efficiency_threshold
+PASSED test_outputs.py::test_capacity_utilization_threshold
+PASSED test_outputs.py::test_priority_compliance_threshold
+PASSED test_outputs.py::test_balance_score_threshold
+PASSED test_outputs.py::test_team_balance_threshold
+PASSED test_outputs.py::test_constraint_margin_threshold
+PASSED test_outputs.py::test_deployment_smoothness_threshold
+PASSED test_outputs.py::test_total_score_threshold
+PASSED test_outputs.py::test_input_files_not_modified
+PASSED test_outputs.py::test_model_file_not_modified
+PASSED test_outputs.py::test_minimum_waves_required
+PASSED test_outputs.py::test_no_hardcoded_plan
+PASSED test_outputs.py::test_all_datacenters_used
+PASSED test_outputs.py::test_full_constraint_validation
+============================== 35 passed in 0.08s ==============================
+Tests: 35 passed, 0 failed, 0 errors
+Reward: 1.000

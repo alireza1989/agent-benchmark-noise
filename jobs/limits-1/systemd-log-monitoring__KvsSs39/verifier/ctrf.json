@@ -1,0 +1,204 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 20,
+            "passed": 16,
+            "failed": 0,
+            "skipped": 4,
+            "pending": 0,
+            "other": 0,
+            "start": 1792973768.1355073,
+            "stop": 1792973769.7716424
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_systemd_service_file_exists",
+                "status": "passed",
+                "duration": 0.0006242090003070189,
+                "start": 1792973768.2066562,
+                "stop": 1792973768.2074852,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_python_app_exists",
+                "status": "passed",
+                "duration": 0.0005353749984351452,
+                "start": 1792973768.2075813,
+                "stop": 1792973768.2082586,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_python_app_json_logging",
+                "status": "passed",
+                "duration": 1.506574790999366,
+                "start": 1792973768.2083519,
+                "stop": 1792973769.7158518,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_rsyslog_configuration",
+                "status": "passed",
+                "duration": 0.001615790999494493,
+                "start": 1792973769.7165895,
+                "stop": 1792973769.7185721,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_logrotate_configuration",
+                "status": "passed",
+                "duration": 0.0013287490019138204,
+                "start": 1792973769.7188315,
+                "stop": 1792973769.7204666,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_service_monitoring_script",
+                "status": "passed",
+                "duration": 0.0010391249998065177,
+                "start": 1792973769.7206438,
+                "stop": 1792973769.7219484,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_service_monitoring_output",
+                "status": "passed",
+                "duration": 0.009469249998801388,
+                "start": 1792973769.7221081,
+                "stop": 1792973769.7319248,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_systemd_service_syntax",
+                "status": "passed",
+                "duration": 0.0016131259999383474,
+                "start": 1792973769.732148,
+                "stop": 1792973769.734009,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_log_files_creation",
+                "status": "passed",
+                "duration": 0.0009490409993304638,
+                "start": 1792973769.7341516,
+                "stop": 1792973769.7353032,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_integration_log_routing",
+                "status": "skipped",
+                "duration": 0.004997249001462478,
+                "start": 1792973769.735444,
+                "stop": 1792973769.7410347,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "('/tests/test_outputs.py', 296, 'Skipped: Rsyslog service not available in test environment')"
+            },
+            {
+                "name": "test_outputs.py::test_service_restart_loop_detection",
+                "status": "passed",
+                "duration": 0.005844917001013528,
+                "start": 1792973769.7411842,
+                "stop": 1792973769.7472844,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_logrotate_syntax",
+                "status": "passed",
+                "duration": 0.002191458001107094,
+                "start": 1792973769.7474506,
+                "stop": 1792973769.7498398,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_logrotate_postrotate",
+                "status": "passed",
+                "duration": 0.0005674590011039982,
+                "start": 1792973769.7499738,
+                "stop": 1792973769.7507293,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_rsyslog_syntax",
+                "status": "passed",
+                "duration": 0.0037752919997728895,
+                "start": 1792973769.7508392,
+                "stop": 1792973769.7548387,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_log_routing_error_separation",
+                "status": "skipped",
+                "duration": 0.002371375001530396,
+                "start": 1792973769.7549605,
+                "stop": 1792973769.7575967,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "('/tests/test_outputs.py', 553, 'Skipped: Rsyslog service not available in test environment')"
+            },
+            {
+                "name": "test_outputs.py::test_service_management",
+                "status": "skipped",
+                "duration": 0.000906249000763637,
+                "start": 1792973769.7577214,
+                "stop": 1792973769.75995,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "('/tests/test_outputs.py', 641, 'Skipped: Systemd not available in test environment')"
+            },
+            {
+                "name": "test_outputs.py::test_end_to_end_service_logging",
+                "status": "skipped",
+                "duration": 0.0007925840000098106,
+                "start": 1792973769.7600524,
+                "stop": 1792973769.7613552,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "('/tests/test_outputs.py', 704, 'Skipped: Required services not available in test environment')"
+            },
+            {
+                "name": "test_outputs.py::test_json_processing_capability",
+                "status": "passed",
+                "duration": 0.007463250998625881,
+                "start": 1792973769.7614515,
+                "stop": 1792973769.7691305,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_logrotate_execution",
+                "status": "passed",
+                "duration": 0.001327333000517683,
+                "start": 1792973769.7692995,
+                "stop": 1792973769.7707596,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_rsyslog_file_ownership",
+                "status": "passed",
+                "duration": 0.00042816599670914,
+                "start": 1792973769.7708485,
+                "stop": 1792973769.7713995,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

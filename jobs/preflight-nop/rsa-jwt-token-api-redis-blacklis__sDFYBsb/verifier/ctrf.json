@@ -1,0 +1,200 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 15,
+            "passed": 0,
+            "failed": 15,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792964651.0093868,
+            "stop": 1792964651.4138982
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_rsa_keys_exist",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0008727509999744143,
+                "start": 1792964651.156423,
+                "stop": 1792964651.174284,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_rsa_keys_exist():\n        \"\"\"Test that RSA key pair exists in /app/keys directory.\"\"\"\n        private_key_path = Path(\"/app/keys/private.pem\")\n        public_key_path = Path(\"/app/keys/public.pem\")\n    \n>       assert private_key_path.exists(), \"Private key file does not exist\"\nE       AssertionError: Private key file does not exist\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/keys/private.pem').exists\n\n/tests/test_outputs.py:97: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_api_server_starts",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.014439582999898448,
+                "start": 1792964651.1744387,
+                "stop": 1792964651.197134,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_api_server_starts():\n        \"\"\"Test that API server can start and respond.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:112: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_login_endpoint",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.01005883300001642,
+                "start": 1792964651.1972795,
+                "stop": 1792964651.2154098,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_login_endpoint():\n        \"\"\"Test that login endpoint returns access and refresh tokens.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:129: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_tokens_have_jti",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.010381875000007312,
+                "start": 1792964651.2155726,
+                "stop": 1792964651.2342873,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_tokens_have_jti():\n        \"\"\"Test that tokens contain unique JTI claims.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:158: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_tokens_are_rsa_signed",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0097717090001197,
+                "start": 1792964651.23444,
+                "stop": 1792964651.2522838,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_tokens_are_rsa_signed():\n        \"\"\"Test that tokens are signed with RSA algorithm.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:193: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_validate_endpoint",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.009072500000002037,
+                "start": 1792964651.252442,
+                "stop": 1792964651.2688813,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_validate_endpoint():\n        \"\"\"Test that validate endpoint checks token validity.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:219: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_revoke_endpoint",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.008490041000072779,
+                "start": 1792964651.2689939,
+                "stop": 1792964651.2847035,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_revoke_endpoint():\n        \"\"\"Test that revoke endpoint adds token to Redis blacklist.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:263: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_revoked_token_rejected",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0083085009999877,
+                "start": 1792964651.2848287,
+                "stop": 1792964651.3003619,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_revoked_token_rejected():\n        \"\"\"Test that revoked tokens are rejected by validate endpoint.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:316: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_refresh_endpoint",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.008353874000022188,
+                "start": 1792964651.3004575,
+                "stop": 1792964651.3160324,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_refresh_endpoint():\n        \"\"\"Test that refresh endpoint returns new access token.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:361: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_cli_acquire",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.009508625999956166,
+                "start": 1792964651.3161254,
+                "stop": 1792964651.3329704,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_cli_acquire():\n        \"\"\"Test that CLI acquire command works.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:397: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_cli_validate",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.008515791000149875,
+                "start": 1792964651.3330758,
+                "stop": 1792964651.348988,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_cli_validate():\n        \"\"\"Test that CLI validate command works.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:449: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_cli_revoke",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.008601084000133596,
+                "start": 1792964651.3490965,
+                "stop": 1792964651.3648992,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_cli_revoke():\n        \"\"\"Test that CLI revoke command works.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:485: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_cli_retry",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.008379999999874599,
+                "start": 1792964651.3650126,
+                "stop": 1792964651.3810475,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_cli_retry():\n        \"\"\"Test that CLI retry command refreshes tokens.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:520: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_expired_token_rejected",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.009143542000060734,
+                "start": 1792964651.3811538,
+                "stop": 1792964651.3975792,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_expired_token_rejected():\n        \"\"\"Test that expired tokens are rejected.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:572: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_logs_directory_exists",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.008718166999983623,
+                "start": 1792964651.3976948,
+                "stop": 1792964651.4137187,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_logs_directory_exists():\n        \"\"\"Test that logs directory exists and log file is created.\"\"\"\n        ensure_dependencies()\n>       port, api_process = start_api_server_if_needed()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:610: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def start_api_server_if_needed():\n        \"\"\"Start API server if not already running, return the port.\"\"\"\n        port = get_api_port()\n        if port is not None:\n            return port, None\n    \n        api_file = Path('/app/api.py')\n        if not api_file.exists():\n            api_file = Path('/app/main.py')\n    \n        if not api_file.exists():\n>           raise AssertionError(\"API server file not found at /app/api.py or /app/main.py\")\nE           AssertionError: API server file not found at /app/api.py or /app/main.py\n\n/tests/test_outputs.py:60: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

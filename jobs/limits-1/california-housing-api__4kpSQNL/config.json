@@ -1,0 +1,13 @@
+{
+    "task": {
+        "path": "tblite/california-housing-api",
+        "source": "tblite"
+    },
+    "trial_name": "california-housing-api__4kpSQNL",
+    "trials_dir": "jobs/limits-1",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "anthropic/claude-haiku-5-5"
+    },
+    "job_id": "a0c34f35-7d98-41b0-b4fb-c0a5ae8a7c1c"
+}

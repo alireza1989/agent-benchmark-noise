@@ -1,0 +1,77 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 6,
+            "passed": 5,
+            "failed": 1,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792975917.1883092,
+            "stop": 1792975949.904028
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_repro_script_produces_artifacts",
+                "status": "passed",
+                "duration": 7.074321293997855,
+                "start": 1792975917.21284,
+                "stop": 1792975924.2890112,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_hashes_json_schema_and_match",
+                "status": "passed",
+                "duration": 6.495934794998902,
+                "start": 1792975924.289357,
+                "stop": 1792975930.7867477,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_seed_train_script_unchanged",
+                "status": "passed",
+                "duration": 6.4017393790018104,
+                "start": 1792975930.7871678,
+                "stop": 1792975937.1893644,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_seed_project_copied_verbatim",
+                "status": "passed",
+                "duration": 6.196702085000652,
+                "start": 1792975937.1895697,
+                "stop": 1792975943.3867855,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_artifacts_match_seed_training_output",
+                "status": "passed",
+                "duration": 6.505098878998979,
+                "start": 1792975943.3869689,
+                "stop": 1792975949.8928363,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_repro_script_structure_uses_virtualenvs",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0009817919999477454,
+                "start": 1792975949.8930278,
+                "stop": 1792975949.9037,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_repro_script_structure_uses_virtualenvs() -> None:\n        \"\"\"repro.sh declares two virtual environments and uses them to run train.py.\n    \n        This enforces that the agent sets up isolated environments instead of\n        running the training directly in the base image or simply writing files\n        under /output. We perform a lightweight static check on the repro.sh\n        script to ensure it creates two venvs and invokes train.py from them.\n        \"\"\"\n    \n        assert REPRO_SCRIPT.exists(), \"Expected /app/work/repro.sh entrypoint script\"\n    \n        text = REPRO_SCRIPT.read_text(encoding=\"utf-8\")\n        lines = text.splitlines()\n    \n        # Basic signal that virtual environments are created. We expect the agent\n        # to use python -m venv, and the invocations must not be commented out.\n        venv_lines = [ln for ln in lines if \"python -m venv\" in ln]\n>       assert venv_lines, \"repro.sh must create at least one virtual environment via python -m venv\"\nE       AssertionError: repro.sh must create at least one virtual environment via python -m venv\nE       assert []\n\n/tests/test_outputs.py:264: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

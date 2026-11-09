@@ -1,0 +1,275 @@
+[?2004hroot@90596a542058:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@90596a542058:/app# clear
+[?2004l[H[J[3J[?2004hroot@90596a542058:/app# cat > /app/solution.py << 'EOF'
+[?2004l[?2004h> import json
+[?2004l[?2004h> from collections import deque
+[?2004l[?2004h> import sys
+[?2004l[?2004h> 
+[?2004l[?2004h> KEYS = ('Depends', 'Before', 'After', 'Needs', 'Requires', 'Alias', 'Phony')
+[?2004l[?2004h> EDGE_KEYS = ('Depends', 'Before', 'After', 'Needs', 'Requires')
+[?2004l         comp.append(w)
+                if w == v:
+                    break
+            sccs.append(comp)
+
+    for v in nodes:
+        if v not in index:
+            strong(v)
+
+    comp_of = {}
+    for i, c in enumerate(sccs)[?2004h> 
+[?2004l[?2004h> 
+[?2004l:
+[?2004h> def solve(lines):
+[?2004l        for v in c[?2004h>     sys.setrecursionlimit(100000)
+[?2004l[?2004h>     blocks = []
+[?2004l[?2004h>     cur = None
+[?2004l[?2004h>     for raw in lines:
+[?2004l[?2004h>         s = raw.strip()
+[?2004l[?2004h>         if not s or s.startswith('#'):
+[?2004l or (c[0] in adj[?2004h>             continue
+[?2004l[?2004h>         if s.startswith('[') and s.endswith(']'):
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         toks = s.split()
+[?2004l   first = [min(nidx[v] f[?2004h>         if toks[0] == 'TARGET':
+[?2004l) for c in sccs]
+    ca[?2004h>             if len(toks) != 2:
+[?2004l[?2004h>                 return 'PARSE_ERROR'
+[?2004l[?2004h>             cur = {'kind': 'TARGET', 'name': toks[1], 'id': '', 'dirs': []}
+[?2004l[?2004h>             blocks.append(cur)
+[?2004lb = comp_of[w]
+[?2004h>         elif toks[0] == 'OVERRIDE':
+[?2004l(a, bb) n[?2004h>             if len(toks) != 3:
+[?2004l[?2004h>                 return 'PARSE_ERROR'
+[?2004l[?2004h>             cur = {'kind': 'OVERRIDE', 'name': toks[1], 'id': toks[2], 'dirs': []}
+[?2004l[?2004h>             blocks.append(cur)
+[?2004l[?2004h>         else:
+[?2004l[?2004h>             if cur is None:
+[?2004l[?2004h>                 return 'PARSE_ERROR'
+[?2004l[?2004h>             if s.count('=') != 1:
+[?2004lpopleft()
+        order.extend(sor[?2004h>                 return 'PARSE_ERROR'
+[?2004ladj[i[?2004h>             k, v = s.split('=')
+[?2004l[?2004h>             k = k.strip()
+[?2004l[?2004h>             v = v.strip()
+[?2004l[?2004h>             if k not in KEYS:
+[?2004lurn json.dumps({'[?2004h>                 return 'PARSE_ERROR'
+[?2004lep[?2004h>             if k == 'Phony':
+[?2004l[?2004h>                 if v not in ('yes', 'no'):
+[?2004l[?2004h>                     return 'PARSE_ERROR'
+[?2004l[?2004h>                 cur['dirs'].append(('Phony', v))
+[?2004l[?2004h>             else:
+[?2004l[?2004h>                 cur['dirs'].append((k, v.split()))
+[?2004ly = yes','Depends = [?2004h> 
+[?2004l[?2004h>     parent = {}
+[?2004l[?2004h> 
+[?2004l[?2004h>     def find(x):
+[?2004lst 20','Phony = n[?2004h>         parent.setdefault(x, x)
+[?2004lion','OVERRI[?2004h>         while parent[x] != x:
+[?2004l[?2004h>             parent[x] = parent[parent[x]]
+[?2004lh[?2004h>             x = parent[x]
+[?2004las =[?2004h>         return x
+[?2004l build','TARGET b[?2004h> 
+[?2004l[?2004h>     def union(a, b):
+[?2004lild','Depends = compi[?2004h>         ra = find(a)
+[?2004l[?2004h>         rb = find(b)
+[?2004l[?2004h>         if ra == rb:
+[?2004l[?2004h>             return
+[?2004l[?2004h>         if ra < rb:
+[?2004l[?2004h>             parent[rb] = ra
+[?2004l[?2004h>         else:
+[?2004l[?2004h>             parent[ra] = rb
+[?2004l[?2004h> 
+[?2004l[?2004h>     all_names = set()
+[?2004l[?2004h>     for b in blocks:
+[?2004l[?2004h>         find(b['name'])
+[?2004l[?2004h>         all_names.add(b['name'])
+[?2004l[?2004h>         for k, vals in b['dirs']:
+[?2004l[?2004h>             if k == 'Alias':
+[?2004l[?2004h>                 for x in vals:
+[?2004l[?2004h>                     union(b['name'], x)
+[?2004l[?2004h>                     all_names.add(x)
+[?2004l[?2004h>     for b in blocks:
+[?2004l[?2004h>         for k, vals in b['dirs']:
+[?2004l[?2004h>             if k in EDGE_KEYS:
+[?2004l[?2004h>                 for x in vals:
+[?2004l[?2004h>                     all_names.add(x)
+[?2004l[?2004h> 
+[?2004l[?2004h>     proc = [b for b in blocks if b['kind'] == 'TARGET'] + \
+[?2004l[?2004h>         sorted([b for b in blocks if b['kind'] == 'OVERRIDE'], key=lambda b: b['id'])
+[?2004l[?2004h> 
+[?2004l[?2004h>     nodes = []
+[?2004l[?2004h>     seen = set()
+[?2004l[?2004h> 
+[?2004l[?2004h>     def add(n):
+[?2004l[?2004h>         if n not in seen:
+[?2004l[?2004h>             seen.add(n)
+[?2004l[?2004h>             nodes.append(n)
+[?2004l[?2004h> 
+[?2004l[?2004h>     acc = {}
+[?2004l[?2004h>     torder = []
+[?2004l[?2004h>     for b in proc:
+[?2004l[?2004h>         U = find(b['name'])
+[?2004l[?2004h>         add(U)
+[?2004l[?2004h>         if U not in acc:
+[?2004l[?2004h>             acc[U] = {k: [] for k in EDGE_KEYS}
+[?2004l[?2004h>             torder.append(U)
+[?2004l[?2004h>         for k, vals in b['dirs']:
+[?2004l[?2004h>             if k in EDGE_KEYS:
+[?2004l[?2004h>                 for x in vals:
+[?2004l[?2004h>                     c = find(x)
+[?2004l[?2004h>                     if c not in acc[U][k]:
+[?2004l[?2004h>                         acc[U][k].append(c)
+[?2004l[?2004h> 
+[?2004l[?2004h>     adj = {}
+[?2004l[?2004h> 
+[?2004l[?2004h>     def edge(a, b2):
+[?2004l[?2004h>         add(a)
+[?2004l[?2004h>         add(b2)
+[?2004l[?2004h>         lst = adj.setdefault(a, [])
+[?2004l[?2004h>         if b2 not in lst:
+[?2004l[?2004h>             lst.append(b2)
+[?2004l[?2004h> 
+[?2004l[?2004h>     for U in torder:
+[?2004l[?2004h>         for x in acc[U]['Depends']:
+[?2004l[?2004h>             edge(x, U)
+[?2004l[?2004h>         for y in acc[U]['Before']:
+[?2004l[?2004h>             edge(U, y)
+[?2004l[?2004h>         for z in acc[U]['After']:
+[?2004l[?2004h>             edge(z, U)
+[?2004l[?2004h>         for w in acc[U]['Needs']:
+[?2004l[?2004h>             edge(U, w)
+[?2004l[?2004h>         for v in acc[U]['Requires']:
+[?2004l[?2004h>             edge(U, v)
+[?2004l[?2004h> 
+[?2004l[?2004h>     for n in sorted(set(find(x) for x in all_names)):
+[?2004l[?2004h>         add(n)
+[?2004l[?2004h> 
+[?2004l[?2004h>     index = {}
+[?2004l[?2004h>     low = {}
+[?2004l[?2004h>     onstack = set()
+[?2004l[?2004h>     st = []
+[?2004l[?2004h>     sccs = []
+[?2004l[?2004h>     counter = [0]
+[?2004l[?2004h> 
+[?2004l[?2004h>     def strong(v):
+[?2004l[?2004h>         index[v] = counter[0]
+[?2004l[?2004h>         low[v] = counter[0]
+[?2004l[?2004h>         counter[0] += 1
+[?2004l[?2004h>         st.append(v)
+[?2004l[?2004h>         onstack.add(v)
+[?2004l[?2004h>         for w in adj.get(v, []):
+[?2004l[?2004h>             if w not in index:
+[?2004l[?2004h>                 strong(w)
+[?2004l[?2004h>                 low[v] = min(low[v], low[w])
+[?2004l[?2004h>             elif w in onstack:
+[?2004l[?2004h>                 low[v] = min(low[v], index[w])
+[?2004l[?2004h>         if low[v] == index[v]:
+[?2004l[?2004h>             comp = []
+[?2004l[?2004h>             while True:
+[?2004l[?2004h>                 w = st.pop()
+[?2004l[?2004h>                 onstack.discard(w)
+[?2004l[?2004h>                 comp.append(w)
+[?2004l[?2004h>                 if w == v:
+[?2004l[?2004h>                     break
+[?2004l[?2004h>             sccs.append(comp)
+[?2004l[?2004h> 
+[?2004l[?2004h>     for v in nodes:
+[?2004l[?2004h>         if v not in index:
+[?2004l[?2004h>             strong(v)
+[?2004l[?2004h> 
+[?2004l[?2004h>     comp_of = {}
+[?2004l[?2004h>     for i, c in enumerate(sccs):
+[?2004l[?2004h>         for v in c:
+[?2004l[?2004h>             comp_of[v] = i
+[?2004l[?2004h> 
+[?2004l[?2004h>     nidx = {n: i for i, n in enumerate(nodes)}
+[?2004l[?2004h>     cycles = []
+[?2004l[?2004h>     for c in sccs:
+[?2004l[?2004h>         if len(c) >= 2 or (c[0] in adj.get(c[0], [])):
+[?2004l[?2004h>             cycles.append(sorted(c))
+[?2004l[?2004h>     cycles.sort()
+[?2004l[?2004h> 
+[?2004l[?2004h>     m = len(sccs)
+[?2004l[?2004h>     first = [min(nidx[v] for v in c) for c in sccs]
+[?2004l[?2004h>     cadj = [[] for _ in range(m)]
+[?2004l[?2004h>     cindeg = [0] * m
+[?2004l[?2004h>     cseen = set()
+[?2004l[?2004h>     for v in nodes:
+[?2004l[?2004h>         for w in adj.get(v, []):
+[?2004l[?2004h>             a = comp_of[v]
+[?2004l[?2004h>             bb = comp_of[w]
+[?2004l[?2004h>             if a != bb and (a, bb) not in cseen:
+[?2004l[?2004h>                 cseen.add((a, bb))
+[?2004l[?2004h>                 cadj[a].append(bb)
+[?2004l[?2004h>                 cindeg[bb] += 1
+[?2004l[?2004h> 
+[?2004l[?2004h>     init = sorted([i for i in range(m) if cindeg[i] == 0], key=lambda i: first[i])
+[?2004l[?2004h>     q = deque(init)
+[?2004l[?2004h>     order = []
+[?2004l[?2004h>     while q:
+[?2004l[?2004h>         i = q.popleft()
+[?2004l[?2004h>         order.extend(sorted(sccs[i]))
+[?2004l[?2004h>         for j in cadj[i]:
+[?2004l[?2004h>             cindeg[j] -= 1
+[?2004l[?2004h>             if cindeg[j] == 0:
+[?2004l[?2004h>                 q.append(j)
+[?2004l[?2004h> 
+[?2004l[?2004h>     return json.dumps({'order': order, 'cycles': cycles}, separators=(',', ':'))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@90596a542058:/app# cd /app && python3 -c "
+[?2004l[?2004h> from solution import solve
+[?2004l[?2004h> print(solve(['TARGET build','Alias = compile link','Depends = all','TARGET compile','Before = clean']))
+[?2004l[?2004h> print(solve(['TARGET test','Phony = yes','Depends = unit','OVERRIDE test 20','Phony = no','After = integration','OVERRIDE test 10','Depends = e2e']))
+[?2004l[?2004h> print(solve(['TARGET zebra','Alias = alpha','TARGET alpha','Alias = build','TARGET build','Depends = compile']))
+[?2004l[?2004h> print(solve(['TARGET a','Depends = b','TARGET b','Depends = c','TARGET c','Depends = a']))
+[?2004l[?2004h> print(solve([]))
+[?2004l[?2004h> print(solve(['Depends = x']))
+[?2004l[?2004h> "
+[?2004l{"order":["all","build","clean"],"cycles":[]}
+{"order":["unit","e2e","integration","test"],"cycles":[]}
+{"order":["compile","alpha"],"cycles":[]}
+{"order":["a","b","c"],"cycles":[["a","b","c"]]}
+{"order":[],"cycles":[]}
+PARSE_ERROR
+[?2004hroot@90596a542058:/app# cat > /tmp/patch.py << 'PYEOF'
+[?2004l[?2004h> s = open('/app/solution.py').read()
+[?2004l[?2004h> ins = '''    values = set()
+[?2004l[?2004h>     for b in blocks:
+[?2004l[?2004h>         for k, vals in b['dirs']:
+[?2004l[?2004h>             if k == 'Alias':
+[?2004l[?2004h>                 values.update(vals)
+[?2004l[?2004h>     comp = {}
+[?2004l[?2004h>     for n in list(parent):
+[?2004l[?2004h>         comp.setdefault(find(n), []).append(n)
+[?2004l[?2004h>     canon_of = {}
+[?2004l[?2004h>     for r, ms in comp.items():
+[?2004l[?2004h>         vs = [m for m in ms if m in values]
+[?2004l[?2004h>         canon_of[r] = min(vs) if vs else min(ms)
+[?2004l[?2004h>     root_find = find
+[?2004l[?2004h>     find = lambda x: canon_of.get(root_find(x), root_find(x))
+[?2004l[?2004h> 
+[?2004l[?2004h> '''
+[?2004l[?2004h> anchor = "    proc = [b for b in blocks"
+[?2004l[?2004h> assert anchor in s
+[?2004l[?2004h> s = s.replace(anchor, ins + anchor, 1)
+[?2004l[?2004h> open('/app/solution.py', 'w').write(s)
+[?2004l[?2004h> PYEOF
+[?2004l[?2004hroot@90596a542058:/app# python3 /tmp/patch.py && cd /app && python3 -c "
+[?2004l[?2004h> from solution import solve
+[?2004l[?2004h> print(solve(['TARGET build','Alias = compile link','Depends = all','TARGET compile','Before = clean']))
+[?2004l[?2004h> print(solve(['TARGET test','Phony = yes','Depends = unit','OVERRIDE test 20','Phony = no','After = integration','OVERRIDE test 10','Depends = e2e']))
+[?2004l[?2004h> print(solve(['TARGET zebra','Alias = alpha','TARGET alpha','Alias = build','TARGET build','Depends = compile']))
+[?2004l[?2004h> print(solve(['TARGET a','Depends = b','TARGET b','Depends = c','TARGET c','Depends = a']))
+[?2004l[?2004h> print(solve([]))
+[?2004l[?2004h> print(solve(['Depends = x']))
+[?2004l[?2004h> "
+[?2004l{"order":["all","compile","clean"],"cycles":[]}
+{"order":["unit","e2e","integration","test"],"cycles":[]}
+{"order":["compile","alpha"],"cycles":[]}
+{"order":["a","b","c"],"cycles":[["a","b","c"]]}
+{"order":[],"cycles":[]}
+PARSE_ERROR
+[?2004hroot@90596a542058:/app# 

@@ -1,0 +1,243 @@
+[?2004hroot@eff861eb58c8:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@eff861eb58c8:/app# clear
+[?2004l[H[J[3J[?2004hroot@eff861eb58c8:/app# mkdir -p /app/src /app/output && cd /app && ls -la
+[?2004ltotal 16
+drwxr-xr-x 1 root root 4096 Oct 26 00:40 .
+drwxr-xr-x 1 root root 4096 Oct 26 00:40 ..
+drwxr-xr-x 2 root root 4096 Oct 26 00:40 output
+drwxr-xr-x 2 root root 4096 Oct 26 00:40 src
+[?2004hroot@eff861eb58c8:/app# cat > /app/src/padding.py << 'EOF'
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def zero_pad(x, pad):
+[?2004l[?2004h>     x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>     if pad == 0:
+[?2004l[?2004h>         return x.copy()
+[?2004l[?2004h>     return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)), mode='constant', constant_values=0.0).astype(np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def get_output_shape(input_shape, kernel_size, stride, padding, dilation=1):
+[?2004l[?2004h>     h, w = input_shape
+[?2004l[?2004h>     oh = (h + 2 * padding - dilation * (kernel_size - 1) - 1) // stride + 1
+[?2004l[?2004h>     ow = (w + 2 * padding - dilation * (kernel_size - 1) - 1) // stride + 1
+[?2004l[?2004h>     return (int(oh), int(ow))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@eff861eb58c8:/app# cat > /app/src/base.py << 'EOF'
+[?2004l[?2004h> from abc import ABC, abstractmethod
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class BaseLayer(ABC):
+[?2004l[?2004h>     def __init__(self):
+[?2004l[?2004h>         pass
+[?2004l[?2004h> 
+[?2004l[?2004h>     def __call__(self, x, *args, **kwargs):
+[?2004l[?2004h>         return self.forward(x, *args, **kwargs)
+[?2004l[?2004h> 
+[?2004l[?2004h>     @abstractmethod
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         raise NotImplementedError
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@eff861eb58c8:/app# cat > /app/src/conv.py << 'EOF'
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> 
+[?2004l[?2004h> from .base import BaseLayer
+[?2004l[?2004h> from .padding import zero_pad, get_output_shape
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class Conv2D(BaseLayer):
+[?2004l[?2004h>     def __init__(self, in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h>         self.in_channels = int(in_channels)
+[?2004l[?2004h>         self.out_channels = int(out_channels)
+[?2004l[?2004h>         self.kernel_size = int(kernel_size)
+[?2004l[?2004h>         self.stride = int(stride)
+[?2004l[?2004h>         self.padding = int(padding)
+[?2004l[?2004h>         self.dilation = int(dilation)
+[?2004l[?2004h>         fan_in = self.in_channels * self.kernel_size * self.kernel_size
+[?2004l[?2004h>         fan_out = self.out_channels * self.kernel_size * self.kernel_size
+[?2004l[?2004h>         limit = np.sqrt(6.0 / (fan_in + fan_out))
+[?2004l[?2004h>         self.weights = np.random.uniform(-limit, limit, (self.out_channels, self.in_channels, self.kernel_size, self.kernel_size)).astype(np.float64)
+[?2004l[?2004h>         self.bias = np.zeros(self.out_channels, dtype=np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         N, H, W, C = x.shape
+[?2004l[?2004h>         k, s, d = self.kernel_size, self.stride, self.dilation
+[?2004l[?2004h>         xp = zero_pad(x, self.padding)
+[?2004l[?2004h>         oh, ow = get_output_shape((H, W), k, s, self.padding, d)
+[?2004l[?2004h>         out = np.zeros((N, oh, ow, self.out_channels), dtype=np.float64)
+[?2004l[?2004h>         for i in range(k):
+[?2004l[?2004h>             for j in range(k):
+[?2004l[?2004h>                 hs = i * d
+[?2004l[?2004h>                 ws = j * d
+[?2004l[?2004h>                 patch = xp[:, hs:hs + s * (oh - 1) + 1:s, ws:ws + s * (ow - 1) + 1:s, :]
+[?2004l[?2004h>                 out += np.einsum('nhwc,oc->nhwo', patch, self.weights[:, :, i, j])
+[?2004l[?2004h>         out += self.bias
+[?2004l[?2004h>         return out
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@eff861eb58c8:/app# cat > /app/src/conv_transpose.py << 'EOF'
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> 
+[?2004l[?2004h> from .base import BaseLayer
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class Conv2DTranspose(BaseLayer):
+[?2004l[?2004h>     def __init__(self, in_channels, out_channels, kernel_size, stride=1, padding=0):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h>         self.in_channels = int(in_channels)
+[?2004l[?2004h>         self.out_channels = int(out_channels)
+[?2004l[?2004h>         self.kernel_size = int(kernel_size)
+[?2004l[?2004h>         self.stride = int(stride)
+[?2004l[?2004h>         self.padding = int(padding)
+[?2004l[?2004h>         fan_in = self.in_channels * self.kernel_size * self.kernel_size
+[?2004l[?2004h>         fan_out = self.out_channels * self.kernel_size * self.kernel_size
+[?2004l[?2004h>         limit = np.sqrt(6.0 / (fan_in + fan_out))
+[?2004l[?2004h>         self.weights = np.random.uniform(-limit, limit, (self.in_channels, self.out_channels, self.kernel_size, self.kernel_size)).astype(np.float64)
+[?2004l[?2004h>         self.bias = np.zeros(self.out_channels, dtype=np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         N, H, W, C = x.shape
+[?2004l[?2004h>         k, s, p = self.kernel_size, self.stride, self.padding
+[?2004l[?2004h>         Hf = (H - 1) * s + k
+[?2004l[?2004h>         Wf = (W - 1) * s + k
+[?2004l[?2004h>         full = np.zeros((N, Hf, Wf, self.out_channels), dtype=np.float64)
+[?2004l[?2004h>         for i in range(k):
+[?2004l[?2004h>             for j in range(k):
+[?2004l[?2004h>                 contrib = np.einsum('nhwc,co->nhwo', x, self.weights[:, :, i, j])
+[?2004l[?2004h>                 full[:, i:i + s * (H - 1) + 1:s, j:j + s * (W - 1) + 1:s, :] += contrib
+[?2004l[?2004h>         out = full[:, p:Hf - p, p:Wf - p, :]
+[?2004l[?2004h>         out = out + self.bias
+[?2004l[?2004h>         return out.astype(np.float64)
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@eff861eb58c8:/app# cat > /app/src/pooling.py << 'EOF'
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> 
+[?2004l[?2004h> from .base import BaseLayer
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class _Pool2D(BaseLayer):
+[?2004l[?2004h>     def __init__(self, kernel_size, stride=None):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h>         self.kernel_size = int(kernel_size)
+[?2004l[?2004h>         self.stride = int(stride) if stride is not None else self.kernel_size
+[?2004l[?2004h> 
+[?2004l[?2004h>     def _patches(self, x):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         N, H, W, C = x.shape
+[?2004l[?2004h>         k, s = self.kernel_size, self.stride
+[?2004l[?2004h>         oh = (H - k) // s + 1
+[?2004l[?2004h>         ow = (W - k) // s + 1
+[?2004l[?2004h>         patches = []
+[?2004l[?2004h>         for i in range(k):
+[?2004l[?2004h>             for j in range(k):
+[?2004l[?2004h>                 patches.append(x[:, i:i + s * (oh - 1) + 1:s, j:j + s * (ow - 1) + 1:s, :])
+[?2004l[?2004h>         return np.stack(patches, axis=0)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class MaxPool2D(_Pool2D):
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         return self._patches(x).max(axis=0).astype(np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class AvgPool2D(_Pool2D):
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         return self._patches(x).mean(axis=0).astype(np.float64)
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@eff861eb58c8:/app# cat > /app/src/normalization.py << 'EOF'
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> 
+[?2004l[?2004h> from .base import BaseLayer
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class BatchNorm2D(BaseLayer):
+[?2004l[?2004h>     def __init__(self, num_features, eps=1e-5, momentum=0.1):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h>         self.num_features = int(num_features)
+[?2004l[?2004h>         self.eps = float(eps)
+[?2004l[?2004h>         self.momentum = float(momentum)
+[?2004l[?2004h>         self.gamma = np.ones(self.num_features, dtype=np.float64)
+[?2004l[?2004h>         self.beta = np.zeros(self.num_features, dtype=np.float64)
+[?2004l[?2004h>         self.running_mean = np.zeros(self.num_features, dtype=np.float64)
+[?2004l[?2004h>         self.running_var = np.ones(self.num_features, dtype=np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h>     def forward(self, x, training=True):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         axes = (0, 1, 2)
+[?2004l[?2004h>         if training:
+[?2004l[?2004h>             mean = x.mean(axis=axes)
+[?2004l[?2004h>             var = x.var(axis=axes)
+[?2004l[?2004h>             m = self.momentum
+[?2004l[?2004h>             self.running_mean = (1 - m) * self.running_mean + m * mean
+[?2004l[?2004h>             self.running_var = (1 - m) * self.running_var + m * var
+[?2004l[?2004h>         else:
+[?2004l[?2004h>             mean = self.running_mean
+[?2004l[?2004h>             var = self.running_var
+[?2004l[?2004h>         x_hat = (x - mean) / np.sqrt(var + self.eps)
+[?2004l[?2004h>         return (self.gamma * x_hat + self.beta).astype(np.float64)
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@eff861eb58c8:/app# cat > /app/src/activation.py << 'EOF'
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> 
+[?2004l[?2004h> from .base import BaseLayer
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class ReLU(BaseLayer):
+[?2004l[?2004h>     def __init__(self):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h> 
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         return np.maximum(0.0, x).astype(np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class LeakyReLU(BaseLayer):
+[?2004l[?2004h>     def __init__(self, negative_slope=0.01):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h>         self.negative_slope = float(negative_slope)
+[?2004l[?2004h> 
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         return np.where(x > 0, x, self.negative_slope * x).astype(np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class Sigmoid(BaseLayer):
+[?2004l[?2004h>     def __init__(self):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h> 
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         out = np.empty_like(x, dtype=np.float64)
+[?2004l[?2004h>         pos = x >= 0
+[?2004l[?2004h>         out[pos] = 1.0 / (1.0 + np.exp(-x[pos]))
+[?2004l[?2004h>         ex = np.exp(x[~pos])
+[?2004l[?2004h>         out[~pos] = ex / (1.0 + ex)
+[?2004l[?2004h>         return out
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@eff861eb58c8:/app# cat > /app/src/__init__.py << 'EOF'
+[?2004l[?2004h> from .base import BaseLayer
+[?2004l[?2004h> from .conv import Conv2D
+[?2004l[?2004h> from .conv_transpose import Conv2DTranspose
+[?2004l[?2004h> from .pooling import MaxPool2D, AvgPool2D
+[?2004l[?2004h> from .normalization import BatchNorm2D
+[?2004l[?2004h> from .activation import ReLU, LeakyReLU, Sigmoid
+[?2004l[?2004h> from .padding import zero_pad, get_output_shape
+[?2004l[?2004h> 
+[?2004l[?2004h> __all__ = [
+[?2004l[?2004h>     'BaseLayer', 'Conv2D', 'Conv2DTranspose', 'MaxPool2D', 'AvgPool2D',
+[?2004l[?2004h>     'BatchNorm2D', 'ReLU', 'LeakyReLU', 'Sigmoid', 'zero_pad', 'get_output_shape',
+[?2004l[?2004h> ]
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@eff861eb58c8:/app# cd /app && python3 -c "import numpy as np; from src import *; from src.padding import get_output_shape; np.random.seed(0); x=np.random.randn(2,9,9,3); c=Conv2D(3,4,3,stride=2,padding=1,dilation=2); y=c(x); print('conv',y.shape,y.dtype); ref=np.zeros_like(y); xp=zero_pad(x,1); [ref.__setitem__((slice(None),a,b,slice(None)), sum(np.einsum('nc,oc->no',xp[:,a*2+i*2,b*2+j*2,:],c.weights[:,:,i,j]) for i in range(3) for j in range(3))+c.bias) for a in range(y.shape[1]) for b in range(y.shape[2])]; print('dil ok', np.allclose(ref,y)); t=Conv2DTranspose(3,5,3,stride=2,padding=1); print('convT',t(np.random.randn(2,4,4,3)).shape); print('pool',MaxPool2D(2)(x).shape, AvgPool2D(3,stride=2)(x).shape); b=BatchNorm2D(3); o=b(x); print('bn',np.allclose(o.mean(axis=(0,1,2)),0,atol=1e-8), b.running_mean.shape); print('relu',ReLU()(np.array([-1.,2.])), LeakyReLU(0.1)(np.array([-1.,2.])), Sigmoid()(np.array([-1000.,0.,1000.]))); print(get_output_shape((9,9),3,2,1,2)); print(BaseLayer.__abstractmethods__)"
+[?2004lconv (2, 4, 4, 4) float64
+dil ok True
+convT (2, 7, 7, 5)
+pool (2, 4, 4, 3) (2, 4, 4, 3)
+bn True (3,)
+relu [0. 2.] [-0.1  2. ] [0.  0.5 1. ]
+(4, 4)
+frozenset({'forward'})
+[?2004hroot@eff861eb58c8:/app# 

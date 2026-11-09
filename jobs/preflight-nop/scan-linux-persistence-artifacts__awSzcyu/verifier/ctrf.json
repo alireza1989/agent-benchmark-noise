@@ -1,0 +1,212 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 16,
+            "passed": 0,
+            "failed": 16,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792964680.3012705,
+            "stop": 1792964680.41748
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_script_exists",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0005879600000753271,
+                "start": 1792964680.3572755,
+                "stop": 1792964680.364948,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_script_exists():\n        \"\"\"Test that scan_persistence.sh exists and is executable.\"\"\"\n        script_path = Path(\"/app/scan_persistence.sh\")\n>       assert script_path.exists(), \"scan_persistence.sh does not exist\"\nE       AssertionError: scan_persistence.sh does not exist\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/scan_persistence.sh').exists\n\n/tests/test_outputs.py:10: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_report_exists",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.001625999999873784,
+                "start": 1792964680.3650522,
+                "stop": 1792964680.3696852,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_report_exists():\n        \"\"\"Test that persistence_report.json exists after running the script.\"\"\"\n        script_path = Path(\"/app/scan_persistence.sh\")\n        report_path = Path(\"/app/persistence_report.json\")\n    \n        result = subprocess.run(\n            [\"bash\", str(script_path)],\n            capture_output=True,\n            text=True,\n            timeout=60\n        )\n    \n>       assert result.returncode == 0, f\"Script failed with exit code {result.returncode}. stderr: {result.stderr}\"\nE       AssertionError: Script failed with exit code 127. stderr: bash: /app/scan_persistence.sh: No such file or directory\nE         \nE       assert 127 == 0\nE        +  where 127 = CompletedProcess(args=['bash', '/app/scan_persistence.sh'], returncode=127, stdout='', stderr='bash: /app/scan_persistence.sh: No such file or directory\\n').returncode\n\n/tests/test_outputs.py:27: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_report_valid_json",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00036729200007812324,
+                "start": 1792964680.3697784,
+                "stop": 1792964680.372925,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_report_valid_json():\n        \"\"\"Test that persistence_report.json is valid JSON.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n        try:\n>           with open(report_path, 'r') as f:\n                 ^^^^^^^^^^^^^^^^^^^^^^\nE           FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:36: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_report_structure",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00035404200002631114,
+                "start": 1792964680.3730114,
+                "stop": 1792964680.3760862,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_report_structure():\n        \"\"\"Test that report has correct structure with summary and artifacts.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n>       with open(report_path, 'r') as f:\n             ^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:46: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_summary_fields",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0003842089998897791,
+                "start": 1792964680.3761735,
+                "stop": 1792964680.3797598,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_summary_fields():\n        \"\"\"Test that summary contains all required fields.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n>       with open(report_path, 'r') as f:\n             ^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:58: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_summary_counts_match",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0003412919998027064,
+                "start": 1792964680.3798487,
+                "stop": 1792964680.3828905,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_summary_counts_match():\n        \"\"\"Test that summary counts match actual artifact counts.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n>       with open(report_path, 'r') as f:\n             ^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:73: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_artifact_structure",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00033562399994480074,
+                "start": 1792964680.3829708,
+                "stop": 1792964680.3860507,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_artifact_structure():\n        \"\"\"Test that each artifact has correct structure.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n>       with open(report_path, 'r') as f:\n             ^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:100: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_sha256_hashes",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0003477920001841994,
+                "start": 1792964680.386136,
+                "stop": 1792964680.3891582,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_sha256_hashes():\n        \"\"\"Test that SHA256 hashes match actual file contents.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n>       with open(report_path, 'r') as f:\n             ^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:136: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_artifacts_sorted",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00033849999999802094,
+                "start": 1792964680.3892405,
+                "stop": 1792964680.3922951,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_artifacts_sorted():\n        \"\"\"Test that artifacts are sorted by type, then by path.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n>       with open(report_path, 'r') as f:\n             ^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:157: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_detects_cron_jobs",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00036879199990380584,
+                "start": 1792964680.392389,
+                "stop": 1792964680.3955128,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_detects_cron_jobs():\n        \"\"\"Test that malicious cron jobs are detected.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n>       with open(report_path, 'r') as f:\n             ^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:180: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_detects_systemd_units",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0003299589998277952,
+                "start": 1792964680.395598,
+                "stop": 1792964680.3986251,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_detects_systemd_units():\n        \"\"\"Test that suspicious systemd units are detected.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n>       with open(report_path, 'r') as f:\n             ^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:202: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_detects_rc_local",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0003528330000790447,
+                "start": 1792964680.3987038,
+                "stop": 1792964680.4017959,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_detects_rc_local():\n        \"\"\"Test that rc.local modifications are detected.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n>       with open(report_path, 'r') as f:\n             ^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:224: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_detects_ssh_keys",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0003769590000501921,
+                "start": 1792964680.4018774,
+                "stop": 1792964680.4051466,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_detects_ssh_keys():\n        \"\"\"Test that unauthorized SSH keys are detected.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n>       with open(report_path, 'r') as f:\n             ^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:243: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_idempotency",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0014253329999291964,
+                "start": 1792964680.4052339,
+                "stop": 1792964680.4098885,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_idempotency():\n        \"\"\"Test that running the script twice produces identical output.\"\"\"\n        script_path = Path(\"/app/scan_persistence.sh\")\n        report_path = Path(\"/app/persistence_report.json\")\n    \n        subprocess.run([\"bash\", str(script_path)], capture_output=True, timeout=60)\n    \n        if not report_path.exists():\n>           assert False, \"First run did not produce report\"\nE           AssertionError: First run did not produce report\nE           assert False\n\n/tests/test_outputs.py:270: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_content_preview_length",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0005876660000012635,
+                "start": 1792964680.4099915,
+                "stop": 1792964680.4136524,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_content_preview_length():\n        \"\"\"Test that content_preview is limited to reasonable length.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n>       with open(report_path, 'r') as f:\n             ^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:286: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_paths_are_absolute",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00038795899990873295,
+                "start": 1792964680.4138186,
+                "stop": 1792964680.4172065,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_paths_are_absolute():\n        \"\"\"Test that all artifact paths are absolute.\"\"\"\n        report_path = Path(\"/app/persistence_report.json\")\n>       with open(report_path, 'r') as f:\n             ^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/persistence_report.json'\n\n/tests/test_outputs.py:300: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            }
+        ]
+    }
+}

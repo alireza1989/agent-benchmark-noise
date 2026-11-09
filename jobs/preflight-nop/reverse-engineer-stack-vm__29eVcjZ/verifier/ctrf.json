@@ -1,0 +1,251 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 21,
+            "passed": 7,
+            "failed": 14,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792964650.655867,
+            "stop": 1792964650.7914221
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_validator_integrity",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0017800419999502992,
+                "start": 1792964650.7181354,
+                "stop": 1792964650.7290747,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_validator_integrity():\n        \"\"\"Verify that the validator binary has not been modified\"\"\"\n>       verify_validator_integrity()\n\n/tests/test_outputs.py:44: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def verify_validator_integrity():\n        \"\"\"Verify that /app/validator has not been tampered with\"\"\"\n        validator_path = \"/app/validator\"\n    \n        if not os.path.exists(validator_path):\n            pytest.fail(\"Validator binary is missing\")\n    \n        # Calculate current checksum of the validator binary\n        with open(validator_path, \"rb\") as f:\n            current_checksum = hashlib.sha256(f.read()).hexdigest()\n    \n        # Compare against expected checksum embedded in test code\n        # This checksum is calculated during Docker build and cannot be modified by the agent\n        if EXPECTED_VALIDATOR_CHECKSUM == \"PLACEHOLDER_CHECKSUM_WILL_BE_REPLACED_DURING_BUILD\":\n            pytest.fail(\"Validator checksum not properly embedded in test code - build process failed\")\n    \n        if current_checksum != EXPECTED_VALIDATOR_CHECKSUM:\n>           pytest.fail(f\"Validator binary has been tampered with! Expected {EXPECTED_VALIDATOR_CHECKSUM}, got {current_checksum}\")\nE           Failed: Validator binary has been tampered with! Expected 9ce4a624ef77c18411fc7074fde932a7db051d183d0ac61facfe743813b63305, got bc695175cc8070ebf69ef36eda5fba97e6a4dc64d1be4223332735a7c9abb3d0\n\n/tests/test_outputs.py:40: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_validator_with_flag",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0011925420000125087,
+                "start": 1792964650.7292562,
+                "stop": 1792964650.7343736,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_validator_with_flag():\n        \"\"\"Verify that the validator binary grants access when given the flag content\"\"\"\n        # First verify integrity to prevent cheating\n>       verify_validator_integrity()\n\n/tests/test_outputs.py:49: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def verify_validator_integrity():\n        \"\"\"Verify that /app/validator has not been tampered with\"\"\"\n        validator_path = \"/app/validator\"\n    \n        if not os.path.exists(validator_path):\n            pytest.fail(\"Validator binary is missing\")\n    \n        # Calculate current checksum of the validator binary\n        with open(validator_path, \"rb\") as f:\n            current_checksum = hashlib.sha256(f.read()).hexdigest()\n    \n        # Compare against expected checksum embedded in test code\n        # This checksum is calculated during Docker build and cannot be modified by the agent\n        if EXPECTED_VALIDATOR_CHECKSUM == \"PLACEHOLDER_CHECKSUM_WILL_BE_REPLACED_DURING_BUILD\":\n            pytest.fail(\"Validator checksum not properly embedded in test code - build process failed\")\n    \n        if current_checksum != EXPECTED_VALIDATOR_CHECKSUM:\n>           pytest.fail(f\"Validator binary has been tampered with! Expected {EXPECTED_VALIDATOR_CHECKSUM}, got {current_checksum}\")\nE           Failed: Validator binary has been tampered with! Expected 9ce4a624ef77c18411fc7074fde932a7db051d183d0ac61facfe743813b63305, got bc695175cc8070ebf69ef36eda5fba97e6a4dc64d1be4223332735a7c9abb3d0\n\n/tests/test_outputs.py:40: Failed",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_flag_exists",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006997499999670254,
+                "start": 1792964650.7344778,
+                "stop": 1792964650.7373867,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_flag_exists():\n        \"\"\"Verify that /app/flag.txt exists\"\"\"\n>       assert os.path.exists(\"/app/flag.txt\"), \"/app/flag.txt must exist\"\nE       AssertionError: /app/flag.txt must exist\nE       assert False\nE        +  where False = <function exists at 0xffff957a71a0>('/app/flag.txt')\nE        +    where <function exists at 0xffff957a71a0> = <module 'posixpath' (frozen)>.exists\nE        +      where <module 'posixpath' (frozen)> = os.path\n\n/tests/test_outputs.py:71: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_flag_not_empty",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.000601540999809913,
+                "start": 1792964650.7375104,
+                "stop": 1792964650.7403967,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_flag_not_empty():\n        \"\"\"Verify that /app/flag.txt is not empty\"\"\"\n        flag_content = read_flag()\n>       assert flag_content is not None, \"/app/flag.txt does not exist\"\nE       AssertionError: /app/flag.txt does not exist\nE       assert None is not None\n\n/tests/test_outputs.py:76: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_flag_no_trailing_newline",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006844169998885263,
+                "start": 1792964650.7405078,
+                "stop": 1792964650.7434597,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_flag_no_trailing_newline():\n        \"\"\"Verify that /app/flag.txt has no trailing newline\"\"\"\n        flag_content = read_flag()\n>       assert flag_content is not None, \"/app/flag.txt does not exist\"\nE       AssertionError: /app/flag.txt does not exist\nE       assert None is not None\n\n/tests/test_outputs.py:82: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_flag_no_leading_whitespace",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006556670000463782,
+                "start": 1792964650.74356,
+                "stop": 1792964650.7473335,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_flag_no_leading_whitespace():\n        \"\"\"Verify that /app/flag.txt has no leading whitespace\"\"\"\n        flag_content = read_flag()\n>       assert flag_content is not None, \"/app/flag.txt does not exist\"\nE       AssertionError: /app/flag.txt does not exist\nE       assert None is not None\n\n/tests/test_outputs.py:89: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_flag_no_trailing_whitespace",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0008435419999841542,
+                "start": 1792964650.7474642,
+                "stop": 1792964650.7506182,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_flag_no_trailing_whitespace():\n        \"\"\"Verify that /app/flag.txt has no trailing whitespace (except checked separately)\"\"\"\n        flag_content = read_flag()\n>       assert flag_content is not None, \"/app/flag.txt does not exist\"\nE       AssertionError: /app/flag.txt does not exist\nE       assert None is not None\n\n/tests/test_outputs.py:96: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_flag_alphanumeric_underscore",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006429999999681968,
+                "start": 1792964650.7507377,
+                "stop": 1792964650.754017,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_flag_alphanumeric_underscore():\n        \"\"\"Verify that flag contains only alphanumeric characters and underscores\"\"\"\n        flag_content = read_flag()\n>       assert flag_content is not None, \"/app/flag.txt does not exist\"\nE       AssertionError: /app/flag.txt does not exist\nE       assert None is not None\n\n/tests/test_outputs.py:103: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_flag_correct_length",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.000681208999935734,
+                "start": 1792964650.7541335,
+                "stop": 1792964650.7571735,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_flag_correct_length():\n        \"\"\"Verify that the flag has the expected length for the passphrase\"\"\"\n        flag_content = read_flag()\n>       assert flag_content is not None, \"/app/flag.txt does not exist\"\nE       AssertionError: /app/flag.txt does not exist\nE       assert None is not None\n\n/tests/test_outputs.py:111: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_validator_rejects_empty",
+                "status": "passed",
+                "duration": 0.001787835000072846,
+                "start": 1792964650.7572782,
+                "stop": 1792964650.7592669,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_rejects_wrong_length_short",
+                "status": "passed",
+                "duration": 0.0013813750000508662,
+                "start": 1792964650.759369,
+                "stop": 1792964650.7609308,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_rejects_wrong_length_long",
+                "status": "passed",
+                "duration": 0.0013262080000231435,
+                "start": 1792964650.7610285,
+                "stop": 1792964650.762549,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_rejects_similar_but_wrong",
+                "status": "passed",
+                "duration": 0.006699040999933459,
+                "start": 1792964650.762644,
+                "stop": 1792964650.769593,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_rejects_random_alphanumeric",
+                "status": "passed",
+                "duration": 0.0037728329999708876,
+                "start": 1792964650.7697372,
+                "stop": 1792964650.7737381,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_validator_executable",
+                "status": "passed",
+                "duration": 0.0005489999999781503,
+                "start": 1792964650.7738519,
+                "stop": 1792964650.7745395,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_flag_reproducible",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.000565416000085861,
+                "start": 1792964650.774644,
+                "stop": 1792964650.7776964,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_flag_reproducible():\n        \"\"\"Verify that running validator multiple times with flag produces consistent results\"\"\"\n        flag_content = read_flag()\n>       assert flag_content is not None, \"/app/flag.txt does not exist\"\nE       AssertionError: /app/flag.txt does not exist\nE       assert None is not None\n\n/tests/test_outputs.py:201: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_flag_exact_output_format",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0005572489999394747,
+                "start": 1792964650.7778137,
+                "stop": 1792964650.7805715,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_flag_exact_output_format():\n        \"\"\"Verify validator output is exactly 'ACCESS GRANTED' with no extra text\"\"\"\n        flag_content = read_flag()\n>       assert flag_content is not None, \"/app/flag.txt does not exist\"\nE       AssertionError: /app/flag.txt does not exist\nE       assert None is not None\n\n/tests/test_outputs.py:217: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_validator_no_args",
+                "status": "passed",
+                "duration": 0.0012486680000165506,
+                "start": 1792964650.7806687,
+                "stop": 1792964650.7820928,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_flag_is_valid_utf8",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0005482909998590912,
+                "start": 1792964650.7821877,
+                "stop": 1792964650.7850158,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_flag_is_valid_utf8():\n        \"\"\"Verify that flag.txt contains valid UTF-8\"\"\"\n        flag_content = read_flag()\n>       assert flag_content is not None, \"/app/flag.txt does not exist\"\nE       AssertionError: /app/flag.txt does not exist\nE       assert None is not None\n\n/tests/test_outputs.py:246: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_validator_case_sensitive",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006077080000750357,
+                "start": 1792964650.7851188,
+                "stop": 1792964650.7881556,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_validator_case_sensitive():\n        \"\"\"Verify that validator is case-sensitive\"\"\"\n        flag_content = read_flag()\n>       assert flag_content is not None, \"/app/flag.txt does not exist\"\nE       AssertionError: /app/flag.txt does not exist\nE       assert None is not None\n\n/tests/test_outputs.py:256: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_validator_position_sensitive",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006934580000006463,
+                "start": 1792964650.7882802,
+                "stop": 1792964650.791206,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_validator_position_sensitive():\n        \"\"\"Verify that validator checks character positions correctly\"\"\"\n        flag_content = read_flag()\n>       assert flag_content is not None, \"/app/flag.txt does not exist\"\nE       AssertionError: /app/flag.txt does not exist\nE       assert None is not None\n\n/tests/test_outputs.py:275: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

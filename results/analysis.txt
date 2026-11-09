@@ -1,0 +1,52 @@
+1. Each run on its own (errors count as failures)
+  limits-1    18/20   90.0%   Wilson 69.9% to 97.2%   (+/-1.96 SE: 76.9% to 103.1%)   $0.19   median 1.9 min
+  limits-2    16/20   80.0%   Wilson 58.4% to 91.9%   (+/-1.96 SE: 62.5% to 97.5%)   $0.57   median 2.9 min
+  limits-3    16/20   80.0%   Wilson 58.4% to 91.9%   (+/-1.96 SE: 62.5% to 97.5%)   $0.20   median 2.8 min
+  nolimits-1  18/20   90.0%   Wilson 69.9% to 97.2%   (+/-1.96 SE: 76.9% to 103.1%)   $0.17   median 2.2 min
+  nolimits-2  18/20   90.0%   Wilson 69.9% to 97.2%   (+/-1.96 SE: 76.9% to 103.1%)   $0.18   median 2.5 min
+
+   What happened in each trial:
+  limits-1    2 failed, 17 passed, 1 timed out, passed
+  limits-2    3 failed, 16 passed, 1 timed out, failed
+  limits-3    4 failed, 15 passed, 1 timed out, passed
+  nolimits-1  2 failed, 17 passed, 1 timed out, passed
+  nolimits-2  2 failed, 18 passed
+
+2. Same setup, different runs (A/A)
+  limits-2 minus limits-1: -10 points. 2 tasks flipped (2 passed only in limits-1, 0 only in limits-2). McNemar p = 0.50
+  limits-3 minus limits-1: -10 points. 4 tasks flipped (3 passed only in limits-1, 1 only in limits-3). McNemar p = 0.62
+  limits-3 minus limits-2: +0 points. 2 tasks flipped (1 passed only in limits-2, 1 only in limits-3). McNemar p = 1.00
+
+3. All limits runs together
+  60 trials on 20 tasks: 83.3%
+  standard error if every trial counted as independent: 4.9%
+  standard error grouped by task (clustered):           6.9%
+  95% interval, clustered: 69.9% to 96.8%
+  solved in all 3 runs: 15   never solved: 1   sometimes: 4
+  pass^3 (solved every time): 75.0%
+  ICC: 0.54   variance within a task: 0.067   between tasks: 0.077
+
+4. Limits off versus limits on, paired by task
+  limits on: 83.3% (3 runs)   limits off: 90.0% (2 runs)
+  difference: +6.7 points
+  standard error, unpaired: 8.4%   paired: 5.2%
+  95% interval, unpaired: -9.8 to +23.2 points   paired: -3.5 to +16.8 points
+  95% bootstrap interval for the difference: -0.8 to +17.5 points
+  sign-flip test p = 0.31
+  infra or verifier errors: 0/60 with limits, 0/40 without
+  tasks whose average changed:
+    reproducibility-and-envsetup                  +100 points  (on [0.0, 0.0, 0.0], off [1.0, 1.0])
+    build-system-task-ordering                    +17 points  (on [0.0, 0.0, 1.0], off [0.0, 1.0])
+    bandit-delayed-feedback                       +17 points  (on [1.0, 0.0, 0.0], off [0.0, 1.0])
+    systemd-log-monitoring                        +17 points  (on [1.0, 0.0, 0.0], off [1.0, 0.0])
+    malicious-package-forensics                   -17 points  (on [1.0, 1.0, 0.0], off [1.0, 0.0])
+
+5. How many tasks would you need?
+  measured: variance within a task 0.067, true task-to-task spread of the change 0.000
+  attempts per task | smallest difference 20 tasks can detect | tasks needed for 5 points | for 10 points
+                  1 |                               23 points |                      419 |          105
+                  3 |                               13 points |                      140 |           35
+                  5 |                               10 points |                       84 |           21
+
+6. Cost: 100 trials, $1.31 total, $0.013 per trial, $0.015 per solved trial
+   tokens: 31,062,258 input (29,383,597 of them read from cache), 1,460,652 output

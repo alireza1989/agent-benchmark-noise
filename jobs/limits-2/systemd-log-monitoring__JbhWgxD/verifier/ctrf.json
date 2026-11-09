@@ -1,0 +1,210 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 20,
+            "passed": 14,
+            "failed": 2,
+            "skipped": 4,
+            "pending": 0,
+            "other": 0,
+            "start": 1792976411.8673959,
+            "stop": 1792976413.5358992
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_systemd_service_file_exists",
+                "status": "passed",
+                "duration": 0.0006341259995679138,
+                "start": 1792976411.9357548,
+                "stop": 1792976411.936579,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_python_app_exists",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0006594590013264678,
+                "start": 1792976411.936677,
+                "stop": 1792976411.9477036,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_python_app_exists():\n        \"\"\"Verify Python application exists and is executable.\"\"\"\n        app_file = Path(\"/opt/myapp/app.py\")\n        assert app_file.exists(), \"Python app must exist at /opt/myapp/app.py\"\n    \n        # Check if executable\n        import os\n        assert os.access(app_file, os.X_OK), \"Python app must be executable\"\n    \n        # Check for required imports and structure\n        content = app_file.read_text()\n        assert \"import json\" in content, \"App must import json for logging\"\n        assert \"import logging\" in content, \"App must use logging module\"\n        assert \"import sys\" in content, \"App must import sys\"\n>       assert \"def main():\" in content, \"App must have main function\"\nE       AssertionError: App must have main function\nE       assert 'def main():' in '#!/usr/bin/env python3\\n\"\"\"Long-running application emitting JSON structured log events to stdout.\"\"\"\\nimport argpars...(\\'Service stopping\\')\\n    sys.stdout.flush()\\n    return 0\\n\\n\\nif __name__ == \\'__main__\\':\\n    sys.exit(main())\\n'\n\n/tests/test_outputs.py:41: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_python_app_json_logging",
+                "status": "passed",
+                "duration": 1.5253088749996095,
+                "start": 1792976411.947862,
+                "stop": 1792976413.4743302,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_rsyslog_configuration",
+                "status": "passed",
+                "duration": 0.0014027909983269637,
+                "start": 1792976413.47495,
+                "stop": 1792976413.476633,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_logrotate_configuration",
+                "status": "passed",
+                "duration": 0.0010386259982624324,
+                "start": 1792976413.4768405,
+                "stop": 1792976413.4781766,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_service_monitoring_script",
+                "status": "passed",
+                "duration": 0.0008436659991275519,
+                "start": 1792976413.4783309,
+                "stop": 1792976413.4793923,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_service_monitoring_output",
+                "status": "passed",
+                "duration": 0.010000582999055041,
+                "start": 1792976413.4795735,
+                "stop": 1792976413.4898324,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_systemd_service_syntax",
+                "status": "passed",
+                "duration": 0.0015116249996935949,
+                "start": 1792976413.489985,
+                "stop": 1792976413.4917207,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_log_files_creation",
+                "status": "passed",
+                "duration": 0.0009740829991642386,
+                "start": 1792976413.4918962,
+                "stop": 1792976413.493089,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_integration_log_routing",
+                "status": "skipped",
+                "duration": 0.0027189990014448995,
+                "start": 1792976413.4932184,
+                "stop": 1792976413.496354,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "('/tests/test_outputs.py', 296, 'Skipped: Rsyslog service not available in test environment')"
+            },
+            {
+                "name": "test_outputs.py::test_service_restart_loop_detection",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.007334541998716304,
+                "start": 1792976413.4964936,
+                "stop": 1792976413.5157497,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_service_restart_loop_detection():\n        \"\"\"Test that monitoring script actually analyzes journalctl output.\"\"\"\n        script_path = Path(\"/usr/local/bin/check_service_health.sh\")\n        script_content = script_path.read_text()\n    \n        # Verify the script is a shell script that analyzes logs\n        assert script_content.startswith('#!/'), \"Script must have a shebang line\"\n        assert len(script_content.strip()) > 100, \"Script must have substantial content\"\n    \n        # Enhanced anti-cheating: Verify journalctl is actually invoked\n        # Check if journalctl is available on the system\n        try:\n            journalctl_check = subprocess.run(\n                [\"journalctl\", \"--version\"],\n                capture_output=True,\n                timeout=5\n            )\n            journalctl_available = journalctl_check.returncode == 0\n        except (FileNotFoundError, subprocess.TimeoutExpired, OSError):\n            journalctl_available = False\n    \n        if journalctl_available:\n            # If journalctl is available, verify the script actually uses it by checking execution\n            # Run the script and capture any journalctl processes it might spawn\n            result = subprocess.run(\n                [str(script_path)],\n                capture_output=True,\n                text=True,\n                timeout=15  # Longer timeout for journalctl operations\n            )\n    \n            assert result.returncode == 0, f\"Monitoring script failed: {result.stderr}\"\n    \n            # Parse and validate JSON output structure\n            try:\n                data = json.loads(result.stdout)\n            except json.JSONDecodeError:\n                pytest.fail(\"Script must output valid JSON\")\n    \n            # Verify exact schema as specified in instruction.md\n            required_fields = ['service', 'time_window', 'restarts', 'errors', 'restart_loop_detected', 'timestamp']\n            for field in required_fields:\n                assert field in data, f\"Output must contain '{field}' field\"\n    \n            assert data['service'] == 'myapp', \"Service field must be 'myapp'\"\n            assert data['time_window'] == '5 minutes', f\"time_window must be exactly '5 minutes', got '{data.get('time_window')}'\"\n            assert isinstance(data['restarts'], int), \"restarts must be an integer\"\n            assert isinstance(data['errors'], int), \"errors must be an integer\"\n            assert isinstance(data['restart_loop_detected'], bool), \"restart_loop_detected must be a boolean\"\n    \n            # Strong anti-cheating: Verify the script produces dynamic output by running it twice\n            # and checking that timestamps are different (proving it's not static)\n            import time\n            time.sleep(1)  # Wait 1 second\n    \n            result2 = subprocess.run(\n                [str(script_path)],\n                capture_output=True,\n                text=True,\n                timeout=15\n            )\n    \n            assert result2.returncode == 0, f\"Second monitoring script run failed: {result2.stderr}\"\n    \n            try:\n                data2 = json.loads(result2.stdout)\n            except json.JSONDecodeError:\n                pytest.fail(\"Second script run must output valid JSON\")\n    \n            # Timestamps should be different (proving dynamic execution, not static output)\n            assert data['timestamp'] != data2['timestamp'], \"Script must produce dynamic timestamps, not static output\"\n    \n            # Anti-cheating: Verify restart_loop_detected is calculated correctly\n            if data['restarts'] > 3:\n                assert data['restart_loop_detected'], \"Should detect restart loop when restarts > 3\"\n            else:\n                assert not data['restart_loop_detected'], \"Should not detect restart loop when restarts <= 3\"\n    \n            # Anti-cheating: Verify counts correlate with actual journal entries\n            # Get actual journal data for comparison\n            journal_result = subprocess.run(\n                [\"journalctl\", \"-u\", \"myapp\", \"--since\", \"5 minutes\", \"-o\", \"json\"],\n                capture_output=True,\n                text=True,\n                timeout=10\n            )\n    \n            if journal_result.returncode == 0 and journal_result.stdout.strip():\n                # Count actual restart and error entries in journal\n                journal_lines = journal_result.stdout.strip().split('\\n')\n                actual_restarts = 0\n                actual_errors = 0\n    \n                for line in journal_lines:\n                    if line.strip():\n                        try:\n                            entry = json.loads(line)\n                            message = entry.get('MESSAGE', '')\n                            if 'Started' in message:\n                                actual_restarts += 1\n                            if 'ERROR' in message:\n                                actual_errors += 1\n                        except json.JSONDecodeError:\n                            continue\n    \n                # The script's counts should match or be close to actual journal counts\n                # Allow some tolerance for parsing differences but they should be correlated\n                restart_diff = abs(data[\"restarts\"] - actual_restarts)\n                error_diff = abs(data[\"errors\"] - actual_errors)\n    \n                assert restart_diff <= 2, f\"Script restart count ({data['restarts']}) doesn't match journal ({actual_restarts}), diff={restart_diff}\"\n                assert error_diff <= 2, f\"Script error count ({data['errors']}) doesn't match journal ({actual_errors}), diff={error_diff}\"\n    \n        else:\n            # If journalctl is not available, just check basic script structure\n            result = subprocess.run(\n                [str(script_path)],\n                capture_output=True,\n                text=True,\n                timeout=10\n            )\n    \n            # Should still produce valid output even without journalctl\n            if result.returncode == 0:\n                try:\n                    data = json.loads(result.stdout)\n                    assert data['service'] == 'myapp', \"Service field must be 'myapp'\"\n                    assert data['time_window'] == '5 minutes', \"time_window must be '5 minutes'\"\n                    # Allow zeros when journalctl is not available\n>                   assert data['restarts'] == 0, \"restarts should be 0 when journalctl unavailable\"\nE                   AssertionError: restarts should be 0 when journalctl unavailable\nE                   assert 1 == 0\n\n/tests/test_outputs.py:500: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_logrotate_syntax",
+                "status": "passed",
+                "duration": 0.0018422920020384481,
+                "start": 1792976413.515881,
+                "stop": 1792976413.5179079,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_logrotate_postrotate",
+                "status": "passed",
+                "duration": 0.0005883749981876463,
+                "start": 1792976413.5180151,
+                "stop": 1792976413.5187645,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_rsyslog_syntax",
+                "status": "passed",
+                "duration": 0.002302374998180312,
+                "start": 1792976413.5188713,
+                "stop": 1792976413.5213351,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_log_routing_error_separation",
+                "status": "skipped",
+                "duration": 0.00189154200052144,
+                "start": 1792976413.521438,
+                "stop": 1792976413.5235543,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "('/tests/test_outputs.py', 553, 'Skipped: Rsyslog service not available in test environment')"
+            },
+            {
+                "name": "test_outputs.py::test_service_management",
+                "status": "skipped",
+                "duration": 0.0008731660000194097,
+                "start": 1792976413.5236557,
+                "stop": 1792976413.5252047,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "('/tests/test_outputs.py', 641, 'Skipped: Systemd not available in test environment')"
+            },
+            {
+                "name": "test_outputs.py::test_end_to_end_service_logging",
+                "status": "skipped",
+                "duration": 0.0008273329985968303,
+                "start": 1792976413.5253143,
+                "stop": 1792976413.5265691,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "('/tests/test_outputs.py', 704, 'Skipped: Required services not available in test environment')"
+            },
+            {
+                "name": "test_outputs.py::test_json_processing_capability",
+                "status": "passed",
+                "duration": 0.00650100000166276,
+                "start": 1792976413.5266588,
+                "stop": 1792976413.533358,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_logrotate_execution",
+                "status": "passed",
+                "duration": 0.0012863339998148149,
+                "start": 1792976413.5334826,
+                "stop": 1792976413.5349123,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_rsyslog_file_ownership",
+                "status": "passed",
+                "duration": 0.0004864589991484536,
+                "start": 1792976413.5350027,
+                "stop": 1792976413.5356185,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

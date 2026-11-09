@@ -1,0 +1,112 @@
+[?2004hroot@d6b239fd3e02:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@d6b239fd3e02:/app# clear
+[?2004l[H[J[3J[?2004hroot@d6b239fd3e02:/app# ls -la
+[?2004ltotal 332
+drwxr-xr-x 1 root root   4096 Oct 25 21:38 [0m[01;34m.[0m
+drwxr-xr-x 1 root root   4096 Oct 26 00:13 [01;34m..[0m
+-rw-r--r-- 1 root root 327678 Oct 25 21:29 signs.txt
+-rw-r--r-- 1 root root   2425 Oct 25 21:29 sum.txt
+[?2004hroot@d6b239fd3e02:/app# head -c 600 signs.txt; echo; wc -l signs.txt; head -c 600 sum.txt; echo; wc -l sum.txt
+[?2004l1 1 1 1 -1 1 1 -1 1 -1 -1 1 1 -1 1 1 -1 1 -1 1 1 -1 1 -1 1 -1 -1 -1 1 -1 1 -1 -1 -1 -1 1 -1 1 1 1 1 -1 -1 -1 -1 1 1 1 1 -1 1 -1 1 -1 -1 1 -1 1 -1 1 -1 1 1 1 1 1 1 -1 -1 1 -1 1 1 1 -1 1 1 -1 -1 -1 -1 -1 1 -1 -1 1 1 -1 1 1 1 -1 1 -1 1 1 -1 1 1 -1 1 -1 1 -1 -1 1 -1 -1 1 -1 1 1 1 -1 -1 1 -1 1 1 -1 -1 -1 1 1 -1 1 1 1
+-1 -1 -1 1 -1 -1 -1 -1 1 -1 -1 1 -1 -1 -1 -1 -1 1 1 -1 1 1 1 1 1 -1 -1 -1 -1 1 1 1 1 1 1 1 -1 -1 -1 -1 -1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 -1 -1 -1 1 -1 -1 -1 -1 1 -1 1 -1 -1 -1 1 -1 -1 -1 -1 1 1 1 1 -1 -1 -1 -1 -1 1 1 1 -1 1 1 -1 -1 1 -1 1 -1 1 1 1 1 1 1 -1 -1 -1 1 1 1 1 -1 -1 1 1 -1 1 -1 
+1024 signs.txt
+0.535921573638916 3.185608148574829 -0.6482224464416504 8.639005661010742 5.899259567260742 -2.2147600650787354 1.900620460510254 1.1745967864990234 1.7747776508331299 -8.728135108947754 6.282806873321533 1.6788820028305054 -0.5747122764587402 -3.5620856285095215 -12.84987735748291 3.5964527130126953 -0.6042890548706055 9.108304977416992 2.7808220386505127 8.79217529296875 4.728195667266846 -5.226822853088379 2.0083627700805664 4.748631000518799 -6.726621150970459 -8.653010368347168 -1.0240875482559204 2.441561698913574 -0.06402456760406494 -2.4375834465026855 -4.540292739868164 -6.06094551086
+1 sum.txt
+[?2004hroot@d6b239fd3e02:/app# which python3; python3 -c 'import numpy, scipy; print(numpy.__version__, scipy.__version__)'
+[?2004l/usr/bin/python3
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'numpy'
+[?2004hroot@d6b239fd3e02:/app# cat > solve.py << 'EOF'
+[?2004l[?2004h> import math
+[?2004l[?2004h> S = []
+[?2004l[?2004h> with open('signs.txt') as f:
+[?2004l[?2004h>     for line in f:
+[?2004l[?2004h>         p = line.split()
+[?2004l[?2004h>         if p:
+[?2004l[?2004h>             S.append([float(x) for x in p])
+[?2004l[?2004h> y = [float(x) for x in open('sum.txt').read().split()]
+[?2004l[?2004h> n = len(S)
+[?2004l[?2004h> d = len(y)
+[?2004l[?2004h> 
+[?2004l[?2004h> def solve(idx):
+[?2004l[?2004h>     k = len(idx)
+[?2004l[?2004h>     G = [[sum(S[a][t] * S[b][t] for t in range(d)) for b in idx] for a in idx]
+[?2004l[?2004h>     b = [sum(S[a][t] * y[t] for t in range(d)) for a in idx]
+[?2004l[?2004h>     M = [G[i][:] + [b[i]] for i in range(k)]
+[?2004l[?2004h>     for c in range(k):
+[?2004l[?2004h>         p = max(range(c, k), key=lambda r: abs(M[r][c]))
+[?2004l[?2004h>         M[c], M[p] = M[p], M[c]
+[?2004l[?2004h>         if abs(M[c][c]) < 1e-12:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         for r in range(k):
+[?2004l[?2004h>             if r != c:
+[?2004l[?2004h>                 f = M[r][c] / M[c][c]
+[?2004l[?2004h>                 for j in range(c, k + 1):
+[?2004l[?2004h>                     M[r][j] -= f * M[c][j]
+[?2004l[?2004h>     coef = [M[i][k] / M[i][i] for i in range(k)]
+[?2004l[?2004h>     res = [y[t] - sum(coef[j] * S[idx[j]][t] for j in range(k)) for t in range(d)]
+[?2004l[?2004h>     return coef, math.sqrt(sum(r * r for r in res)), res
+[?2004l[?2004h> 
+[?2004l[?2004h> sel = []
+[?2004l[?2004h> res = y[:]
+[?2004l[?2004h> for step in range(16):
+[?2004l[?2004h>     best = None
+[?2004l[?2004h>     bv = -1.0
+[?2004l[?2004h>     for i in range(n):
+[?2004l[?2004h>         if i in sel:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         v = abs(sum(S[i][t] * res[t] for t in range(d)))
+[?2004l[?2004h>         if v > bv:
+[?2004l[?2004h>             bv = v
+[?2004l[?2004h>             best = i
+[?2004l[?2004h>     sel.append(best)
+[?2004l[?2004h>     coef, nr, res = solve(sel)
+[?2004l[?2004h>     print(step + 1, best + 1, round(nr, 6), flush=True)
+[?2004l[?2004h> final = sorted(i + 1 for i in sel)
+[?2004l[?2004h> print(final)
+[?2004l[?2004h> print('coefs', [round(c, 4) for c in coef])
+[?2004l[?2004h> with open('players.txt', 'w') as f:
+[?2004l[?2004h>     for i in final:
+[?2004l[?2004h>         f.write(str(i) + '\n')
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@d6b239fd3e02:/app# python3 solve.py
+[?2004l1 596 52.65052
+2 999 46.588745
+3 775 40.415615
+4 569 34.571521
+5 692 30.375468
+6 1003 27.139268
+7 935 23.143033
+8 948 20.091868
+9 430 17.18843
+10 1014 13.363671
+11 716 10.989394
+12 630 7.512658
+13 141 5.875371
+14 1022 4.438534
+15 148 0.243871
+16 1008 3e-06
+[141, 148, 430, 569, 596, 630, 692, 716, 775, 935, 948, 999, 1003, 1008, 1014, 1022]
+coefs [2.4728, 2.1934, 1.9624, -1.5498, -0.7027, 1.5264, 1.2011, -1.0551, -1.072, -0.8007, 0.8119, 0.7367, -0.3949, -0.4688, -0.426, -0.0234]
+[?2004hroot@d6b239fd3e02:/app# cat players.txt; wc -l players.txt
+[?2004l141
+148
+430
+569
+596
+630
+692
+716
+775
+935
+948
+999
+1003
+1008
+1014
+1022
+16 players.txt
+[?2004hroot@d6b239fd3e02:/app# 

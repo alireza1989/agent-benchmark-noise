@@ -1,0 +1,326 @@
+[?2004hroot@2c1bceb76342:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@2c1bceb76342:/app# clear
+[?2004l[H[J[3J[?2004hroot@2c1bceb76342:/app# mkdir -p /app/src /app/output && cd /app && ls -la
+[?2004ltotal 16
+drwxr-xr-x 1 root root 4096 Oct 26 00:00 .
+drwxr-xr-x 1 root root 4096 Oct 26 00:00 ..
+drwxr-xr-x 2 root root 4096 Oct 26 00:00 output
+drwxr-xr-x 2 root root 4096 Oct 26 00:00 src
+[?2004hroot@2c1bceb76342:/app# cat > /app/src/__init__.py << 'PYEOF'
+[?2004l[?2004h> from .base import BaseLayer
+[?2004l[?2004h> from .conv import Conv2D
+[?2004l[?2004h> from .conv_transpose import Conv2DTranspose
+[?2004l[?2004h> from .pooling import MaxPool2D, AvgPool2D
+[?2004l[?2004h> from .normalization import BatchNorm2D
+[?2004l[?2004h> from .activation import ReLU, LeakyReLU, Sigmoid
+[?2004l[?2004h> from .padding import zero_pad, get_output_shape
+[?2004l[?2004h> 
+[?2004l[?2004h> __all__ = [
+[?2004l[?2004h>     'BaseLayer', 'Conv2D', 'Conv2DTranspose', 'MaxPool2D', 'AvgPool2D',
+[?2004l[?2004h>     'BatchNorm2D', 'ReLU', 'LeakyReLU', 'Sigmoid', 'zero_pad', 'get_output_shape',
+[?2004l[?2004h> ]
+[?2004l[?2004h> PYEOF
+[?2004l[?2004hroot@2c1bceb76342:/app# cat > /app/src/base.py << 'PYEOF'
+[?2004l[?2004h> from abc import ABC, abstractmethod
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class BaseLayer(ABC):
+[?2004l[?2004h>     def __init__(self):
+[?2004l[?2004h>         pass
+[?2004l[?2004h> 
+[?2004l[?2004h>     def __call__(self, x, *args, **kwargs):
+[?2004l[?2004h>         return self.forward(x, *args, **kwargs)
+[?2004l[?2004h> 
+[?2004l[?2004h>     @abstractmethod
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         raise NotImplementedError
+[?2004l[?2004h> PYEOF
+[?2004l[?2004hroot@2c1bceb76342:/app# cat > /app/src/padding.py << 'PYEOF'
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def zero_pad(x, pad):
+[?2004l[?2004h>     x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>     if pad == 0:
+[?2004l[?2004h>         return x.copy()
+[?2004l[?2004h>     return np.pad(x, ((0, 0), (pad, pad), (pad, pad), (0, 0)),
+[?2004l[?2004h>                   mode='constant', constant_values=0.0).astype(np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def get_output_shape(input_shape, kernel_size, stride, padding, dilation=1):
+[?2004l[?2004h>     h, w = input_shape
+[?2004l[?2004h>     oh = (h + 2 * padding - dilation * (kernel_size - 1) - 1) // stride + 1
+[?2004l[?2004h>     ow = (w + 2 * padding - dilation * (kernel_size - 1) - 1) // stride + 1
+[?2004l[?2004h>     return (int(oh), int(ow))
+[?2004l[?2004h> PYEOF
+[?2004l[?2004hroot@2c1bceb76342:/app# cat > /app/src/conv.py << 'PYEOF'
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> from .base import BaseLayer
+[?2004l[?2004h> from .padding import zero_pad
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class Conv2D(BaseLayer):
+[?2004l[?2004h>     def __init__(self, in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h>         self.in_channels = int(in_channels)
+[?2004l[?2004h>         self.out_channels = int(out_channels)
+[?2004l[?2004h>         self.kernel_size = int(kernel_size)
+[?2004l[?2004h>         self.stride = int(stride)
+[?2004l[?2004h>         self.padding = int(padding)
+[?2004l[?2004h>         self.dilation = int(dilation)
+[?2004l[?2004h>         fan_in = self.in_channels * self.kernel_size * self.kernel_size
+[?2004l[?2004h>         fan_out = self.out_channels * self.kernel_size * self.kernel_size
+[?2004l[?2004h>         limit = np.sqrt(6.0 / (fan_in + fan_out))
+[?2004l[?2004h>         self.weights = np.random.uniform(-limit, limit,
+[?2004l[?2004h>                                          size=(self.out_channels, self.in_channels,
+[?2004l[?2004h>                                                self.kernel_size, self.kernel_size)).astype(np.float64)
+[?2004l[?2004h>         self.bias = np.zeros(self.out_channels, dtype=np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         n, h, w, c = x.shape
+[?2004l[?2004h>         k, s, d, p = self.kernel_size, self.stride, self.dilation, self.padding
+[?2004l[?2004h>         xp = zero_pad(x, p)
+[?2004l[?2004h>         k_eff = d * (k - 1) + 1
+[?2004l[?2004h>         oh = (h + 2 * p - k_eff) // s + 1
+[?2004l[?2004h>         ow = (w + 2 * p - k_eff) // s + 1
+[?2004l[?2004h>         out = np.zeros((n, oh, ow, self.out_channels), dtype=np.float64)
+[?2004l[?2004h>         for i in range(k):
+[?2004l[?2004h>             for j in range(k):
+[?2004l[?2004h>                 hs = i * d
+[?2004l[?2004h>                 ws = j * d
+[?2004l[?2004h>                 patch = xp[:, hs:hs + s * (oh - 1) + 1:s, ws:ws + s * (ow - 1) + 1:s, :]
+[?2004l[?2004h>                 out += patch @ self.weights[:, :, i, j].T
+[?2004l[?2004h>         out += self.bias
+[?2004l[?2004h>         return out.astype(np.float64)
+[?2004l[?2004h> PYEOF
+[?2004l[?2004hroot@2c1bceb76342:/app# cat > /app/src/conv_transpose.py << 'PYEOF'
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> from .base import BaseLayer
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class Conv2DTranspose(BaseLayer):
+[?2004l[?2004h>     def __init__(self, in_channels, out_channels, kernel_size, stride=1, padding=0):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h>         self.in_channels = int(in_channels)
+[?2004l[?2004h>         self.out_channels = int(out_channels)
+[?2004l[?2004h>         self.kernel_size = int(kernel_size)
+[?2004l[?2004h>         self.stride = int(stride)
+[?2004l[?2004h>         self.padding = int(padding)
+[?2004l[?2004h>         fan_in = self.in_channels * self.kernel_size * self.kernel_size
+[?2004l[?2004h>         fan_out = self.out_channels * self.kernel_size * self.kernel_size
+[?2004l[?2004h>         limit = np.sqrt(6.0 / (fan_in + fan_out))
+[?2004l[?2004h>         self.weights = np.random.uniform(-limit, limit,
+[?2004l[?2004h>                                          size=(self.in_channels, self.out_channels,
+[?2004l[?2004h>                                                self.kernel_size, self.kernel_size)).astype(np.float64)
+[?2004l[?2004h>         self.bias = np.zeros(self.out_channels, dtype=np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         n, h, w, c = x.shape
+[?2004l[?2004h>         k, s, p = self.kernel_size, self.stride, self.padding
+[?2004l[?2004h>         fh = (h - 1) * s + k
+[?2004l[?2004h>         fw = (w - 1) * s + k
+[?2004l[?2004h>         full = np.zeros((n, fh, fw, self.out_channels), dtype=np.float64)
+[?2004l[?2004h>         for i in range(k):
+[?2004l[?2004h>             for j in range(k):
+[?2004l[?2004h>                 contrib = x @ self.weights[:, :, i, j]
+[?2004l[?2004h>                 full[:, i:i + s * (h - 1) + 1:s, j:j + s * (w - 1) + 1:s, :] += contrib
+[?2004l[?2004h>         out = full[:, p:fh - p, p:fw - p, :] + self.bias
+[?2004l[?2004h>         return np.ascontiguousarray(out, dtype=np.float64)
+[?2004l[?2004h> PYEOF
+[?2004l[?2004hroot@2c1bceb76342:/app# cat > /app/src/pooling.py << 'PYEOF'
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> from .base import BaseLayer
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class _Pool2D(BaseLayer):
+[?2004l[?2004h>     def __init__(self, kernel_size, stride=None):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h>         self.kernel_size = int(kernel_size)
+[?2004l[?2004h>         self.stride = int(stride) if stride is not None else self.kernel_size
+[?2004l[?2004h> 
+[?2004l[?2004h>     def _patches(self, x):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         n, h, w, c = x.shape
+[?2004l[?2004h>         k, s = self.kernel_size, self.stride
+[?2004l[?2004h>         oh = (h - k) // s + 1
+[?2004l[?2004h>         ow = (w - k) // s + 1
+[?2004l[?2004h>         patches = []
+[?2004l[?2004h>         for i in range(k):
+[?2004l[?2004h>             for j in range(k):
+[?2004l[?2004h>                 patches.append(x[:, i:i + s * (oh - 1) + 1:s, j:j + s * (ow - 1) + 1:s, :])
+[?2004l[?2004h>         return patches
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class MaxPool2D(_Pool2D):
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         patches = self._patches(x)
+[?2004l[?2004h>         return np.max(np.stack(patches, axis=0), axis=0).astype(np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class AvgPool2D(_Pool2D):
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         patches = self._patches(x)
+[?2004l[?2004h>         return np.mean(np.stack(patches, axis=0), axis=0).astype(np.float64)
+[?2004l[?2004h> PYEOF
+[?2004l[?2004hroot@2c1bceb76342:/app# cat > /app/src/normalization.py << 'PYEOF'
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> from .base import BaseLayer
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class BatchNorm2D(BaseLayer):
+[?2004l[?2004h>     def __init__(self, num_features, eps=1e-5, momentum=0.1):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h>         self.num_features = int(num_features)
+[?2004l[?2004h>         self.eps = float(eps)
+[?2004l[?2004h>         self.momentum = float(momentum)
+[?2004l[?2004h>         self.gamma = np.ones(self.num_features, dtype=np.float64)
+[?2004l[?2004h>         self.beta = np.zeros(self.num_features, dtype=np.float64)
+[?2004l[?2004h>         self.running_mean = np.zeros(self.num_features, dtype=np.float64)
+[?2004l[?2004h>         self.running_var = np.ones(self.num_features, dtype=np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h>     def forward(self, x, training=True):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         axes = tuple(range(x.ndim - 1))
+[?2004l[?2004h>         if training:
+[?2004l[?2004h>             mean = x.mean(axis=axes)
+[?2004l[?2004h>             var = x.var(axis=axes)
+[?2004l[?2004h>             m = self.momentum
+[?2004l[?2004h>             self.running_mean = (1 - m) * self.running_mean + m * mean
+[?2004l[?2004h>             self.running_var = (1 - m) * self.running_var + m * var
+[?2004l[?2004h>         else:
+[?2004l[?2004h>             mean = self.running_mean
+[?2004l[?2004h>             var = self.running_var
+[?2004l[?2004h>         x_hat = (x - mean) / np.sqrt(var + self.eps)
+[?2004l[?2004h>         return (self.gamma * x_hat + self.beta).astype(np.float64)
+[?2004l[?2004h> PYEOF
+[?2004l[?2004hroot@2c1bceb76342:/app# cat > /app/src/activation.py << 'PYEOF'
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> from .base import BaseLayer
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class ReLU(BaseLayer):
+[?2004l[?2004h>     def __init__(self):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h> 
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         return np.maximum(0.0, x).astype(np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class LeakyReLU(BaseLayer):
+[?2004l[?2004h>     def __init__(self, negative_slope=0.01):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h>         self.negative_slope = float(negative_slope)
+[?2004l[?2004h> 
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         return np.where(x > 0, x, self.negative_slope * x).astype(np.float64)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class Sigmoid(BaseLayer):
+[?2004l[?2004h>     def __init__(self):
+[?2004l[?2004h>         super().__init__()
+[?2004l[?2004h> 
+[?2004l[?2004h>     def forward(self, x):
+[?2004l[?2004h>         x = np.asarray(x, dtype=np.float64)
+[?2004l[?2004h>         out = np.empty_like(x, dtype=np.float64)
+[?2004l[?2004h>         pos = x >= 0
+[?2004l[?2004h>         out[pos] = 1.0 / (1.0 + np.exp(-x[pos]))
+[?2004l[?2004h>         neg = ~pos
+[?2004l[?2004h>         ex = np.exp(x[neg])
+[?2004l[?2004h>         out[neg] = ex / (1.0 + ex)
+[?2004l[?2004h>         return out
+[?2004l[?2004h> PYEOF
+[?2004l[?2004hroot@2c1bceb76342:/app# cd /app && python3 -c "import numpy as np; from src import *; from src.conv import Conv2D; x=np.random.randn(2,8,8,3); c=Conv2D(3,4,3,stride=2,padding=1,dilation=2); y=c(x); print('conv', y.shape, y.dtype); t=Conv2DTranspose(3,5,3,stride=2,padding=1); print('convT', t(np.random.randn(2,4,4,3)).shape); print('pool', MaxPool2D(2)(x).shape, AvgPool2D(2,1)(x).shape); bn=BatchNorm2D(3); print('bn', bn(x).shape, bn(x, training=False).shape); print('sig', Sigmoid()(np.array([-1000.,0.,1000.]))); print('shape', get_output_shape((8,8),3,2,1,2)); print('pad', zero_pad(x,1).shape); print(LeakyReLU()(np.array([-1.,2.])), ReLU()(np.array([-1.,2.])))"
+[?2004lconv (2, 3, 3, 4) float64
+convT (2, 7, 7, 5)
+pool (2, 4, 4, 3) (2, 7, 7, 3)
+bn (2, 8, 8, 3) (2, 8, 8, 3)
+sig [0.  0.5 1. ]
+shape (3, 3)
+pad (2, 10, 10, 3)
+[-0.01  2.  ] [0. 2.]
+[?2004hroot@2c1bceb76342:/app# ls -la /app/src /app/output
+[?2004l/app/output:
+total 8
+drwxr-xr-x 2 root root 4096 Oct 26 00:00 .
+drwxr-xr-x 1 root root 4096 Oct 26 00:00 ..
+
+/app/src:
+total 44
+drwxr-xr-x 3 root root 4096 Oct 26 00:00 .
+drwxr-xr-x 1 root root 4096 Oct 26 00:00 ..
+-rw-r--r-- 1 root root  445 Oct 26 00:00 __init__.py
+drwxr-xr-x 2 root root 4096 Oct 26 00:00 __pycache__
+-rw-r--r-- 1 root root  920 Oct 26 00:00 activation.py
+-rw-r--r-- 1 root root  271 Oct 26 00:00 base.py
+-rw-r--r-- 1 root root 1694 Oct 26 00:00 conv.py
+-rw-r--r-- 1 root root 1515 Oct 26 00:00 conv_transpose.py
+-rw-r--r-- 1 root root 1156 Oct 26 00:00 normalization.py
+-rw-r--r-- 1 root root  546 Oct 26 00:00 padding.py
+-rw-r--r-- 1 root root 1005 Oct 26 00:00 pooling.py
+[?2004hroot@2c1bceb76342:/app# cat > /app/output/verify.py << 'PYEOF'
+[?2004l[?2004h> import sys
+[?2004l[?2004h> sys.path.insert(0, '/app')
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> from src import Conv2D, Conv2DTranspose, MaxPool2D, AvgPool2D, BatchNorm2D
+[?2004l[?2004h> 
+[?2004l[?2004h> np.random.seed(0)
+[?2004l[?2004h> 
+[?2004l[?2004h> # Conv2D naive reference with dilation and stride
+[?2004l[?2004h> x = np.random.randn(2, 9, 9, 3)
+[?2004l[?2004h> c = Conv2D(3, 4, 3, stride=2, padding=1, dilation=2)
+[?2004l[?2004h> c.bias = np.random.randn(4)
+[?2004l[?2004h> y = c(x)
+[?2004l[?2004h> xp = np.pad(x, ((0,0),(1,1),(1,1),(0,0)))
+[?2004l[?2004h> ref = np.zeros_like(y)
+[?2004l[?2004h> for n in range(2):
+[?2004l[?2004h>     for oh in range(y.shape[1]):
+[?2004l[?2004h>         for ow in range(y.shape[2]):
+[?2004l[?2004h>             for co in range(4):
+[?2004l[?2004h>                 s = c.bias[co]
+[?2004l[?2004h>                 for i in range(3):
+[?2004l[?2004h>                     for j in range(3):
+[?2004l[?2004h>                         s += np.sum(xp[n, oh*2 + i*2, ow*2 + j*2, :] * c.weights[co, :, i, j])
+[?2004l[?2004h>                 ref[n, oh, ow, co] = s
+[?2004l[?2004h> print('conv max err', np.abs(y - ref).max())
+[?2004l[?2004h> 
+[?2004l[?2004h> # Conv2DTranspose naive reference
+[?2004l[?2004h> t = Conv2DTranspose(3, 5, 3, stride=2, padding=1)
+[?2004l[?2004h> t.bias = np.random.randn(5)
+[?2004l[?2004h> xi = np.random.randn(2, 4, 4, 3)
+[?2004l[?2004h> yt = t(xi)
+[?2004l[?2004h> H = (4 - 1) * 2 + 3
+[?2004l[?2004h> full = np.zeros((2, H, H, 5))
+[?2004l[?2004h> for n in range(2):
+[?2004l[?2004h>     for ih in range(4):
+[?2004l[?2004h>         for iw in range(4):
+[?2004l[?2004h>             for ci in range(3):
+[?2004l[?2004h>                 for i in range(3):
+[?2004l[?2004h>                     for j in range(3):
+[?2004l[?2004h>                         full[n, ih*2 + i, iw*2 + j, :] += xi[n, ih, iw, ci] * t.weights[ci, :, i, j]
+[?2004l[?2004h> ref_t = full[:, 1:H-1, 1:H-1, :] + t.bias
+[?2004l[?2004h> print('convT shape', yt.shape, 'max err', np.abs(yt - ref_t).max())
+[?2004l[?2004h> 
+[?2004l[?2004h> # Pooling
+[?2004l[?2004h> p = np.arange(16, dtype=np.float64).reshape(1, 4, 4, 1)
+[?2004l[?2004h> print('maxpool', MaxPool2D(2)(p).ravel(), 'avgpool', AvgPool2D(2)(p).ravel())
+[?2004l[?2004h> 
+[?2004l[?2004h> # BatchNorm
+[?2004l[?2004h> b = BatchNorm2D(3)
+[?2004l[?2004h> xb = np.random.randn(4, 5, 5, 3) * 3 + 2
+[?2004l[?2004h> out = b(xb)
+[?2004l[?2004h> print('bn out mean', out.mean(axis=(0,1,2)).round(6), 'std', out.std(axis=(0,1,2)).round(4))
+[?2004l[?2004h> print('running_mean', b.running_mean.round(4), 'running_var', b.running_var.round(4))
+[?2004l[?2004h> PYEOF
+[?2004l[?2004hroot@2c1bceb76342:/app# cd /app && python3 /app/output/verify.py
+[?2004lconv max err 4.440892098500626e-16
+convT shape (2, 7, 7, 5) max err 4.440892098500626e-16
+maxpool [ 5.  7. 13. 15.] avgpool [ 2.5  4.5 10.5 12.5]
+bn out mean [-0. -0.  0.] std [1. 1. 1.]
+running_mean [0.1523 0.2183 0.1969] running_var [1.647  1.8234 1.735 ]
+[?2004hroot@2c1bceb76342:/app# 

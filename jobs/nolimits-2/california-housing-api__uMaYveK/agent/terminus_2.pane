@@ -1,0 +1,238 @@
+[?2004hroot@e3d7e74f61d6:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@e3d7e74f61d6:/app# clear
+[?2004l[H[J[3J[?2004hroot@e3d7e74f61d6:/app# ls -la /app /app/data
+[?2004l/app:
+total 24
+drwxr-xr-x 1 root root 4096 Oct 25 21:32 .
+drwxr-xr-x 1 root root 4096 Oct 26 01:02 ..
+drwxr-xr-x 2 root root 4096 Oct 25 21:32 api
+drwxr-xr-x 2 root root 4096 Oct 25 21:31 data
+drwxr-xr-x 2 root root 4096 Oct 25 21:32 models
+drwxr-xr-x 2 root root 4096 Oct 25 21:32 output
+
+/app/data:
+total 736
+drwxr-xr-x 2 root root   4096 Oct 25 21:31 .
+drwxr-xr-x 1 root root   4096 Oct 25 21:32 ..
+-rw-r--r-- 1 root root 139441 Oct 25 21:29 test.zip
+-rw-r--r-- 1 root root 601889 Oct 25 21:29 train.zip
+[?2004hroot@e3d7e74f61d6:/app# python3 -c "import sklearn, fastapi, uvicorn, pandas, numpy, requests; print(sklearn.__version__, fastapi.__version__, uvicorn.__version__, pandas.__version__, numpy.__version__)"
+[?2004l1.6.0 0.115.6 0.34.0 2.2.3 2.2.1
+[?2004hroot@e3d7e74f61d6:/app# which unzip; head -3 /app/data/train.csv 2>/dev/null; head -3 /app/data/test.csv 2>/dev/null
+[?2004l/usr/bin/unzip
+[?2004hroot@e3d7e74f61d6:/app# cd /app/data && unzip -o train.zip && unzip -o test.zip && ls -la && head -3 train.csv && head -3 test.csv && wc -l train.csv test.csv
+[?2004lArchive:  train.zip
+  inflating: train.csv               
+Archive:  test.zip
+  inflating: test.csv                
+total 2572
+drwxr-xr-x 1 root root    4096 Oct 26 01:02 .
+drwxr-xr-x 1 root root    4096 Oct 25 21:32 ..
+-rwxrwxrwx 1 root root  354101 Dec 22  2025 test.csv
+-rw-r--r-- 1 root root  139441 Oct 25 21:29 test.zip
+-rwxrwxrwx 1 root root 1516656 Dec 22  2025 train.csv
+-rw-r--r-- 1 root root  601889 Oct 25 21:29 train.zip
+MedInc,HouseAge,AveRooms,AveBedrms,Population,AveOccup,Latitude,Longitude,target
+3.2596,33.0,5.017656500802568,1.0064205457463884,2300.0,3.691813804173355,32.71,-117.03,1.03
+3.8125,49.0,4.473544973544974,1.041005291005291,1314.0,1.7380952380952381,33.77,-118.16,3.821
+MedInc,HouseAge,AveRooms,AveBedrms,Population,AveOccup,Latitude,Longitude
+1.6812,25.0,4.192200557103064,1.0222841225626742,1392.0,3.8774373259052926,36.06,-119.01
+2.5313,30.0,5.039383561643835,1.1934931506849316,1565.0,2.6797945205479454,35.14,-119.46
+  16513 train.csv
+   4129 test.csv
+  20642 total
+[?2004hroot@e3d7e74f61d6:/app/data# cat > /app/train.py << 'EOF'
+[?2004lut/model_comparison.json', 'w'), indent=2)
+print('BEST', best_name)
+EOF
+cd /app && python3 train.py
+[?2004h> import json, pickle, shutil
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> import pandas as pd
+[?2004l[?2004h> from sklearn.model_selection import train_test_split
+[?2004l[?2004h> from sklearn.linear_model import LinearRegression, Ridge
+[?2004l[?2004h> from sklearn.ensemble import RandomForestRegressor
+[?2004l[?2004h> from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+[?2004l[?2004h> 
+[?2004l[?2004h> df = pd.read_csv('/app/data/train.csv').reset_index(drop=True)
+[?2004l[?2004h> feats = [c for c in df.columns if c != 'target']
+[?2004l[?2004h> idx = np.arange(len(df))
+[?2004l[?2004h> tr_idx, va_idx = train_test_split(idx, test_size=0.2, random_state=42)
+[?2004l[?2004h> tr_idx = np.sort(tr_idx)
+[?2004l[?2004h> va_idx = np.sort(va_idx)
+[?2004l[?2004h> train_df = df.iloc[tr_idx]
+[?2004l[?2004h> val_df = df.iloc[va_idx]
+[?2004l[?2004h> X_train, y_train = train_df[feats], train_df['target']
+[?2004l[?2004h> X_val, y_val = val_df[feats], val_df['target']
+[?2004l[?2004h> 
+[?2004l[?2004h> split_info = {
+[?2004l[?2004h>     'train_size': int(len(tr_idx)),
+[?2004l[?2004h>     'validation_size': int(len(va_idx)),
+[?2004l[?2004h>     'random_state': 42,
+[?2004l[?2004h>     'test_size': 0.2,
+[?2004l[?2004h>     'train_indices': [int(i) for i in tr_idx],
+[?2004l[?2004h>     'validation_indices': [int(i) for i in va_idx],
+[?2004l[?2004h> }
+[?2004l[?2004h> json.dump(split_info, open('/app/output/split_info.json', 'w'))
+[?2004l[?2004h> 
+[?2004l[?2004h> models = {
+[?2004l[?2004h>     'linear_regression': LinearRegression(),
+[?2004l[?2004h>     'ridge': Ridge(alpha=1.0),
+[?2004l[?2004h>     'random_forest': RandomForestRegressor(n_estimators=200, random_state=42, n_jobs=-1),
+[?2004l[?2004h> }
+[?2004l[?2004h> results = []
+[?2004l[?2004h> fitted = {}
+[?2004l[?2004h> for name, m in models.items():
+[?2004l[?2004h>     m.fit(X_train, y_train)
+[?2004l[?2004h>     pred_val = m.predict(X_val)
+[?2004l[?2004h>     mse = mean_squared_error(y_val, pred_val)
+[?2004l[?2004h>     results.append({
+[?2004l[?2004h>         'model_name': name,
+[?2004l[?2004h>         'train_r2': float(r2_score(y_train, m.predict(X_train))),
+[?2004l[?2004h>         'val_r2': float(r2_score(y_val, pred_val)),
+[?2004l[?2004h>         'mae': float(mean_absolute_error(y_val, pred_val)),
+[?2004l[?2004h>         'mse': float(mse),
+[?2004l[?2004h>         'rmse': float(np.sqrt(mse)),
+[?2004l[?2004h>     })
+[?2004l[?2004h>     fitted[name] = m
+[?2004l[?2004h>     with open('/app/models/%s.pkl' % name, 'wb') as f:
+[?2004l[?2004h>         pickle.dump(m, f)
+[?2004l[?2004h>     print(results[-1])
+[?2004l[?2004h> 
+[?2004l[?2004h> best = max(results, key=lambda r: r['val_r2'])
+[?2004l[?2004h> best_name = best['model_name']
+[?2004l[?2004h> shutil.copy('/app/models/%s.pkl' % best_name, '/app/models/best_model.pkl')
+[?2004l[?2004h> json.dump({'models': results, 'best_model_name': best_name}, open('/app/output/model_comparison.json', 'w'), indent=2)
+[?2004l[?2004h> print('BEST', best_name)
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@e3d7e74f61d6:/app/data# cd /app && python3 train.py
+[?2004l{'model_name': 'linear_regression', 'train_r2': 0.6131488911003316, 'val_r2': 0.6097023914123496, 'mae': 0.5407140746076846, 'mse': 0.5386059660291233, 'rmse': 0.7338977899061444}
+{'model_name': 'ridge', 'train_r2': 0.6131487849169934, 'val_r2': 0.6096997448135449, 'mae': 0.5407313629383245, 'mse': 0.538609618303374, 'rmse': 0.7339002781736589}
+{'model_name': 'random_forest', 'train_r2': 0.9736553013500688, 'val_r2': 0.7998143883582483, 'mae': 0.34356966315470816, 'mse': 0.27625371606452687, 'rmse': 0.5255984361321168}
+BEST random_forest
+[?2004hroot@e3d7e74f61d6:/app# cat > /app/api/app.py << 'EOF'
+[?2004l[?2004h> import pickle
+[?2004l[?2004h> from contextlib import asynccontextmanager
+[?2004l[?2004h> from typing import List
+[?2004l[?2004h> 
+[?2004l[?2004h> from fastapi import FastAPI
+[?2004l[?2004h> from pydantic import BaseModel, Field
+[?2004l[?2004h> 
+[?2004l[?2004h> MODEL_NAME = 'best_model'
+[?2004l[?2004h> model = None
+[?2004l[?2004h> model_type = None
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> @asynccontextmanager
+[?2004l[?2004h> async def lifespan(app):
+[?2004l[?2004h>     global model, model_type
+[?2004l[?2004h>     with open('/app/models/best_model.pkl', 'rb') as f:
+[?2004l[?2004h>         model = pickle.load(f)
+[?2004l[?2004h>     model_type = type(model).__name__
+[?2004l[?2004h>     yield
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> app = FastAPI(lifespan=lifespan)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class PredictRequest(BaseModel):
+[?2004l[?2004h>     features: List[float] = Field(..., min_length=8, max_length=8)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class BatchRequest(BaseModel):
+[?2004l[?2004h>     features_list: List[List[float]]
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> @app.post('/predict')
+[?2004l[?2004h> def predict(req: PredictRequest):
+[?2004l[?2004h>     pred = model.predict([req.features])[0]
+[?2004l[?2004h>     return {'prediction': float(pred), 'model_name': MODEL_NAME}
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> @app.get('/health')
+[?2004l[?2004h> def health():
+[?2004l[?2004h>     return {'status': 'healthy', 'model_loaded': model is not None}
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> @app.get('/model-info')
+[?2004l[?2004h> def model_info():
+[?2004l[?2004h>     return {'model_name': MODEL_NAME, 'model_type': model_type, 'features_count': 8}
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> @app.post('/predict-batch')
+[?2004l[?2004h> def predict_batch(req: BatchRequest):
+[?2004l[?2004h>     for row in req.features_list:
+[?2004l[?2004h>         if len(row) != 8:
+[?2004l[?2004h>             from fastapi import HTTPException
+[?2004l[?2004h>             raise HTTPException(status_code=422, detail='Each inner array must have exactly 8 features')
+[?2004l[?2004h>     preds = model.predict(req.features_list)
+[?2004l[?2004h>     return {'predictions': [float(p) for p in preds], 'model_name': MODEL_NAME, 'count': len(preds)}
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@e3d7e74f61d6:/app# cd /app && (nohup uvicorn api.app:app --host 0.0.0.0 --port 8000 > /app/output/uvicorn.log 2>&1 &) && sleep 5 && curl -s http://localhost:8000/health && echo
+[?2004l{"status":"healthy","model_loaded":true}
+[?2004hroot@e3d7e74f61d6:/app# curl -s http://localhost:8000/model-info && echo && curl -s -X POST http://localhost:8000/predict-batch -H 'Content-Type: application/json' -d '{"features_list": [[3.2596,33.0,5.017656500802568,1.0064205457463884,2300.0,3.691813804173355,32.71,-117.03]]}' && echo
+[?2004l{"model_name":"best_model","model_type":"RandomForestRegressor","features_count":8}
+{"predictions":[1.2635750000000017],"model_name":"best_model","count":1}
+[?2004hroot@e3d7e74f61d6:/app# cat > /app/api_test.py << 'EOF'
+[?2004l[?2004h> import json
+[?2004l[?2004h> import pickle
+[?2004l[?2004h> import numpy as np
+[?2004l[?2004h> import pandas as pd
+[?2004l[?2004h> import requests
+[?2004l[?2004h> from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+[?2004l[?2004h> 
+[?2004l[?2004h> df = pd.read_csv('/app/data/train.csv').reset_index(drop=True)
+[?2004l[?2004h> split = json.load(open('/app/output/split_info.json'))
+[?2004l[?2004h> val_idx = split['validation_indices']
+[?2004l[?2004h> feats = [c for c in df.columns if c != 'target']
+[?2004l[?2004h> val_df = df.iloc[val_idx]
+[?2004l[?2004h> X_val = val_df[feats].values
+[?2004l[?2004h> y_val = val_df['target'].values
+[?2004l[?2004h> 
+[?2004l[?2004h> url = 'http://localhost:8000/predict'
+[?2004l[?2004h> preds = []
+[?2004l[?2004h> for row in X_val:
+[?2004l[?2004h>     r = requests.post(url, json={'features': [float(v) for v in row]})
+[?2004l[?2004h>     r.raise_for_status()
+[?2004l[?2004h>     preds.append(r.json()['prediction'])
+[?2004l[?2004h> preds = np.array(preds)
+[?2004l[?2004h> 
+[?2004l[?2004h> out = pd.DataFrame({
+[?2004l[?2004h>     'sample_index': np.arange(len(y_val)),
+[?2004l[?2004h>     'y_true': y_val,
+[?2004l[?2004h>     'y_pred': preds,
+[?2004l[?2004h>     'absolute_error': np.abs(y_val - preds),
+[?2004l[?2004h> })
+[?2004l[?2004h> out.to_csv('/app/output/api_predictions.csv', index=False)
+[?2004l[?2004h> 
+[?2004l[?2004h> mse = mean_squared_error(y_val, preds)
+[?2004l[?2004h> metrics = {
+[?2004l[?2004h>     'sample_count': int(len(y_val)),
+[?2004l[?2004h>     'mae': float(mean_absolute_error(y_val, preds)),
+[?2004l[?2004h>     'mse': float(mse),
+[?2004l[?2004h>     'rmse': float(np.sqrt(mse)),
+[?2004l[?2004h>     'r2_score': float(r2_score(y_val, preds)),
+[?2004l[?2004h> }
+[?2004l[?2004h> json.dump(metrics, open('/app/output/api_metrics.json', 'w'), indent=2)
+[?2004l[?2004h> print(metrics)
+[?2004l[?2004h> 
+[?2004l[?2004h> model = pickle.load(open('/app/models/best_model.pkl', 'rb'))
+[?2004l[?2004h> direct = model.predict(X_val)
+[?2004l[?2004h> print('max abs diff API vs direct:', float(np.max(np.abs(direct - preds))))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@e3d7e74f61d6:/app# cd /app && python3 api_test.py
+[?2004l{'sample_count': 3303, 'mae': 0.3435696631547081, 'mse': 0.2762537160645269, 'rmse': 0.5255984361321169, 'r2_score': 0.7998143883582483}
+/usr/local/lib/python3.13/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but RandomForestRegressor was fitted with feature names
+  warnings.warn(
+max abs diff API vs direct: 3.1086244689504383e-15
+[?2004hroot@e3d7e74f61d6:/app# python3 -c "import json,pickle,pandas as pd; [json.load(open(p)) for p in ['/app/output/split_info.json','/app/output/model_comparison.json','/app/output/api_metrics.json']]; print('json ok'); [print(p, hasattr(pickle.load(open(p,'rb')),'predict')) for p in ['/app/models/linear_regression.pkl','/app/models/ridge.pkl','/app/models/random_forest.pkl','/app/models/best_model.pkl']]; d=pd.read_csv('/app/output/api_predictions.csv'); print(d.columns.tolist(), len(d)); print(json.load(open('/app/output/model_comparison.json'))['best_model_name'])"
+[?2004ljson ok
+/app/models/linear_regression.pkl True
+/app/models/ridge.pkl True
+/app/models/random_forest.pkl True
+/app/models/best_model.pkl True
+['sample_index', 'y_true', 'y_pred', 'absolute_error'] 3303
+random_forest
+[?2004hroot@e3d7e74f61d6:/app# 

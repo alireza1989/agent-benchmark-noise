@@ -1,0 +1,137 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 12,
+            "passed": 9,
+            "failed": 3,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792975898.811132,
+            "stop": 1792975898.8934784
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_01_parse_error_bad_header",
+                "status": "passed",
+                "duration": 0.0006999990018812241,
+                "start": 1792975898.8674886,
+                "stop": 1792975898.868376,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_02_parse_error_bad_directive",
+                "status": "passed",
+                "duration": 0.0005422080012067454,
+                "start": 1792975898.8684769,
+                "stop": 1792975898.86915,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_03_alias_canonicalization_lexmin",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0009143760016740998,
+                "start": 1792975898.8692439,
+                "stop": 1792975898.8783076,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_03_alias_canonicalization_lexmin():\n        \"\"\"Alias sets canonicalize to lexicographically smallest name and output uses canonical names only.\"\"\"\n        solve = load_solve()\n        lines = [\n            \"TARGET build\",\n            \"Alias = compile link\",\n            \"Depends = all\",\n            \"TARGET compile\",\n            \"Before = clean\",\n        ]\n>       assert norm_json(solve(lines)) == norm_json(reference(lines))\nE       assert '{\"cycles\":[]...le\",\"clean\"]}' == '{\"cycles\":[]...ld\",\"clean\"]}'\nE         \nE         - {\"cycles\":[],\"order\":[\"all\",\"build\",\"clean\"]}\nE         ?                              ^^  ^\nE         + {\"cycles\":[],\"order\":[\"all\",\"compile\",\"clean\"]}\nE         ?                              ^^^^  ^\n\n/tests/test_outputs.py:326: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_04_override_ordering_by_id_and_phony_override",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0009101249997911509,
+                "start": 1792975898.8784046,
+                "stop": 1792975898.8831484,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_04_override_ordering_by_id_and_phony_override():\n        \"\"\"Overrides apply in lexicographic id order; Phony last-one-wins across overrides.\"\"\"\n        solve = load_solve()\n        lines = [\n            \"TARGET test\",\n            \"Phony = yes\",\n            \"Depends = unit\",\n            \"OVERRIDE test 20\",\n            \"Phony = no\",\n            \"After = integration\",\n            \"OVERRIDE test 10\",\n            \"Depends = e2e\",\n        ]\n>       assert norm_json(solve(lines)) == norm_json(reference(lines))\nE       assert '{\"cycles\":[]...ion\",\"test\"]}' == '{\"cycles\":[]...nit\",\"test\"]}'\nE         \nE         - {\"cycles\":[],\"order\":[\"e2e\",\"integration\",\"unit\",\"test\"]}\nE         ?                                            -------\nE         + {\"cycles\":[],\"order\":[\"unit\",\"e2e\",\"integration\",\"test\"]}\nE         ?                        +++++++\n\n/tests/test_outputs.py:342: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_05_transitive_aliases",
+                "status": "passed",
+                "duration": 0.0006335420002869796,
+                "start": 1792975898.883235,
+                "stop": 1792975898.8839943,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_06_cycle_detection",
+                "status": "passed",
+                "duration": 0.0006012930007273098,
+                "start": 1792975898.8840785,
+                "stop": 1792975898.884802,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_07_self_loop_cycle",
+                "status": "passed",
+                "duration": 0.0005559999990509823,
+                "start": 1792975898.8848832,
+                "stop": 1792975898.8855557,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_08_empty_input",
+                "status": "passed",
+                "duration": 0.0005310829983500298,
+                "start": 1792975898.885649,
+                "stop": 1792975898.886298,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_09_undefined_referenced_targets",
+                "status": "passed",
+                "duration": 0.0005785009998362511,
+                "start": 1792975898.8863754,
+                "stop": 1792975898.8870678,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_10_multiple_target_blocks",
+                "status": "passed",
+                "duration": 0.0005850420002389001,
+                "start": 1792975898.8871467,
+                "stop": 1792975898.887851,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_11_directive_accumulation",
+                "status": "passed",
+                "duration": 0.0006104150015744381,
+                "start": 1792975898.8879306,
+                "stop": 1792975898.888661,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_12_all_dependency_types",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0008110819999274099,
+                "start": 1792975898.888735,
+                "stop": 1792975898.8932898,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_12_all_dependency_types():\n        \"\"\"All dependency types (Depends, Before, After, Needs, Requires) create correct edges.\"\"\"\n        solve = load_solve()\n        lines = [\n            \"TARGET build\",\n            \"Depends = d1\",\n            \"Before = b1\",\n            \"After = a1\",\n            \"Needs = n1\",\n            \"Requires = r1\",\n        ]\n>       assert norm_json(solve(lines)) == norm_json(reference(lines))\nE       assert '{\"cycles\":[]...\",\"n1\",\"r1\"]}' == '{\"cycles\":[]...\",\"n1\",\"r1\"]}'\nE         \nE         - {\"cycles\":[],\"order\":[\"a1\",\"d1\",\"build\",\"b1\",\"n1\",\"r1\"]}\nE         ?                        ^    ^\nE         + {\"cycles\":[],\"order\":[\"d1\",\"a1\",\"build\",\"b1\",\"n1\",\"r1\"]}\nE         ?                        ^    ^\n\n/tests/test_outputs.py:436: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            }
+        ]
+    }
+}

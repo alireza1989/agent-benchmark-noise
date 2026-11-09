@@ -1,0 +1,338 @@
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+Get:4 http://deb.debian.org/debian bookworm/main arm64 Packages [8689 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main arm64 Packages [6936 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main arm64 Packages [355 kB]
+Fetched 9293 kB in 1s (9478 kB/s)
+Reading package lists...
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 5 packages in 12ms
+============================= test session starts ==============================
+platform linux -- Python 3.12.15, pytest-8.4.1, pluggy-1.7.0 -- /root/.cache/uv/archive-v0/KP6cvOCfAdPcnwrummVks/bin/python
+cachedir: .pytest_cache
+rootdir: /app
+collecting ... collected 35 items
+
+test_outputs.py::test_output_file_exists FAILED                          [  2%]
+test_outputs.py::test_output_is_valid_json FAILED                        [  5%]
+test_outputs.py::test_output_has_required_fields FAILED                  [  8%]
+test_outputs.py::test_generated_at_is_iso8601 FAILED                     [ 11%]
+test_outputs.py::test_waves_is_list FAILED                               [ 14%]
+test_outputs.py::test_wave_numbers_are_consecutive FAILED                [ 17%]
+test_outputs.py::test_deployments_have_required_fields FAILED            [ 20%]
+test_outputs.py::test_total_waves_matches FAILED                         [ 22%]
+test_outputs.py::test_constraint_dependency_ordering FAILED              [ 25%]
+test_outputs.py::test_constraint_capacity_limits FAILED                  [ 28%]
+test_outputs.py::test_constraint_critical_limits FAILED                  [ 31%]
+test_outputs.py::test_constraint_regional_coverage FAILED                [ 34%]
+test_outputs.py::test_constraint_service_uniqueness FAILED               [ 37%]
+test_outputs.py::test_constraint_valid_references FAILED                 [ 40%]
+test_outputs.py::test_constraint_blackout_compliance FAILED              [ 42%]
+test_outputs.py::test_constraint_team_bandwidth FAILED                   [ 45%]
+test_outputs.py::test_constraint_atomic_deployment FAILED                [ 48%]
+test_outputs.py::test_constraint_high_resource_slots FAILED              [ 51%]
+test_outputs.py::test_constraint_global_critical_limit FAILED            [ 54%]
+test_outputs.py::test_constraint_region_deployment_gap FAILED            [ 57%]
+test_outputs.py::test_constraint_team_fatigue FAILED                     [ 60%]
+test_outputs.py::test_wave_efficiency_threshold FAILED                   [ 62%]
+test_outputs.py::test_capacity_utilization_threshold FAILED              [ 65%]
+test_outputs.py::test_priority_compliance_threshold FAILED               [ 68%]
+test_outputs.py::test_balance_score_threshold FAILED                     [ 71%]
+test_outputs.py::test_team_balance_threshold FAILED                      [ 74%]
+test_outputs.py::test_constraint_margin_threshold FAILED                 [ 77%]
+test_outputs.py::test_deployment_smoothness_threshold FAILED             [ 80%]
+test_outputs.py::test_total_score_threshold FAILED                       [ 82%]
+test_outputs.py::test_input_files_not_modified PASSED                    [ 85%]
+test_outputs.py::test_model_file_not_modified PASSED                     [ 88%]
+test_outputs.py::test_minimum_waves_required FAILED                      [ 91%]
+test_outputs.py::test_no_hardcoded_plan FAILED                           [ 94%]
+test_outputs.py::test_all_datacenters_used FAILED                        [ 97%]
+test_outputs.py::test_full_constraint_validation FAILED                  [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_output_file_exists ____________________________
+test_outputs.py:46: in test_output_file_exists
+    assert PLAN_PATH.exists(), f"Output file not found: {PLAN_PATH}"
+E   AssertionError: Output file not found: /app/task_file/output_data/deployment_plan.json
+E   assert False
+E    +  where False = exists()
+E    +    where exists = PosixPath('/app/task_file/output_data/deployment_plan.json').exists
+__________________________ test_output_is_valid_json ___________________________
+test_outputs.py:52: in test_output_is_valid_json
+    load_json(PLAN_PATH)
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+_______________________ test_output_has_required_fields ________________________
+test_outputs.py:59: in test_output_has_required_fields
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+_________________________ test_generated_at_is_iso8601 _________________________
+test_outputs.py:68: in test_generated_at_is_iso8601
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+______________________________ test_waves_is_list ______________________________
+test_outputs.py:79: in test_waves_is_list
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+______________________ test_wave_numbers_are_consecutive _______________________
+test_outputs.py:85: in test_wave_numbers_are_consecutive
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+____________________ test_deployments_have_required_fields _____________________
+test_outputs.py:97: in test_deployments_have_required_fields
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+___________________________ test_total_waves_matches ___________________________
+test_outputs.py:111: in test_total_waves_matches
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+_____________________ test_constraint_dependency_ordering ______________________
+test_outputs.py:123: in test_constraint_dependency_ordering
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+_______________________ test_constraint_capacity_limits ________________________
+test_outputs.py:159: in test_constraint_capacity_limits
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+_______________________ test_constraint_critical_limits ________________________
+test_outputs.py:188: in test_constraint_critical_limits
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+______________________ test_constraint_regional_coverage _______________________
+test_outputs.py:218: in test_constraint_regional_coverage
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+______________________ test_constraint_service_uniqueness ______________________
+test_outputs.py:249: in test_constraint_service_uniqueness
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+_______________________ test_constraint_valid_references _______________________
+test_outputs.py:275: in test_constraint_valid_references
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+_____________________ test_constraint_blackout_compliance ______________________
+test_outputs.py:293: in test_constraint_blackout_compliance
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+________________________ test_constraint_team_bandwidth ________________________
+test_outputs.py:313: in test_constraint_team_bandwidth
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+______________________ test_constraint_atomic_deployment _______________________
+test_outputs.py:344: in test_constraint_atomic_deployment
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+_____________________ test_constraint_high_resource_slots ______________________
+test_outputs.py:389: in test_constraint_high_resource_slots
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+____________________ test_constraint_global_critical_limit _____________________
+test_outputs.py:422: in test_constraint_global_critical_limit
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+____________________ test_constraint_region_deployment_gap _____________________
+test_outputs.py:453: in test_constraint_region_deployment_gap
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+_________________________ test_constraint_team_fatigue _________________________
+test_outputs.py:503: in test_constraint_team_fatigue
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+________________________ test_wave_efficiency_threshold ________________________
+test_outputs.py:567: in test_wave_efficiency_threshold
+    scorer.load_plan()
+task_file/scripts/model.py:77: in load_plan
+    raise FileNotFoundError(f"Plan not found: {plan_path}")
+E   FileNotFoundError: Plan not found: /app/task_file/output_data/deployment_plan.json
+_____________________ test_capacity_utilization_threshold ______________________
+test_outputs.py:583: in test_capacity_utilization_threshold
+    scorer.load_plan()
+task_file/scripts/model.py:77: in load_plan
+    raise FileNotFoundError(f"Plan not found: {plan_path}")
+E   FileNotFoundError: Plan not found: /app/task_file/output_data/deployment_plan.json
+______________________ test_priority_compliance_threshold ______________________
+test_outputs.py:599: in test_priority_compliance_threshold
+    scorer.load_plan()
+task_file/scripts/model.py:77: in load_plan
+    raise FileNotFoundError(f"Plan not found: {plan_path}")
+E   FileNotFoundError: Plan not found: /app/task_file/output_data/deployment_plan.json
+_________________________ test_balance_score_threshold _________________________
+test_outputs.py:615: in test_balance_score_threshold
+    scorer.load_plan()
+task_file/scripts/model.py:77: in load_plan
+    raise FileNotFoundError(f"Plan not found: {plan_path}")
+E   FileNotFoundError: Plan not found: /app/task_file/output_data/deployment_plan.json
+_________________________ test_team_balance_threshold __________________________
+test_outputs.py:631: in test_team_balance_threshold
+    scorer.load_plan()
+task_file/scripts/model.py:77: in load_plan
+    raise FileNotFoundError(f"Plan not found: {plan_path}")
+E   FileNotFoundError: Plan not found: /app/task_file/output_data/deployment_plan.json
+_______________________ test_constraint_margin_threshold _______________________
+test_outputs.py:647: in test_constraint_margin_threshold
+    scorer.load_plan()
+task_file/scripts/model.py:77: in load_plan
+    raise FileNotFoundError(f"Plan not found: {plan_path}")
+E   FileNotFoundError: Plan not found: /app/task_file/output_data/deployment_plan.json
+_____________________ test_deployment_smoothness_threshold _____________________
+test_outputs.py:663: in test_deployment_smoothness_threshold
+    scorer.load_plan()
+task_file/scripts/model.py:77: in load_plan
+    raise FileNotFoundError(f"Plan not found: {plan_path}")
+E   FileNotFoundError: Plan not found: /app/task_file/output_data/deployment_plan.json
+__________________________ test_total_score_threshold __________________________
+test_outputs.py:679: in test_total_score_threshold
+    scorer.load_plan()
+task_file/scripts/model.py:77: in load_plan
+    raise FileNotFoundError(f"Plan not found: {plan_path}")
+E   FileNotFoundError: Plan not found: /app/task_file/output_data/deployment_plan.json
+_________________________ test_minimum_waves_required __________________________
+test_outputs.py:730: in test_minimum_waves_required
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+____________________________ test_no_hardcoded_plan ____________________________
+test_outputs.py:742: in test_no_hardcoded_plan
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+__________________________ test_all_datacenters_used ___________________________
+test_outputs.py:760: in test_all_datacenters_used
+    plan = load_json(PLAN_PATH)
+           ^^^^^^^^^^^^^^^^^^^^
+test_outputs.py:31: in load_json
+    with open(path) as f:
+         ^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/task_file/output_data/deployment_plan.json'
+_______________________ test_full_constraint_validation ________________________
+test_outputs.py:786: in test_full_constraint_validation
+    scorer.load_plan()
+task_file/scripts/model.py:77: in load_plan
+    raise FileNotFoundError(f"Plan not found: {plan_path}")
+E   FileNotFoundError: Plan not found: /app/task_file/output_data/deployment_plan.json
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED test_outputs.py::test_input_files_not_modified
+PASSED test_outputs.py::test_model_file_not_modified
+FAILED test_outputs.py::test_output_file_exists - AssertionError: Output file...
+FAILED test_outputs.py::test_output_is_valid_json - FileNotFoundError: [Errno...
+FAILED test_outputs.py::test_output_has_required_fields - FileNotFoundError: ...
+FAILED test_outputs.py::test_generated_at_is_iso8601 - FileNotFoundError: [Er...
+FAILED test_outputs.py::test_waves_is_list - FileNotFoundError: [Errno 2] No ...
+FAILED test_outputs.py::test_wave_numbers_are_consecutive - FileNotFoundError...
+FAILED test_outputs.py::test_deployments_have_required_fields - FileNotFoundE...
+FAILED test_outputs.py::test_total_waves_matches - FileNotFoundError: [Errno ...
+FAILED test_outputs.py::test_constraint_dependency_ordering - FileNotFoundErr...
+FAILED test_outputs.py::test_constraint_capacity_limits - FileNotFoundError: ...
+FAILED test_outputs.py::test_constraint_critical_limits - FileNotFoundError: ...
+FAILED test_outputs.py::test_constraint_regional_coverage - FileNotFoundError...
+FAILED test_outputs.py::test_constraint_service_uniqueness - FileNotFoundErro...
+FAILED test_outputs.py::test_constraint_valid_references - FileNotFoundError:...
+FAILED test_outputs.py::test_constraint_blackout_compliance - FileNotFoundErr...
+FAILED test_outputs.py::test_constraint_team_bandwidth - FileNotFoundError: [...
+FAILED test_outputs.py::test_constraint_atomic_deployment - FileNotFoundError...
+FAILED test_outputs.py::test_constraint_high_resource_slots - FileNotFoundErr...
+FAILED test_outputs.py::test_constraint_global_critical_limit - FileNotFoundE...
+FAILED test_outputs.py::test_constraint_region_deployment_gap - FileNotFoundE...
+FAILED test_outputs.py::test_constraint_team_fatigue - FileNotFoundError: [Er...
+FAILED test_outputs.py::test_wave_efficiency_threshold - FileNotFoundError: P...
+FAILED test_outputs.py::test_capacity_utilization_threshold - FileNotFoundErr...
+FAILED test_outputs.py::test_priority_compliance_threshold - FileNotFoundErro...
+FAILED test_outputs.py::test_balance_score_threshold - FileNotFoundError: Pla...
+FAILED test_outputs.py::test_team_balance_threshold - FileNotFoundError: Plan...
+FAILED test_outputs.py::test_constraint_margin_threshold - FileNotFoundError:...
+FAILED test_outputs.py::test_deployment_smoothness_threshold - FileNotFoundEr...
+FAILED test_outputs.py::test_total_score_threshold - FileNotFoundError: Plan ...
+FAILED test_outputs.py::test_minimum_waves_required - FileNotFoundError: [Err...
+FAILED test_outputs.py::test_no_hardcoded_plan - FileNotFoundError: [Errno 2]...
+FAILED test_outputs.py::test_all_datacenters_used - FileNotFoundError: [Errno...
+FAILED test_outputs.py::test_full_constraint_validation - FileNotFoundError: ...
+========================= 33 failed, 2 passed in 0.47s =========================
+Tests: 2 passed, 33 failed, 0 errors
+Reward: 0.057

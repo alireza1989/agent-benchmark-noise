@@ -1,0 +1,113 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 8,
+            "passed": 1,
+            "failed": 7,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792964699.2633197,
+            "stop": 1792964699.3466134
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_game_was_played",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.000558373999979267,
+                "start": 1792964699.281012,
+                "stop": 1792964699.2913456,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_game_was_played() -> None:\n        \"\"\"Verify that the bandit game was played to completion for each required seed.\n    \n        The game writes a per-seed hidden log file with all game events.\n        This test ensures the agent ran the game rather than fabricating results.\n        \"\"\"\n        for seed in REQUIRED_SEEDS:\n>           log = load_game_log_for_seed(seed)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:137: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nseed = 42\n\n    def load_game_log_for_seed(seed: int) -> dict:\n        \"\"\"Load the per-seed game log created by bandit.py during gameplay.\"\"\"\n        path = Path(GAME_LOG_TEMPLATE.format(seed=seed))\n>       assert path.exists(), (\n            f\"Game log {path} does not exist. \"\n            f\"The bandit game must be played to completion for seed={seed} for verification.\"\n        )\nE       AssertionError: Game log /app/.game_log_42.json does not exist. The bandit game must be played to completion for seed=42 for verification.\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/.game_log_42.json').exists\n\n/tests/test_outputs.py:122: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_answer_file_exists",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00041875099998378573,
+                "start": 1792964699.2914789,
+                "stop": 1792964699.2946975,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_answer_file_exists() -> None:\n        \"\"\"Verify that /app/answer.txt exists.\"\"\"\n>       assert ANSWER_FILE.exists(), f\"Answer file {ANSWER_FILE} does not exist\"\nE       AssertionError: Answer file /app/answer.txt does not exist\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/answer.txt').exists\n\n/tests/test_outputs.py:195: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_answer_file_format",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0004136250000783548,
+                "start": 1792964699.2948012,
+                "stop": 1792964699.310917,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_answer_file_format() -> None:\n        \"\"\"Verify the answer file has correct format with total_reward and regret.\"\"\"\n>       content = ANSWER_FILE.read_text(encoding=\"utf-8\")\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:200: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/usr/local/lib/python3.11/pathlib.py:1058: in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = PosixPath('/app/answer.txt'), mode = 'r', buffering = -1\nencoding = 'utf-8', errors = None, newline = None\n\n    def open(self, mode='r', buffering=-1, encoding=None,\n             errors=None, newline=None):\n        \"\"\"\n        Open the file pointed by this path and return a file object, as\n        the built-in open() function does.\n        \"\"\"\n        if \"b\" not in mode:\n            encoding = io.text_encoding(encoding)\n>       return io.open(self, mode, buffering, encoding, errors, newline)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/answer.txt'\n\n/usr/local/lib/python3.11/pathlib.py:1044: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_results_match_game",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00045166699999299453,
+                "start": 1792964699.311026,
+                "stop": 1792964699.3307693,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_results_match_game() -> None:\n        \"\"\"Verify reported results match actual game outcomes.\n    \n        This is a critical anti-cheating test. The agent's reported\n        total_reward and regret must match what happened in the game.\n        \"\"\"\n>       content = ANSWER_FILE.read_text(encoding=\"utf-8\")\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:238: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/usr/local/lib/python3.11/pathlib.py:1058: in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = PosixPath('/app/answer.txt'), mode = 'r', buffering = -1\nencoding = 'utf-8', errors = None, newline = None\n\n    def open(self, mode='r', buffering=-1, encoding=None,\n             errors=None, newline=None):\n        \"\"\"\n        Open the file pointed by this path and return a file object, as\n        the built-in open() function does.\n        \"\"\"\n        if \"b\" not in mode:\n            encoding = io.text_encoding(encoding)\n>       return io.open(self, mode, buffering, encoding, errors, newline)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/app/answer.txt'\n\n/usr/local/lib/python3.11/pathlib.py:1044: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_regret_is_acceptable",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00040804099990054965,
+                "start": 1792964699.3308878,
+                "stop": 1792964699.3365242,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_regret_is_acceptable() -> None:\n        \"\"\"Verify the agent achieved acceptable average regret.\n    \n        The agent must play all required seeds and keep average regret below the threshold.\n        \"\"\"\n>       logs = [load_game_log_for_seed(seed) for seed in REQUIRED_SEEDS]\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:267: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:267: in <listcomp>\n    logs = [load_game_log_for_seed(seed) for seed in REQUIRED_SEEDS]\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nseed = 42\n\n    def load_game_log_for_seed(seed: int) -> dict:\n        \"\"\"Load the per-seed game log created by bandit.py during gameplay.\"\"\"\n        path = Path(GAME_LOG_TEMPLATE.format(seed=seed))\n>       assert path.exists(), (\n            f\"Game log {path} does not exist. \"\n            f\"The bandit game must be played to completion for seed={seed} for verification.\"\n        )\nE       AssertionError: Game log /app/.game_log_42.json does not exist. The bandit game must be played to completion for seed=42 for verification.\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/.game_log_42.json').exists\n\n/tests/test_outputs.py:122: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_total_reward_is_plausible",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0004025840000849712,
+                "start": 1792964699.336621,
+                "stop": 1792964699.341085,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_total_reward_is_plausible() -> None:\n        \"\"\"Verify total_reward is within plausible range.\n    \n        With means starting in [0.35, 0.65] that can drift to [0, 1], and 1500 turns,\n        total reward should be roughly 300-1500.\n        \"\"\"\n        # Check each run is plausible (not just the average)\n        for seed in REQUIRED_SEEDS:\n>           log = load_game_log_for_seed(seed)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:284: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nseed = 42\n\n    def load_game_log_for_seed(seed: int) -> dict:\n        \"\"\"Load the per-seed game log created by bandit.py during gameplay.\"\"\"\n        path = Path(GAME_LOG_TEMPLATE.format(seed=seed))\n>       assert path.exists(), (\n            f\"Game log {path} does not exist. \"\n            f\"The bandit game must be played to completion for seed={seed} for verification.\"\n        )\nE       AssertionError: Game log /app/.game_log_42.json does not exist. The bandit game must be played to completion for seed=42 for verification.\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/.game_log_42.json').exists\n\n/tests/test_outputs.py:122: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_regret_consistency",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0004004989999657482,
+                "start": 1792964699.3411732,
+                "stop": 1792964699.3457959,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_regret_consistency() -> None:\n        \"\"\"Verify that regret = oracle_reward - total_reward is consistent.\"\"\"\n        for seed in REQUIRED_SEEDS:\n>           log = load_game_log_for_seed(seed)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n/tests/test_outputs.py:300: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nseed = 42\n\n    def load_game_log_for_seed(seed: int) -> dict:\n        \"\"\"Load the per-seed game log created by bandit.py during gameplay.\"\"\"\n        path = Path(GAME_LOG_TEMPLATE.format(seed=seed))\n>       assert path.exists(), (\n            f\"Game log {path} does not exist. \"\n            f\"The bandit game must be played to completion for seed={seed} for verification.\"\n        )\nE       AssertionError: Game log /app/.game_log_42.json does not exist. The bandit game must be played to completion for seed=42 for verification.\nE       assert False\nE        +  where False = exists()\nE        +    where exists = PosixPath('/app/.game_log_42.json').exists\n\n/tests/test_outputs.py:122: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_bandit_not_modified",
+                "status": "passed",
+                "duration": 0.0004680829999870184,
+                "start": 1792964699.3458872,
+                "stop": 1792964699.3464713,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

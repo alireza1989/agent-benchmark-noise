@@ -1,0 +1,9 @@
+Skipping image OS validation for hb__5a8d8dc136d4bbd8a2d824c04c582d99: docker inspect returned 1
+Parser warnings: - Extra text detected before JSON object
+Trajectory dumped to jobs/nolimits-2/industrial-kiln-controller__8ea5z4f/agent/trajectory.json
+Trajectory dumped to jobs/nolimits-2/industrial-kiln-controller__8ea5z4f/agent/trajectory.json
+Trajectory dumped to jobs/nolimits-2/industrial-kiln-controller__8ea5z4f/agent/trajectory.json
+Parser warnings: - Extra text detected before JSON object
+Trajectory dumped to jobs/nolimits-2/industrial-kiln-controller__8ea5z4f/agent/trajectory.json
+Trajectory dumped to jobs/nolimits-2/industrial-kiln-controller__8ea5z4f/agent/trajectory.json
+Collecting main service artifacts

@@ -1,0 +1,356 @@
+[?2004hroot@3d7cd451650f:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@3d7cd451650f:/app# clear
+[?2004l[H[J[3J[?2004hroot@3d7cd451650f:/app# ls -la /app /app/data && head -5 /app/data/*.csv && wc -l /app/data/*.csv && cat /app/data/arms_metadata.json | head -50
+[?2004l/app:
+total 16
+drwxr-xr-x 1 root root 4096 Oct 25 21:30 .
+drwxr-xr-x 1 root root 4096 Oct 26 01:18 ..
+drwxr-xr-x 2 root root 4096 Oct 25 21:29 data
+drwxr-xr-x 2 root root 4096 Oct 25 21:30 output
+
+/app/data:
+total 3008
+drwxr-xr-x 2 root root    4096 Oct 25 21:29 .
+drwxr-xr-x 1 root root    4096 Oct 25 21:30 ..
+-rw-r--r-- 1 root root    1128 Oct 25 21:29 arms_metadata.json
+-rw-r--r-- 1 root root  135100 Oct 25 21:29 conversions.csv
+-rw-r--r-- 1 root root 2818804 Oct 25 21:29 impressions.csv
+-rw-r--r-- 1 root root  108862 Oct 25 21:29 test_contexts.csv
+==> /app/data/conversions.csv <==
+impression_id,conversion_timestamp,delay_hours,conversion_value
+IMP_000010,1709305348,10.43,3.58
+IMP_000013,1709320719,21.49,1.07
+IMP_000022,1709843815,9.32,3.47
+IMP_000069,1710312110,4.57,2.48
+
+==> /app/data/impressions.csv <==
+impression_id,arm_id,timestamp,hour_of_day,day_of_week,user_segment,device_type,context_feature_1,context_feature_2
+IMP_000000,0,1709340758,9,5,young,mobile,0.7797,0.5969
+IMP_000001,6,1710354874,3,3,young,desktop,0.7081,0.0206
+IMP_000002,9,1710010543,3,6,young,desktop,0.6117,0.0071
+IMP_000003,3,1710416879,20,3,senior,mobile,0.7852,0.1997
+
+==> /app/data/test_contexts.csv <==
+context_id,timestamp,hour_of_day,day_of_week,user_segment,device_type,context_feature_1,context_feature_2
+CTX_000000,1710307872,14,2,middle,mobile,0.747,0.0933
+CTX_000001,1710319811,17,2,senior,mobile,0.9059,0.1018
+CTX_000002,1710341834,23,2,senior,mobile,0.0783,0.8936
+CTX_000003,1710405538,17,3,middle,mobile,0.4505,0.7765
+   4175 /app/data/conversions.csv
+  50001 /app/data/impressions.csv
+   2001 /app/data/test_contexts.csv
+  56177 total
+{
+  "arms": [
+    {
+      "arm_id": 0,
+      "name": "Campaign A",
+      "category": "electronics",
+      "base_bid": 0.3
+    },
+    {
+      "arm_id": 1,
+      "name": "Campaign B",
+      "category": "fashion",
+      "base_bid": 0.4
+    },
+    {
+      "arm_id": 2,
+      "name": "Campaign C",
+      "category": "home",
+      "base_bid": 0.5
+    },
+    {
+      "arm_id": 3,
+      "name": "Campaign D",
+      "category": "sports",
+      "base_bid": 0.6
+    },
+    {
+      "arm_id": 4,
+      "name": "Campaign E",
+      "category": "beauty",
+      "base_bid": 0.7
+    },
+    {
+      "arm_id": 5,
+      "name": "Campaign F",
+      "category": "food",
+      "base_bid": 0.8
+    },
+    {
+      "arm_id": 6,
+      "name": "Campaign G",
+      "category": "travel",
+      "base_bid": 0.9
+    },
+    {
+      "arm_id": 7,
+      "name": "Campaign H",
+      "category": "finance",
+      "base_bid": 1.0
+    },
+[?2004hroot@3d7cd451650f:/app# python3 -c "import numpy, pandas, scipy; print('ok', numpy.__version__, pandas.__version__)"
+[?2004lok 2.1.3 2.2.3
+[?2004hroot@3d7cd451650f:/app# cd /app && python3 -c "
+[?2004l[?2004h> import pandas as pd, numpy as np, json
+[?2004l[?2004h> imp=pd.read_csv('data/impressions.csv'); cv=pd.read_csv('data/conversions.csv'); tc=pd.read_csv('data/test_contexts.csv')
+[?2004l[?2004h> print(imp.describe(include='all').T.to_string())
+[?2004l[?2004h> print('ts range', pd.to_datetime(imp.timestamp.min(),unit='s'), pd.to_datetime(imp.timestamp.max(),unit='s'))
+[?2004l[?2004h> print('test ts range', pd.to_datetime(tc.timestamp.min(),unit='s'), pd.to_datetime(tc.timestamp.max(),unit='s'))
+[?2004l[?2004h> print(imp.arm_id.value_counts().sort_index().to_string())
+[?2004l[?2004h> print('dup imp ids', imp.impression_id.duplicated().sum(), 'dup conv ids', cv.impression_id.duplicated().sum())
+[?2004l[?2004h> print('conv not in imp', (~cv.impression_id.isin(imp.impression_id)).sum())
+[?2004l[?2004h> m=cv.merge(imp,on='impression_id')
+[?2004l[?2004h> print(m.groupby('arm_id').agg(n=('impression_id','size'),val=('conversion_value','mean')).to_string())
+[?2004l[?2004h> print(cv.describe().T.to_string())
+[?2004l[?2004h> d=cv.delay_hours
+[?2004l[?2004h> print('delay quantiles', d.quantile([0,.1,.25,.5,.75,.9,.95,.99,1]).to_string())
+[?2004l[?2004h> print('delay>72', (d>72).sum(), 'delay<=0', (d<=0).sum())
+[?2004l[?2004h> ld=np.log(d[d>0]); print('lognormal mu',ld.mean(),'sigma',ld.std(ddof=0))
+[?2004l[?2004h> print('check delay vs ts diff', ((m.conversion_timestamp-m.timestamp)/3600 - m.delay_hours).abs().describe().to_string())
+[?2004l[?2004h> print('overall conv rate', len(cv)/len(imp))
+[?2004l[?2004h> print(imp.groupby('arm_id').impression_id.size().sum())
+[?2004l[?2004h> "
+[?2004l                     count unique         top   freq              mean            std           min            25%           50%           75%           max
+impression_id        50000  50000  IMP_000000      1               NaN            NaN           NaN            NaN           NaN           NaN           NaN
+arm_id             50000.0    NaN         NaN    NaN           3.62872       2.702602           0.0            1.0           3.0           6.0           9.0
+timestamp          50000.0    NaN         NaN    NaN  1709823454.67588  349357.375749  1709218856.0  1709518516.75  1709825076.0  1710126521.0  1710428377.0
+hour_of_day        50000.0    NaN         NaN    NaN          11.48766       6.939989           0.0            5.0          11.0          17.0          23.0
+day_of_week        50000.0    NaN         NaN    NaN           3.02114       2.003999           0.0            1.0           3.0           5.0           6.0
+user_segment         50000      3       young  16738               NaN            NaN           NaN            NaN           NaN           NaN           NaN
+device_type          50000      3      mobile  24943               NaN            NaN           NaN            NaN           NaN           NaN           NaN
+context_feature_1  50000.0    NaN         NaN    NaN          0.498311       0.288741           0.0         0.2483        0.4985         0.747           1.0
+context_feature_2  50000.0    NaN         NaN    NaN          0.500677       0.288711           0.0         0.2499        0.5014        0.7506        0.9999
+ts range 2024-02-29 15:00:56 2024-03-14 14:59:37
+test ts range 2024-03-12 15:01:13 2024-03-14 14:57:00
+arm_id
+0    6767
+1    8453
+2    3187
+3    8584
+4    5005
+5    4285
+6    4974
+7    2917
+8    3303
+9    2525
+dup imp ids 0 dup conv ids 0
+conv not in imp 0
+           n       val
+arm_id                
+0        417  2.588441
+1        817  1.878115
+2        139  4.470504
+3       1033  1.587299
+4        390  2.255103
+5        300  3.151900
+6        442  2.065204
+7        179  3.751117
+8        375  1.785200
+9         82  4.891463
+                       count          mean            std           min           25%           50%           75%           max
+conversion_timestamp  4174.0  1.709901e+09  358150.657079  1.709236e+09  1.709609e+09  1.709894e+09  1.710217e+09  1.710685e+09
+delay_hours           4174.0  1.742215e+01      16.145733  5.800000e-01  6.382500e+00  1.186500e+01  2.271000e+01  7.200000e+01
+conversion_value      4174.0  2.241198e+00       1.064556  5.500000e-01  1.522500e+00  1.970000e+00  2.660000e+00  9.250000e+00
+delay quantiles 0.00     0.5800
+0.10     3.7600
+0.25     6.3825
+0.50    11.8650
+0.75    22.7100
+0.90    38.9780
+0.95    55.5635
+0.99    72.0000
+1.00    72.0000
+delay>72 0 delay<=0 0
+lognormal mu 2.4757300431035563 sigma 0.8979817729076958
+check delay vs ts diff count    4174.000000
+mean        0.002448
+std         0.001489
+min         0.000000
+25%         0.001111
+50%         0.002500
+75%         0.003611
+max         0.005000
+overall conv rate 0.08348
+50000
+[?2004hroot@3d7cd451650f:/app# cat > /app/solve.py << 'EOF'
+[?2004l[?2004h> import pandas as pd, numpy as np, json, os
+[?2004l[?2004h> from scipy.stats import norm
+[?2004l[?2004h> from scipy.special import expit
+[?2004l[?2004h> from scipy.optimize import minimize
+[?2004l[?2004h> os.makedirs('/app/output', exist_ok=True)
+[?2004l[?2004h> imp = pd.read_csv('/app/data/impressions.csv')
+[?2004l[?2004h> cv = pd.read_csv('/app/data/conversions.csv')
+[?2004l[?2004h> tc = pd.read_csv('/app/data/test_contexts.csv')
+[?2004l[?2004h> imp['conv'] = imp.impression_id.isin(cv.impression_id).astype(int)
+[?2004l[?2004h> mg = cv.merge(imp[['impression_id', 'arm_id']], on='impression_id')
+[?2004l[?2004h> ld = np.log(cv.delay_hours.values)
+[?2004l[?2004h> mu = float(ld.mean()); sigma = float(ld.std(ddof=0))
+[?2004l[?2004h> F72 = norm.cdf((np.log(72.0) - mu) / sigma)
+[?2004l[?2004h> snap = cv.conversion_timestamp.max()
+[?2004l[?2004h> age = np.maximum((snap - imp.timestamp.values) / 3600.0, 1e-3)
+[?2004l[?2004h> Fm = np.minimum(norm.cdf((np.log(np.minimum(age, 72.0)) - mu) / sigma) / F72, 1.0)
+[?2004l[?2004h> imp['Fm'] = Fm
+[?2004l[?2004h> imp['mature'] = (age >= 72).astype(int)
+[?2004l[?2004h> q_all = imp.conv.sum() / imp.Fm.sum()
+[?2004l[?2004h> arm = imp.groupby('arm_id').agg(n=('conv', 'size'), c=('conv', 'sum'), ex=('Fm', 'sum'))
+[?2004l[?2004h> arm['q'] = arm.c / arm.ex
+[?2004l[?2004h> arm['v'] = mg.groupby('arm_id').conversion_value.mean()
+[?2004l[?2004h> def feats(df):
+[?2004l[?2004h>     s = pd.get_dummies(df.user_segment).reindex(columns=['middle', 'senior', 'young'], fill_value=0).astype(float).values
+[?2004l[?2004h>     dv = pd.get_dummies(df.device_type).reindex(columns=['desktop', 'mobile', 'tablet'], fill_value=0).astype(float).values
+[?2004l[?2004h>     h = 2 * np.pi * df.hour_of_day.values / 24.0
+[?2004l[?2004h>     wk = (df.day_of_week.values >= 5).astype(float)
+[?2004l[?2004h>     return np.column_stack([np.ones(len(df)), s[:, 0], s[:, 1], dv[:, 0], dv[:, 2], np.sin(h), np.cos(h), np.sin(2 * h), np.cos(2 * h), wk, df.context_feature_1.values, df.context_feature_2.values])
+[?2004l[?2004h> def fit(X, y, lam=1.0):
+[?2004l[?2004h>     def f(w):
+[?2004l[?2004h>         p = expit(X @ w)
+[?2004l[?2004h>         ll = -(y * np.log(p + 1e-12) + (1 - y) * np.log(1 - p + 1e-12)).sum() + 0.5 * lam * (w[1:] @ w[1:])
+[?2004l[?2004h>         g = X.T @ (p - y)
+[?2004l[?2004h>         g[1:] += lam * w[1:]
+[?2004l[?2004h>         return ll, g
+[?2004l[?2004h>     return minimize(f, np.zeros(X.shape[1]), jac=True, method='L-BFGS-B').x
+[?2004l[?2004h> Xt = feats(tc)
+[?2004l[?2004h> P = np.zeros((len(tc), 10))
+[?2004l[?2004h> nm = np.zeros(10)
+[?2004l[?2004h> for a in range(10):
+[?2004l[?2004h>     d = imp[(imp.arm_id == a) & (imp.mature == 1)]
+[?2004l[?2004h>     nm[a] = len(d)
+[?2004l[?2004h>     w = fit(feats(d), d.conv.values.astype(float))
+[?2004l[?2004h>     P[:, a] = expit(Xt @ w)
+[?2004l[?2004h> v = arm.v.values
+[?2004l[?2004h> R = P * v[None, :]
+[?2004l[?2004h> sel = R.argmax(1)
+[?2004l[?2004h> idx = np.arange(len(tc))
+[?2004l[?2004h> exp_r = R[idx, sel]
+[?2004l[?2004h> z = 1.2816
+[?2004l[?2004h> se = np.sqrt(P * (1 - P) / nm[None, :])
+[?2004l[?2004h> lo = np.maximum(0, P - z * se) * v[None, :]
+[?2004l[?2004h> hi = (P + z * se) * v[None, :]
+[?2004l[?2004h> pred = pd.DataFrame({'context_id': tc.context_id, 'selected_arm': sel.astype(int), 'expected_reward': exp_r, 'confidence_lower': lo[idx, sel], 'confidence_upper': hi[idx, sel]})
+[?2004l[?2004h> pred.to_csv('/app/output/predictions.csv', index=False)
+[?2004l[?2004h> dm = {'distribution_type': 'lognormal', 'parameters': {'mu': mu, 'sigma': sigma}, 'median_delay_hours': float(np.exp(mu)), 'p90_delay_hours': float(np.exp(mu + 1.2816 * sigma)), 'conversion_rate_estimate': float(q_all)}
+[?2004l[?2004h> json.dump(dm, open('/app/output/delay_model.json', 'w'), indent=2)
+[?2004l[?2004h> as_ = pd.DataFrame({'arm_id': range(10), 'estimated_conversion_rate': arm.q.values, 'estimated_avg_value': arm.v.values, 'total_impressions': arm.n.values.astype(int), 'total_conversions': arm.c.values.astype(int)})
+[?2004l[?2004h> as_.to_csv('/app/output/arm_statistics.csv', index=False)
+[?2004l[?2004h> print('mu', mu, 'sigma', sigma, 'q_all', q_all)
+[?2004l[?2004h> print(as_.to_string())
+[?2004l[?2004h> print(pd.Series(sel).value_counts().sort_index().to_string())
+[?2004l[?2004h> print('mean expected reward', exp_r.mean())
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@3d7cd451650f:/app# python3 /app/solve.py && head -5 /app/output/predictions.csv && cat /app/output/delay_model.json && wc -l /app/output/*.csv
+[?2004lmu 2.4757300431035563 sigma 0.8979817729076958 q_all 0.08348007806084977
+   arm_id  estimated_conversion_rate  estimated_avg_value  total_impressions  total_conversions
+0       0                   0.061623             2.588441               6767                417
+1       1                   0.096652             1.878115               8453                817
+2       2                   0.043615             4.470504               3187                139
+3       3                   0.120340             1.587299               8584               1033
+4       4                   0.077922             2.255103               5005                390
+5       5                   0.070012             3.151900               4285                300
+6       6                   0.088862             2.065204               4974                442
+7       7                   0.061364             3.751117               2917                179
+8       8                   0.113533             1.785200               3303                375
+9       9                   0.032475             4.891463               2525                 82
+1     47
+2    114
+3     46
+4     77
+5    565
+6     15
+7    978
+8     64
+9     94
+mean expected reward 0.2838644779547082
+context_id,selected_arm,expected_reward,confidence_lower,confidence_upper
+CTX_000000,5,0.3467365725553235,0.32740517068558495,0.366067974425062
+CTX_000001,2,0.256045718827833,0.23244092115086518,0.27965051650480083
+CTX_000002,7,0.161492841898676,0.1434072576301919,0.17957842616716008
+CTX_000003,9,0.30196978288775184,0.2719088437617777,0.33203072201372597
+{
+  "distribution_type": "lognormal",
+  "parameters": {
+    "mu": 2.4757300431035563,
+    "sigma": 0.8979817729076958
+  },
+  "median_delay_hours": 11.89038443846117,
+  "p90_delay_hours": 37.58419000058561,
+  "conversion_rate_estimate": 0.08348007806084977
+}    11 /app/output/arm_statistics.csv
+  2001 /app/output/predictions.csv
+  2012 total
+[?2004hroot@3d7cd451650f:/app# cd /app && python3 -c "
+[?2004l[?2004h> import pandas as pd, numpy as np
+[?2004l[?2004h> from scipy.stats import norm
+[?2004l[?2004h> from scipy.optimize import minimize
+[?2004l[?2004h> cv=pd.read_csv('data/conversions.csv'); d=cv.delay_hours.values
+[?2004l[?2004h> print('n at >=71.99:', (d>=71.99).sum(), 'of', len(d))
+[?2004l[?2004h> print('hist counts 60-72 by 2h:', np.histogram(d[d>=60], bins=6, range=(60,72))[0])
+[?2004l[?2004h> u=d<71.99; x=np.log(d)
+[?2004l[?2004h> def nll(p):
+[?2004l[?2004h>     m,s=p[0],np.exp(p[1])
+[?2004l[?2004h>     ll=norm.logpdf(x[u],m,s).sum()+(~u).sum()*norm.logsf(np.log(72),m,s)
+[?2004l[?2004h>     return -ll
+[?2004l[?2004h> r=minimize(nll,[x.mean(),np.log(x.std())],method='Nelder-Mead')
+[?2004l[?2004h> print('censored MLE mu',r.x[0],'sigma',np.exp(r.x[1]))
+[?2004l[?2004h> print('naive mu',x.mean(),'sigma',x.std())
+[?2004l[?2004h> "
+[?2004ln at >=71.99: 110 of 4174
+hist counts 60-72 by 2h: [ 18   8   8   8   9 124]
+censored MLE mu 2.484935041681121 sigma 0.9193613821492468
+naive mu 2.4757300431035563 sigma 0.8979817729076958
+[?2004hroot@3d7cd451650f:/app# cd /app && python3 - << 'EOF'
+[?2004l[?2004h> src = open('/app/solve.py').read()
+[?2004l[?2004h> old = 'mu = float(ld.mean()); sigma = float(ld.std(ddof=0))'
+[?2004l[?2004h> new = '''_u = cv.delay_hours.values < 71.99
+[?2004l[?2004h> _x = np.log(cv.delay_hours.values)
+[?2004l[?2004h> def _nll(p):
+[?2004l[?2004h>     return -(norm.logpdf(_x[_u], p[0], np.exp(p[1])).sum() + (~_u).sum() * norm.logsf(np.log(72.0), p[0], np.exp(p[1])))
+[?2004l[?2004h> _r = minimize(_nll, [_x.mean(), np.log(_x.std())], method='Nelder-Mead')
+[?2004l[?2004h> mu = float(_r.x[0]); sigma = float(np.exp(_r.x[1]))'''
+[?2004l[?2004h> assert old in src
+[?2004l[?2004h> open('/app/solve.py', 'w').write(src.replace(old, new))
+[?2004l[?2004h> print('patched')
+[?2004l[?2004h> EOF
+[?2004lpatched
+[?2004hroot@3d7cd451650f:/app# python3 /app/solve.py && cat /app/output/delay_model.json && wc -l /app/output/*.csv && head -3 /app/output/predictions.csv
+[?2004lmu 2.484935041681121 sigma 0.9193613821492468 q_all 0.08348008552546883
+   arm_id  estimated_conversion_rate  estimated_avg_value  total_impressions  total_conversions
+0       0                   0.061623             2.588441               6767                417
+1       1                   0.096652             1.878115               8453                817
+2       2                   0.043615             4.470504               3187                139
+3       3                   0.120340             1.587299               8584               1033
+4       4                   0.077922             2.255103               5005                390
+5       5                   0.070012             3.151900               4285                300
+6       6                   0.088862             2.065204               4974                442
+7       7                   0.061364             3.751117               2917                179
+8       8                   0.113533             1.785200               3303                375
+9       9                   0.032475             4.891463               2525                 82
+1     47
+2    114
+3     46
+4     77
+5    565
+6     15
+7    978
+8     64
+9     94
+mean expected reward 0.2838644779547082
+{
+  "distribution_type": "lognormal",
+  "parameters": {
+    "mu": 2.484935041681121,
+    "sigma": 0.9193613821492468
+  },
+  "median_delay_hours": 12.00034070755409,
+  "p90_delay_hours": 38.98545348715257,
+  "conversion_rate_estimate": 0.08348008552546883
+}    11 /app/output/arm_statistics.csv
+  2001 /app/output/predictions.csv
+  2012 total
+context_id,selected_arm,expected_reward,confidence_lower,confidence_upper
+CTX_000000,5,0.3467365725553235,0.32740517068558495,0.366067974425062
+CTX_000001,2,0.256045718827833,0.23244092115086518,0.27965051650480083
+[?2004hroot@3d7cd451650f:/app# 

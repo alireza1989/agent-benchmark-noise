@@ -1,0 +1,717 @@
+[?2004hroot@a341c7dbec7e:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@a341c7dbec7e:/app# clear
+[?2004l[H[J[3J[?2004hroot@a341c7dbec7e:/app# ls -la /app /app/data && head -5 /app/data/*.csv && cat /app/data/arms_metadata.json && wc -l /app/data/*.csv && which python3 && python3 -c 'import pandas, numpy, scipy; print(pandas.__version__, numpy.__version__, scipy.__version__)'
+[?2004l/app:
+total 16
+drwxr-xr-x 1 root root 4096 Oct 25 21:30 .
+drwxr-xr-x 1 root root 4096 Oct 26 01:00 ..
+drwxr-xr-x 2 root root 4096 Oct 25 21:29 data
+drwxr-xr-x 2 root root 4096 Oct 25 21:30 output
+
+/app/data:
+total 3008
+drwxr-xr-x 2 root root    4096 Oct 25 21:29 .
+drwxr-xr-x 1 root root    4096 Oct 25 21:30 ..
+-rw-r--r-- 1 root root    1128 Oct 25 21:29 arms_metadata.json
+-rw-r--r-- 1 root root  135100 Oct 25 21:29 conversions.csv
+-rw-r--r-- 1 root root 2818804 Oct 25 21:29 impressions.csv
+-rw-r--r-- 1 root root  108862 Oct 25 21:29 test_contexts.csv
+==> /app/data/conversions.csv <==
+impression_id,conversion_timestamp,delay_hours,conversion_value
+IMP_000010,1709305348,10.43,3.58
+IMP_000013,1709320719,21.49,1.07
+IMP_000022,1709843815,9.32,3.47
+IMP_000069,1710312110,4.57,2.48
+
+==> /app/data/impressions.csv <==
+impression_id,arm_id,timestamp,hour_of_day,day_of_week,user_segment,device_type,context_feature_1,context_feature_2
+IMP_000000,0,1709340758,9,5,young,mobile,0.7797,0.5969
+IMP_000001,6,1710354874,3,3,young,desktop,0.7081,0.0206
+IMP_000002,9,1710010543,3,6,young,desktop,0.6117,0.0071
+IMP_000003,3,1710416879,20,3,senior,mobile,0.7852,0.1997
+
+==> /app/data/test_contexts.csv <==
+context_id,timestamp,hour_of_day,day_of_week,user_segment,device_type,context_feature_1,context_feature_2
+CTX_000000,1710307872,14,2,middle,mobile,0.747,0.0933
+CTX_000001,1710319811,17,2,senior,mobile,0.9059,0.1018
+CTX_000002,1710341834,23,2,senior,mobile,0.0783,0.8936
+CTX_000003,1710405538,17,3,middle,mobile,0.4505,0.7765
+{
+  "arms": [
+    {
+      "arm_id": 0,
+      "name": "Campaign A",
+      "category": "electronics",
+      "base_bid": 0.3
+    },
+    {
+      "arm_id": 1,
+      "name": "Campaign B",
+      "category": "fashion",
+      "base_bid": 0.4
+    },
+    {
+      "arm_id": 2,
+      "name": "Campaign C",
+      "category": "home",
+      "base_bid": 0.5
+    },
+    {
+      "arm_id": 3,
+      "name": "Campaign D",
+      "category": "sports",
+      "base_bid": 0.6
+    },
+    {
+      "arm_id": 4,
+      "name": "Campaign E",
+      "category": "beauty",
+      "base_bid": 0.7
+    },
+    {
+      "arm_id": 5,
+      "name": "Campaign F",
+      "category": "food",
+      "base_bid": 0.8
+    },
+    {
+      "arm_id": 6,
+      "name": "Campaign G",
+      "category": "travel",
+      "base_bid": 0.9
+    },
+    {
+      "arm_id": 7,
+      "name": "Campaign H",
+      "category": "finance",
+      "base_bid": 1.0
+    },
+    {
+      "arm_id": 8,
+      "name": "Campaign I",
+      "category": "entertainment",
+      "base_bid": 1.1
+    },
+    {
+      "arm_id": 9,
+      "name": "Campaign J",
+      "category": "health",
+      "base_bid": 1.2
+    }
+  ]
+}   4175 /app/data/conversions.csv
+  50001 /app/data/impressions.csv
+   2001 /app/data/test_contexts.csv
+  56177 total
+/usr/local/bin/python3
+2.2.3 2.1.3 1.14.1
+[?2004hroot@a341c7dbec7e:/app# cd /app && python3 -c "import pandas as pd, numpy as np; imp=pd.read_csv('data/impressions.csv'); conv=pd.read_csv('data/conversions.csv'); print(imp.describe(include='all').T.to_string()); print(conv.describe().T.to_string()); print('dup imp', imp.impression_id.duplicated().sum(), 'dup conv', conv.impression_id.duplicated().sum()); print('conv not in imp', (~conv.impression_id.isin(imp.impression_id)).sum()); d=conv.delay_hours; l=np.log(d); print('mu', l.mean(), 'sigma', l.std(ddof=0), 'median', d.median(), 'p90', d.quantile(0.9), 'max', d.max()); print(imp.arm_id.value_counts().sort_index().to_string()); m=imp.merge(conv, on='impression_id', how='left'); m['conv']=m.conversion_value.notna().astype(int); m['val']=m.conversion_value.fillna(0); print(m.groupby('arm_id').agg(n=('conv','size'), rate=('conv','mean'), val=('val','sum')).to_string()); print(m.groupby('user_segment').conv.mean().to_string()); print(m.groupby('device_type').conv.mean().to_string()); print(m.groupby('day_of_week').conv.mean().to_string()); print(m.groupby('hour_of_day').conv.mean().round(3).to_string()); print('ts range', imp.timestamp.min(), imp.timestamp.max(), 'conv ts max', conv.conversion_timestamp.max())"
+[?2004l                     count unique         top   freq              mean            std           min            25%           50%           75%           max
+impression_id        50000  50000  IMP_000000      1               NaN            NaN           NaN            NaN           NaN           NaN           NaN
+arm_id             50000.0    NaN         NaN    NaN           3.62872       2.702602           0.0            1.0           3.0           6.0           9.0
+timestamp          50000.0    NaN         NaN    NaN  1709823454.67588  349357.375749  1709218856.0  1709518516.75  1709825076.0  1710126521.0  1710428377.0
+hour_of_day        50000.0    NaN         NaN    NaN          11.48766       6.939989           0.0            5.0          11.0          17.0          23.0
+day_of_week        50000.0    NaN         NaN    NaN           3.02114       2.003999           0.0            1.0           3.0           5.0           6.0
+user_segment         50000      3       young  16738               NaN            NaN           NaN            NaN           NaN           NaN           NaN
+device_type          50000      3      mobile  24943               NaN            NaN           NaN            NaN           NaN           NaN           NaN
+context_feature_1  50000.0    NaN         NaN    NaN          0.498311       0.288741           0.0         0.2483        0.4985         0.747           1.0
+context_feature_2  50000.0    NaN         NaN    NaN          0.500677       0.288711           0.0         0.2499        0.5014        0.7506        0.9999
+                       count          mean            std           min           25%           50%           75%           max
+conversion_timestamp  4174.0  1.709901e+09  358150.657079  1.709236e+09  1.709609e+09  1.709894e+09  1.710217e+09  1.710685e+09
+delay_hours           4174.0  1.742215e+01      16.145733  5.800000e-01  6.382500e+00  1.186500e+01  2.271000e+01  7.200000e+01
+conversion_value      4174.0  2.241198e+00       1.064556  5.500000e-01  1.522500e+00  1.970000e+00  2.660000e+00  9.250000e+00
+dup imp 0 dup conv 0
+conv not in imp 0
+mu 2.4757300431035563 sigma 0.8979817729076958 median 11.864999999999998 p90 38.978000000000016 max 72.0
+arm_id
+0    6767
+1    8453
+2    3187
+3    8584
+4    5005
+5    4285
+6    4974
+7    2917
+8    3303
+9    2525
+           n      rate      val
+arm_id                         
+0       6767  0.061623  1079.38
+1       8453  0.096652  1534.42
+2       3187  0.043615   621.40
+3       8584  0.120340  1639.68
+4       5005  0.077922   879.49
+5       4285  0.070012   945.57
+6       4974  0.088862   912.82
+7       2917  0.061364   671.45
+8       3303  0.113533   669.45
+9       2525  0.032475   401.10
+user_segment
+middle    0.086681
+senior    0.070367
+young     0.093380
+device_type
+desktop    0.097345
+mobile     0.075452
+tablet     0.078222
+day_of_week
+0    0.081382
+1    0.090444
+2    0.096404
+3    0.089665
+4    0.087323
+5    0.071746
+6    0.068089
+hour_of_day
+0     0.062
+1     0.048
+2     0.038
+3     0.027
+4     0.036
+5     0.053
+6     0.080
+7     0.091
+8     0.093
+9     0.111
+10    0.121
+11    0.127
+12    0.097
+13    0.116
+14    0.124
+15    0.105
+16    0.096
+17    0.111
+18    0.099
+19    0.099
+20    0.080
+21    0.075
+22    0.074
+23    0.045
+ts range 1709218856 1710428377 conv ts max 1710684542
+[?2004hroot@a341c7dbec7e:/app# cd /app && python3 -c "import pandas as pd, numpy as np; imp=pd.read_csv('data/impressions.csv'); conv=pd.read_csv('data/conversions.csv'); m=conv.merge(imp,on='impression_id'); print('delay==72', (conv.delay_hours>=72).sum(), 'delay>=71', (conv.delay_hours>=71).sum()); r=m.conversion_timestamp-m.timestamp-m.delay_hours*3600; print('resid', r.describe().to_string()); print(np.histogram(conv.delay_hours,bins=[0,1,2,4,8,12,24,36,48,60,72.01])); cut=conv.conversion_timestamp.max(); print('cut', cut); age=(cut-imp.timestamp)/3600; print('age>72 frac', (age>72).mean(), 'age<72 n', (age<72).sum()); print(imp.assign(age=age).groupby(pd.cut(age,[-1,24,48,72,96,120,400])).size().to_string())"
+[?2004ldelay==72 110 delay>=71 120
+resid count    4174.000000
+mean       -0.569478
+std        10.300928
+min       -18.000000
+25%        -9.000000
+50%         0.000000
+75%         8.000000
+max        17.000000
+(array([  17,   82,  369,  918,  721, 1094,  503,  182,  113,  175]), array([ 0.  ,  1.  ,  2.  ,  4.  ,  8.  , 12.  , 24.  , 36.  , 48.  ,
+       60.  , 72.01]))
+cut 1710684542
+age>72 frac 0.99736 age<72 n 131
+<string>:1: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+timestamp
+(-1, 24]          0
+(24, 48]          0
+(48, 72]        132
+(72, 96]       3530
+(96, 120]      3589
+(120, 400]    41709
+[?2004hroot@a341c7dbec7e:/app# cd /app && cat > fit_delay.py << 'EOF'
+[?2004l0.0
+z = (np.log(np.clip(age, 1e-9, None)) - mu_c) / s_c
+F = np.where(age >= 72, 1.0, stats.norm.cdf(z))
+F = np.clip(F, 1e-3, 1.0)
+imp['F'] = F
+m = imp.merge(conv[['impression_id','conversion_value']], on='impression_id', how='left')
+m['conv'] = m.conversion_value.notna().astype(int)
+m['val'] = m.conversion_value.fillna(0)
+m['w'] = 1.0 / m.F
+rows = []
+for a, g in m.groupby('arm_id'):
+    raw = g.conv.mean()
+    ipw = (g.conv * g.w).sum() / g.w.sum()
+    mv = g.loc[g.conv == 1, 'conversion_value'].mean()
+    rows.append((a, len(g), raw, ipw, mv))
+out = pd.DataFrame(rows, columns=['arm','n','raw_rate','ipw_rate','mean_value'])
+print(out.round(4).to_string(index=False))
+print('overall raw', m.conv.mean(), 'overall ipw', (m.conv*m.w).sum()/m.w.sum())
+EOF
+python3 fit_delay.py
+[?2004h> import pandas as pd, numpy as np
+[?2004l[?2004h> from scipy import stats, optimize
+[?2004l[?2004h> imp = pd.read_csv('data/impressions.csv')
+[?2004l[?2004h> conv = pd.read_csv('data/conversions.csv')
+[?2004l[?2004h> d = conv.delay_hours.values
+[?2004l[?2004h> cens = d >= 72 - 1e-9
+[?2004l[?2004h> unc = d[~cens]
+[?2004l[?2004h> nc = cens.sum()
+[?2004l[?2004h> log_unc = np.log(unc)
+[?2004l[?2004h> def nll(p):
+[?2004l[?2004h>     mu, ls = p
+[?2004l[?2004h>     s = np.exp(ls)
+[?2004l[?2004h>     ll = stats.norm.logpdf(log_unc, mu, s).sum() - log_unc.sum()
+[?2004l[?2004h>     lc = nc * stats.norm.logsf(np.log(72.0), mu, s)
+[?2004l[?2004h>     return -(ll + lc)
+[?2004l[?2004h> res = optimize.minimize(nll, [2.5, np.log(0.9)], method='Nelder-Mead', options={'xatol':1e-8,'fatol':1e-8,'maxiter':5000})
+[?2004l[?2004h> mu_c, s_c = res.x[0], np.exp(res.x[1])
+[?2004l[?2004h> print('naive mu', np.log(d).mean(), 'sigma', np.log(d).std(ddof=0))
+[?2004l[?2004h> print('censored mu', mu_c, 'sigma', s_c, 'n_cens', nc, 'converged', res.success)
+[?2004l[?2004h> print('median', np.exp(mu_c), 'p90', np.exp(mu_c + 1.2815515655 * s_c))
+[?2004l[?2004h> print('frac observed <72 from fitted model', stats.norm.cdf((np.log(72)-mu_c)/s_c))
+[?2004l[?2004h> cut = conv.conversion_timestamp.max()
+[?2004l[?2004h> age = (cut - imp.timestamp.values) / 3600.0
+[?2004l[?2004h> z = (np.log(np.clip(age, 1e-9, None)) - mu_c) / s_c
+[?2004l[?2004h> F = np.where(age >= 72, 1.0, stats.norm.cdf(z))
+[?2004l[?2004h> F = np.clip(F, 1e-3, 1.0)
+[?2004l[?2004h> imp['F'] = F
+[?2004l[?2004h> m = imp.merge(conv[['impression_id','conversion_value']], on='impression_id', how='left')
+[?2004l[?2004h> m['conv'] = m.conversion_value.notna().astype(int)
+[?2004l[?2004h> m['val'] = m.conversion_value.fillna(0)
+[?2004l[?2004h> m['w'] = 1.0 / m.F
+[?2004l[?2004h> rows = []
+[?2004l[?2004h> for a, g in m.groupby('arm_id'):
+[?2004l[?2004h>     raw = g.conv.mean()
+[?2004l[?2004h>     ipw = (g.conv * g.w).sum() / g.w.sum()
+[?2004l[?2004h>     mv = g.loc[g.conv == 1, 'conversion_value'].mean()
+[?2004l[?2004h>     rows.append((a, len(g), raw, ipw, mv))
+[?2004l[?2004h> out = pd.DataFrame(rows, columns=['arm','n','raw_rate','ipw_rate','mean_value'])
+[?2004l[?2004h> print(out.round(4).to_string(index=False))
+[?2004l[?2004h> print('overall raw', m.conv.mean(), 'overall ipw', (m.conv*m.w).sum()/m.w.sum())
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@a341c7dbec7e:/app# python3 fit_delay.py
+[?2004lnaive mu 2.4757300431035563 sigma 0.8979817729076958
+censored mu 2.484915518903394 sigma 0.9193407926465385 n_cens 110 converged True
+median 12.000106429856693 p90 38.98192787639391
+frac observed <72 from fitted model 0.9743493904327554
+ arm    n  raw_rate  ipw_rate  mean_value
+   0 6767    0.0616    0.0616      2.5884
+   1 8453    0.0967    0.0967      1.8781
+   2 3187    0.0436    0.0436      4.4705
+   3 8584    0.1203    0.1203      1.5873
+   4 5005    0.0779    0.0779      2.2551
+   5 4285    0.0700    0.0700      3.1519
+   6 4974    0.0889    0.0889      2.0652
+   7 2917    0.0614    0.0614      3.7511
+   8 3303    0.1135    0.1135      1.7852
+   9 2525    0.0325    0.0325      4.8915
+overall raw 0.08348 overall ipw 0.08347685686647555
+[?2004hroot@a341c7dbec7e:/app# cd /app && cat > make_outputs.py << 'EOF'
+[?2004l[?2004h> import os, json
+[?2004l[?2004h> import pandas as pd, numpy as np
+[?2004l[?2004h> from scipy import stats, optimize
+[?2004l[?2004h> os.makedirs('output', exist_ok=True)
+[?2004l[?2004h> imp = pd.read_csv('data/impressions.csv')
+[?2004l[?2004h> conv = pd.read_csv('data/conversions.csv')
+[?2004l[?2004h> ctx = pd.read_csv('data/test_contexts.csv')
+[?2004l[?2004h> # 1. censored lognormal delay model
+[?2004l[?2004h> d = conv.delay_hours.values
+[?2004l[?2004h> cens = d >= 72 - 1e-9
+[?2004l[?2004h> log_unc = np.log(d[~cens])
+[?2004l[?2004h> nc = cens.sum()
+[?2004l[?2004h> def nll(p):
+[?2004l[?2004h>     mu, ls = p
+[?2004l[?2004h>     s = np.exp(ls)
+[?2004l[?2004h>     ll = stats.norm.logpdf(log_unc, mu, s).sum() - log_unc.sum()
+[?2004l[?2004h>     lc = nc * stats.norm.logsf(np.log(72.0), mu, s)
+[?2004l[?2004h>     return -(ll + lc)
+[?2004l[?2004h> res = optimize.minimize(nll, [2.5, np.log(0.9)], method='Nelder-Mead', options={'xatol':1e-8,'fatol':1e-8,'maxiter':5000})
+[?2004l[?2004h> mu_c, s_c = res.x[0], float(np.exp(res.x[1]))
+[?2004limp.impression_id.isin(conv.impression_id).astype(int)
+m = imp.merge(conv[['impression_id','conversion_value']], on='impression_id', how='left')
+m['val'] = m.conversion_value.fillna(0)
+overall_rate = (m.conv * m.w).sum() / m.w.sum()
+rows = []
+for a, g in m.groupby('arm_id'):
+    r = (g.conv * g.w).sum() / g.w.sum()
+    v = g.loc[g.conv == 1, 'conversion_value'].mean()
+    rows.append((int(a), float(r), float(v), int(len(g)), int(g.conv.sum())))
+arm_df = pd.DataFrame(rows, columns=['arm_id','estimated_conversion_rate','estimated_avg_value','total_impressions','total_conversions'])
+arm_df.to_csv('output/arm_statistics.csv', index=False)
+print(arm_df.round(4).to_string(index=False))
+delay = {'distribution_type': 'lognormal', 'parameters': {'mu': float(mu_c), 'sigma': s_c}, 'median_delay_hours': float(np.exp(mu_c)), 'p90_delay_hours': float(np.exp(mu_c + 1.2815515655 * s_c)), 'conversion_rate_estimate': float(overall_rate)}
+json.dump(delay, open('output/delay_model.json', 'w'), indent=2)
+print(json.dumps(delay, indent=2))
+# 3. shrunken cell rates
+seg_map = {'young':0, 'middle':1, 'senior':2}
+dev_map = {'mobile':0, 'desktop':1, 'tablet':2}
+def prep(df):
+    return (np.digitize(df.hour_of_day.values, [6,10,16,20]), df.user_segment.map(seg_map).values, df.device_type.map(dev_map).values)
+hb, s, dv = prep(imp)
+arm = imp.arm_id.values.astype(int)
+cn = np.zeros((10,5,3,3)); cc = np.zeros((10,5,3,3))
+np.add.at(cn, (arm,hb,s,dv), 1)
+np.add.at(cc, (arm,hb,s,dv), imp.conv.values)
+r_arm = arm_df.estimated_conversion_rate.values
+v_arm = arm_df.estimated_avg_value.values
+k = 30.0
+# 4. score contexts
+hbc, sc, dc = prep(ctx)
+A = np.arange(10)[None, :]
+H = hbc[:, None]; S = sc[:, None]; D = dc[:, None]
+n_c = cn[A, H, S, D]; c_c = cc[A, H, S, D]
+a_post = c_c + k * r_arm[None, :]
+b_post = (n_c - c_c) + k * (1 - r_arm[None, :])
+p = a_post / (a_post + b_post)
+exp_r = p * v_arm[None, :]
+lo_r = stats.beta.ppf(0.10, a_post, b_post) * v_arm[None, :]
+hi_r = stats.beta.ppf(0.90, a_post, b_post) * v_arm[None, :]
+best = exp_r.argmax(axis=1)
+idx[?2004h> # 2. IPW rates
+[?2004l = np.arange(len(ctx))
+pred = pd.DataFrame({'context_id': ctx.context_id, 'selected_arm': best, 'expected_reward': exp_r[idx, best], 'confidence_lower': lo_r[idx, best], 'confidence_upper': hi_r[idx, best]})
+pred['expected_reward'] = pred.expected_reward.clip(lower=0)
+pred['confidence_lower'] = np.minimum(pred.confidence_lower, pred.expected_reward)
+pred['confidence_upper'] = np.maximum(pred.confidence_upper, pred.expected_reward)
+pred.to_csv('output/predictions.csv', index=False)
+print('arm selection counts:'); print(pred.selected_arm.value_counts().sort_index().to_string())
+print('mean expected reward', pred.expected_reward.mean(), 'rows', len(pred))
+EOF
+python3 make_outputs.py && head -3 output/predictions.csv && wc -l output/predictions.csv output/arm_statistics.csv
+[?2004h> cut = conv.conversion_timestamp.max()
+[?2004l[?2004h> age = (cut - imp.timestamp.values) / 3600.0
+[?2004l[?2004h> z = (np.log(np.clip(age, 1e-9, None)) - mu_c) / s_c
+[?2004l[?2004h> F = np.clip(np.where(age >= 72, 1.0, stats.norm.cdf(z)), 1e-3, 1.0)
+[?2004l[?2004h> imp['w'] = 1.0 / F
+[?2004l[?2004h> imp['conv'] = imp.impression_id.isin(conv.impression_id).astype(int)
+[?2004l[?2004h> m = imp.merge(conv[['impression_id','conversion_value']], on='impression_id', how='left')
+[?2004l[?2004h> m['val'] = m.conversion_value.fillna(0)
+[?2004l[?2004h> overall_rate = (m.conv * m.w).sum() / m.w.sum()
+[?2004l[?2004h> rows = []
+[?2004l[?2004h> for a, g in m.groupby('arm_id'):
+[?2004l[?2004h>     r = (g.conv * g.w).sum() / g.w.sum()
+[?2004l[?2004h>     v = g.loc[g.conv == 1, 'conversion_value'].mean()
+[?2004l[?2004h>     rows.append((int(a), float(r), float(v), int(len(g)), int(g.conv.sum())))
+[?2004l[?2004h> arm_df = pd.DataFrame(rows, columns=['arm_id','estimated_conversion_rate','estimated_avg_value','total_impressions','total_conversions'])
+[?2004l[?2004h> arm_df.to_csv('output/arm_statistics.csv', index=False)
+[?2004l[?2004h> print(arm_df.round(4).to_string(index=False))
+[?2004l[?2004h> delay = {'distribution_type': 'lognormal', 'parameters': {'mu': float(mu_c), 'sigma': s_c}, 'median_delay_hours': float(np.exp(mu_c)), 'p90_delay_hours': float(np.exp(mu_c + 1.2815515655 * s_c)), 'conversion_rate_estimate': float(overall_rate)}
+[?2004l[?2004h> json.dump(delay, open('output/delay_model.json', 'w'), indent=2)
+[?2004l[?2004h> print(json.dumps(delay, indent=2))
+[?2004l[?2004h> # 3. shrunken cell rates
+[?2004l[?2004h> seg_map = {'young':0, 'middle':1, 'senior':2}
+[?2004l[?2004h> dev_map = {'mobile':0, 'desktop':1, 'tablet':2}
+[?2004l[?2004h> def prep(df):
+[?2004l[?2004h>     return (np.digitize(df.hour_of_day.values, [6,10,16,20]), df.user_segment.map(seg_map).values, df.device_type.map(dev_map).values)
+[?2004l[?2004h> hb, s, dv = prep(imp)
+[?2004l[?2004h> arm = imp.arm_id.values.astype(int)
+[?2004l[?2004h> cn = np.zeros((10,5,3,3)); cc = np.zeros((10,5,3,3))
+[?2004l[?2004h> np.add.at(cn, (arm,hb,s,dv), 1)
+[?2004l[?2004h> np.add.at(cc, (arm,hb,s,dv), imp.conv.values)
+[?2004l[?2004h> r_arm = arm_df.estimated_conversion_rate.values
+[?2004l[?2004h> v_arm = arm_df.estimated_avg_value.values
+[?2004l[?2004h> k = 30.0
+[?2004l[?2004h> # 4. score contexts
+[?2004l[?2004h> hbc, sc, dc = prep(ctx)
+[?2004l[?2004h> A = np.arange(10)[None, :]
+[?2004l[?2004h> H = hbc[:, None]; S = sc[:, None]; D = dc[:, None]
+[?2004l[?2004h> n_c = cn[A, H, S, D]; c_c = cc[A, H, S, D]
+[?2004l[?2004h> a_post = c_c + k * r_arm[None, :]
+[?2004l[?2004h> b_post = (n_c - c_c) + k * (1 - r_arm[None, :])
+[?2004l[?2004h> p = a_post / (a_post + b_post)
+[?2004l[?2004h> exp_r = p * v_arm[None, :]
+[?2004l[?2004h> lo_r = stats.beta.ppf(0.10, a_post, b_post) * v_arm[None, :]
+[?2004l[?2004h> hi_r = stats.beta.ppf(0.90, a_post, b_post) * v_arm[None, :]
+[?2004l[?2004h> best = exp_r.argmax(axis=1)
+[?2004l[?2004h> idx = np.arange(len(ctx))
+[?2004l[?2004h> pred = pd.DataFrame({'context_id': ctx.context_id, 'selected_arm': best, 'expected_reward': exp_r[idx, best], 'confidence_lower': lo_r[idx, best], 'confidence_upper': hi_r[idx, best]})
+[?2004l[?2004h> pred['expected_reward'] = pred.expected_reward.clip(lower=0)
+[?2004l[?2004h> pred['confidence_lower'] = np.minimum(pred.confidence_lower, pred.expected_reward)
+[?2004l[?2004h> pred['confidence_upper'] = np.maximum(pred.confidence_upper, pred.expected_reward)
+[?2004l[?2004h> pred.to_csv('output/predictions.csv', index=False)
+[?2004l[?2004h> print('arm selection counts:'); print(pred.selected_arm.value_counts().sort_index().to_string())
+[?2004l[?2004h> print('mean expected reward', pred.expected_reward.mean(), 'rows', len(pred))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@a341c7dbec7e:/app# python3 make_outputs.py && head -3 output/predictions.csv && wc -l output/predictions.csv output/arm_statistics.csv
+[?2004l arm_id  estimated_conversion_rate  estimated_avg_value  total_impressions  total_conversions
+      0                     0.0616               2.5884               6767                417
+      1                     0.0967               1.8781               8453                817
+      2                     0.0436               4.4705               3187                139
+      3                     0.1203               1.5873               8584               1033
+      4                     0.0779               2.2551               5005                390
+      5                     0.0700               3.1519               4285                300
+      6                     0.0889               2.0652               4974                442
+      7                     0.0614               3.7511               2917                179
+      8                     0.1135               1.7852               3303                375
+      9                     0.0325               4.8915               2525                 82
+{
+  "distribution_type": "lognormal",
+  "parameters": {
+    "mu": 2.484915518903394,
+    "sigma": 0.9193407926465385
+  },
+  "median_delay_hours": 12.000106429856693,
+  "p90_delay_hours": 38.98192787639391,
+  "conversion_rate_estimate": 0.08347685686647555
+}
+arm selection counts:
+selected_arm
+1     61
+2    291
+3     41
+4    182
+5    547
+7    614
+8    114
+9    150
+mean expected reward 0.28862007096359427 rows 2000
+context_id,selected_arm,expected_reward,confidence_lower,confidence_upper
+CTX_000000,4,0.2851691464043284,0.2239192713640098,0.3495467926973129
+CTX_000001,9,0.23854016165374328,0.11785103095548115,0.37794286496163143
+  2001 output/predictions.csv
+    11 output/arm_statistics.csv
+  2012 total
+[?2004hroot@a341c7dbec7e:/app# cd /app && cat > check_calib.py << 'EOF'
+[?2004l[?2004h> import pandas as pd, numpy as np
+[?2004l[?2004h> from scipy import stats
+[?2004l[?2004h> imp = pd.read_csv('data/impressions.csv')
+[?2004l[?2004h> conv = pd.read_csv('data/conversions.csv')
+[?2004l[?2004h> arm_df = pd.read_csv('output/arm_statistics.csv')
+[?2004l[?2004h> m = imp.merge(conv[['impression_id','conversion_value']], on='impression_id', how='left')
+[?2004l[?2004h> m['real'] = m.conversion_value.fillna(0)
+[?2004l[?2004h> seg_map = {'young':0,'middle':1,'senior':2}
+[?2004l[?2004h> dev_map = {'mobile':0,'desktop':1,'tablet':2}
+[?2004l[?2004h> hb = np.digitize(m.hour_of_day.values, [6,10,16,20]); s = m.user_segment.map(seg_map).values; dv = m.device_type.map(dev_map).values
+[?2004l[?2004h> arm = m.arm_id.values.astype(int)
+[?2004l[?2004h> cn = np.zeros((10,5,3,3)); cc = np.zeros((10,5,3,3))
+[?2004l[?2004h> conv_flag = m.conversion_value.notna().astype(int).values
+[?2004l[?2004h> np.add.at(cn,(arm,hb,s,dv),1); np.add.at(cc,(arm,hb,s,dv),conv_flag)
+[?2004l[?2004h> r = arm_df.estimated_conversion_rate.values; v = arm_df.estimated_avg_value.values
+[?2004l[?2004h> for k in [30.0, 300.0, 3000.0]:
+[?2004l[?2004h>     n = cn[arm,hb,s,dv]; c = cc[arm,hb,s,dv]
+[?2004l[?2004h>     p = (c + k*r[arm]) / (n + k)
+[?2004l[?2004h>     pred = p * v[arm]
+[?2004l[?2004h>     print('k', k, 'mean pred shown arm', pred.mean().round(4), 'realized', m.real.mean().round(4), 'ratio', (pred.mean()/m.real.mean()).round(3))
+[?2004l[?2004h> print('arm-only pred', (r[arm]*v[arm]).mean().round(4))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@a341c7dbec7e:/app# python3 check_calib.py
+[?2004lk 30.0 mean pred shown arm 0.1864 realized 0.1871 ratio 0.996
+k 300.0 mean pred shown arm 0.1861 realized 0.1871 ratio 0.995
+k 3000.0 mean pred shown arm 0.1869 realized 0.1871 ratio 0.999
+arm-only pred 0.1871
+[?2004hroot@a341c7dbec7e:/app# cd /app && cat > holdout_policy.py << 'EOF'
+[?2004l[?2004h> import pandas as pd, numpy as np
+[?2004l[?2004h> imp = pd.read_csv('data/impressions.csv')
+[?2004l[?2004h> conv = pd.read_csv('data/conversions.csv')
+[?2004l[?2004h> m = imp.merge(conv[['impression_id','conversion_value']], on='impression_id', how='left')
+[?2004l[?2004h> m['cf'] = m.conversion_value.notna().astype(int)
+[?2004l[?2004h> m['real'] = m.conversion_value.fillna(0)
+[?2004l[?2004h> seg_map = {'young':0,'middle':1,'senior':2}
+[?2004l[?2004h> dev_map = {'mobile':0,'desktop':1,'tablet':2}
+[?2004l[?2004h> m['hb'] = np.digitize(m.hour_of_day.values, [6,10,16,20])
+[?2004l[?2004h> m['s'] = m.user_segment.map(seg_map).values
+[?2004l[?2004h> m['dv'] = m.device_type.map(dev_map).values
+[?2004l[?2004h> rng = np.random.default_rng(0)
+[?2004l[?2004h> mask = rng.random(len(m)) < 0.5
+[?2004l[?2004h> tr, te = m[mask], m[~mask]
+[?2004l[?2004h> def fit(df):
+[?2004l[?2004h>     cn = np.zeros((10,5,3,3)); cc = np.zeros((10,5,3,3))
+[?2004l[?2004h>     np.add.at(cn,(df.arm_id.values,df.hb.values,df.s.values,df.dv.values),1)
+[?2004l[?2004h>     np.add.at(cc,(df.arm_id.values,df.hb.values,df.s.values,df.dv.values),df.cf.values)
+[?2004l[?2004h>     am = df.groupby('arm_id').agg(r=('cf','mean'))
+[?2004l[?2004h>     val = df[df.cf==1].groupby('arm_id').real.mean()
+[?2004l[?2004h>     return cn, cc, am.r.values, val.reindex(range(10)).values
+[?2004l[?2004h> cn, cc, r, v = fit(tr)
+[?2004l[?2004h> k = 30.0
+[?2004l[?2004h> P = np.zeros((len(te),10))
+[?2004l[?2004h> for a in range(10):
+[?2004l[?2004h>     n = cn[a][te.hb.values, te.s.values, te.dv.values]
+[?2004l[?2004h>     c = cc[a][te.hb.values, te.s.values, te.dv.values]
+[?2004l[?2004h>     P[:,a] = (c + k*r[a])/(n + k) * v[a]
+[?2004l[?2004h> best = P.argmax(1)
+[?2004l[?2004h> match = te.arm_id.values == best
+[?2004l[?2004h> print('test rows', len(te), 'matched rows', match.sum())
+[?2004l[?2004h> print('policy predicted mean (all test rows)', P[np.arange(len(te)),best].mean().round(4))
+[?2004l[?2004h> print('policy matched realized mean', te.real.values[match].mean().round(4), 'matched predicted', P[np.arange(len(te)),best][match].mean().round(4))
+[?2004l[?2004h> arm_best = (r*v).argmax()
+[?2004l[?2004h> match2 = te.arm_id.values == arm_best
+[?2004l[?2004h> print('arm-only best arm', arm_best, 'matched rows', match2.sum(), 'matched realized mean', te.real.values[match2].mean().round(4), 'arm-level predicted', (r*v)[arm_best].round(4))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@a341c7dbec7e:/app# python3 holdout_policy.py
+[?2004ltest rows 25028 matched rows 2036
+policy predicted mean (all test rows) 0.3024
+policy matched realized mean 0.1752 matched predicted 0.2933
+arm-only best arm 7 matched rows 1452 matched realized mean 0.2214 arm-level predicted 0.2388
+[?2004hroot@a341c7dbec7e:/app# cd /app && cat > logit_model.py << 'EOF'
+[?2004l= df.cf.values.astype(float)
+    def f(w):
+        z = X @ w
+        loss = np.sum(np.logaddexp(0, z) - y * z) + 0.5 * lam * w @ w
+        g = X.T @ (expit(z) - y) + lam * w
+        return loss, g
+    res = minimize(f, np.zeros(X.shape[1]), jac=True, method='L-BFGS-B', options={'maxiter': 2000})
+    return res.x
+def prob_all(w, df):
+    return np.column_stack([expit(feat(df, np.full(len(df), a)) @ w) for a in range(10)])
+def values(df):
+    return df[df.cf == 1].groupby('arm_id').real.mean().reindex(range(10)).values
+# holdout
+rng = np.random.default_rng(0)
+mask = rng.random(len(m)) < 0.5
+tr, te = m[mask], m[~mask]
+w = fit(tr); v = values(tr); r = tr.groupby('arm_id').cf.mean().reindex(range(10)).values
+P = prob_all(w, te) * v[None, :]
+idx = np.arange(len(te)); shown = te.arm_id.values
+print('ALL test rows: shown-arm predicted', P[idx, shown].mean().round(4), 'realized', te.real.mean().round(4), 'ratio', (P[idx, shown].mean() / te.real.mean()).round(3))
+best = P.argmax(1); match = shown == best
+print('policy matched rows', match.sum(), 'pred', P[idx, best][match].mean().round(4), 'realized', te.real.values[match].mean().round(4), 'ratio', (P[idx, best][match].mean() / te.real.values[match].mean()).round(3))
+print('policy choice counts', np.bincount(best, minlength=10))
+# full fit and predictions
+wf = fit(m); vf = values(m)
+Pc = prob_all(wf, ctx) * vf[None, :]
+bc = Pc.argmax(1); ii = np.arange(len(ctx))
+narm = m.groupby('arm_id').size().reindex(range(10)).values
+pc = prob_all(wf, ctx)[ii, bc]
+se = np.sqrt(np.clip(pc*(1-pc), 1e-9, None) / narm[bc]) * vf[bc]
+out = pd.DataFrame({'context_id': ctx.context_id, 'selected_arm': bc, 'expected_reward': Pc[ii, bc], 'confidence_lower': np.maximum(Pc[ii, bc] - 1.2816*se, 0), 'confidence_upper': Pc[ii, bc] + 1.2816*se})
+out.to_csv('output/predictions_logit.csv', index=False)
+print('full-fit choice counts', np.bincount(bc, minlength=10), 'mean expected', out.expected_reward.mean().round(4))
+print('values', np.round(vf, 3))
+EOF
+python3 logit_model.py
+[?2004h> import numpy as np, pandas as pd
+[?2004l[?2004h> from scipy.optimize import minimize
+[?2004l[?2004h> from scipy.special import expit
+[?2004l[?2004h> imp = pd.read_csv('data/impressions.csv')
+[?2004l[?2004h> conv = pd.read_csv('data/conversions.csv')
+[?2004l[?2004h> ctx = pd.read_csv('data/test_contexts.csv')
+[?2004l[?2004h> m = imp.merge(conv[['impression_id','conversion_value']], on='impression_id', how='left')
+[?2004l[?2004h> m['cf'] = m.conversion_value.notna().astype(int)
+[?2004l[?2004h> m['real'] = m.conversion_value.fillna(0)
+[?2004l[?2004h> SEG = {'young':0,'middle':1,'senior':2}; DEV = {'mobile':0,'desktop':1,'tablet':2}
+[?2004l[?2004h> def feat(df, arm):
+[?2004l[?2004h>     n = len(df); X = np.zeros((n, 10+24+3+3+1+2))
+[?2004l[?2004h>     X[np.arange(n), arm] = 1
+[?2004l[?2004h>     X[np.arange(n), 10 + df.hour_of_day.values] = 1
+[?2004l[?2004h>     X[np.arange(n), 34 + df.user_segment.map(SEG).values] = 1
+[?2004l[?2004h>     X[np.arange(n), 37 + df.device_type.map(DEV).values] = 1
+[?2004l[?2004h>     X[:, 40] = (df.day_of_week.values >= 5).astype(float)
+[?2004l[?2004h>     X[:, 41] = df.context_feature_1.values
+[?2004l[?2004h>     X[:, 42] = df.context_feature_2.values
+[?2004l[?2004h>     return X
+[?2004l[?2004h> def fit(df, lam=1.0):
+[?2004l[?2004h>     X = feat(df, df.arm_id.values); y = df.cf.values.astype(float)
+[?2004l[?2004h>     def f(w):
+[?2004l[?2004h>         z = X @ w
+[?2004l[?2004h>         loss = np.sum(np.logaddexp(0, z) - y * z) + 0.5 * lam * w @ w
+[?2004l[?2004h>         g = X.T @ (expit(z) - y) + lam * w
+[?2004l[?2004h>         return loss, g
+[?2004l[?2004h>     res = minimize(f, np.zeros(X.shape[1]), jac=True, method='L-BFGS-B', options={'maxiter': 2000})
+[?2004l[?2004h>     return res.x
+[?2004l[?2004h> def prob_all(w, df):
+[?2004l[?2004h>     return np.column_stack([expit(feat(df, np.full(len(df), a)) @ w) for a in range(10)])
+[?2004l[?2004h> def values(df):
+[?2004l[?2004h>     return df[df.cf == 1].groupby('arm_id').real.mean().reindex(range(10)).values
+[?2004l[?2004h> # holdout
+[?2004l[?2004h> rng = np.random.default_rng(0)
+[?2004l[?2004h> mask = rng.random(len(m)) < 0.5
+[?2004l[?2004h> tr, te = m[mask], m[~mask]
+[?2004l[?2004h> w = fit(tr); v = values(tr); r = tr.groupby('arm_id').cf.mean().reindex(range(10)).values
+[?2004l[?2004h> P = prob_all(w, te) * v[None, :]
+[?2004l[?2004h> idx = np.arange(len(te)); shown = te.arm_id.values
+[?2004l[?2004h> print('ALL test rows: shown-arm predicted', P[idx, shown].mean().round(4), 'realized', te.real.mean().round(4), 'ratio', (P[idx, shown].mean() / te.real.mean()).round(3))
+[?2004l[?2004h> best = P.argmax(1); match = shown == best
+[?2004l[?2004h> print('policy matched rows', match.sum(), 'pred', P[idx, best][match].mean().round(4), 'realized', te.real.values[match].mean().round(4), 'ratio', (P[idx, best][match].mean() / te.real.values[match].mean()).round(3))
+[?2004l[?2004h> print('policy choice counts', np.bincount(best, minlength=10))
+[?2004l[?2004h> # full fit and predictions
+[?2004l[?2004h> wf = fit(m); vf = values(m)
+[?2004l[?2004h> Pc = prob_all(wf, ctx) * vf[None, :]
+[?2004l[?2004h> bc = Pc.argmax(1); ii = np.arange(len(ctx))
+[?2004l[?2004h> narm = m.groupby('arm_id').size().reindex(range(10)).values
+[?2004l[?2004h> pc = prob_all(wf, ctx)[ii, bc]
+[?2004l[?2004h> se = np.sqrt(np.clip(pc*(1-pc), 1e-9, None) / narm[bc]) * vf[bc]
+[?2004l[?2004h> out = pd.DataFrame({'context_id': ctx.context_id, 'selected_arm': bc, 'expected_reward': Pc[ii, bc], 'confidence_lower': np.maximum(Pc[ii, bc] - 1.2816*se, 0), 'confidence_upper': Pc[ii, bc] + 1.2816*se})
+[?2004l[?2004h> out.to_csv('output/predictions_logit.csv', index=False)
+[?2004l[?2004h> print('full-fit choice counts', np.bincount(bc, minlength=10), 'mean expected', out.expected_reward.mean().round(4))
+[?2004l[?2004h> print('values', np.round(vf, 3))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@a341c7dbec7e:/app# python3 logit_model.py
+[?2004lALL test rows: shown-arm predicted 0.1867 realized 0.1875 ratio 0.996
+policy matched rows 1452 pred 0.2358 realized 0.2214 ratio 1.065
+policy choice counts [    0     0     0     0     0     0     0 25028     0     0]
+full-fit choice counts [   0    0    0    0    0    0    0 2000    0    0] mean expected 0.248
+values [2.588 1.878 4.471 1.587 2.255 3.152 2.065 3.751 1.785 4.891]
+[?2004hroot@a341c7dbec7e:/app# cd /app && cp output/predictions_logit.csv output/predictions.csv && python3 -c "import pandas as pd; p=pd.read_csv('output/predictions.csv'); a=pd.read_csv('output/arm_statistics.csv'); print('rows', len(p), 'ctx unique', p.context_id.nunique(), 'arms', sorted(p.selected_arm.unique())); print('nulls', int(p.isna().sum().sum()), 'nonneg', bool((p.expected_reward>=0).all()), 'bounds ok', bool(((p.confidence_lower<=p.expected_reward+1e-12)&(p.expected_reward<=p.confidence_upper+1e-12)).all())); print('arm_stats rows', len(a)); print(p.head(3).to_string(index=False))" && cat output/delay_model.json && ls -la output/
+[?2004lrows 2000 ctx unique 2000 arms [np.int64(7)]
+nulls 0 nonneg True bounds ok True
+arm_stats rows 10
+context_id  selected_arm  expected_reward  confidence_lower  confidence_upper
+CTX_000000             7         0.341255          0.315658          0.366852
+CTX_000001             7         0.238683          0.216956          0.260410
+CTX_000002             7         0.104900          0.090225          0.119576
+{
+  "distribution_type": "lognormal",
+  "parameters": {
+    "mu": 2.484915518903394,
+    "sigma": 0.9193407926465385
+  },
+  "median_delay_hours": 12.000106429856693,
+  "p90_delay_hours": 38.98192787639391,
+  "conversion_rate_estimate": 0.08347685686647555
+}total 308
+drwxr-xr-x 1 root root   4096 Oct 26 01:03 .
+drwxr-xr-x 1 root root   4096 Oct 26 01:03 ..
+-rw-r--r-- 1 root root    584 Oct 26 01:02 arm_statistics.csv
+-rw-r--r-- 1 root root    257 Oct 26 01:02 delay_model.json
+-rw-r--r-- 1 root root 143482 Oct 26 01:03 predictions.csv
+-rw-r--r-- 1 root root 143482 Oct 26 01:03 predictions_logit.csv
+[?2004hroot@a341c7dbec7e:/app# cd /app && cat > heterogeneity.py << 'EOF'
+[?2004l[?2004h> import pandas as pd, numpy as np
+[?2004l[?2004h> imp = pd.read_csv('data/impressions.csv')
+[?2004l[?2004h> conv = pd.read_csv('data/conversions.csv')
+[?2004l[?2004h> ctx = pd.read_csv('data/test_contexts.csv')
+[?2004l[?2004h> m = imp.merge(conv[['impression_id','conversion_value']], on='impression_id', how='left')
+[?2004l[?2004h> m['cf'] = m.conversion_value.notna().astype(int)
+[?2004l[?2004h> m['real'] = m.conversion_value.fillna(0)
+[?2004l[?2004h> vals = m[m.cf==1].groupby('arm_id').real.mean()
+[?2004l[?2004h> SEG = {'young':0,'middle':1,'senior':2}; DEV = {'mobile':0,'desktop':1,'tablet':2}
+[?2004l[?2004h> def keys(df):
+[?2004l[?2004h>     return list(zip(np.digitize(df.hour_of_day.values,[6,10,16,20]), df.user_segment.map(SEG).values, df.device_type.map(DEV).values))
+[?2004l[?2004h> m['key'] = keys(m); ctx['key'] = keys(ctx)
+[?2004l[?2004h> g = m.groupby(['key','arm_id']).agg(n=('cf','size'), rate=('cf','mean'), real=('real','mean')).reset_index()
+[?2004l[?2004h> g = g[g.n>=100]
+[?2004l[?2004h> g['ev'] = g.real
+[?2004l[?2004h> best = g.loc[g.groupby('key').ev.idxmax()].set_index('key')
+[?2004l[?2004h> arm7 = m[m.arm_id==7].groupby('key').real.mean()
+[?2004l[?2004h> print('cells with best arm', len(best), 'best arm counts', best.arm_id.value_counts().to_dict())
+[?2004l[?2004h> sel = ctx.key.map(lambda k: best.arm_id.get(k, 7))
+[?2004l[?2004h> ev_best = ctx.key.map(lambda k: best.ev.get(k, arm7.get(k, 0)))
+[?2004l[?2004h> ev7 = ctx.key.map(lambda k: arm7.get(k, np.nan))
+[?2004l[?2004h> print('mean EV oracle-cell on test ctx', round(float(np.nanmean(ev_best)),4), 'arm7 EV', round(float(np.nanmean(ev7)),4), 'ratio', round(float(np.nanmean(ev_best)/np.nanmean(ev7)),3))
+[?2004l[?2004h> print('frac ctx where best != 7', round(float((sel!=7).mean()),3))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@a341c7dbec7e:/app# python3 heterogeneity.py
+[?2004lcells with best arm 35 best arm counts {3: 10, 5: 7, 1: 6, 7: 3, 0: 3, 4: 3, 2: 2, 6: 1}
+mean EV oracle-cell on test ctx 0.2528 arm7 EV 0.2326 ratio 1.087
+frac ctx where best != 7 0.78
+[?2004hroot@a341c7dbec7e:/app# cd /app && cat > ips_check.py << 'EOF'
+[?2004l[?2004h> import pandas as pd, numpy as np
+[?2004l[?2004h> imp = pd.read_csv('data/impressions.csv')
+[?2004l[?2004h> conv = pd.read_csv('data/conversions.csv')
+[?2004l[?2004h> m = imp.merge(conv[['impression_id','conversion_value']], on='impression_id', how='left')
+[?2004l[?2004h> m['cf'] = m.conversion_value.notna().astype(int)
+[?2004l[?2004h> m['real'] = m.conversion_value.fillna(0)
+[?2004l[?2004h> SEG = {'young':0,'middle':1,'senior':2}; DEV = {'mobile':0,'desktop':1,'tablet':2}
+[?2004l[?2004h> hb = np.digitize(m.hour_of_day.values,[6,10,16,20])
+[?2004l[?2004h> m['cid'] = hb*9 + m.user_segment.map(SEG).values*3 + m.device_type.map(DEV).values
+[?2004l[?2004h> prop = m.groupby('arm_id').size().reindex(range(10)).values / len(m)
+[?2004l[?2004h> rng = np.random.default_rng(1)
+[?2004l[?2004h> mask = rng.random(len(m)) < 0.5
+[?2004l[?2004h> tr, te = m[mask], m[~mask]
+[?2004l[?2004h> S = np.zeros((45,10)); N = np.zeros((45,10))
+[?2004l[?2004h> np.add.at(S, (tr.cid.values, tr.arm_id.values), tr.real.values)
+[?2004l[?2004h> np.add.at(N, (tr.cid.values, tr.arm_id.values), 1)
+[?2004l[?2004h> am = tr.groupby('arm_id').real.mean().reindex(range(10)).values
+[?2004l[?2004h> shown = te.arm_id.values; y = te.real.values; pi = prop[shown]
+[?2004l[?2004h> def ips(choice):
+[?2004l[?2004h>     t = y * (shown == choice) / pi
+[?2004l[?2004h>     return t.mean(), t.std(ddof=1)/np.sqrt(len(t))
+[?2004l[?2004h> v7, se7 = ips(np.full(len(te), 7))
+[?2004l[?2004h> print('arm7 IPS', round(v7,4), 'se', round(se7,4))
+[?2004l[?2004h> for k in [50.0, 200.0, 1000.0]:
+[?2004l[?2004h>     est = (S + k*am[None,:]) / (N + k)
+[?2004l[?2004h>     choice = est[te.cid.values].argmax(1)
+[?2004l[?2004h>     v, se = ips(choice)
+[?2004l[?2004h>     print('k', k, 'cell policy IPS', round(v,4), 'se', round(se,4), 'ratio vs arm7', round(v/v7,3), 'arm counts', np.bincount(choice, minlength=10).tolist())
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@a341c7dbec7e:/app# python3 ips_check.py
+[?2004larm7 IPS 0.2356 se 0.026
+k 50.0 cell policy IPS 0.1833 se 0.0183 ratio vs arm7 0.778 arm counts [1176, 0, 2803, 2467, 1665, 5187, 1483, 5350, 2851, 2008]
+k 200.0 cell policy IPS 0.2119 se 0.0203 ratio vs arm7 0.9 arm counts [0, 0, 1695, 3855, 723, 4875, 1382, 11380, 1080, 0]
+k 1000.0 cell policy IPS 0.2318 se 0.0254 ratio vs arm7 0.984 arm counts [0, 0, 1012, 0, 0, 2436, 0, 21542, 0, 0]
+[?2004hroot@a341c7dbec7e:/app# 

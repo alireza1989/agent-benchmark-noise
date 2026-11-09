@@ -1,0 +1,7 @@
+Skipping image OS validation for hb__02d8a38b525856a772917a4fea963ad8: docker inspect returned 1
+Parser warnings: - Extra text detected before JSON object
+Trajectory dumped to jobs/limits-3/build-system-task-ordering__kzVU5jy/agent/trajectory.json
+Trajectory dumped to jobs/limits-3/build-system-task-ordering__kzVU5jy/agent/trajectory.json
+Trajectory dumped to jobs/limits-3/build-system-task-ordering__kzVU5jy/agent/trajectory.json
+Trajectory dumped to jobs/limits-3/build-system-task-ordering__kzVU5jy/agent/trajectory.json
+Collecting main service artifacts

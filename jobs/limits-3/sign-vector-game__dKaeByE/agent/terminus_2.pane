@@ -1,0 +1,105 @@
+[?2004hroot@c7dd43c063fc:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@c7dd43c063fc:/app# clear
+[?2004l[H[J[3J[?2004hroot@c7dd43c063fc:/app# cd /app && ls -la && head -c 600 signs.txt && echo && wc -l signs.txt && head -c 600 sum.txt && echo && wc -l sum.txt && which python3 && python3 -c "import numpy, scipy; print(numpy.__version__, scipy.__version__)"
+[?2004ltotal 332
+drwxr-xr-x 1 root root   4096 Oct 25 21:38 [0m[01;34m.[0m
+drwxr-xr-x 1 root root   4096 Oct 26 01:34 [01;34m..[0m
+-rw-r--r-- 1 root root 327678 Oct 25 21:29 signs.txt
+-rw-r--r-- 1 root root   2425 Oct 25 21:29 sum.txt
+1 1 1 1 -1 1 1 -1 1 -1 -1 1 1 -1 1 1 -1 1 -1 1 1 -1 1 -1 1 -1 -1 -1 1 -1 1 -1 -1 -1 -1 1 -1 1 1 1 1 -1 -1 -1 -1 1 1 1 1 -1 1 -1 1 -1 -1 1 -1 1 -1 1 -1 1 1 1 1 1 1 -1 -1 1 -1 1 1 1 -1 1 1 -1 -1 -1 -1 -1 1 -1 -1 1 1 -1 1 1 1 -1 1 -1 1 1 -1 1 1 -1 1 -1 1 -1 -1 1 -1 -1 1 -1 1 1 1 -1 -1 1 -1 1 1 -1 -1 -1 1 1 -1 1 1 1
+-1 -1 -1 1 -1 -1 -1 -1 1 -1 -1 1 -1 -1 -1 -1 -1 1 1 -1 1 1 1 1 1 -1 -1 -1 -1 1 1 1 1 1 1 1 -1 -1 -1 -1 -1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 -1 -1 -1 1 -1 -1 -1 -1 1 -1 1 -1 -1 -1 1 -1 -1 -1 -1 1 1 1 1 -1 -1 -1 -1 -1 1 1 1 -1 1 1 -1 -1 1 -1 1 -1 1 1 1 1 1 1 -1 -1 -1 1 1 1 1 -1 -1 1 1 -1 1 -1 
+1024 signs.txt
+0.535921573638916 3.185608148574829 -0.6482224464416504 8.639005661010742 5.899259567260742 -2.2147600650787354 1.900620460510254 1.1745967864990234 1.7747776508331299 -8.728135108947754 6.282806873321533 1.6788820028305054 -0.5747122764587402 -3.5620856285095215 -12.84987735748291 3.5964527130126953 -0.6042890548706055 9.108304977416992 2.7808220386505127 8.79217529296875 4.728195667266846 -5.226822853088379 2.0083627700805664 4.748631000518799 -6.726621150970459 -8.653010368347168 -1.0240875482559204 2.441561698913574 -0.06402456760406494 -2.4375834465026855 -4.540292739868164 -6.06094551086
+1 sum.txt
+/usr/bin/python3
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'numpy'
+[?2004hroot@c7dd43c063fc:/app# cat > solve.py << 'EOF'
+[?2004l[?2004h> signs = [list(map(int, l.split())) for l in open('signs.txt') if l.strip()]
+[?2004l[?2004h> s = [float(x) for x in open('sum.txt').read().split()]
+[?2004l[?2004h> n = len(signs)
+[?2004l[?2004h> d = len(s)
+[?2004l[?2004h> 
+[?2004l[?2004h> def dot(a, b):
+[?2004l[?2004h>     return sum(x * y for x, y in zip(a, b))
+[?2004l[?2004h> 
+[?2004l[?2004h> def solve(A, b):
+[?2004l[?2004h>     k = len(A)
+[?2004l[?2004h>     M = [[dot(A[i], A[j]) for j in range(k)] + [dot(A[i], b)] for i in range(k)]
+[?2004l[?2004h>     for c in range(k):
+[?2004l[?2004h>         p = max(range(c, k), key=lambda r: abs(M[r][c]))
+[?2004l[?2004h>         M[c], M[p] = M[p], M[c]
+[?2004l[?2004h>         if abs(M[c][c]) < 1e-12:
+[?2004l[?2004h>             return None
+[?2004l[?2004h>         for r in range(k):
+[?2004l[?2004h>             if r != c:
+[?2004l[?2004h>                 f = M[r][c] / M[c][c]
+[?2004l[?2004h>                 for j in range(c, k + 1):
+[?2004l[?2004h>                     M[r][j] -= f * M[c][j]
+[?2004l[?2004h>     return [M[i][k] / M[i][i] for i in range(k)]
+[?2004l[?2004h> 
+[?2004l[?2004h> def resid(sel):
+[?2004l[?2004h>     c = solve([signs[i] for i in sel], s)
+[?2004l[?2004h>     if c is None:
+[?2004l[?2004h>         return None, None
+[?2004l[?2004h>     r = s[:]
+[?2004l[?2004h>     for ci, i in zip(c, sel):
+[?2004l[?2004h>         for t in range(d):
+[?2004l[?2004h>             r[t] -= ci * signs[i][t]
+[?2004l[?2004h>     return sum(x * x for x in r), r
+[?2004l[?2004h> 
+[?2004l[?2004h> sel = []
+[?2004l[?2004h> r = s[:]
+[?2004l[?2004h> for step in range(16):
+[?2004l[?2004h>     best = max((abs(dot(signs[i], r)), i) for i in range(n) if i not in sel)[1]
+[?2004l[?2004h>     sel.append(best)
+[?2004l[?2004h>     e, r = resid(sel)
+[?2004l[?2004h>     print(step + 1, best + 1, e)
+[?2004l[?2004h> 
+[?2004l[?2004h> with open('players.txt', 'w') as f:
+[?2004l[?2004h>     for i in sorted(sel):
+[?2004l[?2004h>         f.write(str(i + 1) + '\n')
+[?2004l[?2004h> print('selected', sorted(i + 1 for i in sel))
+[?2004l[?2004h> print('final residual squared', resid(sel)[0])
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@c7dd43c063fc:/app# python3 solve.py
+[?2004l1 596 2772.0772693869276
+2 999 2170.5111371575554
+3 775 1633.4219104071262
+4 569 1195.190034083003
+5 692 922.6690856845265
+6 1003 736.539882358125
+7 935 535.5999688960355
+8 948 403.6831406103189
+9 430 295.4421114017946
+10 1014 178.5876970573784
+11 716 120.76676966272849
+12 630 56.440028489454036
+13 141 34.51997871791064
+14 1022 19.700580649783703
+15 148 0.05947298650759303
+16 1008 9.228689562371158e-12
+selected [141, 148, 430, 569, 596, 630, 692, 716, 775, 935, 948, 999, 1003, 1008, 1014, 1022]
+final residual squared 9.228689562371158e-12
+[?2004hroot@c7dd43c063fc:/app# wc -l players.txt && cat players.txt
+[?2004l16 players.txt
+141
+148
+430
+569
+596
+630
+692
+716
+775
+935
+948
+999
+1003
+1008
+1014
+1022
+[?2004hroot@c7dd43c063fc:/app# 

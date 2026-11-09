@@ -1,0 +1,209 @@
+[?2004hroot@36985e343068:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@36985e343068:/app# clear
+[?2004l[H[J[3J[?2004hroot@36985e343068:/app# cat > /app/solution.py << 'EOF'
+[?2004l[?2004h> import heapq
+[?2004l[?2004h> import json
+[?2004l[?2004h> import sys
+[?2004l[?2004h> 
+[?2004l[?2004h> ALLOWED = {'Depends', 'Before', 'After', 'Needs', 'Requires', 'Alias', 'Phony'}
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> class _ParseError(Exception):
+[?2004l[?2004h>     pass
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def _parse(lines):
+[?2004l[?2004h>     blocks = []
+[?2004l[?2004h>     cur = None
+[?2004l[?2004h>     for raw in lines:
+[?2004l[?2004h>         line = raw.strip()
+[?2004l[?2004h>         if not line or line.startswith('#'):
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         if line.startswith('[') and line.endswith(']'):
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         tokens = line.split()
+[?2004l[?2004h>         head = tokens[0]
+[?2004l[?2004h>         if head == 'TARGET':
+[?2004l[?2004h>             if len(tokens) != 2:
+[?2004l[?2004h>                 raise _ParseError()
+[?2004l[?2004h>             cur = {'kind': 'T', 'name': tokens[1], 'id': None, 'dirs': []}
+[?2004l[?2004h>             blocks.append(cur)
+[?2004l[?2004h>         elif head == 'OVERRIDE':
+[?2004l[?2004h>             if len(tokens) != 3:
+[?2004l[?2004h>                 raise _ParseError()
+[?2004l': or[?2004h>             cur = {'kind': 'O', 'name': tokens[1], 'id': tokens[2], 'dirs': []}
+[?2004l[?2004h>             blocks.append(cur)
+[?2004le(lines)
+    ex[?2004h>         else:
+[?2004lr[?2004h>             if cur is None:
+[?2004l[?2004h>                 raise _ParseError()
+[?2004l[?2004h>             if line.count('=') != 1:
+[?2004l[?2004h>                 raise _ParseError()
+[?2004l[?2004h>             key, val = line.split('=', 1)
+[?2004l[?2004h>             key = key.strip()
+[?2004l[?2004h>             val = val.strip()
+[?2004l[?2004h>             if key not in ALLOWED:
+[?2004l[?2004h>                 raise _ParseError()
+[?2004l[?2004h>             if key == 'Phony':
+[?2004l[?2004h>                 if val not in ('yes', 'no'):
+[?2004l[?2004h>                     raise _ParseError()
+[?2004l[?2004h>                 cur['dirs'].append(('Phony', val))
+[?2004l[?2004h>             else:
+[?2004l[?2004h>                 cur['dirs'].append((key, val.split()))
+[?2004l[?2004h>     return blocks
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def _solve(lines):
+[?2004l[?2004h>     blocks = _parse(lines)
+[?2004l[?2004h>     if not blocks:
+[?2004l[?2004h>         return '{"order":[],"cycles":[]}'
+[?2004l[?2004h> 
+[?2004l[?2004h>     defined = set()
+[?2004l[?2004h>     referenced = set()
+[?2004l[?2004h>     parent = {}
+[?2004l[?2004h> 
+[?2004l[?2004h>     def find(x):
+[?2004l[?2004h>         parent.setdefault(x, x)
+[?2004l[?2004h>         while parent[x] != x:
+[?2004l[?2004h>             parent[x] = parent[parent[x]]
+[?2004l[?2004h>             x = parent[x]
+[?2004l[?2004h>         return x
+[?2004l[?2004h> 
+[?2004l[?2004h>     def union(a, b):
+[?2004l[?2004h>         ra = find(a)
+[?2004l[?2004h>         rb = find(b)
+[?2004l[?2004h>         if ra == rb:
+[?2004l[?2004h>             return
+[?2004l[?2004h>         if ra < rb:
+[?2004l[?2004h>             parent[rb] = ra
+[?2004l[?2004h>         else:
+[?2004l[?2004h>             parent[ra] = rb
+[?2004l[?2004h> 
+[?2004l[?2004h>     for b in blocks:
+[?2004l[?2004h>         defined.add(b['name'])
+[?2004l[?2004h>         find(b['name'])
+[?2004l[?2004h>         for key, vals in b['dirs']:
+[?2004l[?2004h>             if key == 'Alias':
+[?2004l[?2004h>                 for v in vals:
+[?2004l[?2004h>                     referenced.add(v)
+[?2004l[?2004h>                     union(b['name'], v)
+[?2004l[?2004h>             elif key != 'Phony':
+[?2004l[?2004h>                 for v in vals:
+[?2004l[?2004h>                     referenced.add(v)
+[?2004l[?2004h> 
+[?2004l[?2004h>     def canon(x):
+[?2004l[?2004h>         return find(x)
+[?2004l[?2004h> 
+[?2004l[?2004h>     nodes = set()
+[?2004l[?2004h>     for n in defined | referenced:
+[?2004l[?2004h>         nodes.add(canon(n))
+[?2004l[?2004h> 
+[?2004l[?2004h>     tblocks = [b for b in blocks if b['kind'] == 'T']
+[?2004l[?2004h>     oblocks = sorted([b for b in blocks if b['kind'] == 'O'], key=lambda b: b['id'])
+[?2004l[?2004h> 
+[?2004l[?2004h>     adj = {n: set() for n in nodes}
+[?2004l[?2004h>     phony = {}
+[?2004l[?2004h> 
+[?2004l[?2004h>     for b in tblocks + oblocks:
+[?2004l[?2004h>         u = canon(b['name'])
+[?2004l[?2004h>         for key, vals in b['dirs']:
+[?2004l[?2004h>             if key == 'Phony':
+[?2004l[?2004h>                 phony[u] = vals
+[?2004l[?2004h>                 continue
+[?2004l[?2004h>             if key == 'Alias':
+[?2004l[?2004h>                 continue
+[?2004l[?2004h>             for v in vals:
+[?2004l[?2004h>                 cv = canon(v)
+[?2004l[?2004h>                 if key in ('Depends', 'After'):
+[?2004l[?2004h>                     adj[cv].add(u)
+[?2004l[?2004h>                 else:
+[?2004l[?2004h>                     adj[u].add(cv)
+[?2004l[?2004h> 
+[?2004l[?2004h>     index = {}
+[?2004l[?2004h>     low = {}
+[?2004l[?2004h>     stack = []
+[?2004l[?2004h>     onstack = set()
+[?2004l[?2004h>     sccs = []
+[?2004l[?2004h>     counter = [0]
+[?2004l[?2004h> 
+[?2004l[?2004h>     def strong(v):
+[?2004l[?2004h>         index[v] = counter[0]
+[?2004l[?2004h>         low[v] = counter[0]
+[?2004l[?2004h>         counter[0] += 1
+[?2004l[?2004h>         stack.append(v)
+[?2004l[?2004h>         onstack.add(v)
+[?2004l[?2004h>         for w in sorted(adj[v]):
+[?2004l[?2004h>             if w not in index:
+[?2004l[?2004h>                 strong(w)
+[?2004l[?2004h>                 low[v] = min(low[v], low[w])
+[?2004l[?2004h>             elif w in onstack:
+[?2004l[?2004h>                 low[v] = min(low[v], index[w])
+[?2004l[?2004h>         if low[v] == index[v]:
+[?2004l[?2004h>             comp = []
+[?2004l[?2004h>             while True:
+[?2004l[?2004h>                 w = stack.pop()
+[?2004l[?2004h>                 onstack.discard(w)
+[?2004l[?2004h>                 comp.append(w)
+[?2004l[?2004h>                 if w == v:
+[?2004l[?2004h>                     break
+[?2004l[?2004h>             sccs.append(sorted(comp))
+[?2004l[?2004h> 
+[?2004l[?2004h>     sys.setrecursionlimit(max(10000, 10 * len(nodes) + 1000))
+[?2004l[?2004h>     for v in sorted(nodes):
+[?2004l[?2004h>         if v not in index:
+[?2004l[?2004h>             strong(v)
+[?2004l[?2004h> 
+[?2004l[?2004h>     comp_of = {}
+[?2004l[?2004h>     for i, c in enumerate(sccs):
+[?2004l[?2004h>         for n in c:
+[?2004l[?2004h>             comp_of[n] = i
+[?2004l[?2004h> 
+[?2004l[?2004h>     cadj = {i: set() for i in range(len(sccs))}
+[?2004l[?2004h>     for u in nodes:
+[?2004l[?2004h>         for v in adj[u]:
+[?2004l[?2004h>             if comp_of[u] != comp_of[v]:
+[?2004l[?2004h>                 cadj[comp_of[u]].add(comp_of[v])
+[?2004l[?2004h>     indeg = {i: 0 for i in range(len(sccs))}
+[?2004l[?2004h>     for i in cadj:
+[?2004l[?2004h>         for j in cadj[i]:
+[?2004l[?2004h>             indeg[j] += 1
+[?2004l[?2004h> 
+[?2004l[?2004h>     heap = [(sccs[i][0], i) for i in range(len(sccs)) if indeg[i] == 0]
+[?2004l[?2004h>     heapq.heapify(heap)
+[?2004l[?2004h>     order = []
+[?2004l[?2004h>     while heap:
+[?2004l[?2004h>         _, i = heapq.heappop(heap)
+[?2004l[?2004h>         order.extend(sccs[i])
+[?2004l[?2004h>         for j in cadj[i]:
+[?2004l[?2004h>             indeg[j] -= 1
+[?2004l[?2004h>             if indeg[j] == 0:
+[?2004l[?2004h>                 heapq.heappush(heap, (sccs[j][0], j))
+[?2004l[?2004h> 
+[?2004l[?2004h>     cycles = []
+[?2004l[?2004h>     for c in sccs:
+[?2004l[?2004h>         if len(c) >= 2 or (c[0] in adj[c[0]]):
+[?2004l[?2004h>             cycles.append(sorted(c))
+[?2004l[?2004h>     cycles.sort()
+[?2004l[?2004h> 
+[?2004l[?2004h>     return json.dumps({'order': order, 'cycles': cycles}, separators=(',', ':'))
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def solve(lines):
+[?2004l[?2004h>     try:
+[?2004l[?2004h>         return _solve(lines)
+[?2004l[?2004h>     except _ParseError:
+[?2004l[?2004h>         return 'PARSE_ERROR'
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h>     print(solve(sys.stdin.read().splitlines()))
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@36985e343068:/app# cd /app && python3 -c "from solution import solve; print(solve(['TARGET build','Alias = compile link','Depends = all','TARGET compile','Before = clean'])); print(solve(['TARGET zebra','Alias = alpha','TARGET alpha','Alias = build','TARGET build','Depends = compile'])); print(solve(['TARGET a','Depends = b','TARGET b','Depends = c','TARGET c','Depends = a'])); print(solve([])); print(solve(['FOO x']))"
+[?2004l{"order":["all","build","clean"],"cycles":[]}
+{"order":["compile","alpha"],"cycles":[]}
+{"order":["a","b","c"],"cycles":[["a","b","c"]]}
+{"order":[],"cycles":[]}
+PARSE_ERROR
+[?2004hroot@36985e343068:/app# 

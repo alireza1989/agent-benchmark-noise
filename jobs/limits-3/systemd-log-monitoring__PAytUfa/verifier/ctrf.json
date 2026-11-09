@@ -1,0 +1,207 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 20,
+            "passed": 15,
+            "failed": 1,
+            "skipped": 4,
+            "pending": 0,
+            "other": 0,
+            "start": 1792978676.614591,
+            "stop": 1792978678.2761815
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_systemd_service_file_exists",
+                "status": "passed",
+                "duration": 0.0006242920007935027,
+                "start": 1792978676.6864533,
+                "stop": 1792978676.6872692,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_python_app_exists",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.000638749999779975,
+                "start": 1792978676.687383,
+                "stop": 1792978676.6983955,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_python_app_exists():\n        \"\"\"Verify Python application exists and is executable.\"\"\"\n        app_file = Path(\"/opt/myapp/app.py\")\n        assert app_file.exists(), \"Python app must exist at /opt/myapp/app.py\"\n    \n        # Check if executable\n        import os\n        assert os.access(app_file, os.X_OK), \"Python app must be executable\"\n    \n        # Check for required imports and structure\n        content = app_file.read_text()\n        assert \"import json\" in content, \"App must import json for logging\"\n        assert \"import logging\" in content, \"App must use logging module\"\n        assert \"import sys\" in content, \"App must import sys\"\n>       assert \"def main():\" in content, \"App must have main function\"\nE       AssertionError: App must have main function\nE       assert 'def main():' in '#!/usr/bin/env python3\\n\"\"\"Simple application that logs JSON-formatted events to stdout.\"\"\"\\nimport argparse\\nimport ...errupt:\\n        logger.info(\"Service stopping\")\\n    return 0\\n\\n\\nif __name__ == \"__main__\":\\n    sys.exit(main())\\n'\n\n/tests/test_outputs.py:41: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_python_app_json_logging",
+                "status": "passed",
+                "duration": 1.5230698339983064,
+                "start": 1792978676.6984997,
+                "stop": 1792978678.222334,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_rsyslog_configuration",
+                "status": "passed",
+                "duration": 0.0009958749997167615,
+                "start": 1792978678.2228808,
+                "stop": 1792978678.2241185,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_logrotate_configuration",
+                "status": "passed",
+                "duration": 0.0007626240021636477,
+                "start": 1792978678.2242491,
+                "stop": 1792978678.2251995,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_service_monitoring_script",
+                "status": "passed",
+                "duration": 0.0006949579983484,
+                "start": 1792978678.2253175,
+                "stop": 1792978678.2261813,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_service_monitoring_output",
+                "status": "passed",
+                "duration": 0.007566917000076501,
+                "start": 1792978678.2263265,
+                "stop": 1792978678.234716,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_systemd_service_syntax",
+                "status": "passed",
+                "duration": 0.0013377920004131738,
+                "start": 1792978678.2348537,
+                "stop": 1792978678.2388422,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_log_files_creation",
+                "status": "passed",
+                "duration": 0.0009119580008700723,
+                "start": 1792978678.238964,
+                "stop": 1792978678.2428126,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_integration_log_routing",
+                "status": "skipped",
+                "duration": 0.003191832000084105,
+                "start": 1792978678.2429256,
+                "stop": 1792978678.2477522,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "('/tests/test_outputs.py', 296, 'Skipped: Rsyslog service not available in test environment')"
+            },
+            {
+                "name": "test_outputs.py::test_service_restart_loop_detection",
+                "status": "passed",
+                "duration": 0.005430708999483613,
+                "start": 1792978678.247877,
+                "stop": 1792978678.253588,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_logrotate_syntax",
+                "status": "passed",
+                "duration": 0.0018765409986372106,
+                "start": 1792978678.2537236,
+                "stop": 1792978678.2557735,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_logrotate_postrotate",
+                "status": "passed",
+                "duration": 0.0006290010005614022,
+                "start": 1792978678.255891,
+                "stop": 1792978678.256674,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_rsyslog_syntax",
+                "status": "passed",
+                "duration": 0.002863249999791151,
+                "start": 1792978678.2567804,
+                "stop": 1792978678.2598236,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_log_routing_error_separation",
+                "status": "skipped",
+                "duration": 0.0020078329998796107,
+                "start": 1792978678.2599337,
+                "stop": 1792978678.262172,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "('/tests/test_outputs.py', 553, 'Skipped: Rsyslog service not available in test environment')"
+            },
+            {
+                "name": "test_outputs.py::test_service_management",
+                "status": "skipped",
+                "duration": 0.0009095410005102167,
+                "start": 1792978678.2622788,
+                "stop": 1792978678.264061,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "('/tests/test_outputs.py', 641, 'Skipped: Systemd not available in test environment')"
+            },
+            {
+                "name": "test_outputs.py::test_end_to_end_service_logging",
+                "status": "skipped",
+                "duration": 0.0009171260007860838,
+                "start": 1792978678.2641554,
+                "stop": 1792978678.2655323,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "('/tests/test_outputs.py', 704, 'Skipped: Required services not available in test environment')"
+            },
+            {
+                "name": "test_outputs.py::test_json_processing_capability",
+                "status": "passed",
+                "duration": 0.007470124000974465,
+                "start": 1792978678.26562,
+                "stop": 1792978678.2732987,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_logrotate_execution",
+                "status": "passed",
+                "duration": 0.0014610010002797935,
+                "start": 1792978678.2734377,
+                "stop": 1792978678.2750802,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_rsyslog_file_ownership",
+                "status": "passed",
+                "duration": 0.0005779580005764728,
+                "start": 1792978678.275171,
+                "stop": 1792978678.2759151,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

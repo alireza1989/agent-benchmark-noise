@@ -1,0 +1,9 @@
+Skipping image OS validation for hb__02d8a38b525856a772917a4fea963ad8: docker inspect returned 1
+Trajectory dumped to jobs/nolimits-2/build-system-task-ordering__PivTfQa/agent/trajectory.json
+Parser warnings: - AUTO-CORRECTED: Extracted JSON from mixed content - please fix this in future responses
+Trajectory dumped to jobs/nolimits-2/build-system-task-ordering__PivTfQa/agent/trajectory.json
+Parser warnings: - Extra text detected before JSON object
+- Extra text detected after JSON object
+Trajectory dumped to jobs/nolimits-2/build-system-task-ordering__PivTfQa/agent/trajectory.json
+Trajectory dumped to jobs/nolimits-2/build-system-task-ordering__PivTfQa/agent/trajectory.json
+Collecting main service artifacts

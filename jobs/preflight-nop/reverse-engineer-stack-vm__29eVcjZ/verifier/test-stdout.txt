@@ -1,0 +1,221 @@
+Downloading cpython-3.13.9-linux-aarch64-gnu (download) (27.1MiB)
+ Downloading cpython-3.13.9-linux-aarch64-gnu (download)
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 6 packages in 7ms
+============================= test session starts ==============================
+platform linux -- Python 3.13.9, pytest-8.4.1, pluggy-1.7.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 21 items
+
+../tests/test_outputs.py FFFFFFFFF......FF.FFF                           [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_validator_integrity ___________________________
+
+    def test_validator_integrity():
+        """Verify that the validator binary has not been modified"""
+>       verify_validator_integrity()
+
+/tests/test_outputs.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def verify_validator_integrity():
+        """Verify that /app/validator has not been tampered with"""
+        validator_path = "/app/validator"
+    
+        if not os.path.exists(validator_path):
+            pytest.fail("Validator binary is missing")
+    
+        # Calculate current checksum of the validator binary
+        with open(validator_path, "rb") as f:
+            current_checksum = hashlib.sha256(f.read()).hexdigest()
+    
+        # Compare against expected checksum embedded in test code
+        # This checksum is calculated during Docker build and cannot be modified by the agent
+        if EXPECTED_VALIDATOR_CHECKSUM == "PLACEHOLDER_CHECKSUM_WILL_BE_REPLACED_DURING_BUILD":
+            pytest.fail("Validator checksum not properly embedded in test code - build process failed")
+    
+        if current_checksum != EXPECTED_VALIDATOR_CHECKSUM:
+>           pytest.fail(f"Validator binary has been tampered with! Expected {EXPECTED_VALIDATOR_CHECKSUM}, got {current_checksum}")
+E           Failed: Validator binary has been tampered with! Expected 9ce4a624ef77c18411fc7074fde932a7db051d183d0ac61facfe743813b63305, got bc695175cc8070ebf69ef36eda5fba97e6a4dc64d1be4223332735a7c9abb3d0
+
+/tests/test_outputs.py:40: Failed
+___________________________ test_validator_with_flag ___________________________
+
+    def test_validator_with_flag():
+        """Verify that the validator binary grants access when given the flag content"""
+        # First verify integrity to prevent cheating
+>       verify_validator_integrity()
+
+/tests/test_outputs.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def verify_validator_integrity():
+        """Verify that /app/validator has not been tampered with"""
+        validator_path = "/app/validator"
+    
+        if not os.path.exists(validator_path):
+            pytest.fail("Validator binary is missing")
+    
+        # Calculate current checksum of the validator binary
+        with open(validator_path, "rb") as f:
+            current_checksum = hashlib.sha256(f.read()).hexdigest()
+    
+        # Compare against expected checksum embedded in test code
+        # This checksum is calculated during Docker build and cannot be modified by the agent
+        if EXPECTED_VALIDATOR_CHECKSUM == "PLACEHOLDER_CHECKSUM_WILL_BE_REPLACED_DURING_BUILD":
+            pytest.fail("Validator checksum not properly embedded in test code - build process failed")
+    
+        if current_checksum != EXPECTED_VALIDATOR_CHECKSUM:
+>           pytest.fail(f"Validator binary has been tampered with! Expected {EXPECTED_VALIDATOR_CHECKSUM}, got {current_checksum}")
+E           Failed: Validator binary has been tampered with! Expected 9ce4a624ef77c18411fc7074fde932a7db051d183d0ac61facfe743813b63305, got bc695175cc8070ebf69ef36eda5fba97e6a4dc64d1be4223332735a7c9abb3d0
+
+/tests/test_outputs.py:40: Failed
+_______________________________ test_flag_exists _______________________________
+
+    def test_flag_exists():
+        """Verify that /app/flag.txt exists"""
+>       assert os.path.exists("/app/flag.txt"), "/app/flag.txt must exist"
+E       AssertionError: /app/flag.txt must exist
+E       assert False
+E        +  where False = <function exists at 0xffff957a71a0>('/app/flag.txt')
+E        +    where <function exists at 0xffff957a71a0> = <module 'posixpath' (frozen)>.exists
+E        +      where <module 'posixpath' (frozen)> = os.path
+
+/tests/test_outputs.py:71: AssertionError
+_____________________________ test_flag_not_empty ______________________________
+
+    def test_flag_not_empty():
+        """Verify that /app/flag.txt is not empty"""
+        flag_content = read_flag()
+>       assert flag_content is not None, "/app/flag.txt does not exist"
+E       AssertionError: /app/flag.txt does not exist
+E       assert None is not None
+
+/tests/test_outputs.py:76: AssertionError
+________________________ test_flag_no_trailing_newline _________________________
+
+    def test_flag_no_trailing_newline():
+        """Verify that /app/flag.txt has no trailing newline"""
+        flag_content = read_flag()
+>       assert flag_content is not None, "/app/flag.txt does not exist"
+E       AssertionError: /app/flag.txt does not exist
+E       assert None is not None
+
+/tests/test_outputs.py:82: AssertionError
+_______________________ test_flag_no_leading_whitespace ________________________
+
+    def test_flag_no_leading_whitespace():
+        """Verify that /app/flag.txt has no leading whitespace"""
+        flag_content = read_flag()
+>       assert flag_content is not None, "/app/flag.txt does not exist"
+E       AssertionError: /app/flag.txt does not exist
+E       assert None is not None
+
+/tests/test_outputs.py:89: AssertionError
+_______________________ test_flag_no_trailing_whitespace _______________________
+
+    def test_flag_no_trailing_whitespace():
+        """Verify that /app/flag.txt has no trailing whitespace (except checked separately)"""
+        flag_content = read_flag()
+>       assert flag_content is not None, "/app/flag.txt does not exist"
+E       AssertionError: /app/flag.txt does not exist
+E       assert None is not None
+
+/tests/test_outputs.py:96: AssertionError
+______________________ test_flag_alphanumeric_underscore _______________________
+
+    def test_flag_alphanumeric_underscore():
+        """Verify that flag contains only alphanumeric characters and underscores"""
+        flag_content = read_flag()
+>       assert flag_content is not None, "/app/flag.txt does not exist"
+E       AssertionError: /app/flag.txt does not exist
+E       assert None is not None
+
+/tests/test_outputs.py:103: AssertionError
+___________________________ test_flag_correct_length ___________________________
+
+    def test_flag_correct_length():
+        """Verify that the flag has the expected length for the passphrase"""
+        flag_content = read_flag()
+>       assert flag_content is not None, "/app/flag.txt does not exist"
+E       AssertionError: /app/flag.txt does not exist
+E       assert None is not None
+
+/tests/test_outputs.py:111: AssertionError
+____________________________ test_flag_reproducible ____________________________
+
+    def test_flag_reproducible():
+        """Verify that running validator multiple times with flag produces consistent results"""
+        flag_content = read_flag()
+>       assert flag_content is not None, "/app/flag.txt does not exist"
+E       AssertionError: /app/flag.txt does not exist
+E       assert None is not None
+
+/tests/test_outputs.py:201: AssertionError
+________________________ test_flag_exact_output_format _________________________
+
+    def test_flag_exact_output_format():
+        """Verify validator output is exactly 'ACCESS GRANTED' with no extra text"""
+        flag_content = read_flag()
+>       assert flag_content is not None, "/app/flag.txt does not exist"
+E       AssertionError: /app/flag.txt does not exist
+E       assert None is not None
+
+/tests/test_outputs.py:217: AssertionError
+___________________________ test_flag_is_valid_utf8 ____________________________
+
+    def test_flag_is_valid_utf8():
+        """Verify that flag.txt contains valid UTF-8"""
+        flag_content = read_flag()
+>       assert flag_content is not None, "/app/flag.txt does not exist"
+E       AssertionError: /app/flag.txt does not exist
+E       assert None is not None
+
+/tests/test_outputs.py:246: AssertionError
+________________________ test_validator_case_sensitive _________________________
+
+    def test_validator_case_sensitive():
+        """Verify that validator is case-sensitive"""
+        flag_content = read_flag()
+>       assert flag_content is not None, "/app/flag.txt does not exist"
+E       AssertionError: /app/flag.txt does not exist
+E       assert None is not None
+
+/tests/test_outputs.py:256: AssertionError
+______________________ test_validator_position_sensitive _______________________
+
+    def test_validator_position_sensitive():
+        """Verify that validator checks character positions correctly"""
+        flag_content = read_flag()
+>       assert flag_content is not None, "/app/flag.txt does not exist"
+E       AssertionError: /app/flag.txt does not exist
+E       assert None is not None
+
+/tests/test_outputs.py:275: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_outputs.py::test_validator_rejects_empty
+PASSED ../tests/test_outputs.py::test_validator_rejects_wrong_length_short
+PASSED ../tests/test_outputs.py::test_validator_rejects_wrong_length_long
+PASSED ../tests/test_outputs.py::test_validator_rejects_similar_but_wrong
+PASSED ../tests/test_outputs.py::test_validator_rejects_random_alphanumeric
+PASSED ../tests/test_outputs.py::test_validator_executable
+PASSED ../tests/test_outputs.py::test_validator_no_args
+FAILED ../tests/test_outputs.py::test_validator_integrity - Failed: Validator...
+FAILED ../tests/test_outputs.py::test_validator_with_flag - Failed: Validator...
+FAILED ../tests/test_outputs.py::test_flag_exists - AssertionError: /app/flag...
+FAILED ../tests/test_outputs.py::test_flag_not_empty - AssertionError: /app/f...
+FAILED ../tests/test_outputs.py::test_flag_no_trailing_newline - AssertionErr...
+FAILED ../tests/test_outputs.py::test_flag_no_leading_whitespace - AssertionE...
+FAILED ../tests/test_outputs.py::test_flag_no_trailing_whitespace - Assertion...
+FAILED ../tests/test_outputs.py::test_flag_alphanumeric_underscore - Assertio...
+FAILED ../tests/test_outputs.py::test_flag_correct_length - AssertionError: /...
+FAILED ../tests/test_outputs.py::test_flag_reproducible - AssertionError: /ap...
+FAILED ../tests/test_outputs.py::test_flag_exact_output_format - AssertionErr...
+FAILED ../tests/test_outputs.py::test_flag_is_valid_utf8 - AssertionError: /a...
+FAILED ../tests/test_outputs.py::test_validator_case_sensitive - AssertionErr...
+FAILED ../tests/test_outputs.py::test_validator_position_sensitive - Assertio...
+========================= 14 failed, 7 passed in 0.14s =========================

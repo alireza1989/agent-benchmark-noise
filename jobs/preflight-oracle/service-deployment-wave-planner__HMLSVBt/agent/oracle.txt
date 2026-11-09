@@ -1,0 +1,36 @@
+=== Starting Service Deployment Wave Planner (Enhanced) ===
+Generated deployment plan:
+  Total waves: 25
+  Total services deployed: 200
+  Total services expected: 200
+  Estimated duration: 346 minutes
+=== Deployment Plan Generated ===
+
+Validating constraints...
+  PASS dependency_ordering
+  PASS capacity_limits
+  PASS critical_limits
+  PASS regional_coverage
+  PASS service_uniqueness
+  PASS valid_references
+  PASS blackout_compliance
+  PASS team_bandwidth
+  PASS atomic_deployment
+  PASS high_resource_slots
+  PASS global_critical_limit
+  PASS region_deployment_gap
+  PASS team_fatigue
+
+Calculating scores...
+  wave_efficiency: 0.767
+  capacity_utilization: 0.598
+  priority_compliance: 0.647
+  balance_score: 0.479
+  team_balance: 0.855
+  constraint_margin: 0.821
+  deployment_smoothness: 0.683
+
+Total Score: 0.695
+
+=== All thresholds met! ===
+=== Solution Complete ===

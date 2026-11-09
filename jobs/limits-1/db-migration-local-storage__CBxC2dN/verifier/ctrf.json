@@ -1,0 +1,182 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 18,
+            "passed": 18,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792972977.4174178,
+            "stop": 1792972977.6749554
+        },
+        "tests": [
+            {
+                "name": "test_queries.py::test_service_is_running",
+                "status": "passed",
+                "duration": 0.009388833999764756,
+                "start": 1792972977.5211136,
+                "stop": 1792972977.5308783,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_stats_endpoint",
+                "status": "passed",
+                "duration": 0.006194542002049275,
+                "start": 1792972977.5310955,
+                "stop": 1792972977.5376697,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_query_electronics_phones",
+                "status": "passed",
+                "duration": 0.006026540999300778,
+                "start": 1792972977.537874,
+                "stop": 1792972977.5441997,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_query_furniture_chairs",
+                "status": "passed",
+                "duration": 0.005589999000221724,
+                "start": 1792972977.5444326,
+                "stop": 1792972977.5502996,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_query_clothing_shoes",
+                "status": "passed",
+                "duration": 0.005432125000879751,
+                "start": 1792972977.5505087,
+                "stop": 1792972977.556221,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_query_food_fruits",
+                "status": "passed",
+                "duration": 0.00545458300075552,
+                "start": 1792972977.5564272,
+                "stop": 1792972977.5622325,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_query_books_fiction",
+                "status": "passed",
+                "duration": 0.005612457000097493,
+                "start": 1792972977.562449,
+                "stop": 1792972977.5683627,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_query_nonexistent_combination",
+                "status": "passed",
+                "duration": 0.005552167000132613,
+                "start": 1792972977.5685596,
+                "stop": 1792972977.5744147,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_query_missing_type1",
+                "status": "passed",
+                "duration": 0.008429624998825602,
+                "start": 1792972977.5746117,
+                "stop": 1792972977.5833948,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_query_missing_type2",
+                "status": "passed",
+                "duration": 0.005332916000043042,
+                "start": 1792972977.5835817,
+                "stop": 1792972977.5891917,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_query_performance",
+                "status": "passed",
+                "duration": 0.005333373999746982,
+                "start": 1792972977.5894163,
+                "stop": 1792972977.595032,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_multiple_records_same_combination",
+                "status": "passed",
+                "duration": 0.005277791000480647,
+                "start": 1792972977.5952249,
+                "stop": 1792972977.6007724,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_all_records_queryable",
+                "status": "passed",
+                "duration": 0.03458995900109585,
+                "start": 1792972977.6009617,
+                "stop": 1792972977.6360016,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_concurrent_queries",
+                "status": "passed",
+                "duration": 0.009373332999530248,
+                "start": 1792972977.6362545,
+                "stop": 1792972977.6460059,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_single_query_loads_exactly_one_type1_and_one_type2",
+                "status": "passed",
+                "duration": 0.006327039998723194,
+                "start": 1792972977.6462145,
+                "stop": 1792972977.6528623,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_multiple_queries_each_loads_only_requested_data",
+                "status": "passed",
+                "duration": 0.008961874000306125,
+                "start": 1792972977.653042,
+                "stop": 1792972977.6623492,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_catastrophic_memory_inefficiency_detection",
+                "status": "passed",
+                "duration": 0.005851583002367988,
+                "start": 1792972977.6625497,
+                "stop": 1792972977.6687107,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            },
+            {
+                "name": "test_queries.py::test_empty_query_loads_nothing",
+                "status": "passed",
+                "duration": 0.005689749999874039,
+                "start": 1792972977.668894,
+                "stop": 1792972977.674877,
+                "retries": 0,
+                "file_path": "test_queries.py"
+            }
+        ]
+    }
+}

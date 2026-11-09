@@ -1,0 +1,11 @@
+Skipping image OS validation for hb__8dffd613cc0f92c75c838a6d0c093567: docker inspect returned 1
+Parser warnings: - Extra text detected before JSON object
+Trajectory dumped to jobs/limits-2/submission_a63937a5_20251224_152__XhFZ3dk/agent/trajectory.json
+Parser warnings: - Extra text detected before JSON object
+- Command 1 should end with newline when followed by another command. Otherwise the two commands will be concatenated together on the same line.
+Trajectory dumped to jobs/limits-2/submission_a63937a5_20251224_152__XhFZ3dk/agent/trajectory.json
+Parser warnings: - Extra text detected before JSON object
+Trajectory dumped to jobs/limits-2/submission_a63937a5_20251224_152__XhFZ3dk/agent/trajectory.json
+Trajectory dumped to jobs/limits-2/submission_a63937a5_20251224_152__XhFZ3dk/agent/trajectory.json
+Trajectory dumped to jobs/limits-2/submission_a63937a5_20251224_152__XhFZ3dk/agent/trajectory.json
+Collecting main service artifacts

@@ -1,0 +1,8 @@
+Skipping image OS validation for hb__2d11ab8d335d5e75374b2d6c7a089cef: docker inspect returned 1
+Parser warnings: - Extra text detected before JSON object
+Trajectory dumped to jobs/nolimits-1/convolutional-layers__fEttWhU/agent/trajectory.json
+Trajectory dumped to jobs/nolimits-1/convolutional-layers__fEttWhU/agent/trajectory.json
+Trajectory dumped to jobs/nolimits-1/convolutional-layers__fEttWhU/agent/trajectory.json
+Trajectory dumped to jobs/nolimits-1/convolutional-layers__fEttWhU/agent/trajectory.json
+Trajectory dumped to jobs/nolimits-1/convolutional-layers__fEttWhU/agent/trajectory.json
+Collecting main service artifacts

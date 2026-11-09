@@ -1,0 +1,39 @@
+============================================================
+Stage 1: Finding ZIP archives
+============================================================
+First ZIP at offset: 80
+Second ZIP at offset: 336
+
+============================================================
+Stage 2: Extracting and parsing PNG
+============================================================
+PNG size: 503 bytes
+tEXt chunk at offset: 33
+CRC valid: True
+Extracted text length: 416
+
+============================================================
+Stage 3: Decoding encoding chain
+============================================================
+Found XOR key: 90
+Decoded intermediate length: 312
+
+============================================================
+Stage 4: Deriving multi-byte XOR key
+============================================================
+Derived XOR key: DEAD
+Key length: 2
+Decrypted data length: 232
+
+============================================================
+Stage 5: Reassembling chunks
+============================================================
+Total chunks: 5
+Chunk sequence (as found): [3, 1, 2, 4, 0]
+Final message: SECRET_DATA:The exfiltration server is located at 192.168.42.100 port 8443. Credentials are admin:Str0ngP@ssw0rd!
+
+============================================================
+Writing output
+============================================================
+Output written to /app/output/extraction_chain.json
+Done!

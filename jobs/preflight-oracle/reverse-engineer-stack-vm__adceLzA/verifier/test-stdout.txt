@@ -1,0 +1,99 @@
+Downloading cpython-3.13.9-linux-aarch64-gnu (download) (27.1MiB)
+ Downloading cpython-3.13.9-linux-aarch64-gnu (download)
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 6 packages in 6ms
+============================= test session starts ==============================
+platform linux -- Python 3.13.9, pytest-8.4.1, pluggy-1.7.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 21 items
+
+../tests/test_outputs.py FF...................                           [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_validator_integrity ___________________________
+
+    def test_validator_integrity():
+        """Verify that the validator binary has not been modified"""
+>       verify_validator_integrity()
+
+/tests/test_outputs.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def verify_validator_integrity():
+        """Verify that /app/validator has not been tampered with"""
+        validator_path = "/app/validator"
+    
+        if not os.path.exists(validator_path):
+            pytest.fail("Validator binary is missing")
+    
+        # Calculate current checksum of the validator binary
+        with open(validator_path, "rb") as f:
+            current_checksum = hashlib.sha256(f.read()).hexdigest()
+    
+        # Compare against expected checksum embedded in test code
+        # This checksum is calculated during Docker build and cannot be modified by the agent
+        if EXPECTED_VALIDATOR_CHECKSUM == "PLACEHOLDER_CHECKSUM_WILL_BE_REPLACED_DURING_BUILD":
+            pytest.fail("Validator checksum not properly embedded in test code - build process failed")
+    
+        if current_checksum != EXPECTED_VALIDATOR_CHECKSUM:
+>           pytest.fail(f"Validator binary has been tampered with! Expected {EXPECTED_VALIDATOR_CHECKSUM}, got {current_checksum}")
+E           Failed: Validator binary has been tampered with! Expected 9ce4a624ef77c18411fc7074fde932a7db051d183d0ac61facfe743813b63305, got bc695175cc8070ebf69ef36eda5fba97e6a4dc64d1be4223332735a7c9abb3d0
+
+/tests/test_outputs.py:40: Failed
+___________________________ test_validator_with_flag ___________________________
+
+    def test_validator_with_flag():
+        """Verify that the validator binary grants access when given the flag content"""
+        # First verify integrity to prevent cheating
+>       verify_validator_integrity()
+
+/tests/test_outputs.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def verify_validator_integrity():
+        """Verify that /app/validator has not been tampered with"""
+        validator_path = "/app/validator"
+    
+        if not os.path.exists(validator_path):
+            pytest.fail("Validator binary is missing")
+    
+        # Calculate current checksum of the validator binary
+        with open(validator_path, "rb") as f:
+            current_checksum = hashlib.sha256(f.read()).hexdigest()
+    
+        # Compare against expected checksum embedded in test code
+        # This checksum is calculated during Docker build and cannot be modified by the agent
+        if EXPECTED_VALIDATOR_CHECKSUM == "PLACEHOLDER_CHECKSUM_WILL_BE_REPLACED_DURING_BUILD":
+            pytest.fail("Validator checksum not properly embedded in test code - build process failed")
+    
+        if current_checksum != EXPECTED_VALIDATOR_CHECKSUM:
+>           pytest.fail(f"Validator binary has been tampered with! Expected {EXPECTED_VALIDATOR_CHECKSUM}, got {current_checksum}")
+E           Failed: Validator binary has been tampered with! Expected 9ce4a624ef77c18411fc7074fde932a7db051d183d0ac61facfe743813b63305, got bc695175cc8070ebf69ef36eda5fba97e6a4dc64d1be4223332735a7c9abb3d0
+
+/tests/test_outputs.py:40: Failed
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_outputs.py::test_flag_exists
+PASSED ../tests/test_outputs.py::test_flag_not_empty
+PASSED ../tests/test_outputs.py::test_flag_no_trailing_newline
+PASSED ../tests/test_outputs.py::test_flag_no_leading_whitespace
+PASSED ../tests/test_outputs.py::test_flag_no_trailing_whitespace
+PASSED ../tests/test_outputs.py::test_flag_alphanumeric_underscore
+PASSED ../tests/test_outputs.py::test_flag_correct_length
+PASSED ../tests/test_outputs.py::test_validator_rejects_empty
+PASSED ../tests/test_outputs.py::test_validator_rejects_wrong_length_short
+PASSED ../tests/test_outputs.py::test_validator_rejects_wrong_length_long
+PASSED ../tests/test_outputs.py::test_validator_rejects_similar_but_wrong
+PASSED ../tests/test_outputs.py::test_validator_rejects_random_alphanumeric
+PASSED ../tests/test_outputs.py::test_validator_executable
+PASSED ../tests/test_outputs.py::test_flag_reproducible
+PASSED ../tests/test_outputs.py::test_flag_exact_output_format
+PASSED ../tests/test_outputs.py::test_validator_no_args
+PASSED ../tests/test_outputs.py::test_flag_is_valid_utf8
+PASSED ../tests/test_outputs.py::test_validator_case_sensitive
+PASSED ../tests/test_outputs.py::test_validator_position_sensitive
+FAILED ../tests/test_outputs.py::test_validator_integrity - Failed: Validator...
+FAILED ../tests/test_outputs.py::test_validator_with_flag - Failed: Validator...
+========================= 2 failed, 19 passed in 0.10s =========================

@@ -1,0 +1,254 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 25,
+            "passed": 22,
+            "failed": 3,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792977917.9875143,
+            "stop": 1792977918.1076913
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::TestTimelineExists::test_timeline_file_exists",
+                "status": "passed",
+                "duration": 0.0010473759994056309,
+                "start": 1792977918.0507376,
+                "stop": 1792977918.0521064,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineExists::test_timeline_is_not_empty",
+                "status": "passed",
+                "duration": 0.0007205829988379264,
+                "start": 1792977918.0522554,
+                "stop": 1792977918.0531635,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineFormat::test_timeline_has_exactly_required_columns",
+                "status": "passed",
+                "duration": 0.0005543329989450285,
+                "start": 1792977918.0533023,
+                "stop": 1792977918.0540094,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineFormat::test_timestamp_format_is_iso8601",
+                "status": "passed",
+                "duration": 0.0006659589998889714,
+                "start": 1792977918.0541234,
+                "stop": 1792977918.0549238,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineFormat::test_source_values_are_valid",
+                "status": "passed",
+                "duration": 0.0006216249985300237,
+                "start": 1792977918.0550206,
+                "stop": 1792977918.0557942,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineFormat::test_event_type_values_are_valid",
+                "status": "passed",
+                "duration": 0.0005290829994919477,
+                "start": 1792977918.0559158,
+                "stop": 1792977918.0565886,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineOrdering::test_timeline_is_sorted_chronologically",
+                "status": "passed",
+                "duration": 0.010798667000926798,
+                "start": 1792977918.056683,
+                "stop": 1792977918.0677934,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_contains_package_install_events",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0009301239988417365,
+                "start": 1792977918.0680075,
+                "stop": 1792977918.0786307,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestTimelineCompleteness object at 0xffffb300c910>\n\n    def test_timeline_contains_package_install_events(self):\n        \"\"\"Verify timeline includes package installation events from multiple sources.\"\"\"\n        timeline_path = Path(\"/app/timeline.csv\")\n        with open(timeline_path, \"r\") as f:\n            reader = csv.DictReader(f)\n            rows = list(reader)\n    \n        install_events = [\n            r for r in rows if r.get(\"event_type\", \"\").lower() == \"package_install\"\n        ]\n>       assert len(install_events) >= 5, (\n            f\"Expected at least 5 package_install events to capture attack progression, found {len(install_events)}\"\n        )\nE       AssertionError: Expected at least 5 package_install events to capture attack progression, found 1\nE       assert 1 >= 5\nE        +  where 1 = len([{'details': 'requsets==2.31.1 installed per pip_packages.json', 'event_type': 'package_install', 'source': 'pip', 'timestamp': '2024-03-15 11:00:00'}])\n\n/tests/test_outputs.py:182: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_contains_persistence_events",
+                "status": "passed",
+                "duration": 0.0008086249999905704,
+                "start": 1792977918.078837,
+                "stop": 1792977918.0798676,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_contains_exfiltration_events",
+                "status": "passed",
+                "duration": 0.0005292500027280767,
+                "start": 1792977918.0800238,
+                "stop": 1792977918.0807033,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_has_minimum_event_count",
+                "status": "passed",
+                "duration": 0.0004978749984729802,
+                "start": 1792977918.0808039,
+                "stop": 1792977918.0814269,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_contains_credential_harvesting",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.001027082000291557,
+                "start": 1792977918.0815341,
+                "stop": 1792977918.08767,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestTimelineCompleteness object at 0xffffb3005d90>\n\n    def test_timeline_contains_credential_harvesting(self):\n        \"\"\"Verify timeline includes credential file access events.\"\"\"\n        timeline_path = Path(\"/app/timeline.csv\")\n        with open(timeline_path, \"r\") as f:\n            reader = csv.DictReader(f)\n            rows = list(reader)\n    \n        cred_events = [\n            r for r in rows\n            if r.get(\"event_type\", \"\").lower() == \"file_read\"\n            and any(kw in r.get(\"details\", \"\").lower()\n                   for kw in (\".ssh\", \".aws\", \"credentials\", \"id_rsa\", \".kube\", \".npmrc\"))\n        ]\n>       assert len(cred_events) >= 2, (\n            f\"Expected at least 2 credential harvesting events, found {len(cred_events)}. \"\n            \"The attack involved reading multiple sensitive files.\"\n        )\nE       AssertionError: Expected at least 2 credential harvesting events, found 0. The attack involved reading multiple sensitive files.\nE       assert 0 >= 2\nE        +  where 0 = len([])\n\n/tests/test_outputs.py:239: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::TestTimelineCompleteness::test_timeline_documents_malicious_package",
+                "status": "passed",
+                "duration": 0.0008372069987672148,
+                "start": 1792977918.0878656,
+                "stop": 1792977918.0889013,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsExists::test_findings_file_exists",
+                "status": "passed",
+                "duration": 0.0006883759979245951,
+                "start": 1792977918.08902,
+                "stop": 1792977918.0900009,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsExists::test_findings_has_three_lines",
+                "status": "passed",
+                "duration": 0.000781248996645445,
+                "start": 1792977918.0901182,
+                "stop": 1792977918.0910914,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsFormat::test_findings_has_malicious_package_line",
+                "status": "passed",
+                "duration": 0.0006706660005875165,
+                "start": 1792977918.0912273,
+                "stop": 1792977918.0920885,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsFormat::test_findings_has_persistence_path_line",
+                "status": "passed",
+                "duration": 0.000727249000192387,
+                "start": 1792977918.0922227,
+                "stop": 1792977918.093132,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestFindingsFormat::test_findings_has_exfil_destination_line",
+                "status": "passed",
+                "duration": 0.0006204590008564992,
+                "start": 1792977918.0932627,
+                "stop": 1792977918.0940506,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestMaliciousPackageIdentification::test_malicious_package_identified_correctly",
+                "status": "passed",
+                "duration": 0.0007653739976376528,
+                "start": 1792977918.094173,
+                "stop": 1792977918.095085,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestPersistenceDetection::test_persistence_path_identified_correctly",
+                "status": "passed",
+                "duration": 0.0006245420008781366,
+                "start": 1792977918.0952086,
+                "stop": 1792977918.0959818,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestPersistenceDetection::test_persistence_path_is_absolute",
+                "status": "passed",
+                "duration": 0.0006332500015560072,
+                "start": 1792977918.0960789,
+                "stop": 1792977918.0968752,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestExfiltrationIdentification::test_exfil_destination_identified_correctly",
+                "status": "passed",
+                "duration": 0.0006953760021133348,
+                "start": 1792977918.0969775,
+                "stop": 1792977918.0978093,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestExfiltrationIdentification::test_exfil_ip_format_is_valid",
+                "status": "passed",
+                "duration": 0.0009217089991579996,
+                "start": 1792977918.0979168,
+                "stop": 1792977918.0990615,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestAttackChainCorrelation::test_attack_sequence_is_logical",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0012482920010370435,
+                "start": 1792977918.099204,
+                "stop": 1792977918.1059806,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "self = <test_outputs.TestAttackChainCorrelation object at 0xffffb300d6d0>\n\n    def test_attack_sequence_is_logical(self):\n        \"\"\"\n        Verify that attack events occur in logical temporal sequence.\n    \n        Expected sequence:\n        1. Malicious package installation\n        2. Persistence mechanism creation\n        3. Credential harvesting\n        4. C2 connection establishment\n        5. Data exfiltration\n        \"\"\"\n        timeline_path = Path(\"/app/timeline.csv\")\n        with open(timeline_path, \"r\") as f:\n            reader = csv.DictReader(f)\n            rows = list(reader)\n    \n        malicious_install_time = None\n        first_persistence_time = None\n        first_exfil_time = None\n    \n        for row in rows:\n            ts_str = row.get(\"timestamp\", \"\").strip()\n            details = row.get(\"details\", \"\").lower()\n            event_type = row.get(\"event_type\", \"\").lower()\n    \n            try:\n                ts = datetime.strptime(ts_str, \"%Y-%m-%d %H:%M:%S\")\n            except ValueError:\n                continue\n    \n            if \"requsets\" in details and event_type == \"package_install\":\n                if malicious_install_time is None:\n                    malicious_install_time = ts\n    \n            if event_type == \"persistence\":\n                if first_persistence_time is None:\n                    first_persistence_time = ts\n    \n            if event_type == \"exfiltration\":\n                if first_exfil_time is None:\n                    first_exfil_time = ts\n    \n        if malicious_install_time and first_persistence_time:\n>           assert malicious_install_time <= first_persistence_time, (\n                \"Persistence should occur after malicious package installation\"\n            )\nE           AssertionError: Persistence should occur after malicious package installation\nE           assert datetime.datetime(2024, 3, 15, 11, 0) <= datetime.datetime(2024, 3, 15, 10, 40, 18)\n\n/tests/test_outputs.py:489: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::TestAttackChainCorrelation::test_timeline_shows_multi_source_correlation",
+                "status": "passed",
+                "duration": 0.0009959160015569068,
+                "start": 1792977918.106221,
+                "stop": 1792977918.1074116,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

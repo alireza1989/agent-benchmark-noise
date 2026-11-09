@@ -1,0 +1,290 @@
+[?2004hroot@98339942150e:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@98339942150e:/app# clear
+[?2004l[H[J[3J[?2004hroot@98339942150e:/app# ls -la /app /app/data /app/output 2>&1; echo
+[?2004l/app:
+total 16
+drwxr-xr-x 1 root root 4096 Oct 25 21:30 .
+drwxr-xr-x 1 root root 4096 Oct 26 00:18 ..
+drwxr-xr-x 2 root root 4096 Oct 25 21:29 data
+drwxr-xr-x 2 root root 4096 Oct 25 21:30 output
+
+/app/data:
+total 3008
+drwxr-xr-x 2 root root    4096 Oct 25 21:29 .
+drwxr-xr-x 1 root root    4096 Oct 25 21:30 ..
+-rw-r--r-- 1 root root    1128 Oct 25 21:29 arms_metadata.json
+-rw-r--r-- 1 root root  135100 Oct 25 21:29 conversions.csv
+-rw-r--r-- 1 root root 2818804 Oct 25 21:29 impressions.csv
+-rw-r--r-- 1 root root  108862 Oct 25 21:29 test_contexts.csv
+
+/app/output:
+total 8
+drwxr-xr-x 2 root root 4096 Oct 25 21:30 .
+drwxr-xr-x 1 root root 4096 Oct 25 21:30 ..
+
+[?2004hroot@98339942150e:/app# head -3 /app/data/impressions.csv; echo; head -3 /app/data/conversions.csv; echo; head -3 /app/data/test_contexts.csv; echo; cat /app/data/arms_metadata.json | head -60
+[?2004limpression_id,arm_id,timestamp,hour_of_day,day_of_week,user_segment,device_type,context_feature_1,context_feature_2
+IMP_000000,0,1709340758,9,5,young,mobile,0.7797,0.5969
+IMP_000001,6,1710354874,3,3,young,desktop,0.7081,0.0206
+
+impression_id,conversion_timestamp,delay_hours,conversion_value
+IMP_000010,1709305348,10.43,3.58
+IMP_000013,1709320719,21.49,1.07
+
+context_id,timestamp,hour_of_day,day_of_week,user_segment,device_type,context_feature_1,context_feature_2
+CTX_000000,1710307872,14,2,middle,mobile,0.747,0.0933
+CTX_000001,1710319811,17,2,senior,mobile,0.9059,0.1018
+
+{
+  "arms": [
+    {
+      "arm_id": 0,
+      "name": "Campaign A",
+      "category": "electronics",
+      "base_bid": 0.3
+    },
+    {
+      "arm_id": 1,
+      "name": "Campaign B",
+      "category": "fashion",
+      "base_bid": 0.4
+    },
+    {
+      "arm_id": 2,
+      "name": "Campaign C",
+      "category": "home",
+      "base_bid": 0.5
+    },
+    {
+      "arm_id": 3,
+      "name": "Campaign D",
+      "category": "sports",
+      "base_bid": 0.6
+    },
+    {
+      "arm_id": 4,
+      "name": "Campaign E",
+      "category": "beauty",
+      "base_bid": 0.7
+    },
+    {
+      "arm_id": 5,
+      "name": "Campaign F",
+      "category": "food",
+      "base_bid": 0.8
+    },
+    {
+      "arm_id": 6,
+      "name": "Campaign G",
+      "category": "travel",
+      "base_bid": 0.9
+    },
+    {
+      "arm_id": 7,
+      "name": "Campaign H",
+      "category": "finance",
+      "base_bid": 1.0
+    },
+    {
+      "arm_id": 8,
+      "name": "Campaign I",
+      "category": "entertainment",
+      "base_bid": 1.1
+    },
+    {
+      "arm_id": 9,
+      "name": "Campaign J",
+      "category": "health",
+[?2004hroot@98339942150e:/app# wc -l /app/data/*.csv; which python3; python3 -c 'import pandas, numpy, scipy; print(pandas.__version__, numpy.__version__, scipy.__version__)'
+[?2004l   4175 /app/data/conversions.csv
+  50001 /app/data/impressions.csv
+   2001 /app/data/test_contexts.csv
+  56177 total
+/usr/local/bin/python3
+2.2.3 2.1.3 1.14.1
+[?2004hroot@98339942150e:/app# cd /app && python3 -c "import pandas as pd, numpy as np; imp=pd.read_csv('data/impressions.csv'); conv=pd.read_csv('data/conversions.csv'); ctx=pd.read_csv('data/test_contexts.csv'); print(imp.timestamp.min(), imp.timestamp.max(), ctx.timestamp.min(), ctx.timestamp.max()); print(conv.delay_hours.describe()); ld=np.log(conv.delay_hours); print('log mu', ld.mean(), 'log sd', ld.std(ddof=0), 'sd ddof1', ld.std()); print(conv.conversion_value.describe()); print('dup conv ids', conv.impression_id.duplicated().sum(), 'unmatched', (~conv.impression_id.isin(imp.impression_id)).sum()); m=imp.merge(conv, on='impression_id', how='left'); g=m.groupby('arm_id').agg(n=('impression_id','size'), c=('delay_hours', lambda s: s.notna().sum()), v=('conversion_value','mean')); print(g); print(imp.arm_id.value_counts().sort_index().values); print(imp.user_segment.value_counts(), imp.device_type.value_counts())"
+[?2004l1709218856 1710428377 1710255673 1710428220
+count    4174.000000
+mean       17.422149
+std        16.145733
+min         0.580000
+25%         6.382500
+50%        11.865000
+75%        22.710000
+max        72.000000
+Name: delay_hours, dtype: float64
+log mu 2.4757300431035563 log sd 0.8979817729076958 sd ddof1 0.8980893607320689
+count    4174.000000
+mean        2.241198
+std         1.064556
+min         0.550000
+25%         1.522500
+50%         1.970000
+75%         2.660000
+max         9.250000
+Name: conversion_value, dtype: float64
+dup conv ids 0 unmatched 0
+           n     c         v
+arm_id                      
+0       6767   417  2.588441
+1       8453   817  1.878115
+2       3187   139  4.470504
+3       8584  1033  1.587299
+4       5005   390  2.255103
+5       4285   300  3.151900
+6       4974   442  2.065204
+7       2917   179  3.751117
+8       3303   375  1.785200
+9       2525    82  4.891463
+[6767 8453 3187 8584 5005 4285 4974 2917 3303 2525]
+user_segment
+young     16738
+senior    16684
+middle    16578
+Name: count, dtype: int64 device_type
+mobile     24943
+desktop    17361
+tablet      7696
+Name: count, dtype: int64
+[?2004hroot@98339942150e:/app# cat > /app/solve.py << 'EOF'
+[?2004l[?2004h> import pandas as pd, numpy as np, json
+[?2004l[?2004h> from scipy.stats import norm, gamma
+[?2004l[?2004h> imp = pd.read_csv('data/impressions.csv')
+[?2004l[?2004h> conv = pd.read_csv('data/conversions.csv')
+[?2004l[?2004h> ctx = pd.read_csv('data/test_contexts.csv')
+[?2004l[?2004h> arms = json.load(open('data/arms_metadata.json'))['arms']
+[?2004l[?2004h> lnd = np.log(conv.delay_hours.values)
+[?2004l[?2004h> mu = lnd.mean()
+[?2004l[?2004h> sig = lnd.std(ddof=0)
+[?2004l[?2004h> T = imp.timestamp.max()
+[?2004l[?2004h> m = imp.merge(conv[['impression_id', 'conversion_value', 'delay_hours']], on='impression_id', how='left')
+[?2004l[?2004h> m['conv'] = m.delay_hours.notna().astype(int)
+[?2004l[?2004h> m['v'] = m.conversion_value.fillna(0.0)
+[?2004l[?2004h> age = np.clip((T - m.timestamp.values) / 3600.0, 1e-9, None)
+[?2004l[?2004h> F = norm.cdf((np.log(age) - mu) / sig)
+[?2004l[?2004h> m['F'] = np.where(age >= 72, 1.0, F)
+[?2004l[?2004h> K = 100.0
+[?2004l[?2004h> OVERALL = m.conv.sum() / m.F.sum()
+[?2004l[?2004h> g = m.groupby('arm_id').agg(n=('conv', 'size'), c=('conv', 'sum'), E=('F', 'sum'))
+[?2004l[?2004h> g['rate'] = (g.c + K * OVERALL) / (g.E + K)
+[?2004l[?2004h> val = conv.merge(imp[['impression_id', 'arm_id']], on='impression_id').groupby('arm_id').conversion_value.mean()
+[?2004l[?2004h> g['val'] = val
+[?2004l[?2004h> m['cell'] = list(zip(m.arm_id, m.user_segment, m.device_type))
+[?2004l[?2004h> cell = m.groupby('cell').agg(c=('conv', 'sum'), E=('F', 'sum'))
+[?2004l[?2004h> def cell_stats(arm, seg, dev):
+[?2004l[?2004h>     r = g.loc[arm, 'rate']
+[?2004l[?2004h>     key = (arm, seg, dev)
+[?2004l[?2004h>     if key in cell.index:
+[?2004l[?2004h>         c = cell.loc[key, 'c']; E = cell.loc[key, 'E']
+[?2004l[?2004h>     else:
+[?2004l[?2004h>         c = 0.0; E = 0.0
+[?2004l[?2004h>     a = c + K * r
+[?2004l[?2004h>     b = E + K
+[?2004l[?2004h>     rate = a / b
+[?2004l[?2004h>     lo = gamma.ppf(0.1, a, scale=1.0 / b)
+[?2004l[?2004h>     hi = gamma.ppf(0.9, a + 1.0, scale=1.0 / b)
+[?2004l[?2004h>     return rate, lo, hi
+[?2004l[?2004h> rows = []
+[?2004l[?2004h> for _, row in ctx.iterrows():
+[?2004l[?2004h>     best = None
+[?2004l[?2004h>     for arm in range(10):
+[?2004l[?2004h>         rate, lo, hi = cell_stats(arm, row.user_segment, row.device_type)
+[?2004l[?2004h>         v = g.loc[arm, 'val']
+[?2004l[?2004h>         ev = rate * v
+[?2004l[?2004h>         if best is None or ev > best[1]:
+[?2004l[?2004h>             best = (arm, ev, lo * v, hi * v)
+[?2004l[?2004h>     arm, ev, lo, hi = best
+[?2004l[?2004h>     lo = min(lo, ev); hi = max(hi, ev)
+[?2004l[?2004h>     rows.append((row.context_id, int(arm), float(ev), float(max(lo, 0.0)), float(hi)))
+[?2004l[?2004h> pred = pd.DataFrame(rows, columns=['context_id', 'selected_arm', 'expected_reward', 'confidence_lower', 'confidence_upper'])
+[?2004l[?2004h> pred.to_csv('output/predictions.csv', index=False)
+[?2004l[?2004h> stats = pd.DataFrame({'arm_id': g.index, 'estimated_conversion_rate': g.rate.values, 'estimated_avg_value': g.val.values, 'total_impressions': g.n.values, 'total_conversions': conv.merge(imp[['impression_id', 'arm_id']], on='impression_id').groupby('arm_id').size().reindex(g.index).values})
+[?2004l[?2004h> stats.to_csv('output/arm_statistics.csv', index=False)
+[?2004l[?2004h> med = float(np.exp(mu))
+[?2004l[?2004h> p90 = float(np.exp(mu + norm.ppf(0.9) * sig))
+[?2004l[?2004h> out = {'distribution_type': 'lognormal', 'parameters': {'mu': float(mu), 'sigma': float(sig)}, 'median_delay_hours': med, 'p90_delay_hours': p90, 'conversion_rate_estimate': float(OVERALL)}
+[?2004l[?2004h> json.dump(out, open('output/delay_model.json', 'w'), indent=2)
+[?2004l[?2004h> print(out)
+[?2004l[?2004h> print(pred.describe())
+[?2004l[?2004h> print(pred.selected_arm.value_counts().sort_index())
+[?2004l[?2004h> print(stats)
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@98339942150e:/app# python3 solve.py && wc -l output/*.csv && head -3 output/predictions.csv
+[?2004lTraceback (most recent call last):
+  File "/app/solve.py", line 42, in <module>
+    rate, lo, hi = cell_stats(arm, row.user_segment, row.device_type)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/solve.py", line 29, in cell_stats
+    c = cell.loc[key, 'c']; E = cell.loc[key, 'E']
+        ~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pandas/core/indexing.py", line 1184, in __getitem__
+    return self._getitem_tuple(key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pandas/core/indexing.py", line 1377, in _getitem_tuple
+    return self._getitem_tuple_same_dim(tup)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pandas/core/indexing.py", line 1023, in _getitem_tuple_same_dim
+    assert retval.ndim == self.ndim
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+[?2004hroot@98339942150e:/app# sed -i "/m\['cell'\]/d" solve.py && sed -i "s/^cell = .*/cell = m.groupby(['arm_id','user_segment','device_type']).agg(c=('conv','sum'), E=('F','sum')).to_dict('index')/" solve.py && sed -i 's/if key in cell.index:/if key in cell:/' solve.py && sed -i "s/c = cell.loc\[key, 'c'\]; E = cell.loc\[key, 'E'\]/c = cell[key]['c']; E = cell[key]['E']/" solve.py && grep -n 'cell' solve.py
+[?2004l23:cell = m.groupby(['arm_id','user_segment','device_type']).agg(c=('conv','sum'), E=('F','sum')).to_dict('index')
+24:def cell_stats(arm, seg, dev):
+27:    if key in cell:
+28:        c = cell[key]['c']; E = cell[key]['E']
+41:        rate, lo, hi = cell_stats(arm, row.user_segment, row.device_type)
+[?2004hroot@98339942150e:/app# python3 solve.py && wc -l output/*.csv && head -3 output/predictions.csv
+[?2004l{'distribution_type': 'lognormal', 'parameters': {'mu': 2.4757300431035563, 'sigma': 0.8979817729076958}, 'median_delay_hours': 11.89038443846117, 'p90_delay_hours': 37.582555377256135, 'conversion_rate_estimate': 0.08792209844796531}
+       selected_arm  expected_reward  confidence_lower  confidence_upper
+count    2000.00000      2000.000000       2000.000000       2000.000000
+mean        5.50500         0.256693          0.206547          0.317187
+std         1.11696         0.054046          0.041364          0.073435
+min         4.00000         0.183422          0.149506          0.223494
+25%         5.00000         0.210977          0.181942          0.243809
+50%         5.00000         0.255534          0.215046          0.313276
+75%         7.00000         0.288462          0.238238          0.355880
+max         7.00000         0.361824          0.289416          0.448610
+selected_arm
+4     328
+5    1003
+7     669
+Name: count, dtype: int64
+   arm_id  estimated_conversion_rate  estimated_avg_value  total_impressions  total_conversions
+0       0                   0.065244             2.588441               6767                417
+1       1                   0.101422             1.878115               8453                817
+2       2                   0.047388             4.470504               3187                139
+3       3                   0.126364             1.587299               8584               1033
+4       4                   0.082632             2.255103               5005                390
+5       5                   0.073772             3.151900               4285                300
+6       6                   0.093100             2.065204               4974                442
+7       7                   0.065260             3.751117               2917                179
+8       8                   0.119436             1.785200               3303                375
+9       9                   0.036353             4.891463               2525                 82
+    11 output/arm_statistics.csv
+  2001 output/predictions.csv
+  2012 total
+context_id,selected_arm,expected_reward,confidence_lower,confidence_upper
+CTX_000000,4,0.21097726755867394,0.1819417323844905,0.24380923512360228
+CTX_000001,5,0.1834223428535963,0.14950640754422975,0.22349436140916284
+[?2004hroot@98339942150e:/app# ls -la /app/output && head -3 /app/output/arm_statistics.csv && cat /app/output/delay_model.json
+[?2004ltotal 160
+drwxr-xr-x 1 root root   4096 Oct 26 00:19 .
+drwxr-xr-x 1 root root   4096 Oct 26 00:19 ..
+-rw-r--r-- 1 root root    587 Oct 26 00:19 arm_statistics.csv
+-rw-r--r-- 1 root root    258 Oct 26 00:19 delay_model.json
+-rw-r--r-- 1 root root 142948 Oct 26 00:19 predictions.csv
+arm_id,estimated_conversion_rate,estimated_avg_value,total_impressions,total_conversions
+0,0.0652442381827775,2.5884412470023985,6767,417
+1,0.1014215396949315,1.8781150550795596,8453,817
+{
+  "distribution_type": "lognormal",
+  "parameters": {
+    "mu": 2.4757300431035563,
+    "sigma": 0.8979817729076958
+  },
+  "median_delay_hours": 11.89038443846117,
+  "p90_delay_hours": 37.582555377256135,
+  "conversion_rate_estimate": 0.08792209844796531
+}[?2004hroot@98339942150e:/app# 

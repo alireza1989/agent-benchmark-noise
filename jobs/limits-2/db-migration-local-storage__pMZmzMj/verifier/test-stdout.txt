@@ -1,0 +1,98 @@
+Waiting for API to start...
+API started successfully
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 14 packages in 15ms
+============================= test session starts ==============================
+platform linux -- Python 3.11.17, pytest-8.4.1, pluggy-1.7.0 -- /root/.cache/uv/archive-v0/Eb7fcGAb70SlBPZdeKpSe/bin/python
+cachedir: .pytest_cache
+rootdir: /tests
+plugins: anyio-4.15.1, json-ctrf-0.3.5
+collecting ... collected 18 items
+
+../tests/test_queries.py::test_service_is_running PASSED                 [  5%]
+../tests/test_queries.py::test_stats_endpoint PASSED                     [ 11%]
+../tests/test_queries.py::test_query_electronics_phones PASSED           [ 16%]
+../tests/test_queries.py::test_query_furniture_chairs PASSED             [ 22%]
+../tests/test_queries.py::test_query_clothing_shoes PASSED               [ 27%]
+../tests/test_queries.py::test_query_food_fruits PASSED                  [ 33%]
+../tests/test_queries.py::test_query_books_fiction PASSED                [ 38%]
+../tests/test_queries.py::test_query_nonexistent_combination PASSED      [ 44%]
+../tests/test_queries.py::test_query_missing_type1 PASSED                [ 50%]
+../tests/test_queries.py::test_query_missing_type2 PASSED                [ 55%]
+../tests/test_queries.py::test_query_performance PASSED                  [ 61%]
+../tests/test_queries.py::test_multiple_records_same_combination PASSED  [ 66%]
+../tests/test_queries.py::test_all_records_queryable PASSED              [ 72%]
+../tests/test_queries.py::test_concurrent_queries PASSED                 [ 77%]
+../tests/test_queries.py::test_single_query_loads_exactly_one_type1_and_one_type2 PASSED [ 83%]
+../tests/test_queries.py::test_multiple_queries_each_loads_only_requested_data PASSED [ 88%]
+../tests/test_queries.py::test_catastrophic_memory_inefficiency_detection PASSED [ 94%]
+../tests/test_queries.py::test_empty_query_loads_nothing PASSED          [100%]
+
+==================================== PASSES ====================================
+___________ test_single_query_loads_exactly_one_type1_and_one_type2 ____________
+----------------------------- Captured stdout call -----------------------------
+
+=== Single Query Efficiency ===
+Query: type1=electronics, type2=phones
+Loaded Type1 values: ['electronics']
+Loaded Type2 values: ['phones']
+✅ PASS: Loaded exactly 1 Type1 and 1 Type2
+_____________ test_multiple_queries_each_loads_only_requested_data _____________
+----------------------------- Captured stdout call -----------------------------
+
+=== Multiple Query Test: furniture/chairs ===
+Loaded Type1 values: ['furniture']
+Loaded Type2 values: ['chairs']
+✅ PASS: Query loaded exactly its own Type1 and Type2
+
+=== Multiple Query Test: clothing/shoes ===
+Loaded Type1 values: ['clothing']
+Loaded Type2 values: ['shoes']
+✅ PASS: Query loaded exactly its own Type1 and Type2
+
+=== Multiple Query Test: food/fruits ===
+Loaded Type1 values: ['food']
+Loaded Type2 values: ['fruits']
+✅ PASS: Query loaded exactly its own Type1 and Type2
+_______________ test_catastrophic_memory_inefficiency_detection ________________
+----------------------------- Captured stdout call -----------------------------
+
+=== MEMORY EFFICIENCY CHECK ===
+Query: type1=electronics, type2=phones
+Loaded into memory: 1 Type1, 1 Type2
+Type1 loaded: ['electronics']
+Type2 loaded: ['phones']
+
+✅ PASS: Optimal memory efficiency
+   Loaded exactly 1 Type1 ('electronics') and 1 Type2 ('phones')
+________________________ test_empty_query_loads_nothing ________________________
+----------------------------- Captured stdout call -----------------------------
+
+=== Empty Query Test ===
+Query: type1=nonexistent, type2=invalid
+Loaded Type1 values: []
+Loaded Type2 values: []
+✅ PASS: No data loaded for non-existent combination
+=========================== short test summary info ============================
+PASSED ../tests/test_queries.py::test_service_is_running
+PASSED ../tests/test_queries.py::test_stats_endpoint
+PASSED ../tests/test_queries.py::test_query_electronics_phones
+PASSED ../tests/test_queries.py::test_query_furniture_chairs
+PASSED ../tests/test_queries.py::test_query_clothing_shoes
+PASSED ../tests/test_queries.py::test_query_food_fruits
+PASSED ../tests/test_queries.py::test_query_books_fiction
+PASSED ../tests/test_queries.py::test_query_nonexistent_combination
+PASSED ../tests/test_queries.py::test_query_missing_type1
+PASSED ../tests/test_queries.py::test_query_missing_type2
+PASSED ../tests/test_queries.py::test_query_performance
+PASSED ../tests/test_queries.py::test_multiple_records_same_combination
+PASSED ../tests/test_queries.py::test_all_records_queryable
+PASSED ../tests/test_queries.py::test_concurrent_queries
+PASSED ../tests/test_queries.py::test_single_query_loads_exactly_one_type1_and_one_type2
+PASSED ../tests/test_queries.py::test_multiple_queries_each_loads_only_requested_data
+PASSED ../tests/test_queries.py::test_catastrophic_memory_inefficiency_detection
+PASSED ../tests/test_queries.py::test_empty_query_loads_nothing
+============================== 18 passed in 0.25s ==============================
+Test exit code: 0
+Reward file written to /logs/verifier/reward.txt

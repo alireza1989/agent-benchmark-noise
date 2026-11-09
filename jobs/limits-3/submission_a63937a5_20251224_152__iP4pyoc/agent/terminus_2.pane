@@ -1,0 +1,102 @@
+[?2004hroot@4f53a8eae559:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@4f53a8eae559:/app# clear
+[?2004l[H[J[3J[?2004hroot@4f53a8eae559:/app# ls -la /app
+[?2004ltotal 20
+drwxr-xr-x 1 root root 4096 Oct 25 21:39 .
+drwxr-xr-x 1 root root 4096 Oct 26 01:34 ..
+-rwxr-xr-x 1 root root   46 Oct 25 21:39 bandit
+-r--r--r-- 1 root root 7944 Oct 25 21:38 bandit.pyc
+[?2004hroot@4f53a8eae559:/app# which python3; file /app/bandit | head -5
+[?2004l/usr/local/bin/python3
+bash: file: command not found
+[?2004hroot@4f53a8eae559:/app# cat /app/bandit; echo; python3 --version
+[?2004l#!/bin/bash
+exec python3 /app/bandit.pyc "$@"
+
+Python 3.11.17
+[?2004hroot@4f53a8eae559:/app# cat > /app/player.py << 'EOF'
+[?2004l[?2004h> import subprocess, sys, math
+[?2004l[?2004h> from collections import deque
+[?2004l[?2004h> 
+[?2004l[?2004h> def play(seed, W=30, c=0.5):
+[?2004l[?2004h>     p = subprocess.Popen(['/app/bandit', '--seed', str(seed)], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True, bufsize=1)
+[?2004l[?2004h>     obs = [deque(maxlen=W) for _ in range(10)]
+[?2004l[?2004h>     last = None
+[?2004l[?2004h>     done_line = None
+[?2004l[?2004h>     def readline():
+[?2004l[?2004h>         return p.stdout.readline().strip()
+[?2004l[?2004h>     line = readline()
+[?2004l[?2004h>     while not line.startswith('READY'):
+[?2004l[?2004h>         line = readline()
+[?2004l[?2004h>     while True:
+[?2004l[?2004h>         line = readline()
+[?2004l[?2004h>         if not line:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         if line.startswith('DONE'):
+[?2004l[?2004h>             done_line = line
+[?2004l[?2004h>             break
+[?2004l[?2004h>         if line.startswith('TURN'):
+[?2004l[?2004h>             t = int(line.split()[1])
+[?2004l[?2004h>             # choose arm
+[?2004l[?2004h>             best, bestv = 0, -1e9
+[?2004l[?2004h>             total_n = sum(len(o) for o in obs)
+[?2004l[?2004h>             for i in range(10):
+[?2004l[?2004h>                 n = len(obs[i])
+[?2004l[?2004h>                 if n == 0:
+[?2004l[?2004h>                     v = 1e9
+[?2004l[?2004h>                 else:
+[?2004l[?2004h>                     m = sum(obs[i]) / n
+[?2004l[?2004h>                     v = m + c * math.sqrt(math.log(max(total_n, 2)) / n)
+[?2004l[?2004h>                 if v > bestv:
+[?2004l[?2004h>                     best, bestv = i, v
+[?2004l[?2004h>             p.stdin.write(str(best) + '\n')
+[?2004l[?2004h>             p.stdin.flush()
+[?2004l[?2004h>             r_line = readline()
+[?2004l[?2004h>             while not r_line.startswith('REWARD'):
+[?2004l[?2004h>                 r_line = readline()
+[?2004l[?2004h>             r = float(r_line.split()[1])
+[?2004l[?2004h>             obs[best].append(r)
+[?2004l[?2004h>     p.wait()
+[?2004l[?2004h>     return done_line
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@4f53a8eae559:/app# echo written
+[?2004lwritten
+[?2004hroot@4f53a8eae559:/app# sed -i '$d' /app/player.py && cat >> /app/player.py << 'EOF'
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h>     res = []
+[?2004l[?2004h>     for s in [42, 43, 44]:
+[?2004l[?2004h>         d = play(s)
+[?2004l[?2004h>         print(d)
+[?2004l[?2004h>         kv = dict(x.split('=') for x in d.split()[1:])
+[?2004l[?2004h>         res.append((float(kv['total_reward']), float(kv['regret'])))
+[?2004l[?2004h>     tr = sum(r[0] for r in res) / 3
+[?2004l[?2004h>     rg = sum(r[1] for r in res) / 3
+[?2004l[?2004h>     with open('/app/answer.txt', 'w') as f:
+[?2004l[?2004h>         f.write('total_reward=%.3f\nregret=%.3f\n' % (tr, rg))
+[?2004l[?2004h>     print(open('/app/answer.txt').read())
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@4f53a8eae559:/app# python3 /app/player.py
+[?2004lDONE total_reward=1214.967 oracle_reward=1350.995 regret=136.027
+DONE total_reward=1250.479 oracle_reward=1391.051 regret=140.572
+DONE total_reward=1242.549 oracle_reward=1377.283 regret=134.733
+total_reward=1235.998
+regret=137.111
+
+[?2004hroot@4f53a8eae559:/app# ls -la /app; cat /app/answer.txt
+[?2004ltotal 304
+drwxr-xr-x 1 root root  4096 Oct 26 01:34 .
+drwxr-xr-x 1 root root  4096 Oct 26 01:34 ..
+-rw-r--r-- 1 root root 90406 Oct 26 01:34 .game_log_42.json
+-rw-r--r-- 1 root root 90428 Oct 26 01:34 .game_log_43.json
+-rw-r--r-- 1 root root 90413 Oct 26 01:34 .game_log_44.json
+-rw-r--r-- 1 root root    37 Oct 26 01:34 answer.txt
+-rwxr-xr-x 1 root root    46 Oct 25 21:39 bandit
+-r--r--r-- 1 root root  7944 Oct 25 21:38 bandit.pyc
+-rw-r--r-- 1 root root  1870 Oct 26 01:34 player.py
+total_reward=1235.998
+regret=137.111
+[?2004hroot@4f53a8eae559:/app# 

@@ -1,0 +1,214 @@
+Hit:1 http://deb.debian.org/debian bookworm InRelease
+Hit:2 http://deb.debian.org/debian bookworm-updates InRelease
+Hit:3 http://deb.debian.org/debian-security bookworm-security InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+curl is already the newest version (7.88.1-10+deb12u15).
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+downloading uv 0.9.5 aarch64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Downloading cpython-3.13.9-linux-aarch64-gnu (download) (27.1MiB)
+ Downloading cpython-3.13.9-linux-aarch64-gnu (download)
+Downloading pygments (1.2MiB)
+ Downloading pygments
+Installed 6 packages in 9ms
+============================= test session starts ==============================
+platform linux -- Python 3.13.9, pytest-8.4.1, pluggy-1.7.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 20 items
+
+../../tests/test_outputs.py .F.......sF...sss...                         [100%]
+
+=================================== FAILURES ===================================
+____________________________ test_python_app_exists ____________________________
+
+    def test_python_app_exists():
+        """Verify Python application exists and is executable."""
+        app_file = Path("/opt/myapp/app.py")
+        assert app_file.exists(), "Python app must exist at /opt/myapp/app.py"
+    
+        # Check if executable
+        import os
+        assert os.access(app_file, os.X_OK), "Python app must be executable"
+    
+        # Check for required imports and structure
+        content = app_file.read_text()
+        assert "import json" in content, "App must import json for logging"
+        assert "import logging" in content, "App must use logging module"
+        assert "import sys" in content, "App must import sys"
+>       assert "def main():" in content, "App must have main function"
+E       AssertionError: App must have main function
+E       assert 'def main():' in '#!/usr/bin/env python3\n"""myapp: emits JSON-formatted log events to stdout."""\nimport argparse\nimport datetime\nim... __name__ == \'__main__\':\n    try:\n        main(sys.argv[1:])\n    except KeyboardInterrupt:\n        sys.exit(0)\n'
+
+/tests/test_outputs.py:41: AssertionError
+_____________________ test_service_restart_loop_detection ______________________
+
+    def test_service_restart_loop_detection():
+        """Test that monitoring script actually analyzes journalctl output."""
+        script_path = Path("/usr/local/bin/check_service_health.sh")
+        script_content = script_path.read_text()
+    
+        # Verify the script is a shell script that analyzes logs
+        assert script_content.startswith('#!/'), "Script must have a shebang line"
+        assert len(script_content.strip()) > 100, "Script must have substantial content"
+    
+        # Enhanced anti-cheating: Verify journalctl is actually invoked
+        # Check if journalctl is available on the system
+        try:
+            journalctl_check = subprocess.run(
+                ["journalctl", "--version"],
+                capture_output=True,
+                timeout=5
+            )
+            journalctl_available = journalctl_check.returncode == 0
+        except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+            journalctl_available = False
+    
+        if journalctl_available:
+            # If journalctl is available, verify the script actually uses it by checking execution
+            # Run the script and capture any journalctl processes it might spawn
+            result = subprocess.run(
+                [str(script_path)],
+                capture_output=True,
+                text=True,
+                timeout=15  # Longer timeout for journalctl operations
+            )
+    
+            assert result.returncode == 0, f"Monitoring script failed: {result.stderr}"
+    
+            # Parse and validate JSON output structure
+            try:
+                data = json.loads(result.stdout)
+            except json.JSONDecodeError:
+                pytest.fail("Script must output valid JSON")
+    
+            # Verify exact schema as specified in instruction.md
+            required_fields = ['service', 'time_window', 'restarts', 'errors', 'restart_loop_detected', 'timestamp']
+            for field in required_fields:
+                assert field in data, f"Output must contain '{field}' field"
+    
+            assert data['service'] == 'myapp', "Service field must be 'myapp'"
+            assert data['time_window'] == '5 minutes', f"time_window must be exactly '5 minutes', got '{data.get('time_window')}'"
+            assert isinstance(data['restarts'], int), "restarts must be an integer"
+            assert isinstance(data['errors'], int), "errors must be an integer"
+            assert isinstance(data['restart_loop_detected'], bool), "restart_loop_detected must be a boolean"
+    
+            # Strong anti-cheating: Verify the script produces dynamic output by running it twice
+            # and checking that timestamps are different (proving it's not static)
+            import time
+            time.sleep(1)  # Wait 1 second
+    
+            result2 = subprocess.run(
+                [str(script_path)],
+                capture_output=True,
+                text=True,
+                timeout=15
+            )
+    
+            assert result2.returncode == 0, f"Second monitoring script run failed: {result2.stderr}"
+    
+            try:
+                data2 = json.loads(result2.stdout)
+            except json.JSONDecodeError:
+                pytest.fail("Second script run must output valid JSON")
+    
+            # Timestamps should be different (proving dynamic execution, not static output)
+            assert data['timestamp'] != data2['timestamp'], "Script must produce dynamic timestamps, not static output"
+    
+            # Anti-cheating: Verify restart_loop_detected is calculated correctly
+            if data['restarts'] > 3:
+                assert data['restart_loop_detected'], "Should detect restart loop when restarts > 3"
+            else:
+                assert not data['restart_loop_detected'], "Should not detect restart loop when restarts <= 3"
+    
+            # Anti-cheating: Verify counts correlate with actual journal entries
+            # Get actual journal data for comparison
+            journal_result = subprocess.run(
+                ["journalctl", "-u", "myapp", "--since", "5 minutes", "-o", "json"],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+    
+            if journal_result.returncode == 0 and journal_result.stdout.strip():
+                # Count actual restart and error entries in journal
+                journal_lines = journal_result.stdout.strip().split('\n')
+                actual_restarts = 0
+                actual_errors = 0
+    
+                for line in journal_lines:
+                    if line.strip():
+                        try:
+                            entry = json.loads(line)
+                            message = entry.get('MESSAGE', '')
+                            if 'Started' in message:
+                                actual_restarts += 1
+                            if 'ERROR' in message:
+                                actual_errors += 1
+                        except json.JSONDecodeError:
+                            continue
+    
+                # The script's counts should match or be close to actual journal counts
+                # Allow some tolerance for parsing differences but they should be correlated
+                restart_diff = abs(data["restarts"] - actual_restarts)
+                error_diff = abs(data["errors"] - actual_errors)
+    
+                assert restart_diff <= 2, f"Script restart count ({data['restarts']}) doesn't match journal ({actual_restarts}), diff={restart_diff}"
+                assert error_diff <= 2, f"Script error count ({data['errors']}) doesn't match journal ({actual_errors}), diff={error_diff}"
+    
+        else:
+            # If journalctl is not available, just check basic script structure
+            result = subprocess.run(
+                [str(script_path)],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+    
+            # Should still produce valid output even without journalctl
+            if result.returncode == 0:
+                try:
+                    data = json.loads(result.stdout)
+                    assert data['service'] == 'myapp', "Service field must be 'myapp'"
+                    assert data['time_window'] == '5 minutes', "time_window must be '5 minutes'"
+                    # Allow zeros when journalctl is not available
+>                   assert data['restarts'] == 0, "restarts should be 0 when journalctl unavailable"
+E                   AssertionError: restarts should be 0 when journalctl unavailable
+E                   assert 1 == 0
+
+/tests/test_outputs.py:500: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../../tests/test_outputs.py::test_systemd_service_file_exists
+PASSED ../../tests/test_outputs.py::test_python_app_json_logging
+PASSED ../../tests/test_outputs.py::test_rsyslog_configuration
+PASSED ../../tests/test_outputs.py::test_logrotate_configuration
+PASSED ../../tests/test_outputs.py::test_service_monitoring_script
+PASSED ../../tests/test_outputs.py::test_service_monitoring_output
+PASSED ../../tests/test_outputs.py::test_systemd_service_syntax
+PASSED ../../tests/test_outputs.py::test_log_files_creation
+PASSED ../../tests/test_outputs.py::test_logrotate_syntax
+PASSED ../../tests/test_outputs.py::test_logrotate_postrotate
+PASSED ../../tests/test_outputs.py::test_rsyslog_syntax
+PASSED ../../tests/test_outputs.py::test_json_processing_capability
+PASSED ../../tests/test_outputs.py::test_logrotate_execution
+PASSED ../../tests/test_outputs.py::test_rsyslog_file_ownership
+SKIPPED [1] ../../tests/test_outputs.py:296: Rsyslog service not available in test environment
+SKIPPED [1] ../../tests/test_outputs.py:553: Rsyslog service not available in test environment
+SKIPPED [1] ../../tests/test_outputs.py:641: Systemd not available in test environment
+SKIPPED [1] ../../tests/test_outputs.py:704: Required services not available in test environment
+FAILED ../../tests/test_outputs.py::test_python_app_exists - AssertionError: ...
+FAILED ../../tests/test_outputs.py::test_service_restart_loop_detection - Ass...
+=================== 2 failed, 14 passed, 4 skipped in 1.67s ====================

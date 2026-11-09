@@ -1,0 +1,140 @@
+{
+    "id": "4184ea2f-684a-4821-9695-ea8d286e3d5f",
+    "task_name": "california-housing-api",
+    "trial_name": "california-housing-api__ytxn9mM",
+    "trial_uri": "file:///Users/alireza/agent-benchmark-noise/jobs/smoke/california-housing-api__ytxn9mM",
+    "task_id": {
+        "path": "tblite/california-housing-api"
+    },
+    "source": "tblite",
+    "task_checksum": "f7d734cf2405d72c2a1e7504710acc867c489703a8bbbc685e7433b3b12f8184",
+    "config": {
+        "task": {
+            "path": "tblite/california-housing-api",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "tblite"
+        },
+        "trial_name": "california-housing-api__ytxn9mM",
+        "trials_dir": "jobs/smoke",
+        "install_only": false,
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "terminus-2",
+            "import_path": null,
+            "model_name": "anthropic/claude-haiku-5-5",
+            "n_concurrent": null,
+            "concurrency_group": null,
+            "skills": [],
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "resume_trajectory": false,
+            "load_trajectory": null,
+            "extra_allowed_hosts": [],
+            "kwargs": {},
+            "mcp_servers": []
+        },
+        "user_agent": null,
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "stream": false,
+            "cpu_enforcement_policy": "auto",
+            "memory_enforcement_policy": "auto",
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "override_tpu": null,
+            "mounts": null,
+            "extra_docker_compose": [],
+            "kwargs": {},
+            "extra_allowed_hosts": []
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "extra_instruction_paths": [],
+        "extra_instructions": [],
+        "job_id": "cab26948-0e87-46ae-8f93-1211877b200a",
+        "source_trial": null
+    },
+    "agent_info": {
+        "name": "terminus-2",
+        "version": "2.0.0",
+        "model_info": {
+            "name": "claude-haiku-5-5",
+            "provider": "anthropic"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 98336,
+        "n_cache_tokens": 83030,
+        "n_output_tokens": 7844,
+        "cost_usd": 0.006664649999999999,
+        "model_usage": {
+            "claude-haiku-5-5": {
+                "n_input_tokens": 98336,
+                "n_cache_tokens": 83030,
+                "n_output_tokens": 7844,
+                "cost_usd": 0.006664649999999999
+            }
+        },
+        "rollout_details": [],
+        "metadata": {
+            "n_episodes": 9,
+            "api_request_times_msec": [
+                1880.5720806121826,
+                1538.7089252471924,
+                13849.025964736938,
+                6148.263931274414,
+                1425.4002571105957,
+                1815.4950141906738,
+                1735.2938652038574,
+                3591.909885406494,
+                3472.3970890045166
+            ],
+            "summarization_count": 0
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "verifier_environment_mode": "shared",
+    "exception_info": null,
+    "started_at": "2026-10-25T23:53:55.752571Z",
+    "finished_at": "2026-10-25T23:58:18.883019Z",
+    "environment_setup": {
+        "started_at": "2026-10-25T23:53:55.790203Z",
+        "finished_at": "2026-10-25T23:54:02.573412Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-10-25T23:54:02.573839Z",
+        "finished_at": "2026-10-25T23:54:05.897453Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-10-25T23:54:05.898436Z",
+        "finished_at": "2026-10-25T23:57:49.208952Z"
+    },
+    "verifier": {
+        "started_at": "2026-10-25T23:57:50.865633Z",
+        "finished_at": "2026-10-25T23:58:06.183539Z"
+    },
+    "step_results": null
+}

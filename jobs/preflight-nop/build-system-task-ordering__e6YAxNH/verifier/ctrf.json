@@ -1,0 +1,164 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 12,
+            "passed": 0,
+            "failed": 12,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792964493.9656978,
+            "stop": 1792964494.232876
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_01_parse_error_bad_header",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0008031249999476131,
+                "start": 1792964494.0259645,
+                "stop": 1792964494.0429094,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_01_parse_error_bad_header():\n        \"\"\"Malformed header must return exactly PARSE_ERROR.\"\"\"\n>       solve = load_solve()\n                ^^^^^^^^^^^^\n\n/tests/test_outputs.py:302: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:24: in load_solve\n    spec.loader.exec_module(mod)\n<frozen importlib._bootstrap_external>:1023: in exec_module\n    ???\n<frozen importlib._bootstrap_external>:1160: in get_code\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <_frozen_importlib_external.SourceFileLoader object at 0xffffb6d8ac90>\npath = '/app/solution.py'\n\n>   ???\nE   FileNotFoundError: [Errno 2] No such file or directory: '/app/solution.py'\n\n<frozen importlib._bootstrap_external>:1218: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_02_parse_error_bad_directive",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0012055419999796868,
+                "start": 1792964494.043113,
+                "stop": 1792964494.1296346,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_02_parse_error_bad_directive():\n        \"\"\"Missing '=' in directive must return PARSE_ERROR.\"\"\"\n>       solve = load_solve()\n                ^^^^^^^^^^^^\n\n/tests/test_outputs.py:308: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:24: in load_solve\n    spec.loader.exec_module(mod)\n<frozen importlib._bootstrap_external>:1023: in exec_module\n    ???\n<frozen importlib._bootstrap_external>:1160: in get_code\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <_frozen_importlib_external.SourceFileLoader object at 0xffffb6d8a5d0>\npath = '/app/solution.py'\n\n>   ???\nE   FileNotFoundError: [Errno 2] No such file or directory: '/app/solution.py'\n\n<frozen importlib._bootstrap_external>:1218: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_03_alias_canonicalization_lexmin",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0029197079999221387,
+                "start": 1792964494.1305966,
+                "stop": 1792964494.148014,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_03_alias_canonicalization_lexmin():\n        \"\"\"Alias sets canonicalize to lexicographically smallest name and output uses canonical names only.\"\"\"\n>       solve = load_solve()\n                ^^^^^^^^^^^^\n\n/tests/test_outputs.py:318: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:24: in load_solve\n    spec.loader.exec_module(mod)\n<frozen importlib._bootstrap_external>:1023: in exec_module\n    ???\n<frozen importlib._bootstrap_external>:1160: in get_code\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <_frozen_importlib_external.SourceFileLoader object at 0xffffb6d8a810>\npath = '/app/solution.py'\n\n>   ???\nE   FileNotFoundError: [Errno 2] No such file or directory: '/app/solution.py'\n\n<frozen importlib._bootstrap_external>:1218: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_04_override_ordering_by_id_and_phony_override",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0005502489998434612,
+                "start": 1792964494.1481936,
+                "stop": 1792964494.162475,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_04_override_ordering_by_id_and_phony_override():\n        \"\"\"Overrides apply in lexicographic id order; Phony last-one-wins across overrides.\"\"\"\n>       solve = load_solve()\n                ^^^^^^^^^^^^\n\n/tests/test_outputs.py:331: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:24: in load_solve\n    spec.loader.exec_module(mod)\n<frozen importlib._bootstrap_external>:1023: in exec_module\n    ???\n<frozen importlib._bootstrap_external>:1160: in get_code\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <_frozen_importlib_external.SourceFileLoader object at 0xffffb6d89e50>\npath = '/app/solution.py'\n\n>   ???\nE   FileNotFoundError: [Errno 2] No such file or directory: '/app/solution.py'\n\n<frozen importlib._bootstrap_external>:1218: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_05_transitive_aliases",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0004882920000000013,
+                "start": 1792964494.1627452,
+                "stop": 1792964494.1733713,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_05_transitive_aliases():\n        \"\"\"Transitive alias relationships are handled correctly.\"\"\"\n>       solve = load_solve()\n                ^^^^^^^^^^^^\n\n/tests/test_outputs.py:347: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:24: in load_solve\n    spec.loader.exec_module(mod)\n<frozen importlib._bootstrap_external>:1023: in exec_module\n    ???\n<frozen importlib._bootstrap_external>:1160: in get_code\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <_frozen_importlib_external.SourceFileLoader object at 0xffffb6ab2c30>\npath = '/app/solution.py'\n\n>   ???\nE   FileNotFoundError: [Errno 2] No such file or directory: '/app/solution.py'\n\n<frozen importlib._bootstrap_external>:1218: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_06_cycle_detection",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0004716670000561862,
+                "start": 1792964494.173491,
+                "stop": 1792964494.1831622,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_06_cycle_detection():\n        \"\"\"Cycles are detected and reported correctly.\"\"\"\n>       solve = load_solve()\n                ^^^^^^^^^^^^\n\n/tests/test_outputs.py:361: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:24: in load_solve\n    spec.loader.exec_module(mod)\n<frozen importlib._bootstrap_external>:1023: in exec_module\n    ???\n<frozen importlib._bootstrap_external>:1160: in get_code\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <_frozen_importlib_external.SourceFileLoader object at 0xffffb6ab3050>\npath = '/app/solution.py'\n\n>   ???\nE   FileNotFoundError: [Errno 2] No such file or directory: '/app/solution.py'\n\n<frozen importlib._bootstrap_external>:1218: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_07_self_loop_cycle",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0004567910000332631,
+                "start": 1792964494.1833398,
+                "stop": 1792964494.1912994,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_07_self_loop_cycle():\n        \"\"\"Self-loops are detected as cycles.\"\"\"\n>       solve = load_solve()\n                ^^^^^^^^^^^^\n\n/tests/test_outputs.py:375: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:24: in load_solve\n    spec.loader.exec_module(mod)\n<frozen importlib._bootstrap_external>:1023: in exec_module\n    ???\n<frozen importlib._bootstrap_external>:1160: in get_code\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <_frozen_importlib_external.SourceFileLoader object at 0xffffb6ab3530>\npath = '/app/solution.py'\n\n>   ???\nE   FileNotFoundError: [Errno 2] No such file or directory: '/app/solution.py'\n\n<frozen importlib._bootstrap_external>:1218: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_08_empty_input",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0005523339999626842,
+                "start": 1792964494.1914387,
+                "stop": 1792964494.200426,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_08_empty_input():\n        \"\"\"Empty input returns empty order and cycles.\"\"\"\n>       solve = load_solve()\n                ^^^^^^^^^^^^\n\n/tests/test_outputs.py:385: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:24: in load_solve\n    spec.loader.exec_module(mod)\n<frozen importlib._bootstrap_external>:1023: in exec_module\n    ???\n<frozen importlib._bootstrap_external>:1160: in get_code\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <_frozen_importlib_external.SourceFileLoader object at 0xffffb6ab3a10>\npath = '/app/solution.py'\n\n>   ???\nE   FileNotFoundError: [Errno 2] No such file or directory: '/app/solution.py'\n\n<frozen importlib._bootstrap_external>:1218: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_09_undefined_referenced_targets",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.0005652920000329686,
+                "start": 1792964494.2006297,
+                "stop": 1792964494.208716,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_09_undefined_referenced_targets():\n        \"\"\"Targets referenced but not defined are included in universe and output.\"\"\"\n>       solve = load_solve()\n                ^^^^^^^^^^^^\n\n/tests/test_outputs.py:391: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:24: in load_solve\n    spec.loader.exec_module(mod)\n<frozen importlib._bootstrap_external>:1023: in exec_module\n    ???\n<frozen importlib._bootstrap_external>:1160: in get_code\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <_frozen_importlib_external.SourceFileLoader object at 0xffffb6d8a8d0>\npath = '/app/solution.py'\n\n>   ???\nE   FileNotFoundError: [Errno 2] No such file or directory: '/app/solution.py'\n\n<frozen importlib._bootstrap_external>:1218: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_10_multiple_target_blocks",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00046787500002665183,
+                "start": 1792964494.2088633,
+                "stop": 1792964494.216717,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_10_multiple_target_blocks():\n        \"\"\"Multiple TARGET blocks for same target are processed in appearance order.\"\"\"\n>       solve = load_solve()\n                ^^^^^^^^^^^^\n\n/tests/test_outputs.py:401: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:24: in load_solve\n    spec.loader.exec_module(mod)\n<frozen importlib._bootstrap_external>:1023: in exec_module\n    ???\n<frozen importlib._bootstrap_external>:1160: in get_code\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <_frozen_importlib_external.SourceFileLoader object at 0xffffb6ab3530>\npath = '/app/solution.py'\n\n>   ???\nE   FileNotFoundError: [Errno 2] No such file or directory: '/app/solution.py'\n\n<frozen importlib._bootstrap_external>:1218: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_11_directive_accumulation",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00046108400010780315,
+                "start": 1792964494.2168527,
+                "stop": 1792964494.224928,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_11_directive_accumulation():\n        \"\"\"Directives accumulate across blocks (union for sets, last-one-wins for Phony).\"\"\"\n>       solve = load_solve()\n                ^^^^^^^^^^^^\n\n/tests/test_outputs.py:413: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:24: in load_solve\n    spec.loader.exec_module(mod)\n<frozen importlib._bootstrap_external>:1023: in exec_module\n    ???\n<frozen importlib._bootstrap_external>:1160: in get_code\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <_frozen_importlib_external.SourceFileLoader object at 0xffffb6ab2ed0>\npath = '/app/solution.py'\n\n>   ???\nE   FileNotFoundError: [Errno 2] No such file or directory: '/app/solution.py'\n\n<frozen importlib._bootstrap_external>:1218: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_12_all_dependency_types",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.00040237499990780634,
+                "start": 1792964494.2250888,
+                "stop": 1792964494.2326562,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_12_all_dependency_types():\n        \"\"\"All dependency types (Depends, Before, After, Needs, Requires) create correct edges.\"\"\"\n>       solve = load_solve()\n                ^^^^^^^^^^^^\n\n/tests/test_outputs.py:427: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/tests/test_outputs.py:24: in load_solve\n    spec.loader.exec_module(mod)\n<frozen importlib._bootstrap_external>:1023: in exec_module\n    ???\n<frozen importlib._bootstrap_external>:1160: in get_code\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <_frozen_importlib_external.SourceFileLoader object at 0xffffb6ab2f30>\npath = '/app/solution.py'\n\n>   ???\nE   FileNotFoundError: [Errno 2] No such file or directory: '/app/solution.py'\n\n<frozen importlib._bootstrap_external>:1218: FileNotFoundError",
+                "message": "The test failed in the call phase"
+            }
+        ]
+    }
+}

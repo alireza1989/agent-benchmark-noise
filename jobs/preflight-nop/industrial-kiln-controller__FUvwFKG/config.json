@@ -1,0 +1,12 @@
+{
+    "task": {
+        "path": "tblite/industrial-kiln-controller",
+        "source": "tblite"
+    },
+    "trial_name": "industrial-kiln-controller__FUvwFKG",
+    "trials_dir": "jobs/preflight-nop",
+    "agent": {
+        "name": "nop"
+    },
+    "job_id": "2a0a1ef1-40fa-4a18-ac7d-00b14514c28d"
+}

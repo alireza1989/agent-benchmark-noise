@@ -1,0 +1,10 @@
+Skipping image OS validation for hb__fa9673144e0da5564bae17983658ea8b: docker inspect returned 1
+Parser warnings: - Extra text detected before JSON object
+Trajectory dumped to jobs/nolimits-2/systemd-log-monitoring__VWAD656/agent/trajectory.json
+Parser warnings: - Extra text detected before JSON object
+Trajectory dumped to jobs/nolimits-2/systemd-log-monitoring__VWAD656/agent/trajectory.json
+Trajectory dumped to jobs/nolimits-2/systemd-log-monitoring__VWAD656/agent/trajectory.json
+Trajectory dumped to jobs/nolimits-2/systemd-log-monitoring__VWAD656/agent/trajectory.json
+Trajectory dumped to jobs/nolimits-2/systemd-log-monitoring__VWAD656/agent/trajectory.json
+Trajectory dumped to jobs/nolimits-2/systemd-log-monitoring__VWAD656/agent/trajectory.json
+Collecting main service artifacts

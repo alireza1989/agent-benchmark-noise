@@ -1,0 +1,176 @@
+[?2004hroot@34607ca2da85:/app# asciinema rec --stdin /logs/agent/recording.cast
+[?2004l[0;32masciinema: recording asciicast to /logs/agent/recording.cast[0m
+[0;32masciinema: press <ctrl-d> or type "exit" when you're done[0m
+[?2004hroot@34607ca2da85:/app# clear
+[?2004l[H[J[3J[?2004hroot@34607ca2da85:/app# ls -la /app
+[?2004ltotal 8
+drwxr-xr-x 2 root root 4096 Oct 25 21:30 .
+drwxr-xr-x 1 root root 4096 Oct 26 00:36 ..
+[?2004hroot@34607ca2da85:/app# cat /app/input.txt
+[?2004lcat: /app/input.txt: No such file or directory
+[?2004hroot@34607ca2da85:/app# python3 --version
+[?2004lPython 3.13.17
+[?2004hroot@34607ca2da85:/app# cat > /app/canonicalize.py << 'EOF'
+[?2004lep_lines:
+        f = l.split()
+        if len(f) != 4:
+            break
+        path, method, role, perm = f
+        m = method.upper()
+        p = perm.upper()
+        if (not path.strip() or m not in VALID_METHODS or
+                p not in VALID_PERMS or not role.strip()):
+            break
+        eps.append((path, m, role, p))
+        name_map.setdefault(norm(path), path)
+
+    base = None
+    exclude = set()
+    for f in meta_lines:
+        if f[0].lower() == 'base':
+            base = f[1] if len(f) > 1 else None
+        elif f[0].lower() == 'exclude':
+            exclude.update(f[1:])
+
+    plan = []
+    for f in plan_lines:
+        if len(f) != 2:
+            break
+        path, method = f
+        m = method.upper()
+        if m not in VALID_METHODS or not path.strip():
+            break
+        plan.append((norm(path), m))
+
+    eligible = [e for e in eps if base is None or e[0].startswith(base)]
+
+    if not plan:
+        selected = [e for e in eligible if e[2] not in exclude]
+    else:
+        plan[?2004h> import re
+[?2004l[?2004h> 
+[?2004l[?2004h> VALID_METHODS = {'GET', 'POST', 'PUT', 'DELETE', 'PATCH'}
+[?2004l[?2004h> VALID_PERMS = {'ALLOW', 'DENY'}
+[?2004l[?2004h> VAR_RE = re.compile(r'\{[A-Za-z0-9_-]+\}')
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def norm(path):
+[?2004l[?2004h>     return VAR_RE.sub('{var}', path)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def segs(path):
+[?2004l[?2004h>     return [s for s in path.split('/') if s]
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def is_strict_prefix(a, b):
+[?2004l[?2004h>     sa, sb = segs(a), segs(b)
+[?2004l[?2004h>     return len(sa) < len(sb) and sb[:len(sa)] == sa
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> def main():
+[?2004l[?2004h>     with open('/app/input.txt') as fh:
+[?2004l[?2004h>         lines = [l.rstrip('\r\n') for l in fh.readlines()]
+[?2004l[?2004h> 
+[?2004l[?2004h>     i = 0
+[?2004l[?2004h>     while i < len(lines) and not lines[i].strip():
+[?2004l[?2004h>         i += 1
+[?2004l[?2004h>     ep_lines = []
+[?2004l[?2004h>     while i < len(lines) and lines[i].strip():
+[?2004l[?2004h>         ep_lines.append(lines[i])
+[?2004l[?2004h>         i += 1
+[?2004l[?2004h>     rest = lines[i:]
+[?2004l[?2004h> 
+[?2004l[?2004h>     meta_lines, plan_lines = [], []
+[?2004l[?2004h>     for l in rest:
+[?2004l[?2004h>         s = l.split()
+[?2004l[?2004h>         if not s:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         if s[0].lower() in ('base', 'exclude'):
+[?2004l[?2004h>             meta_lines.append(s)
+[?2004l[?2004h>         else:
+[?2004l[?2004h>             plan_lines.append(s)
+[?2004l[?2004h> 
+[?2004l[?2004h>     eps = []
+[?2004l[?2004h>     name_map = {}
+[?2004l[?2004h>     for l in ep_lines:
+[?2004l[?2004h>         f = l.split()
+[?2004l[?2004h>         if len(f) != 4:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         path, method, role, perm = f
+[?2004l[?2004h>         m = method.upper()
+[?2004l[?2004h>         p = perm.upper()
+[?2004l[?2004h>         if (not path.strip() or m not in VALID_METHODS or
+[?2004l[?2004h>                 p not in VALID_PERMS or not role.strip()):
+[?2004l[?2004h>             break
+[?2004l[?2004h>         eps.append((path, m, role, p))
+[?2004l[?2004h>         name_map.setdefault(norm(path), path)
+[?2004l[?2004h> 
+[?2004l[?2004h>     base = None
+[?2004l[?2004h>     exclude = set()
+[?2004l[?2004h>     for f in meta_lines:
+[?2004l[?2004h>         if f[0].lower() == 'base':
+[?2004l[?2004h>             base = f[1] if len(f) > 1 else None
+[?2004l[?2004h>         elif f[0].lower() == 'exclude':
+[?2004l[?2004h>             exclude.update(f[1:])
+[?2004l[?2004h> 
+[?2004l[?2004h>     plan = []
+[?2004l[?2004h>     for f in plan_lines:
+[?2004l[?2004h>         if len(f) != 2:
+[?2004l[?2004h>             break
+[?2004l[?2004h>         path, method = f
+[?2004l[?2004h>         m = method.upper()
+[?2004l[?2004h>         if m not in VALID_METHODS or not path.strip():
+[?2004l[?2004h>             break
+[?2004l[?2004h>         plan.append((norm(path), m))
+[?2004l[?2004h> 
+[?2004l[?2004h>     eligible = [e for e in eps if base is None or e[0].startswith(base)]
+[?2004l[?2004h> 
+[?2004l[?2004h>     if not plan:
+[?2004l[?2004h>         selected = [e for e in eligible if e[2] not in exclude]
+[?2004l[?2004h>     else:
+[?2004l[?2004h>         plan_set = set(plan)
+[?2004l[?2004h>         plan_norms = set(pn for pn, _ in plan)
+[?2004l[?2004h>         chosen = set()
+[?2004l[?2004h>         by_norm = {}
+[?2004l[?2004h>         for idx, e in enumerate(eligible):
+[?2004l[?2004h>             by_norm.setdefault(norm(e[0]), []).append(idx)
+[?2004l[?2004h>             if (norm(e[0]), e[1]) in plan_set and e[2] not in exclude:
+[?2004l[?2004h>                 chosen.add(idx)
+[?2004l[?2004h>         for pn2, idxs in by_norm.items():
+[?2004l[?2004h>             if any(is_strict_prefix(pn2, pn) for pn in plan_norms):
+[?2004l[?2004h>                 nonex = [j for j in idxs if eligible[j][2] not in exclude]
+[?2004l[?2004h>                 chosen.update(nonex if nonex else idxs)
+[?2004l[?2004h>         selected = [eligible[j] for j in sorted(chosen)]
+[?2004l[?2004h> 
+[?2004l[?2004h>     seen = set()
+[?2004l[?2004h>     result = []
+[?2004l[?2004h>     for path, m, role, perm in selected:
+[?2004l[?2004h>         key = (norm(path), m, role)
+[?2004l[?2004h>         if key in seen:
+[?2004l[?2004h>             continue
+[?2004l[?2004h>         seen.add(key)
+[?2004l[?2004h>         result.append((name_map[norm(path)], m, role, perm))
+[?2004l[?2004h> 
+[?2004l[?2004h>     result.sort(key=lambda r: (-len(segs(r[0])), r[1], r[2], r[3]))
+[?2004l[?2004h> 
+[?2004l[?2004h>     if not result:
+[?2004l[?2004h>         out = '\n'
+[?2004l[?2004h>     else:
+[?2004l[?2004h>         out = ''.join('%s %s %s %s\n' % r for r in result)
+[?2004l[?2004h> 
+[?2004l[?2004h>     with open('/app/output.txt', 'w') as fh:
+[?2004l[?2004h>         fh.write(out)
+[?2004l[?2004h> 
+[?2004l[?2004h> 
+[?2004l[?2004h> if __name__ == '__main__':
+[?2004l[?2004h>     main()
+[?2004l[?2004h> EOF
+[?2004l[?2004hroot@34607ca2da85:/app# python3 -m py_compile /app/canonicalize.py && echo COMPILE_OK
+[?2004lCOMPILE_OK
+[?2004hroot@34607ca2da85:/app# printf '/api/users/{id} GET alice allow\n/api/users GET bob ALLOW\n/api/users GET admin deny\n/api/users/{uid}/posts get alice allow\n/api/users/{uid} delete carol deny\nbad line here\n/api/x GET z ALLOW\n\nbase /api\nexclude admin\n\n/api/users/{uid}/posts GET\n' > /app/input.txt && python3 /app/canonicalize.py && cat -A /app/output.txt
+[?2004l/api/users/{uid}/posts GET alice ALLOW$
+/api/users/{id} DELETE carol DENY$
+/api/users/{id} GET alice ALLOW$
+/api/users GET bob ALLOW$
+[?2004hroot@34607ca2da85:/app# rm -f /app/input.txt /app/output.txt
+[?2004l[?2004hroot@34607ca2da85:/app# 

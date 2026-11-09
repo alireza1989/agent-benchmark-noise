@@ -1,0 +1,92 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 8,
+            "passed": 8,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1792974863.0742574,
+            "stop": 1792974863.1590323
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_game_was_played",
+                "status": "passed",
+                "duration": 0.05189387399877887,
+                "start": 1792974863.0930858,
+                "stop": 1792974863.1453118,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_answer_file_exists",
+                "status": "passed",
+                "duration": 0.0005032079989177873,
+                "start": 1792974863.1454546,
+                "stop": 1792974863.1461108,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_answer_file_format",
+                "status": "passed",
+                "duration": 0.0005197909995331429,
+                "start": 1792974863.1461976,
+                "stop": 1792974863.1468678,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_results_match_game",
+                "status": "passed",
+                "duration": 0.002622042000439251,
+                "start": 1792974863.1469646,
+                "stop": 1792974863.1497273,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_regret_is_acceptable",
+                "status": "passed",
+                "duration": 0.0024590000011812663,
+                "start": 1792974863.1498284,
+                "stop": 1792974863.1524186,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_total_reward_is_plausible",
+                "status": "passed",
+                "duration": 0.0024245419990620576,
+                "start": 1792974863.152502,
+                "stop": 1792974863.1550534,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_regret_consistency",
+                "status": "passed",
+                "duration": 0.002668081999217975,
+                "start": 1792974863.1551447,
+                "stop": 1792974863.1580174,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_bandit_not_modified",
+                "status": "passed",
+                "duration": 0.0005818339996039867,
+                "start": 1792974863.1581216,
+                "stop": 1792974863.1588345,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}
